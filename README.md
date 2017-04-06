@@ -35,3 +35,4 @@ The application uses the libraries below:
 + [Glide](https://github.com/bumptech/glide) - Glide is a fast and efficient open source media management and image loading framework for Android.
 + [GSON](https://github.com/google/gson) - A Java serialization/deserialization library that can convert Java Objects into JSON and back.
 + [Facebook](https://developers.facebook.com/docs/android/) - SDK to Use Facebook API.
+

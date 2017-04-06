@@ -3,7 +3,7 @@
 ### Project Structure Folder
 The application is organized by feature in following package structure inside com.beautydate package:
 
-- **_API_**:  Contains all classes and interfaces that is use to communicate with rest service.
++ **_API_**:  Contains all classes and interfaces that is use to communicate with rest service.
 + **_Components_**: Contains all app interface components used in many places.
 + **_Interfaces_**: Contains all interfaces used in the app as Callbacks and UI Responses.
 + **_Constants_**: Constants used in many places of app grouped by SharedPreferences, Analytics and General constants.

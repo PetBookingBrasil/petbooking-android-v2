@@ -9,25 +9,61 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    NavigationView mNavView;
+    View mHeaderView;
+    DrawerLayout mDrawerLayout;
+    Toolbar mToolbar;
+
+    /**
+     * Sidemenu content
+     */
+    private CircleImageView mCivSideMenuPicture;
+    private TextView mTvSideMenuName;
+    private TextView mTvSideMenuAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavView = (NavigationView) findViewById(R.id.nav_view);
+        mNavView.setNavigationItemSelectedListener(this);
+        //mHeaderView = mNavView.getHeaderView(0);
+
+        /**
+         * Update Sidemenu Info
+         */
+        mCivSideMenuPicture = (CircleImageView) findViewById(R.id.sidemenu_picture);
+        mTvSideMenuName = (TextView) findViewById(R.id.sidemenu_name);
+        mTvSideMenuAddress = (TextView) findViewById(R.id.sidemenu_address);
+
+        mTvSideMenuName.setText("Catioro");
+        mTvSideMenuAddress.setText("São Paulo, SP");
+
+        Glide.with(this)
+                .load("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTEH_PtPQloEqKvOToQB8uH3KFx0QljOq9kY6re2LL6fUsh-BkEbX5-LH0")
+                .centerCrop()
+                .dontAnimate()
+                .into(mCivSideMenuPicture);
     }
 
     @Override
@@ -53,11 +89,6 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }

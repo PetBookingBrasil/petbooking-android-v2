@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Pet Booking</string>
 
@@ -7,10 +8,10 @@
     <string name="action_settings">Settings</string>
 
     <!-- Sidemenu Options-->
-    <string name="search">Pesquisar</string>
-    <string name="calendar">Agenda</string>
-    <string name="payments">Pagamentos</string>
-    <string name="favorites">Favoritos</string>
-    <string name="settings">Configurações</string>
-    <string name="logout">Sair</string>
+    <string name="search">Search</string>
+    <string name="calendar">Calendar</string>
+    <string name="payments">Payments</string>
+    <string name="favorites">Favorites</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
 </resources>

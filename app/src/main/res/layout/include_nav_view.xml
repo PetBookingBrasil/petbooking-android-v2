@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_view"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="start"
@@ -9,20 +8,19 @@
     android:fitsSystemWindows="true"
     app:itemTextColor="@color/white">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/include_nav_header"></include>
+        <include
+            android:id="@+id/nav_header"
+            layout="@layout/include_nav_header" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <include
+            android:id="@+id/nav_drawer_menu"
+            layout="@layout/nav_drawer_menu" />
 
-            <include layout="@layout/nav_drawer_menu"></include>
-        </ScrollView>
     </LinearLayout>
 
 </android.support.design.widget.NavigationView>

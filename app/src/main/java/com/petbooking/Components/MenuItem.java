@@ -3,6 +3,7 @@ package com.petbooking.Components;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -21,17 +22,16 @@ public class MenuItem extends LinearLayout {
     private ImageView mIvItemIcon;
     private TextView mTvItemText;
 
-
-    public MenuItem(Context context, AttributeSet attrs) {
-        super(context);
+    public MenuItem(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
         initView(context, attrs);
     }
 
-    public void initView(Context context, AttributeSet attrs) {
-        View.inflate(context, R.layout.nav_drawer_item, this);
+    public void initView(Context context, @Nullable AttributeSet attrs) {
+        View view = View.inflate(context, R.layout.nav_drawer_item, this);
 
-        mIvItemIcon = (ImageView) findViewById(R.id.icon);
-        mTvItemText = (TextView) findViewById(R.id.text);
+        mIvItemIcon = (ImageView) view.findViewById(R.id.icon);
+        mTvItemText = (TextView) view.findViewById(R.id.text);
 
         if (attrs != null) {
             TypedArray prop = context.obtainStyledAttributes(attrs, R.styleable.MenuItem, 0, 0);

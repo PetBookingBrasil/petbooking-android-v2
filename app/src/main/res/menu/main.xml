@@ -10,5 +10,5 @@
         android:id="@+id/cart"
         android:icon="@drawable/ic_menu_gallery"
         android:title="Profile"
-        app:showAsAction="ifRoom|withText"></item>
+        app:showAsAction="ifRoom"></item>
 </menu>

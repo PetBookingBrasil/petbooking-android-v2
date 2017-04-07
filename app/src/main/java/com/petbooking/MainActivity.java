@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.petbooking.Components.MenuItem;
+import com.petbooking.Components.DrawerItem;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,11 +36,11 @@ public class MainActivity extends AppCompatActivity {
      * Sidemenu Itens
      */
 
-    private MenuItem mMiSearch;
-    private MenuItem mMiCalendar;
-    private MenuItem mMiPayments;
-    private MenuItem mMiFavorites;
-    private MenuItem mMiSettings;
+    private DrawerItem mMiSearch;
+    private DrawerItem mMiCalendar;
+    private DrawerItem mMiPayments;
+    private DrawerItem mMiFavorites;
+    private DrawerItem mMiSettings;
     private LinearLayout mMiLogout;
 
     View.OnClickListener mMenuItemListener = new View.OnClickListener() {
@@ -70,11 +70,11 @@ public class MainActivity extends AppCompatActivity {
          * Set sidemenu actions
          */
 
-        mMiSearch = (MenuItem) findViewById(R.id.search);
-        mMiCalendar = (MenuItem) findViewById(R.id.calendar);
-        mMiPayments = (MenuItem) findViewById(R.id.payments);
-        mMiFavorites = (MenuItem) findViewById(R.id.favorites);
-        mMiSettings = (MenuItem) findViewById(R.id.settings);
+        mMiSearch = (DrawerItem) findViewById(R.id.search);
+        mMiCalendar = (DrawerItem) findViewById(R.id.calendar);
+        mMiPayments = (DrawerItem) findViewById(R.id.payments);
+        mMiFavorites = (DrawerItem) findViewById(R.id.favorites);
+        mMiSettings = (DrawerItem) findViewById(R.id.settings);
         mMiLogout = (LinearLayout) findViewById(R.id.logout);
 
         mMiSearch.setOnClickListener(mMenuItemListener);
@@ -114,13 +114,24 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        if (item.getItemId() == R.id.cart) {
+            Log.d("ITEM SELECTED", "CART");
+        } else if (item.getItemId() == R.id.notifications) {
+            Log.d("ITEM SELECTED", "NOTIFICATIONS");
+        }
+
         return true;
     }
 
     /**
      * On Select Sidemenu item
+     *
      * @param id
      * @return
      */

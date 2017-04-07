@@ -17,12 +17,12 @@ import com.petbooking.R;
  * Created by Luciano José on 06/04/2017.
  */
 
-public class MenuItem extends LinearLayout {
+public class DrawerItem extends LinearLayout {
 
     private ImageView mIvItemIcon;
     private TextView mTvItemText;
 
-    public MenuItem(Context context, @Nullable AttributeSet attrs) {
+    public DrawerItem(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initView(context, attrs);
     }
@@ -34,14 +34,14 @@ public class MenuItem extends LinearLayout {
         mTvItemText = (TextView) view.findViewById(R.id.text);
 
         if (attrs != null) {
-            TypedArray prop = context.obtainStyledAttributes(attrs, R.styleable.MenuItem, 0, 0);
+            TypedArray prop = context.obtainStyledAttributes(attrs, R.styleable.DrawerItem, 0, 0);
 
             String text = "";
             Drawable icon = null;
 
             try {
-                text = prop.getString(R.styleable.MenuItem_item_text);
-                icon = prop.getDrawable(R.styleable.MenuItem_item_icon);
+                text = prop.getString(R.styleable.DrawerItem_item_text);
+                icon = prop.getDrawable(R.styleable.DrawerItem_item_icon);
             } catch (Exception e) {
                 Log.e("ITEM", "There was an error loading attributes.");
             } finally {

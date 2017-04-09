@@ -6,6 +6,15 @@
 
     <string name="action_settings">Settings</string>
 
+    <!-- Login -->
+    <string name="description">Encontre serviços para seu Pet \n mais póximos de você e agende online!</string>
+    <string name="no_account">Ainda não é cadastrado?</string>
+    <string name="sign_up">Cadastre-se</string>
+    <string name="login">Entrar</string>
+    <string name="login_facebook">Login com Facebook</string>
+    <string name="hint_email">petbooking@gmail.com</string>
+    <string name="hint_password">......</string>
+
     <!-- Sidemenu Options-->
     <string name="search">Pesquisar</string>
     <string name="calendar">Agenda</string>

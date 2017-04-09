@@ -3,8 +3,13 @@ package com.petbooking.UI.SplashScreen;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
+import com.google.gson.Gson;
+import com.petbooking.API.Auth.AuthService;
+import com.petbooking.Interfaces.Callback;
 import com.petbooking.MainActivity;
+import com.petbooking.Models.ConsumerRqt;
 import com.petbooking.UI.Login.LoginActivity;
 
 /**
@@ -16,6 +21,19 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AuthService m = AuthService.getInstance(this);
+        m.authConsumer(new Callback() {
+            @Override
+            public void onSuccess(Object response) {
+                Log.d("RES", new Gson().toJson(response));
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
 
         /**
          * Register the consumer in the API

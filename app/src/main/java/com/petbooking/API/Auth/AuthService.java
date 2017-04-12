@@ -1,16 +1,15 @@
 package com.petbooking.API.Auth;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.Gson;
-import com.petbooking.API.Rest;
-import com.petbooking.Interfaces.Callback;
-import com.petbooking.Managers.APIManager;
+import com.petbooking.API.APIClient;
+import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Models.ConsumerResp;
 import com.petbooking.Models.ConsumerRqt;
-import com.petbooking.Models.GenericResponse;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Luciano José on 09/04/2017.
@@ -18,31 +17,25 @@ import com.petbooking.Models.GenericResponse;
 
 public class AuthService {
 
-    private static AuthService mInstance;
-    private Context mContext;
-    private APIManager mApiManager;
-    JsonObjectRequest mRequest;
+    private final AuthInterface mAuthInterface;
 
-    public static AuthService getInstance(Context context) {
-        if (mInstance == null) {
-            mInstance = new AuthService(context);
-        }
-        return mInstance;
+    public AuthService() {
+        mAuthInterface = APIClient.getClient().create(AuthInterface.class);
     }
 
-    public AuthService(Context context) {
-        this.mContext = context;
-        mApiManager = APIManager.getInstance(context);
+    public void authConsumer(final APICallback callback) {
+        ConsumerRqt consumerRqt = new ConsumerRqt();
+        Call<ConsumerResp> call = mAuthInterface.authConsumer(consumerRqt);
+        call.enqueue(new Callback<ConsumerResp>() {
+            @Override
+            public void onResponse(Call<ConsumerResp> call, Response<ConsumerResp> response) {
+                callback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ConsumerResp> call, Throwable t) {
+                callback.onError(t.getMessage());
+            }
+        });
     }
-
-
-    public void authConsumer(final Callback callback) {
-        this.mRequest = new Rest(mContext, GenericResponse.class)
-                .post(APIAuthConstants.CONSUMER_ENDPOINT, new ConsumerRqt())
-                .setCallback(callback)
-                .build();
-
-        mApiManager.addToRequestQueue(this.mRequest);
-    }
-
 }

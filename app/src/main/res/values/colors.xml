@@ -5,12 +5,14 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="red">#D11326</color>
+    <color name="gray">#AFB4B7</color>
+
+    <!-- Login -->
+    <color name="facebook_btn_login">#2656A0</color>
 
     <!-- Brand Colors -->
     <color name="brand_primary">#FF4C4D</color>
     <color name="brand_accent">#37C6A8</color>
-
-
 
 
 </resources>

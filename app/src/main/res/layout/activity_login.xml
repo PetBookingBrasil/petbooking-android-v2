@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.petbooking.UI.Login.LoginActivity">
+
+    <ImageView
+        android:id="@+id/appLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/spacing_xmicro"
+        android:layout_marginRight="@dimen/spacing_xmicro"
+        android:layout_marginTop="@dimen/spacing_xtiny"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/brand_app_half" />
+
+    <TextView
+        android:id="@+id/appDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_xmicro"
+        android:layout_marginRight="@dimen/spacing_xmicro"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:text="@string/description"
+        android:textAlignment="center"
+        android:textColor="@color/gray"
+        android:textSize="15sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appLogo" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_xnormal"
+        android:layout_marginRight="@dimen/spacing_xnormal"
+        android:layout_marginTop="@dimen/spacing_smallest"
+        android:ems="10"
+        android:hint="@string/hint_email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appDescription" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_xnormal"
+        android:layout_marginRight="@dimen/spacing_xnormal"
+        android:layout_marginTop="@dimen/spacing_xmicro"
+        android:ems="10"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/spacing_xmicro"
+        android:layout_marginRight="@dimen/spacing_xmicro"
+        android:layout_marginTop="@dimen/spacing_smallest"
+        android:background="@drawable/button_radius"
+        android:minWidth="210dp"
+        android:text="@string/login"
+        android:theme="@style/AppTheme.PrimaryButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
+
+    <Button
+        android:id="@+id/facebookLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/spacing_xmicro"
+        android:layout_marginRight="@dimen/spacing_xmicro"
+        android:layout_marginTop="@dimen/spacing_xtiny"
+        android:background="@drawable/button_radius"
+        android:backgroundTint="@color/facebook_btn_login"
+        android:drawableLeft="@drawable/ic_facebook"
+        android:minWidth="210dp"
+        android:text="@string/login_facebook"
+        android:theme="@style/AppTheme.SocialButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login" />
+
+    <TextView
+        android:id="@+id/account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_xtiny"
+        android:layout_marginLeft="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_xmicro"
+        android:text="@string/no_account"
+        android:textColor="@color/gray"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/facebookLogin"
+        app:layout_constraintVertical_bias="0.7" />
+
+    <TextView
+        android:id="@+id/signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_xtiny"
+        android:layout_marginLeft="@dimen/spacing_micro"
+        android:layout_marginRight="@dimen/spacing_xmicro"
+        android:layout_marginTop="@dimen/spacing_xmicro"
+        android:text="@string/sign_up"
+        android:textColor="@color/gray"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintLeft_toRightOf="@+id/account"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/facebookLogin"
+        app:layout_constraintVertical_bias="0.704" />
+
+</android.support.constraint.ConstraintLayout>

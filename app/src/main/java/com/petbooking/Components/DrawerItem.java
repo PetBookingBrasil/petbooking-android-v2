@@ -37,11 +37,11 @@ public class DrawerItem extends LinearLayout {
             TypedArray prop = context.obtainStyledAttributes(attrs, R.styleable.DrawerItem, 0, 0);
 
             String text = "";
-            Drawable icon = null;
+            int icon = -1;
 
             try {
                 text = prop.getString(R.styleable.DrawerItem_item_text);
-                icon = prop.getDrawable(R.styleable.DrawerItem_item_icon);
+                icon = prop.getResourceId(R.styleable.DrawerItem_item_icon, -1);
             } catch (Exception e) {
                 Log.e("ITEM", "There was an error loading attributes.");
             } finally {
@@ -57,7 +57,7 @@ public class DrawerItem extends LinearLayout {
         mTvItemText.setText(text);
     }
 
-    private void setIcon(Drawable icon) {
-        mIvItemIcon.setImageDrawable(icon);
+    private void setIcon(int icon) {
+        mIvItemIcon.setImageResource(icon);
     }
 }

@@ -1,5 +1,6 @@
 package com.petbooking;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.petbooking.Components.DrawerItem;
+import com.petbooking.UI.Login.LoginActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
      * Sidemenu Itens
      */
 
+    private DrawerItem mMiPets;
     private DrawerItem mMiSearch;
     private DrawerItem mMiCalendar;
     private DrawerItem mMiPayments;
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         /**
          * Set sidemenu actions
          */
-
+        mMiPets = (DrawerItem) findViewById(R.id.my_pets);
         mMiSearch = (DrawerItem) findViewById(R.id.search);
         mMiCalendar = (DrawerItem) findViewById(R.id.calendar);
         mMiPayments = (DrawerItem) findViewById(R.id.payments);
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         mMiSettings = (DrawerItem) findViewById(R.id.settings);
         mMiLogout = (LinearLayout) findViewById(R.id.logout);
 
+        mMiPets.setOnClickListener(mMenuItemListener);
         mMiSearch.setOnClickListener(mMenuItemListener);
         mMiCalendar.setOnClickListener(mMenuItemListener);
         mMiPayments.setOnClickListener(mMenuItemListener);
@@ -136,7 +140,9 @@ public class MainActivity extends AppCompatActivity {
      * @return
      */
     public boolean onMenuItemSelected(int id) {
-        if (id == mMiSearch.getId()) {
+        if (id == mMiPets.getId()) {
+            Log.d("ITEM SELECTED", "PETS");
+        } else if (id == mMiSearch.getId()) {
             Log.d("ITEM SELECTED", "SEARCH");
         } else if (id == mMiCalendar.getId()) {
             Log.d("ITEM SELECTED", "CALENDAR");
@@ -147,10 +153,18 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == mMiSettings.getId()) {
             Log.d("ITEM SELECTED", "SETTING");
         } else if (id == mMiLogout.getId()) {
-            Log.d("ITEM SELECTED", "LOGOUT");
+            logout();
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * Logout
+     */
+    private void logout() {
+        Intent logoutIntent = new Intent(this, LoginActivity.class);
+        startActivity(logoutIntent);
     }
 }

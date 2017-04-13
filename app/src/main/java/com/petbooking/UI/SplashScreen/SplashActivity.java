@@ -33,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
          * Register the consumer in the API
          * and store the token in the APP.
          */
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

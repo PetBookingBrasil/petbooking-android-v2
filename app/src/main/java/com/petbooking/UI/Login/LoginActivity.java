@@ -2,15 +2,19 @@ package com.petbooking.UI.Login;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.petbooking.Managers.SessionManager;
 import com.petbooking.R;
 
 import org.w3c.dom.Text;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private SessionManager mSessionManager;
 
     private EditText mEdtEmail;
     private EditText mEdtPassword;
@@ -24,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mSessionManager = SessionManager.getInstance();
 
         mEdtEmail = (EditText) findViewById(R.id.email);
         mEdtPassword = (EditText) findViewById(R.id.email);

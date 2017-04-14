@@ -11,6 +11,7 @@ import com.petbooking.API.Auth.AuthInterface;
 import com.petbooking.API.Auth.AuthService;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.MainActivity;
+import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.ConsumerResp;
 import com.petbooking.Models.ConsumerRqt;
 import com.petbooking.UI.Login.LoginActivity;
@@ -24,16 +25,38 @@ import retrofit2.Response;
  */
 public class SplashActivity extends AppCompatActivity {
 
+    private AuthService mAuthService;
+    private SessionManager mSessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        /**
-         * Register the consumer in the API
-         * and store the token in the APP.
-         */
-        Intent intent = new Intent(this, MainActivity.class);
+
+        mSessionManager = SessionManager.getInstance();
+        mAuthService = new AuthService();
+        mAuthService.authConsumer(new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                ConsumerResp consumerResp = (ConsumerResp) response;
+                mSessionManager.setConsumerToken(consumerResp.data.attributes.token);
+                mSessionManager.setConsumerExpirationDate(consumerResp.data.attributes.tokenExpiresAt);
+                goToLogin();
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
+
+
+    }
+
+    /**
+     * Go to Login Page
+     */
+    public void goToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
     }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@color/red" />
+    <item android:drawable="@color/brand_primary" />
 
     <!-- Image at the center of the screen -->
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/bd_splash" />
+            android:src="@drawable/logo_splash" />
     </item>
 </layer-list>

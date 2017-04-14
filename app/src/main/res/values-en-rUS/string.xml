@@ -18,10 +18,13 @@
 
 
     <!-- Sidemenu Options-->
+    <string name="my_pets">My Pets</string>
     <string name="search">Search</string>
     <string name="calendar">Calendar</string>
     <string name="payments">Payments</string>
     <string name="favorites">Favorites</string>
     <string name="settings">Settings</string>
     <string name="logout">Logout</string>
+    <string name="notifications">Notifications</string>
+    <string name="schedules">Schedules</string>
 </resources>

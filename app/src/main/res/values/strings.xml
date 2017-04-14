@@ -15,11 +15,14 @@
     <string name="hint_email">petbooking@gmail.com</string>
     <string name="hint_password">......</string>
 
-    <!-- Sidemenu Options-->
+    <!-- Sidemenu and Toolbar Options-->
+    <string name="my_pets">Meus Pets</string>
     <string name="search">Pesquisar</string>
     <string name="calendar">Agenda</string>
     <string name="payments">Pagamentos</string>
     <string name="favorites">Favoritos</string>
     <string name="settings">Configurações</string>
     <string name="logout">Sair</string>
+    <string name="notifications">Notificações</string>
+    <string name="schedules">Agendamentos</string>
 </resources>

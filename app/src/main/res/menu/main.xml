@@ -4,11 +4,11 @@
     <item
         android:id="@+id/notifications"
         android:icon="@drawable/ic_notifications"
-        android:title="Compose"
+        android:title="@string/notifications"
         app:showAsAction="ifRoom"></item>
     <item
-        android:id="@+id/cart"
-        android:icon="@drawable/ic_notifications"
-        android:title="Profile"
+        android:id="@+id/schedules"
+        android:icon="@drawable/ic_scheduling"
+        android:title="@string/schedules"
         app:showAsAction="ifRoom"></item>
 </menu>

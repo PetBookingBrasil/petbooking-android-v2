@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
-        if (item.getItemId() == R.id.cart) {
+        if (item.getItemId() == R.id.schedules) {
             Log.d("ITEM SELECTED", "CART");
         } else if (item.getItemId() == R.id.notifications) {
             Log.d("ITEM SELECTED", "NOTIFICATIONS");

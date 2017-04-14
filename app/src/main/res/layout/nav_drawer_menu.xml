@@ -13,7 +13,7 @@
             android:id="@+id/my_pets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_icon="@drawable/ic_search"
+            app:item_icon="@drawable/ic_pets"
             app:item_text="@string/my_pets" />
 
         <com.petbooking.Components.DrawerItem
@@ -41,7 +41,7 @@
             android:id="@+id/favorites"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_icon="@drawable/ic_menu_camera"
+            app:item_icon="@drawable/ic_favorite"
             app:item_text="@string/favorites" />
 
         <com.petbooking.Components.DrawerItem

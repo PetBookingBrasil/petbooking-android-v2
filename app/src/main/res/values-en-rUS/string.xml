@@ -11,12 +11,12 @@
     <string name="description">Find services for your Pet \n next to you and schedule online!</string>
     <string name="sign_up">Sign up</string>
     <string name="login">Sign in</string>
-    <string name="login_facebook">Sign in with Facebook</string>
+    <string name="login_facebook">Sign in with <b>Facebook</b></string>
     <string name="hint_email">petbooking@gmail.com</string>
     <string name="hint_password">......</string>
     <string name="app_terms_info"><i>Utilizando o app, você concorda com os <b><u>Termos de uso</u></b>
         \n e com a <b><u>Política de Privacidade.</u></b></i></string>
-    <string name="forgot_password">Forgot password?</string>
+    <string name="forgot_password">Forgot password ?</string>
 
 
     <!-- Sidemenu Options-->

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,119 +7,149 @@
     android:background="@color/brand_primary"
     tools:context="com.petbooking.UI.Login.LoginActivity">
 
+    <ImageView
+        android:id="@+id/appLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_xmicro"
+        android:layout_marginLeft="@dimen/spacing_xmicro"
+        android:layout_marginRight="@dimen/spacing_xmicro"
+        android:layout_marginStart="@dimen/spacing_xmicro"
+        android:layout_marginTop="45dp"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_login" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_xtiny"
+        android:layout_marginLeft="@dimen/spacing_xtiny"
+        android:layout_marginRight="@dimen/spacing_xtiny"
+        android:layout_marginStart="@dimen/spacing_xtiny"
+        android:layout_marginTop="@dimen/spacing_xsmallest"
+        android:background="@drawable/custom_edt"
+        android:drawablePadding="@dimen/spacing_xmicro"
+        android:drawableStart="@drawable/ic_email"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/hint_email"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintHorizontal_bias="0.156"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appLogo" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_xtiny"
+        android:layout_marginLeft="@dimen/spacing_xtiny"
+        android:layout_marginRight="@dimen/spacing_xtiny"
+        android:layout_marginStart="@dimen/spacing_xtiny"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:background="@drawable/custom_edt"
+        android:drawablePadding="@dimen/spacing_xmicro"
+        android:drawableStart="@drawable/ic_password"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:text="@string/hint_password"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
+
+    <TextView
+        android:id="@+id/forgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_xmicro"
+        android:layout_marginEnd="@dimen/spacing_xtiny"
+        android:layout_marginLeft="@dimen/spacing_xtiny"
+        android:layout_marginRight="@dimen/spacing_xtiny"
+        android:layout_marginStart="@dimen/spacing_xtiny"
+        android:layout_marginTop="@dimen/spacing_xmicro"
+        android:text="@string/forgot_password"
+        android:textColor="@color/white"
+        android:textStyle="italic"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintVertical_bias="0.125" />
+
     <LinearLayout
+        android:id="@+id/buttonGroup"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/appLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="@dimen/spacing_xmicro"
-            android:layout_marginStart="@dimen/spacing_xmicro"
-            android:layout_marginTop="@dimen/spacing_smallest"
-            android:contentDescription="@string/app_name"
-            app:srcCompat="@drawable/ic_login" />
-
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_xtiny"
-            android:layout_marginStart="@dimen/spacing_xtiny"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:background="@drawable/custom_edt"
-            android:drawablePadding="@dimen/spacing_xmicro"
-            android:drawableStart="@drawable/ic_email"
-            android:ems="10"
-            android:hint="@string/hint_email"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_xtiny"
-            android:layout_marginStart="@dimen/spacing_xtiny"
-            android:layout_marginTop="@dimen/spacing_xmicro"
-            android:background="@drawable/custom_edt"
-            android:drawablePadding="@dimen/spacing_xmicro"
-            android:drawableStart="@drawable/ic_password"
-            android:ems="10"
-            android:hint="@string/hint_password"
-            android:inputType="textPassword"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
-
-        <TextView
-            android:id="@+id/forgotPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginBottom="@dimen/spacing_small"
-            android:layout_marginEnd="@dimen/spacing_xtiny"
-            android:layout_marginTop="@dimen/spacing_xmicro"
-            android:text="@string/forgot_password"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:textStyle="italic" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_tiny"
-            android:layout_marginEnd="@dimen/spacing_tiny"
-            android:layout_marginStart="@dimen/spacing_tiny"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/spacing_xmicro"
-                android:layout_weight="1"
-                android:background="@drawable/button_radius"
-                android:text="@string/login"
-                android:theme="@style/AppTheme.SecondaryButton" />
-
-            <Button
-                android:id="@+id/signup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_xmicro"
-                android:layout_weight="1"
-                android:background="@drawable/transparent_button"
-                android:text="@string/sign_up"
-                android:theme="@style/AppTheme.TransparentButton" />
-        </LinearLayout>
-
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_xtiny"
+        android:layout_marginRight="@dimen/spacing_xtiny"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forgotPassword">
 
         <Button
-            android:id="@+id/facebookLogin"
-            android:layout_width="match_parent"
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/spacing_large"
-            android:layout_marginEnd="@dimen/spacing_tiny"
-            android:layout_marginStart="@dimen/spacing_tiny"
+            android:layout_marginEnd="@dimen/spacing_xmicro"
+            android:layout_weight="1"
             android:background="@drawable/button_radius"
-            android:backgroundTint="@color/facebook_btn_login"
-            android:drawableStart="@drawable/ic_facebook"
-            android:text="@string/login_facebook"
-            android:theme="@style/AppTheme.SocialButton" />
+            android:text="@string/login"
+            android:theme="@style/AppTheme.SecondaryButton" />
 
-        <TextView
-            android:id="@+id/appTerms"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/signup"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_micro"
-            android:text="@string/app_terms_info"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:layout_marginStart="@dimen/spacing_xmicro"
+            android:layout_weight="1"
+            android:background="@drawable/transparent_button"
+            android:text="@string/sign_up"
+            android:theme="@style/AppTheme.TransparentButton" />
     </LinearLayout>
-</ScrollView>
+
+    <Button
+        android:id="@+id/facebookLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_xtiny"
+        android:layout_marginRight="@dimen/spacing_xtiny"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:background="@drawable/button_radius"
+        android:backgroundTint="@color/facebook_btn_login"
+        android:drawableStart="@drawable/ic_facebook"
+        android:text="@string/login_facebook"
+        android:theme="@style/AppTheme.SocialButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonGroup" />
+
+    <TextView
+        android:id="@+id/appTerms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_xmicro"
+        android:layout_marginLeft="@dimen/spacing_xmicro"
+        android:layout_marginRight="@dimen/spacing_xmicro"
+        android:layout_marginTop="@dimen/spacing_xmicro"
+        android:text="@string/app_terms_info"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/facebookLogin"
+        app:layout_constraintVertical_bias="0.800" />
+</android.support.constraint.ConstraintLayout>

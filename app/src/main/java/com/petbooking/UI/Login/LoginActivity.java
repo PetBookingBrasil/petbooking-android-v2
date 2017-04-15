@@ -1,8 +1,8 @@
 package com.petbooking.UI.Login;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +15,11 @@ import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Auth.Models.SessionResp;
 import com.petbooking.API.Generic.ErrorResp;
 import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Interfaces.SocialCallback;
 import com.petbooking.MainActivity;
+import com.petbooking.Managers.FacebookAuthManager;
 import com.petbooking.Managers.SessionManager;
+import com.petbooking.Models.SocialUser;
 import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.Utils.APIUtils;
@@ -26,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private SessionManager mSessionManager;
     private AuthService mAuthService;
+    private FacebookAuthManager mFacebookAuthManager;
 
     private EditText mEdtEmail;
     private EditText mEdtPassword;
@@ -42,12 +46,19 @@ public class LoginActivity extends AppCompatActivity {
             if (id == R.id.login) {
                 login();
             } else if (id == R.id.facebookLogin) {
-
+                mFacebookAuthManager.auth(LoginActivity.this);
             } else if (id == R.id.signup) {
 
             } else if (id == R.id.forgotPassword) {
                 recoverPassword();
             }
+        }
+    };
+
+    SocialCallback fbRequestCallback = new SocialCallback() {
+        @Override
+        public void onFacebookLoginSuccess(SocialUser user) {
+            Log.d("USERS", new Gson().toJson(user));
         }
     };
 
@@ -58,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mSessionManager = SessionManager.getInstance();
         mAuthService = new AuthService();
+        mFacebookAuthManager = new FacebookAuthManager();
 
         mTvForgotPassword = (TextView) findViewById(R.id.forgotPassword);
         mEdtEmail = (EditText) findViewById(R.id.email);
@@ -67,9 +79,17 @@ public class LoginActivity extends AppCompatActivity {
         mBtnFacebookLogin = (Button) findViewById(R.id.facebookLogin);
 
         mBtnLogin.setOnClickListener(clickListener);
-        mBtnFacebookLogin.setOnClickListener(clickListener);
         mBtnSignup.setOnClickListener(clickListener);
         mTvForgotPassword.setOnClickListener(clickListener);
+
+        mBtnFacebookLogin.setOnClickListener(clickListener);
+        mFacebookAuthManager.init(fbRequestCallback);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mFacebookAuthManager.getCallback().onActivityResult(requestCode, resultCode, data);
     }
 
     /**

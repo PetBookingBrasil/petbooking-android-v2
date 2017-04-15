@@ -6,13 +6,15 @@ import android.util.Log;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.petbooking.Interfaces.RequestCallback;
+import com.google.gson.Gson;
+import com.petbooking.Constants.AppConstants;
+import com.petbooking.Interfaces.SocialCallback;
+import com.petbooking.Models.SocialUser;
 
 import org.json.JSONObject;
 
@@ -23,17 +25,18 @@ import java.util.Locale;
  * Created by Luciano José on 18/12/2016.
  */
 
-public class FacebookAuthManager implements FacebookCallback<LoginResult> {
+public class FacebookAuthManager implements com.facebook.FacebookCallback {
 
     private AccessToken accessToken;
     private LoginManager mLoginManager;
     private CallbackManager mFBCallback;
-    private RequestCallback mReqCallback;
+    private SocialCallback mReqCallback;
 
-    private FacebookCallback<LoginResult> mCallback = new FacebookCallback<LoginResult>() {
+    private com.facebook.FacebookCallback mCallback = new com.facebook.FacebookCallback() {
         @Override
-        public void onSuccess(LoginResult loginResult) {
-            getUserInfo(loginResult);
+        public void onSuccess(Object o) {
+            LoginResult result = (LoginResult) o;
+            getUserInfo(result);
         }
 
         @Override
@@ -52,7 +55,7 @@ public class FacebookAuthManager implements FacebookCallback<LoginResult> {
      *
      * @param callback
      */
-    public void init(RequestCallback callback) {
+    public void init(SocialCallback callback) {
         mFBCallback = CallbackManager.Factory.create();
         mLoginManager = LoginManager.getInstance();
         mLoginManager.registerCallback(mFBCallback, mCallback);
@@ -61,10 +64,11 @@ public class FacebookAuthManager implements FacebookCallback<LoginResult> {
 
     /**
      * Autentica o usuário
+     *
      * @param activity
      */
     public void auth(Activity activity) {
-        mLoginManager.logInWithReadPermissions(activity, Arrays.asList(LoginConsts.FACEBOOK_EMAIL_PERMISSION));
+        mLoginManager.logInWithReadPermissions(activity, Arrays.asList(AppConstants.FACEBOOK_EMAIL_PERMISSION));
     }
 
     /**
@@ -84,13 +88,13 @@ public class FacebookAuthManager implements FacebookCallback<LoginResult> {
                             GraphResponse response) {
 
                         try {
-                            User user = new User();
+                            SocialUser user = new SocialUser();
 
                             user.id = object.getString("id").toString();
                             user.email = object.getString("email").toString();
                             user.name = object.getString("name").toString();
-                            user.profilePicture = String.format(Locale.getDefault(), LoginConsts.USER_PICTURE_URL, object.getString("id").toString());
-                            mReqCallback.onLoginSuccess(user);
+                            user.profilePicture = String.format(Locale.getDefault(), AppConstants.USER_PICTURE_URL, object.getString("id").toString());
+                            mReqCallback.onFacebookLoginSuccess(user);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -103,32 +107,11 @@ public class FacebookAuthManager implements FacebookCallback<LoginResult> {
         parameters.putString("fields", "id,name,email");
         request.setParameters(parameters);
         request.executeAsync();
-
     }
 
     @Override
-    public void onSuccess(LoginResult loginResult) {
-        accessToken = loginResult.getAccessToken();
-        getUserInfo(loginResult);
-
-        if (!accessToken.isExpired()) {
-            Log.d("FACEBOOK_LOGIN", "ACCESS_TOKEN_EXPIRED");
-            return;
-        }
-
-        AccessToken.refreshCurrentAccessTokenAsync(new AccessToken.AccessTokenRefreshCallback() {
-            @SuppressWarnings("PMD.MethodNamingConventions")
-            @Override
-            public void OnTokenRefreshed(AccessToken accessToken) {
-                Log.d("FACEBOOK_LOGIN", "TOKEN_REFRESHED");
-            }
-
-            @SuppressWarnings("PMD.MethodNamingConventions")
-            @Override
-            public void OnTokenRefreshFailed(FacebookException exception) {
-                Log.d("FACEBOOK_LOGIN", "TOKEN_REFRESHED_FAIL");
-            }
-        });
+    public void onSuccess(Object o) {
+        Log.d("FB", new Gson().toJson(o));
     }
 
     @Override

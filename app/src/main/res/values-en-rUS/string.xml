@@ -32,5 +32,5 @@
 
     <!--Errors -->
     <string name="error_auth_invalid">Invalid authentication. Request a new one.</string>
-    <string name="error_invalid_login">Wrong username or password. Please check and try again.</string>
+    <string name="error_invalid_login">Wrong username or password.</string>
 </resources>

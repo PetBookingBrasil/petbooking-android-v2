@@ -27,5 +27,5 @@
 
     <!-- Errors -->
     <string name="error_auth_invalid">Token de autenticação inválido. Requisite um novo token.</string>
-    <string name="error_invalid_login">Email ou senha inválidos. Verifique e tente novamente.</string>
+    <string name="error_invalid_login">Email ou senha inválidos.</string>
 </resources>

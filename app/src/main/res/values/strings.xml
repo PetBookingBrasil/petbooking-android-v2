@@ -6,6 +6,8 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="facebook_app_id">1799017433691061</string>
+
     <!-- Login -->
     <string name="description">Encontre serviços para seu Pet \n mais póximos de você e agende online!</string>
     <string name="no_account">Ainda não é cadastrado?</string>

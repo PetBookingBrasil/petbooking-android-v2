@@ -19,10 +19,8 @@ import com.petbooking.MainActivity;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
 import com.petbooking.R;
-import com.petbooking.Utils.APIHandleError;
 import com.petbooking.Utils.APIUtils;
-
-import org.w3c.dom.Text;
+import com.petbooking.Utils.AppUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -74,6 +72,10 @@ public class LoginActivity extends AppCompatActivity {
         mTvForgotPassword.setOnClickListener(clickListener);
     }
 
+    /**
+     * Login User with
+     * email and password
+     */
     public void login() {
         String email = mEdtEmail.getText().toString();
         String password = mEdtPassword.getText().toString();
@@ -89,8 +91,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onError(Object error) {
                 ErrorResp errorResp = (ErrorResp) error;
-                String str = getResources().getString(APIHandleError.getErrorMessage(errorResp));
-                Log.d("ERROR", str);
+                int message = APIUtils.getErrorMessage(errorResp);
+                AppUtils.showSnackBar(findViewById(R.id.loginLayout), message);
             }
         });
     }
@@ -122,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(Object error) {
-                Log.d("WRO", new Gson().toJson(error));
+                Log.d("ERROR", new Gson().toJson(error));
             }
         });
     }

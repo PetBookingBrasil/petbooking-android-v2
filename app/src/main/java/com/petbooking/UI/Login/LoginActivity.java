@@ -16,7 +16,7 @@ import com.petbooking.API.Auth.Models.SessionResp;
 import com.petbooking.API.Generic.ErrorResp;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Interfaces.SocialCallback;
-import com.petbooking.MainActivity;
+import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.Managers.FacebookAuthManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.SocialUser;
@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
      * Go to Dashboard after logged
      */
     public void goToDashboard() {
-        Intent dashboardIntent = new Intent(this, MainActivity.class);
+        Intent dashboardIntent = new Intent(this, DashboardActivity.class);
         startActivity(dashboardIntent);
     }
 

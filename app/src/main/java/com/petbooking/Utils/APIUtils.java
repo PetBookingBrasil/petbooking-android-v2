@@ -84,4 +84,9 @@ public class APIUtils {
         }
         return code;
     }
+
+    public static String getAssetEndpoint(String assetPath) {
+        String endpoint = String.format(APIConstants.ASSET_ENDPOINT_BETA, assetPath);
+        return endpoint;
+    }
 }

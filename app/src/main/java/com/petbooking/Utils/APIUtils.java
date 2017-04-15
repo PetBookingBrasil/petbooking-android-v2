@@ -1,12 +1,21 @@
 package com.petbooking.Utils;
 
 import com.google.gson.Gson;
+import com.petbooking.API.Auth.Models.AuthUserResp;
+import com.petbooking.API.Generic.ErrorResp;
 import com.petbooking.Constants.APIConstants;
+import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Models.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.HashMap;
+
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 /**
  * Created by Luciano José on 09/04/2017.
@@ -14,29 +23,33 @@ import java.util.HashMap;
 
 public class APIUtils {
 
-    static Gson mJsonManager = new Gson();
-    static final HashMap<String, String> headers = new HashMap<String, String>();
+    public static User parseUser(AuthUserResp resp) {
+        AuthUserResp.Attributes attr = resp.data.attributes;
+        User user = new User(resp.data.id, attr.authToken, attr.name, attr.birthday, attr.phone, attr.phoneActivated,
+                attr.phoneCodeCreatedAt, attr.email, attr.futureEventsCount, attr.acceptsSms, attr.zipcode,
+                attr.street, attr.neighborhood, attr.streetNumber, attr.city, attr.state, attr.nickname,
+                attr.gender, attr.cpf, attr.searchRange, attr.acceptsEmail, attr.acceptsNotifications, attr.acceptsTerms);
 
-    public static JSONObject getBody(Object object) {
-        JSONObject body = null;
+        return user;
+    }
+
+    public static void handleResponse(Response response, APICallback callback) {
+        if (response.isSuccessful()) {
+           callback.onSuccess(response.body());
+        } else {
+           callback.onError(handleError(response));
+        }
+    }
+
+    public static Object handleError(Response response) {
+        ResponseBody errorBody = response.errorBody();
+        String error = null;
         try {
-            body = new JSONObject(mJsonManager.toJson(object));
-        } catch (JSONException e) {
+            error = errorBody != null ? new String(errorBody.bytes(), Charset.defaultCharset()) : response.message();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return body;
+        return new Gson().fromJson(error, ErrorResp.class);
     }
-
-    public static HashMap<String, String> getHeaders(String consumer, String token) {
-        consumer = String.format(APIConstants.HEADER_AUTHORIZATION_FORMAT, consumer);
-        token = String.format(APIConstants.HEADER_SESSION_TOKEN_FORMAT, token);
-
-        headers.put(APIConstants.HEADER_CONTENT_TYPE, APIConstants.HEADER_CONTENT_TYPE_VALUE);
-        headers.put(APIConstants.HEADER_AUTHORIZATION, consumer);
-        headers.put(APIConstants.HEADER_SESSION_TOKEN, token);
-
-        return headers;
-    }
-
 }

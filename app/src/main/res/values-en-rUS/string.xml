@@ -29,4 +29,8 @@
     <string name="logout">Logout</string>
     <string name="notifications">Notifications</string>
     <string name="schedules">Schedules</string>
+
+    <!--Errors -->
+    <string name="error_auth_invalid">Invalid authentication. Request a new one.</string>
+    <string name="error_invalid_login">Wrong username or password. Please check and try again.</string>
 </resources>

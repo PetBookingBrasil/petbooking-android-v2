@@ -24,4 +24,8 @@
     <string name="favorites">Favoritos</string>
     <string name="settings">Configurações</string>
     <string name="logout">Sair</string>
+
+    <!-- Errors -->
+    <string name="error_auth_invalid">Token de autenticação inválido. Requisite um novo token.</string>
+    <string name="error_invalid_login">Email ou senha inválidos. Verifique e tente novamente.</string>
 </resources>

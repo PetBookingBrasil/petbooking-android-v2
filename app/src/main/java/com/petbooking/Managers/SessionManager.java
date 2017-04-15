@@ -2,13 +2,17 @@ package com.petbooking.Managers;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
+import com.petbooking.Models.User;
 
 /**
  * Created by Luciano José on 18/12/2016.
  */
 public class SessionManager {
 
+    private static Gson mJsonManager;
     private static SessionManager mInstance;
     private static PreferenceManager mPreferenceManager;
 
@@ -22,6 +26,7 @@ public class SessionManager {
 
     public static void initialize(Context context) {
         mPreferenceManager = new PreferenceManager(context);
+        mJsonManager = new Gson();
     }
 
     public void setConsumerToken(String consumer) {
@@ -32,6 +37,7 @@ public class SessionManager {
         return mPreferenceManager.getString(AppConstants.CONSUMER_TOKEN);
     }
 
+
     public void setConsumerExpirationDate(long date) {
         mPreferenceManager.putLong(AppConstants.CONSUMER_EXPIRATION_DATE, date);
     }
@@ -40,4 +46,20 @@ public class SessionManager {
         return mPreferenceManager.getLong(AppConstants.CONSUMER_EXPIRATION_DATE);
     }
 
+    public void setSessionToken(String token) {
+        mPreferenceManager.putString(AppConstants.SESSION_TOKEN, token);
+    }
+
+    public String getSessionToken() {
+        return mPreferenceManager.getString(AppConstants.SESSION_TOKEN);
+    }
+
+    public void setUserLogged(User user){
+        mPreferenceManager.putString(AppConstants.USER_LOGGED, mJsonManager.toJson(user));
+    }
+
+    public User getUserLogged(){
+        User user = mJsonManager.fromJson(mPreferenceManager.getString(AppConstants.USER_LOGGED), User.class);
+        return user;
+    }
 }

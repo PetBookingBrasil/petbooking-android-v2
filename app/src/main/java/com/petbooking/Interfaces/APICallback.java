@@ -7,6 +7,6 @@ package com.petbooking.Interfaces;
 public interface APICallback {
 
     void onSuccess(Object response);
-    void onError(String message);
+    void onError(Object error);
 
 }

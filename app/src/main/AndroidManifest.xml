@@ -24,6 +24,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".UI.SplashScreen.SplashActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,6 +38,8 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".UI.Login.LoginActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitle"></activity>
     </application>
 

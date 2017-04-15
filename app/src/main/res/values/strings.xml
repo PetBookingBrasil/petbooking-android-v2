@@ -27,4 +27,5 @@
     <string name="logout">Sair</string>
     <string name="notifications">Notificações</string>
     <string name="schedules">Agendamentos</string>
+    <string name="title_activity_base">BaseActivity</string>
 </resources>

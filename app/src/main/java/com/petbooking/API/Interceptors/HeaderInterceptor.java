@@ -1,7 +1,11 @@
 package com.petbooking.API.Interceptors;
 
 import com.petbooking.Constants.APIConstants;
+import com.petbooking.Events.HideLoadingEvt;
+import com.petbooking.Events.ShowLoadingEvt;
 import com.petbooking.Managers.SessionManager;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.Set;
@@ -36,8 +40,9 @@ public class HeaderInterceptor implements Interceptor {
             newRequestBuilder.header(APIConstants.HEADER_SESSION_TOKEN, userToken);
         }
 
-
+        EventBus.getDefault().post(new ShowLoadingEvt());
         Response response = chain.proceed(newRequestBuilder.build());
+        EventBus.getDefault().post(new HideLoadingEvt());
         return response;
     }
 }

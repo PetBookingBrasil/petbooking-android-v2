@@ -2,7 +2,6 @@ package com.petbooking.UI.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,18 +13,19 @@ import com.petbooking.API.Auth.AuthService;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Auth.Models.SessionResp;
 import com.petbooking.API.Generic.ErrorResp;
+import com.petbooking.BaseActivity;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Interfaces.SocialCallback;
-import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.Managers.FacebookAuthManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.SocialUser;
 import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private SessionManager mSessionManager;
     private AuthService mAuthService;
@@ -147,5 +147,10 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("ERROR", new Gson().toJson(error));
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d("EXIT", "EXIT");
     }
 }

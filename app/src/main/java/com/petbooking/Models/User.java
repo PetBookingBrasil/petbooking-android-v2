@@ -1,6 +1,7 @@
 package com.petbooking.Models;
 
 import com.google.gson.annotations.SerializedName;
+import com.petbooking.API.Generic.AvatarResp;
 
 /**
  * Created by Luciano José on 14/04/2017.
@@ -13,11 +14,9 @@ public class User {
     public String name;
     public String birthday;
     public String phone;
-    public boolean phoneActivated;
     public String phoneCodeCreatedAt;
     public String email;
     public String futureEventsCount;
-    public boolean acceptsSms;
     public String zipcode;
     public String street;
     public String neighborhood;
@@ -28,14 +27,19 @@ public class User {
     public String gender;
     public String cpf;
     public String searchRange;
+    public boolean phoneActivated;
+    public boolean acceptsSms;
     public boolean acceptsEmail;
     public boolean acceptsNotifications;
     public boolean acceptsTerms;
+    public boolean validForScheduling;
+    public AvatarResp avatar;
 
     public User(String id, String authToken, String name, String birthday, String phone, boolean phoneActivated,
                 String phoneCodeCreatedAt, String email, String futureEventsCount, boolean acceptsSms, String zipcode,
                 String street, String neighborhood, String streetNumber, String city, String state, String nickname,
-                String gender, String cpf, String searchRange, boolean acceptsEmail, boolean acceptsNotifications, boolean acceptsTerms) {
+                String gender, String cpf, String searchRange, boolean acceptsEmail, boolean acceptsNotifications,
+                boolean acceptsTerms, boolean validForScheduling, AvatarResp avatar) {
         this.id = id;
         this.authToken = authToken;
         this.name = name;
@@ -59,5 +63,7 @@ public class User {
         this.acceptsEmail = acceptsEmail;
         this.acceptsNotifications = acceptsNotifications;
         this.acceptsTerms = acceptsTerms;
+        this.validForScheduling = validForScheduling;
+        this.avatar = avatar;
     }
 }

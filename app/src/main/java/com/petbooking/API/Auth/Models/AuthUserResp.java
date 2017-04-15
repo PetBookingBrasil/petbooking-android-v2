@@ -1,6 +1,7 @@
 package com.petbooking.API.Auth.Models;
 
 import com.google.gson.annotations.SerializedName;
+import com.petbooking.API.Generic.AvatarResp;
 
 /**
  * Created by Luciano José on 11/04/2017.
@@ -24,6 +25,7 @@ public class AuthUserResp {
 
         public String name;
         public String birthday;
+        public AvatarResp avatar;
         public String phone;
 
         @SerializedName("phone_activated")
@@ -63,6 +65,9 @@ public class AuthUserResp {
 
         @SerializedName("accepts_terms")
         public boolean acceptsTerms;
+
+        @SerializedName("valid_for_scheduling")
+        public boolean validForScheduling;
 
     }
 

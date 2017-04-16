@@ -22,7 +22,7 @@ public class AuthConsumerRqt {
         public Attributes attributes;
 
         public Data(Attributes attributes) {
-            this.type = APIAuthConstants.DATA_CONSUMERS;
+            this.type = APIConstants.DATA_CONSUMERS;
             this.attributes = attributes;
         }
     }

@@ -21,4 +21,5 @@
     <dimen name="spacing_medium">64dp</dimen>
     <dimen name="spacing_xmedium">72dp</dimen>
     <dimen name="spacing_large">86dp</dimen>
+    <dimen name="spacing_xlarge">120dp</dimen>
 </resources>

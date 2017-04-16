@@ -14,6 +14,7 @@ import com.petbooking.API.Auth.AuthService;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Auth.Models.SessionResp;
 import com.petbooking.API.Generic.ErrorResp;
+import com.petbooking.API.User.UserService;
 import com.petbooking.BaseActivity;
 import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
@@ -24,6 +25,7 @@ import com.petbooking.Models.SocialUser;
 import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
+import com.petbooking.UI.RecoverPassword.RecoverPasswordActivity;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.FormUtils;
@@ -34,6 +36,7 @@ public class LoginActivity extends BaseActivity {
 
     private SessionManager mSessionManager;
     private AuthService mAuthService;
+    private UserService mUserService;
     private FacebookAuthManager mFacebookAuthManager;
 
     private EditText mEdtEmail;
@@ -74,6 +77,7 @@ public class LoginActivity extends BaseActivity {
 
         mSessionManager = SessionManager.getInstance();
         mAuthService = new AuthService();
+        mUserService = new UserService();
         mFacebookAuthManager = new FacebookAuthManager();
 
         mTvForgotPassword = (TextView) findViewById(R.id.forgotPassword);
@@ -130,8 +134,12 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Go to Recover Password Screen
+     */
     public void recoverPassword() {
-        Log.d("RECOVER", "RECOVER");
+        Intent recoverIntent = new Intent(this, RecoverPasswordActivity.class);
+        startActivity(recoverIntent);
     }
 
     /**
@@ -146,7 +154,7 @@ public class LoginActivity extends BaseActivity {
      * Get User information
      */
     public void requestData(String id) {
-        mAuthService.getUser(id, new APICallback() {
+        mUserService.getUser(id, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 AuthUserResp authUserResp = (AuthUserResp) response;

@@ -43,7 +43,13 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitle" />
-
+        <activity
+            android:name=".UI.RecoverPassword.RecoverPasswordActivity"
+            android:parentActivityName=".UI.Login.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Login.LoginActivity" />
+        </activity>
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -66,15 +72,14 @@
                 android:value="android.support.v7.app.AppCompatActivity" />
         </activity>
 
+        <!-- Third-party Activities -->
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="@string/fabric_app_id" />
-
+            android:value="fe0c61a27b92b4a7f90ab0fc8f69e3a4326250e5" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <!-- Third-party Activities -->
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"

@@ -12,5 +12,6 @@
 
     <!-- Brand Colors -->
     <color name="brand_primary">#E74C3C</color>
+    <color name="text_color">#545454</color>
 
 </resources>

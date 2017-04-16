@@ -4,6 +4,7 @@ import android.app.Application;
 import android.hardware.camera2.params.Face;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.petbooking.Managers.SessionManager;
@@ -31,7 +32,10 @@ public class App extends Application {
     }
 
     private void initDependencies() {
-        Fabric.with(this, new Crashlytics());
+        Crashlytics crashlyticsKit = new Crashlytics.Builder()
+                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build();
+        Fabric.with(this, crashlyticsKit);
         AppEventsLogger.activateApp(this);
     }
 }

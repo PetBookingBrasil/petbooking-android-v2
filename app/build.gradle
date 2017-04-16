@@ -14,6 +14,10 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
+        debug {
+            ext.enableCrashlytics = false
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

@@ -24,6 +24,7 @@ import com.petbooking.Models.SocialUser;
 import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
+import com.petbooking.UI.RecoverPassword.RecoverPasswordActivity;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.FormUtils;
@@ -130,8 +131,12 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Go to Recover Password Screen
+     */
     public void recoverPassword() {
-        Log.d("RECOVER", "RECOVER");
+        Intent recoverIntent = new Intent(this, RecoverPasswordActivity.class);
+        startActivity(recoverIntent);
     }
 
     /**

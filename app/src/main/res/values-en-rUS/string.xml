@@ -18,6 +18,10 @@
         \n e com a <b><u>Política de Privacidade.</u></b></i></string>
     <string name="forgot_password">Forgot password ?</string>
 
+    <!-- Forgot Password -->
+    <string name="forgot_password_text">Enter your email address \n associated with your petbooking account.</string>
+    <string name="email_empty">Enter your email adress</string>
+    <string name="send_button">Send</string>
 
     <!-- Sidemenu Options-->
     <string name="my_pets">My Pets</string>

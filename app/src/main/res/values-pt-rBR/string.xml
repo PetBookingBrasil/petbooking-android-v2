@@ -6,6 +6,10 @@
 
     <string name="action_settings">Settings</string>
 
+    <!-- Screen Title -->
+    <string name="title_forgot_password">Esqueci a senha</string>
+
+
     <!-- Login -->
     <string name="description">Encontre serviços para seu Pet \n mais póximos de você e agende online!</string>
     <string name="sign_up">Cadastre-se</string>
@@ -16,6 +20,11 @@
     <string name="app_terms_info"><i>Utilizando o app, você concorda com os <b><u>Termos de uso</u></b>
         \n e com a <b><u>Política de Privacidade.</u></b></i></string>
     <string name="forgot_password">Esqueceu a senha ?</string>
+
+    <!-- Forgot Password -->
+    <string name="forgot_password_text">Insira o seu email de cadastro \n associado à sua conta no petbooking.</string>
+    <string name="email_empty">Informe o email</string>
+    <string name="send_button">Enviar</string>
 
     <!-- Sidemenu Options-->
     <string name="search">Pesquisar</string>

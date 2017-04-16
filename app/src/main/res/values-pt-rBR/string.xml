@@ -26,6 +26,9 @@
     <string name="logout">Sair</string>
 
     <!-- Errors -->
+    <string name="error_fields_empty">Preencha todos os campos.</string>
+    <string name="error_invalid_email">Email inválido.</string>
+
     <string name="error_auth_invalid">Token de autenticação inválido. Requisite um novo token.</string>
     <string name="error_invalid_login">Email ou senha inválidos.</string>
 </resources>

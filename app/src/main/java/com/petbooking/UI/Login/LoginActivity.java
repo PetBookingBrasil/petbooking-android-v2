@@ -2,6 +2,7 @@ package com.petbooking.UI.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
+import com.petbooking.Utils.FormUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -102,6 +104,16 @@ public class LoginActivity extends BaseActivity {
     public void login() {
         String email = mEdtEmail.getText().toString();
         String password = mEdtPassword.getText().toString();
+
+        if (email.equals("") || password.equals("")) {
+            EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_fields_empty, Snackbar.LENGTH_SHORT));
+            return;
+        }
+
+        if (!FormUtils.isValidEmail(email)) {
+            EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_invalid_email, Snackbar.LENGTH_SHORT));
+            return;
+        }
 
         mAuthService.authUser(email, password, new APICallback() {
             @Override

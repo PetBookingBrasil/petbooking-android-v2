@@ -14,6 +14,8 @@ public class AppConstants {
     public static final String SESSION_TOKEN = "sessionToken";
     public static final String USER_LOGGED = "userLogged";
 
+    public static String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
     /**
      * Facebook Properties
      */

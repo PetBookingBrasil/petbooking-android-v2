@@ -63,19 +63,4 @@ public class AuthService {
             }
         });
     }
-
-    public void getUser(String userId, final APICallback callback) {
-        Call<AuthUserResp> call = mAuthInterface.getUser(userId);
-        call.enqueue(new Callback<AuthUserResp>() {
-            @Override
-            public void onResponse(Call<AuthUserResp> call, Response<AuthUserResp> response) {
-                APIUtils.handleResponse(response, callback);
-            }
-
-            @Override
-            public void onFailure(Call<AuthUserResp> call, Throwable t) {
-
-            }
-        });
-    }
 }

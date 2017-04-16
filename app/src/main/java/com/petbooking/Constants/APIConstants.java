@@ -12,6 +12,16 @@ public class APIConstants {
     public static final String ASSET_ENDPOINT_PRODUCTION = "https://petbooking.com.br/%s";
 
     /**
+     * DATA TYPES
+     */
+
+    public static String DATA_PROVIDER = "b2beauty";
+    public static final String DATA_CONSUMERS = "consumers";
+    public static final String DATA_USERS = "users";
+    public static final String DATA_SESSIONS = "sessions";
+
+
+    /**
      * CONFIG
      */
     public static final String UUID_PRODUCTION = "fe2e0261-2cac-440d-8027-c8cfc4720940";

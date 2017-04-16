@@ -28,8 +28,4 @@ public interface AuthInterface {
     @POST(APIAuthConstants.SESSION_ENDPOINT)
     Call<SessionResp> authUser(@Body AuthUserRqt authUserRqt);
 
-    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
-    @GET(APIAuthConstants.ENDPOINT_REQUEST_USER)
-    Call<AuthUserResp> getUser(@Path(APIConstants.PATH_PARAM) String userID);
-
 }

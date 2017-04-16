@@ -20,7 +20,7 @@
 
     <!-- Forgot Password -->
     <string name="forgot_password_text">Enter your email address \n associated with your petbooking account.</string>
-    <string name="email_empty">Enter your email adress</string>
+    <string name="email_empty">Enter your email adress.</string>
     <string name="send_button">Send</string>
 
     <!-- Sidemenu Options-->

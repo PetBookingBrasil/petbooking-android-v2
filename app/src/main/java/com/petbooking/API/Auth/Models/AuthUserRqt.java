@@ -1,6 +1,7 @@
 package com.petbooking.API.Auth.Models;
 
 import com.petbooking.API.Auth.APIAuthConstants;
+import com.petbooking.Constants.APIConstants;
 
 public class AuthUserRqt {
 
@@ -18,7 +19,7 @@ public class AuthUserRqt {
         public Attributes attributes;
 
         public Data(Attributes attributes) {
-            this.type = APIAuthConstants.DATA_SESSIONS;
+            this.type = APIConstants.DATA_SESSIONS;
             this.attributes = attributes;
         }
 
@@ -32,7 +33,7 @@ public class AuthUserRqt {
 
 
         public Attributes(String email, String password) {
-            this.provider = APIAuthConstants.DATA_PROVIDER;
+            this.provider = APIConstants.DATA_PROVIDER;
             this.email = email;
             this.password = password;
         }

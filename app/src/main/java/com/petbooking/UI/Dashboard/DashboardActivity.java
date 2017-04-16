@@ -1,4 +1,4 @@
-package com.petbooking;
+package com.petbooking.UI.Dashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,11 +16,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.petbooking.Components.DrawerItem;
+import com.petbooking.Managers.SessionManager;
+import com.petbooking.Models.User;
+import com.petbooking.R;
 import com.petbooking.UI.Login.LoginActivity;
+import com.petbooking.Utils.APIUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity {
+
+    private SessionManager mSessionManager;
 
     NavigationView mNavView;
     View mHeaderView;
@@ -30,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Sidemenu content
      */
+    private User currentUser;
     private CircleImageView mCivSideMenuPicture;
     private TextView mTvSideMenuName;
     private TextView mTvSideMenuAddress;
@@ -56,7 +63,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_dashboard);
+
+        mSessionManager = SessionManager.getInstance();
+        currentUser = mSessionManager.getUserLogged();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -96,11 +106,11 @@ public class MainActivity extends AppCompatActivity {
         mTvSideMenuName = (TextView) findViewById(R.id.sidemenu_name);
         mTvSideMenuAddress = (TextView) findViewById(R.id.sidemenu_address);
 
-        mTvSideMenuName.setText("Catioro");
-        mTvSideMenuAddress.setText("São Paulo, SP");
+        mTvSideMenuName.setText(currentUser.name);
+        mTvSideMenuAddress.setText(currentUser.city + ", " + currentUser.state);
 
         Glide.with(this)
-                .load("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTEH_PtPQloEqKvOToQB8uH3KFx0QljOq9kY6re2LL6fUsh-BkEbX5-LH0")
+                .load(APIUtils.getAssetEndpoint(currentUser.avatar.large.url))
                 .centerCrop()
                 .dontAnimate()
                 .into(mCivSideMenuPicture);

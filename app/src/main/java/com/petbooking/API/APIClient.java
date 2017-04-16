@@ -4,6 +4,7 @@ import com.petbooking.API.Interceptors.HeaderInterceptor;
 import com.petbooking.Constants.APIConstants;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -16,6 +17,7 @@ public class APIClient {
     private static Retrofit retrofit = null;
     private static OkHttpClient.Builder mBuilder;
     private static OkHttpClient mClient;
+    private static HttpLoggingInterceptor mLogger;
     private static HeaderInterceptor headerInterceptor;
 
     public static Retrofit getClient() {
@@ -27,13 +29,16 @@ public class APIClient {
     }
 
     private static void buildClient() {
+        mLogger = new HttpLoggingInterceptor();
+        mLogger.setLevel(HttpLoggingInterceptor.Level.BODY);
         headerInterceptor = new HeaderInterceptor();
         mBuilder = new OkHttpClient.Builder();
         mBuilder.addNetworkInterceptor(new HeaderInterceptor());
+        mBuilder.addNetworkInterceptor(mLogger);
         mClient = mBuilder.build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(APIConstants.BASE_URL_PRODUCTION)
+                .baseUrl(APIConstants.BASE_URL_BETA)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(mClient)
                 .build();

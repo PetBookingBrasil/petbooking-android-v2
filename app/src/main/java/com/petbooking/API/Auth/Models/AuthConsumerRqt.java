@@ -1,4 +1,4 @@
-package com.petbooking.Models;
+package com.petbooking.API.Auth.Models;
 
 import com.petbooking.API.Auth.APIAuthConstants;
 import com.petbooking.Constants.APIConstants;
@@ -7,12 +7,12 @@ import com.petbooking.Constants.APIConstants;
  * Created by Luciano José on 09/04/2017.
  */
 
-public class ConsumerRqt {
+public class AuthConsumerRqt {
 
     public Data data;
     public transient Attributes attributes;
 
-    public ConsumerRqt() {
+    public AuthConsumerRqt() {
         this.attributes = new Attributes();
         this.data = new Data(attributes);
     }
@@ -31,8 +31,8 @@ public class ConsumerRqt {
         public String uuid;
 
         public Attributes() {
-            uuid = APIConstants.UUID_PRODUCTION;
-            //uuid = APIConstants.UUID_BETA;
+            //uuid = APIConstants.UUID_PRODUCTION;
+            uuid = APIConstants.UUID_BETA;
         }
     }
 

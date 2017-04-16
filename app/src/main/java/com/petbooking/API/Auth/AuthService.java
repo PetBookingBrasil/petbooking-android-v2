@@ -43,7 +43,7 @@ public class AuthService {
 
             @Override
             public void onFailure(Call<AuthConsumerResp> call, Throwable t) {
-                callback.onError(t.getMessage());
+
             }
         });
     }
@@ -59,7 +59,7 @@ public class AuthService {
 
             @Override
             public void onFailure(Call<SessionResp> call, Throwable t) {
-                callback.onError(call);
+
             }
         });
     }
@@ -74,7 +74,7 @@ public class AuthService {
 
             @Override
             public void onFailure(Call<AuthUserResp> call, Throwable t) {
-                callback.onError(t);
+
             }
         });
     }

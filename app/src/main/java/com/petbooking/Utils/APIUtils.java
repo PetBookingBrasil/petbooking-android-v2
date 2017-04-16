@@ -1,19 +1,20 @@
 package com.petbooking.Utils;
 
+import android.support.design.widget.Snackbar;
+
 import com.google.gson.Gson;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Generic.ErrorResp;
 import com.petbooking.Constants.APIConstants;
+import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.User;
 import com.petbooking.R;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.HashMap;
 
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -31,6 +32,13 @@ public class APIUtils {
     private static final int ERROR_CODE_INVALID_AUTH_TOKEN = 126;
     private static final int ERROR_CODE_INVALID_USER_TOKEN = 127;
 
+    /**
+     * Create User from
+     * AuthUserResponse
+     *
+     * @param resp
+     * @return
+     */
     public static User parseUser(AuthUserResp resp) {
         AuthUserResp.Attributes attr = resp.data.attributes;
         User user = new User(resp.data.id, attr.authToken, attr.name, attr.birthday, attr.phone, attr.phoneActivated,
@@ -42,6 +50,12 @@ public class APIUtils {
         return user;
     }
 
+    /**
+     * Handle API Response
+     *
+     * @param response
+     * @param callback
+     */
     public static void handleResponse(Response response, APICallback callback) {
         if (response.isSuccessful()) {
             callback.onSuccess(response.body());
@@ -50,6 +64,12 @@ public class APIUtils {
         }
     }
 
+    /**
+     * Handle Error status
+     *
+     * @param response
+     * @return
+     */
     public static Object handleError(Response response) {
         ResponseBody errorBody = response.errorBody();
         String error = null;
@@ -58,33 +78,49 @@ public class APIUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        getErrorMessage(new Gson().fromJson(error, ErrorResp.class));
         return new Gson().fromJson(error, ErrorResp.class);
     }
 
-    public static int getErrorMessage(ErrorResp errorRsp) {
+    /**
+     * Get Error message
+     *
+     * @param errorRsp
+     */
+    public static void getErrorMessage(ErrorResp errorRsp) {
         if (errorRsp.errors != null && errorRsp.errors.size() > 0) {
             ErrorResp.Error firstError = errorRsp.errors.get(0);
             switch (firstError.status) {
                 case ERROR_STATUS_UNAUTHORIZED:
-                    return handlerUnauthorizedError(firstError.code);
+                    handlerUnauthorizedError(firstError.code);
+                    break;
             }
         }
-        return -1;
     }
 
-    private static int handlerUnauthorizedError(int code) {
+    /**
+     * Handle authorization error
+     *
+     * @param code
+     */
+    private static void handlerUnauthorizedError(int code) {
         switch (code) {
             case ERROR_CODE_INVALID_AUTH_TOKEN:
-                return R.string.error_invalid_login;
+                break;
             case ERROR_CODE_INVALID_USER_TOKEN:
-                return R.string.error_invalid_login;
+                break;
             case ERROR_CODE_INVALID_LOGIN:
-                return R.string.error_invalid_login;
+                EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_invalid_login, Snackbar.LENGTH_SHORT));
+                break;
         }
-        return code;
     }
 
+    /**
+     * Get Asset Endpoint
+     *
+     * @param assetPath
+     * @return
+     */
     public static String getAssetEndpoint(String assetPath) {
         String endpoint = String.format(APIConstants.ASSET_ENDPOINT_BETA, assetPath);
         return endpoint;

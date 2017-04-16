@@ -2,12 +2,14 @@ package com.petbooking;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.petbooking.Events.HideLoadingEvt;
 import com.petbooking.Events.ShowLoadingEvt;
+import com.petbooking.Events.ShowSnackbarEvt;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -15,6 +17,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+    private Snackbar mSnackbar;
     protected final EventBus mEventBus = EventBus.getDefault();
 
     private AlertDialog mLoadingDialog;
@@ -29,12 +32,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         mEventBus.unregister(this);
-        onHideLoading(null);
+        hideLoading(null);
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public synchronized void onShowLoading(ShowLoadingEvt showEvt) {
+    public synchronized void showLoading(ShowLoadingEvt showEvt) {
         if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
         }
@@ -46,11 +49,26 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public synchronized void onHideLoading(HideLoadingEvt hideEvt) {
+    public synchronized void hideLoading(HideLoadingEvt hideEvt) {
         if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
             mLoadingDialog = null;
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public synchronized void showSnackbar(ShowSnackbarEvt showSnackbarEvt) {
+        hideLoading(null);
+        if (mSnackbar != null) {
+            mSnackbar.dismiss();
+        }
+        mSnackbar = Snackbar.make(findViewById(android.R.id.content), showSnackbarEvt.getMessage(),
+                showSnackbarEvt.getDuration());
+
+        if (showSnackbarEvt.getAction() != null) {
+            mSnackbar.setAction(showSnackbarEvt.getActionMessage(), showSnackbarEvt.getAction());
+        }
+
+        mSnackbar.show();
+    }
 }

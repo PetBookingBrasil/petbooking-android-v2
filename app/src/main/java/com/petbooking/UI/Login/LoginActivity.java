@@ -14,6 +14,7 @@ import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Auth.Models.SessionResp;
 import com.petbooking.API.Generic.ErrorResp;
 import com.petbooking.BaseActivity;
+import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Interfaces.SocialCallback;
 import com.petbooking.Managers.FacebookAuthManager;
@@ -24,6 +25,8 @@ import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class LoginActivity extends BaseActivity {
 
@@ -110,9 +113,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onError(Object error) {
-                ErrorResp errorResp = (ErrorResp) error;
-                int message = APIUtils.getErrorMessage(errorResp);
-                AppUtils.showSnackBar(findViewById(R.id.loginLayout), message);
+
             }
         });
     }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Pet Booking</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- Login -->
+    <string name="description">Find services for your Pet \n next to you and schedule online!</string>
+    <string name="sign_up">Sign up</string>
+    <string name="login">Sign in</string>
+    <string name="login_facebook">Sign in with <b>Facebook</b></string>
+    <string name="hint_email">petbooking@gmail.com</string>
+    <string name="hint_password">......</string>
+    <string name="app_terms_info"><i>Utilizando o app, você concorda com os <b><u>Termos de uso</u></b>
+        \n e com a <b><u>Política de Privacidade.</u></b></i></string>
+    <string name="forgot_password">Forgot password ?</string>
+
+    <!-- Forgot Password -->
+    <string name="forgot_password_text">Enter your email address \n associated with your petbooking account.</string>
+    <string name="email_empty">Enter your email adress.</string>
+    <string name="send_button">Send</string>
+
+    <!-- Sidemenu Options-->
+    <string name="my_pets">My Pets</string>
+    <string name="search">Search</string>
+    <string name="calendar">Calendar</string>
+    <string name="payments">Payments</string>
+    <string name="favorites">Favorites</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
+    <string name="notifications">Notifications</string>
+    <string name="schedules">Schedules</string>
+
+    <!-- Errors -->
+    <string name="error_fields_empty">Complete all fields.</string>
+    <string name="error_invalid_email">Invalid Email.</string>
+
+    <string name="error_auth_invalid">Invalid authentication. Request a new one.</string>
+    <string name="error_invalid_login">Wrong username or password.</string>
+
+
+</resources>

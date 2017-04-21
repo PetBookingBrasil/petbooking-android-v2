@@ -5,10 +5,24 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="small_lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec justo a libero bibendum varius.</string>
 
     <!-- Screen Title -->
     <string name="recover_password_title">Esqueci a senha</string>
 
+    <!-- Presentation -->
+    <string name="presentation_title_format">presentation_%d_title</string>
+    <string name="presentation_text_format">presentation_%d_text</string>
+    <string name="presentation_image_format">presentation_%d</string>
+    <string name="presentation_color_format">presentation_%d</string>
+    <string name="presentation_1_title">Title 01</string>
+    <string name="presentation_2_title">Title 02</string>
+    <string name="presentation_3_title">Title 03</string>
+    <string name="presentation_1_text">Text 01</string>
+    <string name="presentation_2_text">Text 02</string>
+    <string name="presentation_3_text">Text 03</string>
+    <string name="next">Próximo</string>
+    <string name="skip">Pular</string>
 
     <!-- Login -->
     <string name="description">Encontre serviços para seu Pet \n mais póximos de você e agende online!</string>

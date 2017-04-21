@@ -7,6 +7,11 @@
     <color name="red">#D11326</color>
     <color name="gray">#AFB4B7</color>
 
+    <!-- Presentation -->
+    <color name="presentation_1">#FBCFD5</color>
+    <color name="presentation_2">#F6DAC4</color>
+    <color name="presentation_3">#ABDEDA</color>
+
     <!-- Login -->
     <color name="facebook_btn_login">#2556A0</color>
 

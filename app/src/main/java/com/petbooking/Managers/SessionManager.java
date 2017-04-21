@@ -54,12 +54,20 @@ public class SessionManager {
         return mPreferenceManager.getString(AppConstants.SESSION_TOKEN);
     }
 
-    public void setUserLogged(User user){
+    public void setUserLogged(User user) {
         mPreferenceManager.putString(AppConstants.USER_LOGGED, mJsonManager.toJson(user));
     }
 
-    public User getUserLogged(){
+    public User getUserLogged() {
         User user = mJsonManager.fromJson(mPreferenceManager.getString(AppConstants.USER_LOGGED), User.class);
         return user;
+    }
+
+    public boolean alreadyLogged() {
+        return mPreferenceManager.getBoolean(AppConstants.ALREADY_LOGGED);
+    }
+
+    public void setAlreadyLogged(boolean alreadyLogged) {
+        mPreferenceManager.putBoolean(AppConstants.ALREADY_LOGGED, alreadyLogged);
     }
 }

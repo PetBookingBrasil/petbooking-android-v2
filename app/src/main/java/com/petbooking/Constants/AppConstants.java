@@ -2,6 +2,8 @@ package com.petbooking.Constants;
 
 import android.os.Build;
 
+import com.petbooking.R;
+
 /**
  * Created by Luciano José on 13/04/2017.
  */
@@ -16,6 +18,7 @@ public class AppConstants {
     public static final String CONSUMER_EXPIRATION_DATE = "consumerExpirationDate";
     public static final String SESSION_TOKEN = "sessionToken";
     public static final String USER_LOGGED = "userLogged";
+    public static final String ALREADY_LOGGED = "alreadyLogged";
 
     public static String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
@@ -24,4 +27,9 @@ public class AppConstants {
      */
     public static final String FACEBOOK_EMAIL_PERMISSION = "email";
     public static final String USER_PICTURE_URL = "https://graph.facebook.com/%s/picture?type=large";
+
+    /**
+     * Pages Contants
+     */
+    public static final int PRESENTATION_COLORS[] = {R.color.presentation_1, R.color.presentation_2, R.color.presentation_3};
 }

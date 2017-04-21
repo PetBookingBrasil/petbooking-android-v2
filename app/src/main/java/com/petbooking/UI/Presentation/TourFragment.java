@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.petbooking.Constants.AppConstants;
 import com.petbooking.R;
 
 /**
@@ -19,7 +20,6 @@ import com.petbooking.R;
  */
 public class TourFragment extends Fragment {
 
-    private static final int COLORS[] = {R.color.presentation_1, R.color.presentation_2, R.color.presentation_3};
     private static final String PAGE_POSITION = "position";
     private ConstraintLayout mPresentationLayout;
     private ImageView mIvPresentation;
@@ -48,7 +48,7 @@ public class TourFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tour, container, false);
 
         int position = getPosition();
-        int colorId = COLORS[position];
+        int colorId = AppConstants.PRESENTATION_COLORS[position];
         position++;
         String packageName = getContext().getPackageName();
         String imageId = getContext().getString(R.string.presentation_image_format, position);

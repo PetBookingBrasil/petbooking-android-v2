@@ -31,7 +31,13 @@ public class SplashActivity extends AppCompatActivity {
                 AuthConsumerResp authConsumerResp = (AuthConsumerResp) response;
                 mSessionManager.setConsumerToken(authConsumerResp.data.attributes.token);
                 mSessionManager.setConsumerExpirationDate(authConsumerResp.data.attributes.tokenExpiresAt);
-                goToLogin();
+                boolean alreadyLogged = mSessionManager.alreadyLogged();
+                if (alreadyLogged) {
+                    goToLogin();
+                } else {
+                    //mSessionManager.setAlreadyLogged(true);
+                    goToPresentation();
+                }
             }
 
             @Override
@@ -47,6 +53,15 @@ public class SplashActivity extends AppCompatActivity {
      * Go to Login Page
      */
     public void goToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    /**
+     * Go to Presentation Screen
+     */
+    public void goToPresentation() {
         Intent intent = new Intent(this, PresentationActivity.class);
         startActivity(intent);
         finish();

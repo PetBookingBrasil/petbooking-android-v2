@@ -1,0 +1,56 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/presentationLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/presentation_1">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/presentationImagem"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/spacing_xmicro"
+        android:layout_marginRight="@dimen/spacing_xmicro"
+        android:layout_marginTop="@dimen/spacing_xmedium"
+        android:src="@color/presentation_1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/presentationTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_xmicro"
+        android:layout_marginRight="@dimen/spacing_xmicro"
+        android:layout_marginTop="@dimen/spacing_xsmallest"
+        android:text="@string/presentation_1_title"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/presentationImagem" />
+
+    <TextView
+        android:id="@+id/presentationText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_xmicro"
+        android:layout_marginLeft="@dimen/spacing_normal"
+        android:layout_marginRight="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_xmicro"
+        android:text="@string/small_lorem"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/presentationTitle"
+        app:layout_constraintVertical_bias="0.01" />
+</android.support.constraint.ConstraintLayout>

@@ -9,6 +9,7 @@ import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.API.Auth.Models.AuthConsumerResp;
 import com.petbooking.UI.Login.LoginActivity;
+import com.petbooking.UI.Presentation.PresentationActivity;
 
 /**
  * Created by Luciano Junior on 04,December,2016
@@ -46,7 +47,7 @@ public class SplashActivity extends AppCompatActivity {
      * Go to Login Page
      */
     public void goToLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, PresentationActivity.class);
         startActivity(intent);
         finish();
     }

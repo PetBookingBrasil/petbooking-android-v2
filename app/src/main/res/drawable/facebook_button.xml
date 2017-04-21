@@ -2,5 +2,5 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <corners android:radius="30dp"></corners>
-    <solid android:color="@color/facebook_btn_login"></solid>
+    <solid android:color="#2556A0"></solid>
 </shape>

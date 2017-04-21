@@ -36,16 +36,15 @@
         </activity>
         <activity
             android:name=".UI.Presentation.PresentationActivity"
-            android:theme="@style/AppTheme.FullScreen"></activity>
+            android:theme="@style/AppTheme.FullScreen" />
         <activity
-            android:name=".UI.Dashboard.DashboardActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".UI.Login.LoginActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme" />
+            android:name=".UI.SignUp.SignUpActivity"
+            android:label="@string/signup_title"
+            android:parentActivityName=".UI.Login.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Login.LoginActivity" />
+        </activity>
         <activity
             android:name=".UI.RecoverPassword.RecoverPasswordActivity"
             android:parentActivityName=".UI.Login.LoginActivity">
@@ -53,6 +52,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Login.LoginActivity" />
         </activity>
+        <activity
+            android:name=".UI.Login.LoginActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginTheme" />
+        <activity
+            android:name=".UI.Dashboard.DashboardActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">

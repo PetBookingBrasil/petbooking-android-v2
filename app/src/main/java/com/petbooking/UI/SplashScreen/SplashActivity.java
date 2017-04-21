@@ -35,7 +35,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (alreadyLogged) {
                     goToLogin();
                 } else {
-                    //mSessionManager.setAlreadyLogged(true);
+                    mSessionManager.setAlreadyLogged(true);
                     goToPresentation();
                 }
             }

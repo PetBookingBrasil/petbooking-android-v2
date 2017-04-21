@@ -9,6 +9,7 @@
 
     <!-- Screen Title -->
     <string name="recover_password_title">Esqueci a senha</string>
+    <string name="signup_title">Preencha seus dados</string>
 
     <!-- Presentation -->
     <string name="presentation_title_format">presentation_%d_title</string>
@@ -34,6 +35,17 @@
     <string name="app_terms_info"><i>Utilizando o app, você concorda com os <b><u>Termos de uso</u></b>
         \n e com a <b><u>Política de Privacidade.</u></b></i></string>
     <string name="forgot_password">Esqueceu a senha ?</string>
+
+    <!-- Register -->
+    <string name="full_name">Nome Completo</string>
+    <string name="cpf">CPF</string>
+    <string name="birthday">Data Nasc.</string>
+    <string name="email">Email</string>
+    <string name="address">Endereço completo</string>
+    <string name="phone">Celular</string>
+    <string name="password">Senha</string>
+    <string name="repeat_password">Conf. senha</string>
+    <string name="register">Salvar</string>
 
     <!-- Forgot Password -->
     <string name="recover_password_text">Insira o seu email de cadastro \n associado à sua conta no petbooking.</string>

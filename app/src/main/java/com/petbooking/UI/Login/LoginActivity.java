@@ -26,6 +26,7 @@ import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.RecoverPassword.RecoverPasswordActivity;
+import com.petbooking.UI.SignUp.SignUpActivity;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.FormUtils;
@@ -56,7 +57,7 @@ public class LoginActivity extends BaseActivity {
             } else if (id == R.id.facebookLogin) {
                 mFacebookAuthManager.auth(LoginActivity.this);
             } else if (id == R.id.signup) {
-
+                goToSignup();
             } else if (id == R.id.forgotPassword) {
                 recoverPassword();
             }
@@ -169,6 +170,15 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
+
+    /**
+     * Go To Register Page
+     */
+    private void goToSignup() {
+        Intent signupIntent = new Intent(this, SignUpActivity.class);
+        startActivity(signupIntent);
+    }
+
 
     @Override
     public void onBackPressed() {

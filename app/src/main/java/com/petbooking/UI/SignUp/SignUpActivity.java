@@ -53,7 +53,6 @@ public class SignUpActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.user_form);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.user_form);
         user = new User();

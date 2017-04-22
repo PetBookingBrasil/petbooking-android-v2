@@ -63,6 +63,10 @@
     <string name="settings">Configurações</string>
     <string name="logout">Sair</string>
 
+    <!-- Dialog Select Picture -->
+    <string name="dialog_picture_title">Selecionar Foto</string>
+    <string name="dialog_picture_text">Selecione o método de entrada de imagens \n que deseja usar.</string>
+
     <!-- Errors -->
     <string name="error_fields_empty">Preencha todos os campos.</string>
     <string name="error_invalid_email">Email inválido.</string>

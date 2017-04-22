@@ -29,6 +29,7 @@ import com.petbooking.UI.RecoverPassword.RecoverPasswordActivity;
 import com.petbooking.UI.SignUp.SignUpActivity;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
+import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -115,7 +116,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-        if (!FormUtils.isValidEmail(email)) {
+        if (!CommonUtils.isValidEmail(email)) {
             EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_invalid_email, Snackbar.LENGTH_SHORT));
             return;
         }

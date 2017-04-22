@@ -13,6 +13,7 @@ import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.R;
 import com.petbooking.UI.Login.LoginActivity;
+import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,8 +37,6 @@ public class RecoverPasswordActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recover_password);
 
-        getSupportActionBar().setTitle(R.string.recover_password_title);
-
         mUserService = new UserService();
 
         mEdtRecoverEmail = (EditText) findViewById(R.id.recoverEmail);
@@ -57,7 +56,7 @@ public class RecoverPasswordActivity extends BaseActivity {
             return;
         }
 
-        if (!FormUtils.isValidEmail(email)) {
+        if (!CommonUtils.isValidEmail(email)) {
             EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_invalid_email, Snackbar.LENGTH_SHORT));
             return;
         }

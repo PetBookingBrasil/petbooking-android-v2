@@ -4,6 +4,9 @@ apply plugin: 'io.fabric'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+    dataBinding {
+        enabled = true
+    }
     defaultConfig {
         applicationId "com.petbooking"
         minSdkVersion 17

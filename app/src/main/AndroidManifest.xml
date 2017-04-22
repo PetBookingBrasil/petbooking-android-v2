@@ -24,6 +24,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".BaseActivity"
+            android:label="@string/title_activity_base"
+            android:parentActivityName="android.support.v7.app.AppCompatActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.support.v7.app.AppCompatActivity" />
+        </activity>
+        <activity
             android:name=".UI.SplashScreen.SplashActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
@@ -36,18 +45,25 @@
         </activity>
         <activity
             android:name=".UI.Presentation.PresentationActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme" />
         <activity
             android:name=".UI.SignUp.SignUpActivity"
+            android:configChanges="orientation"
             android:label="@string/signup_title"
-            android:parentActivityName=".UI.Login.LoginActivity">
+            android:parentActivityName=".UI.Login.LoginActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Login.LoginActivity" />
         </activity>
         <activity
             android:name=".UI.RecoverPassword.RecoverPasswordActivity"
-            android:parentActivityName=".UI.Login.LoginActivity">
+            android:configChanges="orientation"
+            android:label="@string/recover_password_title"
+            android:parentActivityName=".UI.Login.LoginActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Login.LoginActivity" />
@@ -59,9 +75,10 @@
             android:theme="@style/LoginTheme" />
         <activity
             android:name=".UI.Dashboard.DashboardActivity"
+            android:configChanges="orientation"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -73,15 +90,6 @@
 
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".BaseActivity"
-            android:label="@string/title_activity_base"
-            android:parentActivityName="android.support.v7.app.AppCompatActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="android.support.v7.app.AppCompatActivity" />
         </activity>
 
         <!-- Third-party Activities -->

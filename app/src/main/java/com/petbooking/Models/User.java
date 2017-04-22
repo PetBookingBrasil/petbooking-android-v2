@@ -1,6 +1,5 @@
 package com.petbooking.Models;
 
-import com.google.gson.annotations.SerializedName;
 import com.petbooking.API.Generic.AvatarResp;
 
 /**
@@ -26,6 +25,7 @@ public class User {
     public String nickname;
     public String gender;
     public String cpf;
+    public String password;
     public String searchRange;
     public boolean phoneActivated;
     public boolean acceptsSms;
@@ -34,6 +34,9 @@ public class User {
     public boolean acceptsTerms;
     public boolean validForScheduling;
     public AvatarResp avatar;
+
+    public User() {
+    }
 
     public User(String id, String authToken, String name, String birthday, String phone, boolean phoneActivated,
                 String phoneCodeCreatedAt, String email, String futureEventsCount, boolean acceptsSms, String zipcode,

@@ -30,21 +30,24 @@
     <string name="sign_up">Cadastre-se</string>
     <string name="login">Entrar</string>
     <string name="login_facebook">Entrar com <b>Facebook</b></string>
-    <string name="hint_email">petbooking@gmail.com</string>
-    <string name="hint_password">......</string>
     <string name="app_terms_info"><i>Utilizando o app, você concorda com os <b><u>Termos de uso</u></b>
         \n e com a <b><u>Política de Privacidade.</u></b></i></string>
     <string name="forgot_password">Esqueceu a senha ?</string>
 
     <!-- Register -->
-    <string name="full_name">Nome Completo</string>
-    <string name="cpf">CPF</string>
-    <string name="birthday">Data Nasc.</string>
-    <string name="email">Email</string>
-    <string name="address">Endereço completo</string>
-    <string name="phone">Celular</string>
-    <string name="password">Senha</string>
-    <string name="repeat_password">Conf. senha</string>
+    <string name="hint_name">Nome Completo</string>
+    <string name="hint_cpf">CPF</string>
+    <string name="hint_birthday">Data Nasc.</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_zipcode">CEP</string>
+    <string name="hint_city">Cidade</string>
+    <string name="hint_state">UF</string>
+    <string name="hint_neighborhood">Bairro</string>
+    <string name="hint_street">Rua</string>
+    <string name="hint_street_number">Número</string>
+    <string name="hint_phone">Celular</string>
+    <string name="hint_password">Senha</string>
+    <string name="hint_repeat_password">Conf. senha</string>
     <string name="register">Salvar</string>
 
     <!-- Forgot Password -->
@@ -63,6 +66,9 @@
     <!-- Errors -->
     <string name="error_fields_empty">Preencha todos os campos.</string>
     <string name="error_invalid_email">Email inválido.</string>
+    <string name="error_invalid_cpf">CPF inválido.</string>
+    <string name="error_invalid_phone">Telefone Inválido.</string>
+    <string name="error_different_password">As senhas não coincidem.</string>
 
     <string name="error_auth_invalid">Token de autenticação inválido. Requisite um novo token.</string>
     <string name="error_invalid_login">Email ou senha inválidos.</string>

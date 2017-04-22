@@ -65,7 +65,7 @@
 
     <!-- Dialog Select Picture -->
     <string name="dialog_picture_title">Selecionar Foto</string>
-    <string name="dialog_picture_text">Selecione o método de entrada de imagens \n que deseja usar.</string>
+    <string name="dialog_picture_text">Selecione o método de entrada de imagens que deseja usar.</string>
 
     <!-- Errors -->
     <string name="error_fields_empty">Preencha todos os campos.</string>

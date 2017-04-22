@@ -1,12 +1,17 @@
 package com.petbooking.UI.SignUp;
 
+import android.app.Dialog;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -29,7 +34,16 @@ import org.greenrobot.eventbus.EventBus;
 public class SignUpActivity extends BaseActivity {
 
     private UserService mUserService;
+    private PictureSelectDialogFragment mFragmentPictureSelect;
 
+    /**
+     * Dialog Select Picture
+     */
+
+
+    /**
+     * Form Inputs
+     */
     private EditText mEdtCpf;
     private EditText mEdtZipcode;
     private EditText mEdtCity;
@@ -58,6 +72,8 @@ public class SignUpActivity extends BaseActivity {
         user = new User();
 
         mUserService = new UserService();
+        mFragmentPictureSelect = PictureSelectDialogFragment.newInstance();
+        mFragmentPictureSelect.show(getSupportFragmentManager(), "SELECT_PICTURE");
 
         mEdtCpf = (EditText) findViewById(R.id.user_cpf);
         mEdtPhone = (EditText) findViewById(R.id.user_phone);
@@ -141,4 +157,5 @@ public class SignUpActivity extends BaseActivity {
             }
         });
     }
+
 }

@@ -13,42 +13,42 @@
             android:id="@+id/my_pets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_icon="@drawable/ic_pets"
+            app:item_icon="@drawable/ic_menu_pets"
             app:item_text="@string/my_pets" />
 
         <com.petbooking.Components.DrawerItem
             android:id="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_icon="@drawable/ic_search"
+            app:item_icon="@drawable/ic_menu_search"
             app:item_text="@string/search" />
 
         <com.petbooking.Components.DrawerItem
             android:id="@+id/calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_icon="@drawable/ic_calendar"
+            app:item_icon="@drawable/ic_menu_calendar"
             app:item_text="@string/calendar" />
 
         <com.petbooking.Components.DrawerItem
             android:id="@+id/payments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_icon="@drawable/ic_payments"
+            app:item_icon="@drawable/ic_menu_payments"
             app:item_text="@string/payments" />
 
         <com.petbooking.Components.DrawerItem
             android:id="@+id/favorites"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_icon="@drawable/ic_favorite"
+            app:item_icon="@drawable/ic_menu_favorite"
             app:item_text="@string/favorites" />
 
         <com.petbooking.Components.DrawerItem
             android:id="@+id/settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_icon="@drawable/ic_settings"
+            app:item_icon="@drawable/ic_menu_settings"
             app:item_text="@string/settings" />
 
 
@@ -63,7 +63,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_logout" />
+                app:srcCompat="@drawable/ic_menu_logout" />
 
             <TextView
                 android:layout_width="wrap_content"

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -29,6 +30,7 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
+import com.petbooking.UI.Dialogs.DatePickerFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
 import com.petbooking.Utils.APIUtils;
@@ -41,9 +43,12 @@ import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SignUpActivity extends BaseActivity
-        implements PictureSelectDialogFragment.FinishDialogListener, FeedbackDialogFragment.FinishDialogListener {
+public class SignUpActivity extends BaseActivity implements
+        PictureSelectDialogFragment.FinishDialogListener,
+        FeedbackDialogFragment.FinishDialogListener,
+        DatePickerFragment.DatePickerListener {
 
+    private FragmentManager mFragmentManager;
     private UserService mUserService;
     private SessionManager mSessionManager;
 
@@ -59,6 +64,10 @@ public class SignUpActivity extends BaseActivity
      */
     private FeedbackDialogFragment mDialogFragmentFeedback;
 
+    /**
+     * Date Picker
+     */
+    private DatePickerFragment mDatePicker;
 
     /**
      * Form Inputs
@@ -89,7 +98,7 @@ public class SignUpActivity extends BaseActivity
     View.OnClickListener mSelectListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mDialogFragmentPictureSelect.show(getSupportFragmentManager(), "SELECT_PICTURE");
+            mDialogFragmentPictureSelect.show(mFragmentManager, "SELECT_PICTURE");
         }
     };
 
@@ -114,6 +123,13 @@ public class SignUpActivity extends BaseActivity
         }
     };
 
+    View.OnClickListener mBirthdayListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mDatePicker.show(mFragmentManager, "DATE_PICKER");
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,10 +137,12 @@ public class SignUpActivity extends BaseActivity
         mBinding = DataBindingUtil.setContentView(this, R.layout.user_form);
         user = new User();
 
+        mFragmentManager = getSupportFragmentManager();
         mUserService = new UserService();
         mSessionManager = SessionManager.getInstance();
         mDialogFragmentPictureSelect = PictureSelectDialogFragment.newInstance();
         mDialogFragmentFeedback = FeedbackDialogFragment.newInstance();
+        mDatePicker = DatePickerFragment.newInstance();
 
         mCiUserPhoto = (CircleImageView) findViewById(R.id.user_photo);
         mEdtBirthday = (EditText) findViewById(R.id.user_birthday);
@@ -138,6 +156,7 @@ public class SignUpActivity extends BaseActivity
         mEdtRepeatPass = (EditText) findViewById(R.id.repeat_password);
 
         mEdtBirthday.addTextChangedListener(MaskManager.insert("##/##/####", mEdtBirthday));
+        mEdtBirthday.setOnClickListener(mBirthdayListener);
         mEdtCpf.addTextChangedListener(MaskManager.insert("###.###.###-##", mEdtCpf));
         mEdtZipcode.addTextChangedListener(MaskManager.insert("##.###-###", mEdtZipcode));
         mEdtPhone.addTextChangedListener(MaskManager.insert("(##) #####.####", mEdtPhone));
@@ -237,14 +256,14 @@ public class SignUpActivity extends BaseActivity
                 mSessionManager.setUserLogged(user);
                 mDialogFragmentFeedback.setDialogInfo(R.string.dialog_register_user_title, R.string.success_create_user,
                         R.string.dialog_button_ok, AppConstants.OK_ACTION);
-                mDialogFragmentFeedback.show(getSupportFragmentManager(), "FEEDBACK");
+                mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
             }
 
             @Override
             public void onError(Object error) {
                 mDialogFragmentFeedback.setDialogInfo(R.string.dialog_register_user_title, R.string.error_create_user,
                         R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
-                mDialogFragmentFeedback.show(getSupportFragmentManager(), "FEEDBACK");
+                mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
             }
         });
     }
@@ -294,5 +313,10 @@ public class SignUpActivity extends BaseActivity
                 }
             }
         }
+    }
+
+    @Override
+    public void onDateSet(String date) {
+        mEdtBirthday.setText(date);
     }
 }

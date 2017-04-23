@@ -110,4 +110,11 @@ public class CommonUtils {
         return true;
     }
 
+    public static String formatDate(int day, int month, int year) {
+        String monthAux = month < 10 ? ("0" + month) : (month + "");
+        String date = day + "/" + monthAux + "/" + year;
+
+        return date;
+    }
+
 }

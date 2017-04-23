@@ -72,6 +72,7 @@
     <string name="error_invalid_email">Email inválido.</string>
     <string name="error_invalid_cpf">CPF inválido.</string>
     <string name="error_invalid_phone">Telefone Inválido.</string>
+    <string name="error_invalid_password">A senha deve ter ao menos 6 caracteres.</string>
     <string name="error_different_password">As senhas não coincidem.</string>
 
     <string name="error_auth_invalid">Token de autenticação inválido. Requisite um novo token.</string>

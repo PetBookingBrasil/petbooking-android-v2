@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.google.gson.Gson;
+import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.User.Models.Address;
 import com.petbooking.API.User.UserService;
 import com.petbooking.BaseActivity;
@@ -25,8 +26,11 @@ import com.petbooking.Events.ShowLoadingEvt;
 import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.MaskManager;
+import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.DashboardActivity;
+import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
 import com.petbooking.databinding.UserFormBinding;
@@ -40,6 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SignUpActivity extends BaseActivity implements PictureSelectDialogFragment.FinishDialogListener {
 
     private UserService mUserService;
+    private SessionManager mSessionManager;
 
     /**
      * Picture Select
@@ -52,6 +57,7 @@ public class SignUpActivity extends BaseActivity implements PictureSelectDialogF
      * Form Inputs
      */
     private CircleImageView mCiUserPhoto;
+    private EditText mEdtBirthday;
     private EditText mEdtCpf;
     private EditText mEdtZipcode;
     private EditText mEdtCity;
@@ -109,9 +115,11 @@ public class SignUpActivity extends BaseActivity implements PictureSelectDialogF
         user = new User();
 
         mUserService = new UserService();
+        mSessionManager = SessionManager.getInstance();
         mFragmentPictureSelect = PictureSelectDialogFragment.newInstance();
 
         mCiUserPhoto = (CircleImageView) findViewById(R.id.user_photo);
+        mEdtBirthday = (EditText) findViewById(R.id.user_birthday);
         mEdtCpf = (EditText) findViewById(R.id.user_cpf);
         mEdtPhone = (EditText) findViewById(R.id.user_phone);
         mEdtZipcode = (EditText) findViewById(R.id.user_zipcode);
@@ -121,6 +129,7 @@ public class SignUpActivity extends BaseActivity implements PictureSelectDialogF
         mEdtState = (EditText) findViewById(R.id.user_state);
         mEdtRepeatPass = (EditText) findViewById(R.id.repeat_password);
 
+        mEdtBirthday.addTextChangedListener(MaskManager.insert("##/##/####", mEdtBirthday));
         mEdtCpf.addTextChangedListener(MaskManager.insert("###.###.###-##", mEdtCpf));
         mEdtZipcode.addTextChangedListener(MaskManager.insert("##.###-###", mEdtZipcode));
         mEdtPhone.addTextChangedListener(MaskManager.insert("(##) #####.####", mEdtPhone));
@@ -143,7 +152,7 @@ public class SignUpActivity extends BaseActivity implements PictureSelectDialogF
         String repeatPassword = mEdtRepeatPass.getText().toString();
 
         if (message == -1 && (user.password.equals(repeatPassword))) {
-            Log.d("USER", new Gson().toJson(user));
+            createRequest(user);
         } else if (message == -1 && (!user.password.equals(repeatPassword))) {
             EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_different_password, Snackbar.LENGTH_LONG));
         } else if (message != -1) {
@@ -201,10 +210,39 @@ public class SignUpActivity extends BaseActivity implements PictureSelectDialogF
      * @param photo
      */
     public void updatePhoto(Bitmap photo) {
-        Log.d("BASE", CommonUtils.toBase64(mBitmap));
         mIBtnSelectPicture.setVisibility(View.GONE);
         mCiUserPhoto.setVisibility(View.VISIBLE);
         mCiUserPhoto.setImageBitmap(photo);
+    }
+
+    /**
+     * Request to Create a new User
+     *
+     * @param user
+     */
+    public void createRequest(User user) {
+        mUserService.createUser(user, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                AuthUserResp authUserResp = (AuthUserResp) response;
+                User user = APIUtils.parseUser(authUserResp);
+                mSessionManager.setUserLogged(user);
+                goToDashboard();
+            }
+
+            @Override
+            public void onError(Object error) {
+
+            }
+        });
+    }
+
+    /**
+     * Go to Dashboard after logged
+     */
+    public void goToDashboard() {
+        Intent dashboardIntent = new Intent(this, DashboardActivity.class);
+        startActivity(dashboardIntent);
     }
 
 

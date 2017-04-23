@@ -28,6 +28,8 @@ public class FormUtils {
             return R.string.error_invalid_cpf;
         } else if (!CommonUtils.isPhoneValid(user.phone)) {
             return R.string.error_invalid_phone;
+        } else if (!CommonUtils.isValidPassword(user.password)) {
+            return R.string.error_invalid_password;
         }
 
         return -1;

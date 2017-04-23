@@ -71,7 +71,7 @@
                     android:drawablePadding="@dimen/spacing_xmicro"
                     android:drawableStart="@drawable/ic_user"
                     android:hint="@string/hint_name"
-                    android:inputType="textPersonName|textNoSuggestions"
+                    android:inputType="textPersonName"
                     android:paddingLeft="@dimen/spacing_xmicro"
                     android:text="@={user.name}" />
             </android.support.design.widget.TextInputLayout>
@@ -125,7 +125,7 @@
                         android:drawablePadding="@dimen/spacing_xmicro"
                         android:drawableStart="@drawable/ic_calendar_black"
                         android:hint="@string/hint_birthday"
-                        android:inputType="date"
+                        android:inputType="number"
                         android:paddingLeft="@dimen/spacing_xmicro"
                         android:text="@={user.birthday}" />
                 </android.support.design.widget.TextInputLayout>

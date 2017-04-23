@@ -1,9 +1,10 @@
 package com.petbooking.API.User;
 
 import com.petbooking.API.Auth.Models.AuthUserResp;
+import com.petbooking.API.User.Models.Address;
+import com.petbooking.API.User.Models.CreateUserRqt;
 import com.petbooking.API.User.Models.RecoverPasswordRqt;
 import com.petbooking.Constants.APIConstants;
-import com.petbooking.API.User.Models.Address;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -17,6 +18,11 @@ import retrofit2.http.Path;
  */
 
 public interface UserInterface {
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
+    @POST(APIUserConstants.USER_ENDPOINT)
+    Call<AuthUserResp> createUser(@Body CreateUserRqt createUserRqt);
+
 
     @Headers(APIConstants.HEADER_AUTHORIZATION_REQUIRED)
     @POST(APIUserConstants.ENDPOINT_RECOVER_PASSWORD)

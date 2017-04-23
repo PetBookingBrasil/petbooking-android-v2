@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 public class CommonUtils {
 
+    public static final int PASSWORD_LENGTH = 6;
 
     public static boolean isEmpty(String text) {
         if (text == null || text.equals("")) {
@@ -99,6 +100,14 @@ public class CommonUtils {
         } catch (Exception error) {
             return false;
         }
+    }
+
+    public static boolean isValidPassword(String password) {
+        if (password.length() < PASSWORD_LENGTH) {
+            return false;
+        }
+
+        return true;
     }
 
 }

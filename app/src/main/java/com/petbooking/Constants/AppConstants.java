@@ -38,4 +38,6 @@ public class AppConstants {
      */
     public static final int PICK_PHOTO = 1;
     public static final int TAKE_PHOTO = 2;
+    public static final int OK_ACTION = 9000;
+    public static final int BACK_SCREEN_ACTION = 9001;
 }

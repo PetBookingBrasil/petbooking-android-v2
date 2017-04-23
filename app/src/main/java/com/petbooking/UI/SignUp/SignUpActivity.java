@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.google.gson.Gson;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.User.Models.Address;
 import com.petbooking.API.User.UserService;
@@ -30,8 +29,9 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
+import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
+import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
 import com.petbooking.Utils.APIUtils;
-import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
 import com.petbooking.databinding.UserFormBinding;
 
@@ -41,7 +41,8 @@ import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SignUpActivity extends BaseActivity implements PictureSelectDialogFragment.FinishDialogListener {
+public class SignUpActivity extends BaseActivity
+        implements PictureSelectDialogFragment.FinishDialogListener, FeedbackDialogFragment.FinishDialogListener {
 
     private UserService mUserService;
     private SessionManager mSessionManager;
@@ -49,9 +50,15 @@ public class SignUpActivity extends BaseActivity implements PictureSelectDialogF
     /**
      * Picture Select
      */
-    private PictureSelectDialogFragment mFragmentPictureSelect;
+    private PictureSelectDialogFragment mDialogFragmentPictureSelect;
     private Uri mUri;
     private Bitmap mBitmap;
+
+    /**
+     * Feedback
+     */
+    private FeedbackDialogFragment mDialogFragmentFeedback;
+
 
     /**
      * Form Inputs
@@ -82,7 +89,7 @@ public class SignUpActivity extends BaseActivity implements PictureSelectDialogF
     View.OnClickListener mSelectListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mFragmentPictureSelect.show(getSupportFragmentManager(), "SELECT_PICTURE");
+            mDialogFragmentPictureSelect.show(getSupportFragmentManager(), "SELECT_PICTURE");
         }
     };
 
@@ -116,7 +123,8 @@ public class SignUpActivity extends BaseActivity implements PictureSelectDialogF
 
         mUserService = new UserService();
         mSessionManager = SessionManager.getInstance();
-        mFragmentPictureSelect = PictureSelectDialogFragment.newInstance();
+        mDialogFragmentPictureSelect = PictureSelectDialogFragment.newInstance();
+        mDialogFragmentFeedback = FeedbackDialogFragment.newInstance();
 
         mCiUserPhoto = (CircleImageView) findViewById(R.id.user_photo);
         mEdtBirthday = (EditText) findViewById(R.id.user_birthday);
@@ -227,12 +235,16 @@ public class SignUpActivity extends BaseActivity implements PictureSelectDialogF
                 AuthUserResp authUserResp = (AuthUserResp) response;
                 User user = APIUtils.parseUser(authUserResp);
                 mSessionManager.setUserLogged(user);
-                goToDashboard();
+                mDialogFragmentFeedback.setDialogInfo(R.string.dialog_register_user_title, R.string.success_create_user,
+                        R.string.dialog_button_ok, AppConstants.OK_ACTION);
+                mDialogFragmentFeedback.show(getSupportFragmentManager(), "FEEDBACK");
             }
 
             @Override
             public void onError(Object error) {
-
+                mDialogFragmentFeedback.setDialogInfo(R.string.dialog_register_user_title, R.string.error_create_user,
+                        R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
+                mDialogFragmentFeedback.show(getSupportFragmentManager(), "FEEDBACK");
             }
         });
     }
@@ -250,8 +262,10 @@ public class SignUpActivity extends BaseActivity implements PictureSelectDialogF
     public void onFinishDialog(int action) {
         if (action == AppConstants.PICK_PHOTO) {
             openGalery();
-        } else {
+        } else if (action == AppConstants.TAKE_PHOTO) {
             openCamera();
+        } else if (action == AppConstants.OK_ACTION) {
+            goToDashboard();
         }
     }
 

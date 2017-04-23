@@ -1,20 +1,13 @@
 package com.petbooking.Utils;
 
-import android.util.Log;
-
-import com.petbooking.Constants.AppConstants;
 import com.petbooking.Models.User;
 import com.petbooking.R;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Luciano José on 15/04/2017.
  */
 
 public class FormUtils {
-
 
     public static int validateUser(User user) {
         if (CommonUtils.isEmpty(user.name) || CommonUtils.isEmpty(user.birthday) || CommonUtils.isEmpty(user.cpf)

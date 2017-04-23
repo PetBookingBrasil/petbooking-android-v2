@@ -63,9 +63,12 @@
     <string name="settings">Configurações</string>
     <string name="logout">Sair</string>
 
-    <!-- Dialog Select Picture -->
+    <!-- Dialog -->
     <string name="dialog_picture_title">Selecionar Foto</string>
     <string name="dialog_picture_text">Selecione o método de entrada de imagens que deseja usar.</string>
+    <string name="dialog_register_user_title">Cadastro de Usuário</string>
+    <string name="dialog_button_ok">Ok</string>
+    <string name="dialog_back_screen">Voltar à Tela</string>
 
     <!-- Errors -->
     <string name="error_fields_empty">Preencha todos os campos.</string>
@@ -74,7 +77,11 @@
     <string name="error_invalid_phone">Telefone Inválido.</string>
     <string name="error_invalid_password">A senha deve ter ao menos 6 caracteres.</string>
     <string name="error_different_password">As senhas não coincidem.</string>
+    <string name="error_create_user">Não Foi possível cadastrar o usuário.</string>
 
     <string name="error_auth_invalid">Token de autenticação inválido. Requisite um novo token.</string>
     <string name="error_invalid_login">Email ou senha inválidos.</string>
+
+    <!-- Success -->
+    <string name="success_create_user">Usuário Cadastrado com Sucesso.</string>
 </resources>

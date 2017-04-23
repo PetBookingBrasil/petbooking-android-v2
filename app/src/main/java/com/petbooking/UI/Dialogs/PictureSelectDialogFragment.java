@@ -1,16 +1,13 @@
-package com.petbooking.UI.SignUp;
+package com.petbooking.UI.Dialogs;
 
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +16,6 @@ import android.widget.ImageView;
 
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.R;
-
-import java.net.URI;
-
-import static android.app.Activity.RESULT_OK;
 
 
 public class PictureSelectDialogFragment extends DialogFragment {

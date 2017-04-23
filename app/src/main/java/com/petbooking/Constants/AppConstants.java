@@ -32,4 +32,10 @@ public class AppConstants {
      * Pages Contants
      */
     public static final int PRESENTATION_COLORS[] = {R.color.presentation_1, R.color.presentation_2, R.color.presentation_3};
+
+    /**
+     * Intent Codes
+     */
+    public static final int PICK_PHOTO = 1;
+    public static final int TAKE_PHOTO = 2;
 }

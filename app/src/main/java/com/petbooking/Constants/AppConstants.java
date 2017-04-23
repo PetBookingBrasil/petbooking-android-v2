@@ -1,5 +1,6 @@
 package com.petbooking.Constants;
 
+import android.Manifest;
 import android.os.Build;
 
 import com.petbooking.R;
@@ -40,4 +41,9 @@ public class AppConstants {
     public static final int TAKE_PHOTO = 2;
     public static final int OK_ACTION = 9000;
     public static final int BACK_SCREEN_ACTION = 9001;
+
+    /**
+     * Permissions
+     */
+    public static final String PERMISSION_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
 }

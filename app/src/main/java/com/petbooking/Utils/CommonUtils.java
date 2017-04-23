@@ -1,8 +1,10 @@
 package com.petbooking.Utils;
 
+import android.location.Address;
 import android.util.Log;
 
 import com.petbooking.Constants.AppConstants;
+import com.petbooking.Models.UserAddress;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -115,6 +117,19 @@ public class CommonUtils {
         String date = day + "/" + monthAux + "/" + year;
 
         return date;
+    }
+
+    public static UserAddress parseAddress(Address address) {
+        UserAddress userAddress = null;
+        String state = address.getAdminArea().substring(0, 2);
+        String postalCode = address.getPostalCode().replace("-", "");
+
+        state = state.toUpperCase();
+
+        userAddress = new UserAddress(postalCode, address.getLocality(),
+                address.getThoroughfare(), address.getSubLocality(), state, address.getFeatureName());
+
+        return userAddress;
     }
 
 }

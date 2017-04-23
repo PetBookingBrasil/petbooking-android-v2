@@ -1,8 +1,16 @@
 package com.petbooking.UI.Dashboard;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -10,22 +18,37 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.petbooking.Constants.AppConstants;
+import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
+import com.petbooking.Models.UserAddress;
 import com.petbooking.R;
+import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Login.LoginActivity;
 import com.petbooking.Utils.APIUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener, FeedbackDialogFragment.FinishDialogListener {
+
+    private static final int RC_PERMISSION = 234;
 
     private SessionManager mSessionManager;
+    private LocationManager mLocationManager;
 
+    private FeedbackDialogFragment mFeedbackDialogFragment;
+    private UserAddress mUserAddress;
+
+
+    private FragmentManager mFragmentManager;
     NavigationView mNavView;
     View mHeaderView;
     DrawerLayout mDrawerLayout;
@@ -39,14 +62,24 @@ public class DashboardActivity extends AppCompatActivity {
     private TextView mTvSideMenuName;
     private TextView mTvSideMenuAddress;
 
+    View.OnClickListener locationListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            checkLocationPermission();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
         mSessionManager = SessionManager.getInstance();
+        mLocationManager = LocationManager.getInstance();
+        mFragmentManager = getSupportFragmentManager();
         currentUser = mSessionManager.getUserLogged();
 
+        mFeedbackDialogFragment = FeedbackDialogFragment.newInstance();
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
@@ -57,6 +90,8 @@ public class DashboardActivity extends AppCompatActivity {
         toggle.syncState();
 
         mNavView = (NavigationView) findViewById(R.id.nav_view);
+        mNavView.setNavigationItemSelectedListener(this);
+
         mHeaderView = mNavView.getHeaderView(0);
 
         /**
@@ -68,13 +103,26 @@ public class DashboardActivity extends AppCompatActivity {
         mTvSideMenuAddress = (TextView) mHeaderView.findViewById(R.id.sidemenu_address);
 
         mTvSideMenuName.setText(currentUser.name);
-        mTvSideMenuAddress.setText(currentUser.city + ", " + currentUser.state);
+
+        mUserAddress = mLocationManager.getAddress();
+
+        if (mUserAddress != null) {
+            mTvSideMenuAddress.setText(mUserAddress.city + ", " + mUserAddress.state);
+        }
 
         Glide.with(this)
                 .load(APIUtils.getAssetEndpoint(currentUser.avatar.large.url))
                 .centerCrop()
                 .dontAnimate()
                 .into(mCivSideMenuPicture);
+    }
+
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        checkLocationPermission();
+        Log.d("COORDS", new Gson().toJson(mLocationManager.getAddress()));
     }
 
     @Override
@@ -104,23 +152,50 @@ public class DashboardActivity extends AppCompatActivity {
         return true;
     }
 
-    /**
-     * On Select Sidemenu item
-     *
-     * @param id
-     * @return
-     */
-    public boolean onMenuItemSelected(int id) {
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.payments) {
+            Log.d("PAYMENTS", "PAYMENTS");
+        } else if (id == R.id.logout) {
+            Intent logoutIntent = new Intent(this, LoginActivity.class);
+            startActivity(logoutIntent);
+        }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
     /**
-     * Logout
+     * Request Location Permission
      */
-    private void logout() {
-        Intent logoutIntent = new Intent(this, LoginActivity.class);
-        startActivity(logoutIntent);
+    private void checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, AppConstants.PERMISSION_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mLocationManager.requestLocation();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{AppConstants.PERMISSION_LOCATION}, RC_PERMISSION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == RC_PERMISSION) {
+            if (ContextCompat.checkSelfPermission(this, AppConstants.PERMISSION_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mLocationManager.requestLocation();
+            } else {
+                mFeedbackDialogFragment.setDialogInfo(R.string.permission_location_title, R.string.permission_location,
+                        R.string.dialog_button_ok, AppConstants.OK_ACTION);
+                mFeedbackDialogFragment.show(mFragmentManager, "LOCATION_PERMISSION");
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onFinishDialog(int action) {
+        if(action == AppConstants.OK_ACTION){
+            checkLocationPermission();
+        }
     }
 }

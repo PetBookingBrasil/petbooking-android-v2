@@ -5,8 +5,8 @@ import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.User.Models.CreateUserRqt;
 import com.petbooking.API.User.Models.RecoverPasswordRqt;
 import com.petbooking.Interfaces.APICallback;
-import com.petbooking.API.User.Models.Address;
 import com.petbooking.Models.User;
+import com.petbooking.Models.UserAddress;
 import com.petbooking.Utils.APIUtils;
 
 import retrofit2.Call;
@@ -58,15 +58,15 @@ public class UserService {
     }
 
     public void getAddress(String zipcode, final APICallback callback) {
-        Call<Address> call = mUserInterface.getAddress(zipcode);
-        call.enqueue(new Callback<Address>() {
+        Call<UserAddress> call = mUserInterface.getAddress(zipcode);
+        call.enqueue(new Callback<UserAddress>() {
             @Override
-            public void onResponse(Call<Address> call, Response<Address> response) {
+            public void onResponse(Call<UserAddress> call, Response<UserAddress> response) {
                 APIUtils.handleResponse(response, callback);
             }
 
             @Override
-            public void onFailure(Call<Address> call, Throwable t) {
+            public void onFailure(Call<UserAddress> call, Throwable t) {
 
             }
         });

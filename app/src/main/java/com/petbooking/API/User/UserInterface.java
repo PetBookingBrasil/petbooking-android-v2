@@ -1,10 +1,10 @@
 package com.petbooking.API.User;
 
 import com.petbooking.API.Auth.Models.AuthUserResp;
-import com.petbooking.API.User.Models.Address;
 import com.petbooking.API.User.Models.CreateUserRqt;
 import com.petbooking.API.User.Models.RecoverPasswordRqt;
 import com.petbooking.Constants.APIConstants;
+import com.petbooking.Models.UserAddress;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -33,6 +33,6 @@ public interface UserInterface {
     Call<AuthUserResp> getUser(@Path(APIConstants.PATH_PARAM) String userID);
 
     @GET(APIUserConstants.ENDPOINT_USER_ADDRESS)
-    Call<Address> getAddress(@Path(APIConstants.PATH_PARAM) String zipcode);
+    Call<UserAddress> getAddress(@Path(APIConstants.PATH_PARAM) String zipcode);
 
 }

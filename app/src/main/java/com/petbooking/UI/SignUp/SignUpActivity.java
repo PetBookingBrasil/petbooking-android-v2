@@ -10,14 +10,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.petbooking.API.Auth.Models.AuthUserResp;
-import com.petbooking.API.User.Models.Address;
 import com.petbooking.API.User.UserService;
 import com.petbooking.BaseActivity;
 import com.petbooking.Constants.AppConstants;
@@ -29,6 +27,7 @@ import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.MaskManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
+import com.petbooking.Models.UserAddress;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.Dialogs.DatePickerFragment;
@@ -199,12 +198,12 @@ public class SignUpActivity extends BaseActivity implements
         mUserService.getAddress(zipcode, new APICallback() {
             @Override
             public void onSuccess(Object response) {
-                Address address = (Address) response;
+                UserAddress address = (UserAddress) response;
 
-                mEdtCity.setText(address.localidade);
-                mEdtStreet.setText(address.logradouro);
-                mEdtNeighborhood.setText(address.bairro);
-                mEdtState.setText(address.uf);
+                mEdtCity.setText(address.city);
+                mEdtStreet.setText(address.street);
+                mEdtNeighborhood.setText(address.neighborhood);
+                mEdtState.setText(address.state);
 
                 EventBus.getDefault().post(new HideLoadingEvt());
             }

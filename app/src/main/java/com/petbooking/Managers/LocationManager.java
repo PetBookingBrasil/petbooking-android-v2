@@ -9,13 +9,18 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.gson.Gson;
+import com.petbooking.Models.User;
+import com.petbooking.Models.UserAddress;
 import com.petbooking.R;
+import com.petbooking.Utils.CommonUtils;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -135,11 +140,31 @@ public class LocationManager implements GoogleApiClient.ConnectionCallbacks,
             if (addresses.size() > 0) {
                 Address address = addresses.get(0);
                 cityState = address.getLocality() + " - " + address.getAdminArea();
+                Log.d("ADDRESS", new Gson().toJson(address));
             }
         } catch (IOException e) {
             return cityState;
         }
         return cityState;
+    }
+
+    public UserAddress getAddress() {
+        UserAddress userAddress = null;
+        if (mLastLocationX == 0) {
+            return null;
+        }
+        Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(mLastLocationX, mLastLocationY, 1);
+            if (addresses.size() > 0) {
+                Address address = addresses.get(0);
+                userAddress = CommonUtils.parseAddress(address);
+            }
+        } catch (IOException e) {
+            return userAddress;
+        }
+
+        return userAddress;
     }
 
     private Location getCurrentLocationWithLocationService() {

@@ -1,11 +1,13 @@
 package com.petbooking.UI.Dialogs;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,7 @@ import android.widget.TextView;
 import com.petbooking.R;
 
 
-public class FeedbackDialogFragment extends DialogFragment {
+public class FeedbackDialogFragment extends DialogFragment implements DialogInterface.OnCancelListener {
 
     private FinishDialogListener finishDialogListener;
     private Dialog mDialog;
@@ -72,6 +74,7 @@ public class FeedbackDialogFragment extends DialogFragment {
         mDialog = super.onCreateDialog(savedInstanceState);
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mDialog.setOnCancelListener(this);
 
         return mDialog;
     }
@@ -91,5 +94,11 @@ public class FeedbackDialogFragment extends DialogFragment {
 
     public interface FinishDialogListener {
         void onFinishDialog(int action);
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        super.onCancel(dialog);
+        finishDialogListener.onFinishDialog(mAction);
     }
 }

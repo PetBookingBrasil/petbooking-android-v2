@@ -7,6 +7,7 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 
 import io.fabric.sdk.android.Fabric;
@@ -29,6 +30,7 @@ public class App extends Application {
 
     public void initManagers() {
         SessionManager.initialize(this);
+        LocationManager.getInstance().initialize(this);
     }
 
     private void initDependencies() {

@@ -78,10 +78,14 @@
     <string name="error_invalid_password">A senha deve ter ao menos 6 caracteres.</string>
     <string name="error_different_password">As senhas não coincidem.</string>
     <string name="error_create_user">Não Foi possível cadastrar o usuário.</string>
-
     <string name="error_auth_invalid">Token de autenticação inválido. Requisite um novo token.</string>
     <string name="error_invalid_login">Email ou senha inválidos.</string>
 
+    <string name="error_no_location">Localização não dísponível.</string>
+
     <!-- Success -->
-    <string name="success_create_user">Usuário Cadastrado com Sucesso.</string>
+    <string name="success_create_user">Usuário cadastrado com sucesso.</string>
+
+    <!-- Prompt -->
+    <string name="prompt_loading">Loading…</string>
 </resources>

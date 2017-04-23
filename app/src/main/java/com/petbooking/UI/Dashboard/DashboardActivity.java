@@ -11,11 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.petbooking.Components.DrawerItem;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
 import com.petbooking.R;
@@ -41,25 +39,6 @@ public class DashboardActivity extends AppCompatActivity {
     private TextView mTvSideMenuName;
     private TextView mTvSideMenuAddress;
 
-    /**
-     * Sidemenu Itens
-     */
-
-    private DrawerItem mMiPets;
-    private DrawerItem mMiSearch;
-    private DrawerItem mMiCalendar;
-    private DrawerItem mMiPayments;
-    private DrawerItem mMiFavorites;
-    private DrawerItem mMiSettings;
-    private LinearLayout mMiLogout;
-
-    View.OnClickListener mMenuItemListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onMenuItemSelected(v.getId());
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,33 +57,15 @@ public class DashboardActivity extends AppCompatActivity {
         toggle.syncState();
 
         mNavView = (NavigationView) findViewById(R.id.nav_view);
-
-        /**
-         * Set sidemenu actions
-         */
-        mMiPets = (DrawerItem) findViewById(R.id.my_pets);
-        mMiSearch = (DrawerItem) findViewById(R.id.search);
-        mMiCalendar = (DrawerItem) findViewById(R.id.calendar);
-        mMiPayments = (DrawerItem) findViewById(R.id.payments);
-        mMiFavorites = (DrawerItem) findViewById(R.id.favorites);
-        mMiSettings = (DrawerItem) findViewById(R.id.settings);
-        mMiLogout = (LinearLayout) findViewById(R.id.logout);
-
-        mMiPets.setOnClickListener(mMenuItemListener);
-        mMiSearch.setOnClickListener(mMenuItemListener);
-        mMiCalendar.setOnClickListener(mMenuItemListener);
-        mMiPayments.setOnClickListener(mMenuItemListener);
-        mMiFavorites.setOnClickListener(mMenuItemListener);
-        mMiSettings.setOnClickListener(mMenuItemListener);
-        mMiLogout.setOnClickListener(mMenuItemListener);
+        mHeaderView = mNavView.getHeaderView(0);
 
         /**
          * Update Sidemenu Info
          */
 
-        mCivSideMenuPicture = (CircleImageView) findViewById(R.id.sidemenu_picture);
-        mTvSideMenuName = (TextView) findViewById(R.id.sidemenu_name);
-        mTvSideMenuAddress = (TextView) findViewById(R.id.sidemenu_address);
+        mCivSideMenuPicture = (CircleImageView) mHeaderView.findViewById(R.id.sidemenu_picture);
+        mTvSideMenuName = (TextView) mHeaderView.findViewById(R.id.sidemenu_name);
+        mTvSideMenuAddress = (TextView) mHeaderView.findViewById(R.id.sidemenu_address);
 
         mTvSideMenuName.setText(currentUser.name);
         mTvSideMenuAddress.setText(currentUser.city + ", " + currentUser.state);
@@ -150,21 +111,6 @@ public class DashboardActivity extends AppCompatActivity {
      * @return
      */
     public boolean onMenuItemSelected(int id) {
-        if (id == mMiPets.getId()) {
-            Log.d("ITEM SELECTED", "PETS");
-        } else if (id == mMiSearch.getId()) {
-            Log.d("ITEM SELECTED", "SEARCH");
-        } else if (id == mMiCalendar.getId()) {
-            Log.d("ITEM SELECTED", "CALENDAR");
-        } else if (id == mMiPayments.getId()) {
-            Log.d("ITEM SELECTED", "PAYMENT");
-        } else if (id == mMiFavorites.getId()) {
-            Log.d("ITEM SELECTED", "FAVORITE");
-        } else if (id == mMiSettings.getId()) {
-            Log.d("ITEM SELECTED", "SETTING");
-        } else if (id == mMiLogout.getId()) {
-            logout();
-        }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;

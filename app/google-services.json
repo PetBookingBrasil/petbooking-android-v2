@@ -1,0 +1,66 @@
+{
+  "project_info": {
+    "project_number": "194306783014",
+    "firebase_url": "https://petbooking-337f2.firebaseio.com",
+    "project_id": "petbooking-337f2",
+    "storage_bucket": "petbooking-337f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194306783014:android:94fad0ab8bbab595",
+        "android_client_info": {
+          "package_name": "com.petbooking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194306783014-032dqhurh9rsgol6se9efhkgmdccvhl3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petbooking",
+            "certificate_hash": "C865EF4DDC66596DC689FE10DB8C90EAFCF7E847"
+          }
+        },
+        {
+          "client_id": "194306783014-7kukq29pik84632hqaltkuuj1ovs710v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petbooking",
+            "certificate_hash": "DA0AF249164B616EF087B1D4E41CFD4C06E1B099"
+          }
+        },
+        {
+          "client_id": "194306783014-plg99oq6rb304t6mv8jtiek3qtehsh17.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIHElBcu7iSWPY3FY4Lt9ivtwOCi3Gkb8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-80328338-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194306783014-plg99oq6rb304t6mv8jtiek3qtehsh17.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

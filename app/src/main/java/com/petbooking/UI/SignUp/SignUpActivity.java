@@ -25,6 +25,7 @@ import com.petbooking.Events.HideLoadingEvt;
 import com.petbooking.Events.ShowLoadingEvt;
 import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.MaskManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
@@ -51,6 +52,7 @@ public class SignUpActivity extends BaseActivity implements
     private FragmentManager mFragmentManager;
     private UserService mUserService;
     private SessionManager mSessionManager;
+    private LocationManager mLocationManager;
 
     /**
      * Picture Select

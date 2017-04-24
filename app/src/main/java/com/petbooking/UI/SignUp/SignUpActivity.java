@@ -176,7 +176,7 @@ public class SignUpActivity extends BaseActivity implements
      * Register User
      */
     public void registerUser() {
-        int message = FormUtils.validateUser(user);
+        int message = FormUtils.validateUser(user, true);
         String repeatPassword = mEdtRepeatPass.getText().toString();
 
         if (message == -1 && (user.password.equals(repeatPassword))) {

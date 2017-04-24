@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.User.UserService;
@@ -74,6 +75,7 @@ public class ProfileActivity extends BaseActivity implements
     /**
      * Form Inputs
      */
+    private LinearLayout mLPasswordGroup;
     private CircleImageView mCiUserPhoto;
     private EditText mEdtBirthday;
     private EditText mEdtCpf;
@@ -149,6 +151,7 @@ public class ProfileActivity extends BaseActivity implements
         mDialogFragmentFeedback = FeedbackDialogFragment.newInstance();
         mDatePicker = DatePickerFragment.newInstance();
 
+        mLPasswordGroup = (LinearLayout) findViewById(R.id.passwordGroup);
         mCiUserPhoto = (CircleImageView) findViewById(R.id.user_photo);
         mEdtBirthday = (EditText) findViewById(R.id.user_birthday);
         mEdtCpf = (EditText) findViewById(R.id.user_cpf);
@@ -158,21 +161,21 @@ public class ProfileActivity extends BaseActivity implements
         mEdtCity = (EditText) findViewById(R.id.user_city);
         mEdtNeighborhood = (EditText) findViewById(R.id.user_neighborhood);
         mEdtState = (EditText) findViewById(R.id.user_state);
-        mEdtRepeatPass = (EditText) findViewById(R.id.repeat_password);
+        mBtnSubmit = (Button) findViewById(R.id.submitButton);
+        mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
 
         mEdtBirthday.addTextChangedListener(MaskManager.insert("##/##/####", mEdtBirthday));
-        mEdtBirthday.setOnClickListener(mBirthdayListener);
         mEdtCpf.addTextChangedListener(MaskManager.insert("###.###.###-##", mEdtCpf));
         mEdtZipcode.addTextChangedListener(MaskManager.insert("##.###-###", mEdtZipcode));
         mEdtPhone.addTextChangedListener(MaskManager.insert("(##) #####.####", mEdtPhone));
 
         mEdtZipcode.addTextChangedListener(mTextWatcher);
-
-        mBtnSubmit = (Button) findViewById(R.id.submitButton);
-        mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
+        mEdtBirthday.setOnClickListener(mBirthdayListener);
         mBtnSubmit.setOnClickListener(mSubmitListener);
         mIBtnSelectPicture.setOnClickListener(mSelectListener);
         mCiUserPhoto.setOnClickListener(mSelectListener);
+
+        mLPasswordGroup.setVisibility(View.GONE);
 
         mBinding.setUser(user);
     }
@@ -181,13 +184,10 @@ public class ProfileActivity extends BaseActivity implements
      * Update User
      */
     public void updateUser() {
-        int message = FormUtils.validateUser(user);
-        String repeatPassword = mEdtRepeatPass.getText().toString();
+        int message = FormUtils.validateUser(user, false);
 
-        if (message == -1 && (user.password.equals(repeatPassword))) {
+        if (message == -1) {
             updateRequest(user);
-        } else if (message == -1 && (!user.password.equals(repeatPassword))) {
-            EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_different_password, Snackbar.LENGTH_LONG));
         } else if (message != -1) {
             EventBus.getDefault().post(new ShowSnackbarEvt(message, Snackbar.LENGTH_LONG));
         }
@@ -280,7 +280,7 @@ public class ProfileActivity extends BaseActivity implements
             openGalery();
         } else if (action == AppConstants.TAKE_PHOTO) {
             openCamera();
-        }else if(action == AppConstants.OK_ACTION){
+        } else if (action == AppConstants.OK_ACTION) {
             onBackPressed();
         }
     }

@@ -9,7 +9,7 @@ import com.petbooking.R;
 
 public class FormUtils {
 
-    public static int validateUser(User user) {
+    public static int validateUser(User user, boolean checkPassword) {
         if (CommonUtils.isEmpty(user.name) || CommonUtils.isEmpty(user.birthday) || CommonUtils.isEmpty(user.cpf)
                 || CommonUtils.isEmpty(user.email) || CommonUtils.isEmpty(user.zipcode) || CommonUtils.isEmpty(user.street)
                 || CommonUtils.isEmpty(user.city) || CommonUtils.isEmpty(user.neighborhood)
@@ -21,7 +21,7 @@ public class FormUtils {
             return R.string.error_invalid_cpf;
         } else if (!CommonUtils.isPhoneValid(user.phone)) {
             return R.string.error_invalid_phone;
-        } else if (!CommonUtils.isValidPassword(user.password)) {
+        } else if (checkPassword && !CommonUtils.isValidPassword(user.password)) {
             return R.string.error_invalid_password;
         }
 

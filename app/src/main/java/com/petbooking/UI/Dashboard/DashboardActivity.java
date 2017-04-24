@@ -81,7 +81,6 @@ public class DashboardActivity extends AppCompatActivity implements
         mSessionManager = SessionManager.getInstance();
         mLocationManager = LocationManager.getInstance();
         mFragmentManager = getSupportFragmentManager();
-        currentUser = mSessionManager.getUserLogged();
 
         mFeedbackDialogFragment = FeedbackDialogFragment.newInstance();
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -106,25 +105,14 @@ public class DashboardActivity extends AppCompatActivity implements
         mCivSideMenuPicture = (CircleImageView) mHeaderView.findViewById(R.id.sidemenu_picture);
         mTvSideMenuName = (TextView) mHeaderView.findViewById(R.id.sidemenu_name);
         mTvSideMenuAddress = (TextView) mHeaderView.findViewById(R.id.sidemenu_address);
-
-        mTvSideMenuName.setText(currentUser.name);
         mIBtnProfile.setOnClickListener(btnProfileListener);
-
-        mUserAddress = mLocationManager.getAddress();
-
-        if (mUserAddress != null) {
-            mTvSideMenuAddress.setText(mUserAddress.city + ", " + mUserAddress.state);
-        } else if (currentUser.city != null && currentUser.state != null) {
-            mTvSideMenuAddress.setText(currentUser.city + ", " + currentUser.state);
-        }
-
-        Glide.with(this)
-                .load(APIUtils.getAssetEndpoint(currentUser.avatar.large.url))
-                .centerCrop()
-                .dontAnimate()
-                .into(mCivSideMenuPicture);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUserInfo();
+    }
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -213,5 +201,27 @@ public class DashboardActivity extends AppCompatActivity implements
     private void goToProfile() {
         Intent profileIntent = new Intent(this, ProfileActivity.class);
         startActivity(profileIntent);
+    }
+
+    /**
+     * Update User Info
+     */
+    private void updateUserInfo() {
+        currentUser = mSessionManager.getUserLogged();
+
+        mTvSideMenuName.setText(currentUser.name);
+        mUserAddress = mLocationManager.getAddress();
+
+        if (mUserAddress != null) {
+            mTvSideMenuAddress.setText(mUserAddress.city + ", " + mUserAddress.state);
+        } else if (currentUser.city != null && currentUser.state != null) {
+            mTvSideMenuAddress.setText(currentUser.city + ", " + currentUser.state);
+        }
+
+        Glide.with(this)
+                .load(APIUtils.getAssetEndpoint(currentUser.avatar.large.url))
+                .centerCrop()
+                .dontAnimate()
+                .into(mCivSideMenuPicture);
     }
 }

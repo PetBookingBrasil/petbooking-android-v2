@@ -3,6 +3,7 @@ package com.petbooking.UI.SplashScreen;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.petbooking.API.Auth.AuthService;
 import com.petbooking.Interfaces.APICallback;
@@ -25,28 +26,7 @@ public class SplashActivity extends AppCompatActivity {
 
         mSessionManager = SessionManager.getInstance();
         mAuthService = new AuthService();
-        mAuthService.authConsumer(new APICallback() {
-            @Override
-            public void onSuccess(Object response) {
-                AuthConsumerResp authConsumerResp = (AuthConsumerResp) response;
-                mSessionManager.setConsumerToken(authConsumerResp.data.attributes.token);
-                mSessionManager.setConsumerExpirationDate(authConsumerResp.data.attributes.tokenExpiresAt);
-                boolean alreadyLogged = mSessionManager.alreadyLogged();
-                if (alreadyLogged) {
-                    goToLogin();
-                } else {
-                    mSessionManager.setAlreadyLogged(true);
-                    goToPresentation();
-                }
-            }
-
-            @Override
-            public void onError(Object error) {
-
-            }
-        });
-
-
+        authConsumer();
     }
 
     /**
@@ -65,5 +45,31 @@ public class SplashActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PresentationActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    /**
+     * Auth Consumer
+     */
+    public void authConsumer(){
+        mAuthService.authConsumer(new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                AuthConsumerResp authConsumerResp = (AuthConsumerResp) response;
+                mSessionManager.setConsumerToken(authConsumerResp.data.attributes.token);
+                mSessionManager.setConsumerExpirationDate(authConsumerResp.data.attributes.tokenExpiresAt);
+                boolean alreadyLogged = mSessionManager.alreadyLogged();
+                if (alreadyLogged) {
+                    goToLogin();
+                } else {
+                    mSessionManager.setAlreadyLogged(true);
+                    goToPresentation();
+                }
+            }
+
+            @Override
+            public void onError(Object error) {
+                authConsumer();
+            }
+        });
     }
 }

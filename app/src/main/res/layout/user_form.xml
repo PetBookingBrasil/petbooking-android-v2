@@ -337,7 +337,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
-                android:id="@+id/groupTwo"
+                android:id="@+id/passwordGroup"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/spacing_xmicro"
@@ -405,7 +405,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/groupTwo" />
+                app:layout_constraintTop_toBottomOf="@+id/passwordGroup" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

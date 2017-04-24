@@ -9,18 +9,22 @@ import android.widget.EditText;
 
 import com.petbooking.API.User.UserService;
 import com.petbooking.BaseActivity;
+import com.petbooking.Constants.AppConstants;
 import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.R;
+import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Login.LoginActivity;
+import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
-public class RecoverPasswordActivity extends BaseActivity {
+public class RecoverPasswordActivity extends BaseActivity implements FeedbackDialogFragment.FinishDialogListener {
 
     private UserService mUserService;
 
+    private FeedbackDialogFragment mFeedbackDialgoFragment;
     private EditText mEdtRecoverEmail;
     private Button mBtnSendEmail;
 
@@ -36,10 +40,9 @@ public class RecoverPasswordActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recover_password);
 
-        getSupportActionBar().setTitle(R.string.recover_password_title);
-
         mUserService = new UserService();
 
+        mFeedbackDialgoFragment = FeedbackDialogFragment.newInstance();
         mEdtRecoverEmail = (EditText) findViewById(R.id.recoverEmail);
         mBtnSendEmail = (Button) findViewById(R.id.sendButton);
 
@@ -57,7 +60,7 @@ public class RecoverPasswordActivity extends BaseActivity {
             return;
         }
 
-        if (!FormUtils.isValidEmail(email)) {
+        if (!CommonUtils.isValidEmail(email)) {
             EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_invalid_email, Snackbar.LENGTH_SHORT));
             return;
         }
@@ -65,7 +68,9 @@ public class RecoverPasswordActivity extends BaseActivity {
         mUserService.recoverPassword(email, new APICallback() {
             @Override
             public void onSuccess(Object response) {
-                goToLogin();
+                mFeedbackDialgoFragment.setDialogInfo(R.string.recover_email_title, R.string.recover_email_text,
+                        R.string.dialog_button_ok, AppConstants.OK_ACTION);
+                mFeedbackDialgoFragment.show(getSupportFragmentManager(), "RECOVER_EMAIL");
             }
 
             @Override
@@ -78,10 +83,15 @@ public class RecoverPasswordActivity extends BaseActivity {
     /**
      * Go to Login
      */
-
     public void goToLogin() {
         Intent loginIntent = new Intent(this, LoginActivity.class);
         startActivity(loginIntent);
+    }
 
+    @Override
+    public void onFinishDialog(int action) {
+        if (action == AppConstants.OK_ACTION) {
+            goToLogin();
+        }
     }
 }

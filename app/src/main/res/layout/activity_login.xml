@@ -27,8 +27,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_login" />
 
-        <EditText
-            android:id="@+id/email"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/emailTL"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_xtiny"
@@ -36,17 +36,24 @@
             android:layout_marginRight="@dimen/spacing_xtiny"
             android:layout_marginStart="@dimen/spacing_xtiny"
             android:layout_marginTop="@dimen/spacing_xsmallest"
-            android:drawablePadding="@dimen/spacing_xmicro"
-            android:drawableStart="@drawable/ic_email"
-            android:hint="@string/hint_email"
-            android:inputType="textEmailAddress"
             app:layout_constraintHorizontal_bias="0.156"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appLogo" />
+            app:layout_constraintTop_toBottomOf="@+id/appLogo">
 
-        <EditText
-            android:id="@+id/password"
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/spacing_xmicro"
+                android:drawableStart="@drawable/ic_email"
+                android:hint="@string/hint_email"
+                android:inputType="textEmailAddress" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/passwordTL"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_xtiny"
@@ -54,15 +61,21 @@
             android:layout_marginRight="@dimen/spacing_xtiny"
             android:layout_marginStart="@dimen/spacing_xtiny"
             android:layout_marginTop="@dimen/spacing_tiny"
-            android:drawablePadding="@dimen/spacing_xmicro"
-            android:drawableStart="@drawable/ic_password"
-            android:ems="10"
-            android:hint="@string/hint_password"
-            android:inputType="textPassword"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email" />
+            app:layout_constraintTop_toBottomOf="@+id/emailTL">
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/spacing_xmicro"
+                android:drawableStart="@drawable/ic_password"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:id="@+id/forgotPassword"
@@ -79,7 +92,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password"
+            app:layout_constraintTop_toBottomOf="@+id/passwordTL"
             app:layout_constraintVertical_bias="0.125" />
 
         <LinearLayout

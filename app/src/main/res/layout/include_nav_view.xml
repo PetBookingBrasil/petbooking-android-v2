@@ -6,21 +6,9 @@
     android:layout_gravity="start"
     android:background="@color/brand_primary"
     android:fitsSystemWindows="true"
-    app:itemTextColor="@color/white">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include
-            android:id="@+id/nav_header"
-            layout="@layout/include_nav_header" />
-
-        <include
-            android:id="@+id/nav_drawer_menu"
-            layout="@layout/nav_drawer_menu" />
-
-    </LinearLayout>
+    app:headerLayout="@layout/nav_header"
+    app:itemIconTint="@color/white"
+    app:itemTextColor="@color/white"
+    app:menu="@menu/menu_drawer">
 
 </android.support.design.widget.NavigationView>

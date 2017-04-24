@@ -1,5 +1,6 @@
 package com.petbooking.Constants;
 
+import android.Manifest;
 import android.os.Build;
 
 import com.petbooking.R;
@@ -32,4 +33,17 @@ public class AppConstants {
      * Pages Contants
      */
     public static final int PRESENTATION_COLORS[] = {R.color.presentation_1, R.color.presentation_2, R.color.presentation_3};
+
+    /**
+     * Intent Codes
+     */
+    public static final int PICK_PHOTO = 1;
+    public static final int TAKE_PHOTO = 2;
+    public static final int OK_ACTION = 9000;
+    public static final int BACK_SCREEN_ACTION = 9001;
+
+    /**
+     * Permissions
+     */
+    public static final String PERMISSION_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
 }

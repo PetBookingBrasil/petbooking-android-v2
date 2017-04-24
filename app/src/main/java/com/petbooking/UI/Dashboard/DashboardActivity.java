@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -30,6 +31,7 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
 import com.petbooking.Models.UserAddress;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Profile.ProfileActivity;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Login.LoginActivity;
 import com.petbooking.Utils.APIUtils;
@@ -58,16 +60,18 @@ public class DashboardActivity extends AppCompatActivity implements
      * Sidemenu content
      */
     private User currentUser;
+    private ImageButton mIBtnProfile;
     private CircleImageView mCivSideMenuPicture;
     private TextView mTvSideMenuName;
     private TextView mTvSideMenuAddress;
 
-    View.OnClickListener locationListener = new View.OnClickListener() {
+    View.OnClickListener btnProfileListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            checkLocationPermission();
+            goToProfile();
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,16 +102,20 @@ public class DashboardActivity extends AppCompatActivity implements
          * Update Sidemenu Info
          */
 
+        mIBtnProfile = (ImageButton) mHeaderView.findViewById(R.id.profileButton);
         mCivSideMenuPicture = (CircleImageView) mHeaderView.findViewById(R.id.sidemenu_picture);
         mTvSideMenuName = (TextView) mHeaderView.findViewById(R.id.sidemenu_name);
         mTvSideMenuAddress = (TextView) mHeaderView.findViewById(R.id.sidemenu_address);
 
         mTvSideMenuName.setText(currentUser.name);
+        mIBtnProfile.setOnClickListener(btnProfileListener);
 
         mUserAddress = mLocationManager.getAddress();
 
         if (mUserAddress != null) {
             mTvSideMenuAddress.setText(mUserAddress.city + ", " + mUserAddress.state);
+        } else if (currentUser.city != null && currentUser.state != null) {
+            mTvSideMenuAddress.setText(currentUser.city + ", " + currentUser.state);
         }
 
         Glide.with(this)
@@ -122,7 +130,6 @@ public class DashboardActivity extends AppCompatActivity implements
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         checkLocationPermission();
-        Log.d("COORDS", new Gson().toJson(mLocationManager.getAddress()));
     }
 
     @Override
@@ -167,16 +174,6 @@ public class DashboardActivity extends AppCompatActivity implements
         return true;
     }
 
-    /**
-     * Request Location Permission
-     */
-    private void checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this, AppConstants.PERMISSION_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mLocationManager.requestLocation();
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{AppConstants.PERMISSION_LOCATION}, RC_PERMISSION);
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -194,8 +191,27 @@ public class DashboardActivity extends AppCompatActivity implements
 
     @Override
     public void onFinishDialog(int action) {
-        if(action == AppConstants.OK_ACTION){
+        if (action == AppConstants.OK_ACTION) {
             checkLocationPermission();
         }
+    }
+
+    /**
+     * Request Location Permission
+     */
+    private void checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, AppConstants.PERMISSION_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mLocationManager.requestLocation();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{AppConstants.PERMISSION_LOCATION}, RC_PERMISSION);
+        }
+    }
+
+    /**
+     * Go to Profile Screen
+     */
+    private void goToProfile() {
+        Intent profileIntent = new Intent(this, ProfileActivity.class);
+        startActivity(profileIntent);
     }
 }

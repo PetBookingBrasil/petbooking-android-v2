@@ -379,7 +379,6 @@
                         android:id="@+id/repeat_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/spacing_xmicro"
                         android:layout_marginTop="@dimen/spacing_xmicro"
                         android:drawableLeft="@drawable/ic_password_black"
                         android:drawablePadding="@dimen/spacing_xmicro"
@@ -391,7 +390,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/registerButton"
+                android:id="@+id/submitButton"
                 style="@style/AppTheme.PrimaryButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

@@ -119,6 +119,12 @@ public class CommonUtils {
         return date;
     }
 
+    public static String formatDate(String date){
+        String formatedDate = date.substring(8, 10) + "/" + date.substring(5,7) + "/" + date.substring(0, 4);
+
+        return formatedDate;
+    }
+
     public static UserAddress parseAddress(Address address) {
         UserAddress userAddress = null;
         String state = address.getAdminArea().substring(0, 2);
@@ -132,4 +138,7 @@ public class CommonUtils {
         return userAddress;
     }
 
+    public static String formatCpf(String cpf) {
+        return cpf;
+    }
 }

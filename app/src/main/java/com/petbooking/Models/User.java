@@ -1,6 +1,7 @@
 package com.petbooking.Models;
 
 import com.petbooking.API.Generic.AvatarResp;
+import com.petbooking.Utils.CommonUtils;
 
 /**
  * Created by Luciano José on 14/04/2017.
@@ -46,7 +47,7 @@ public class User {
         this.id = id;
         this.authToken = authToken;
         this.name = name;
-        this.birthday = birthday;
+        this.birthday = CommonUtils.formatDate(birthday);
         this.phone = phone;
         this.phoneActivated = phoneActivated;
         this.phoneCodeCreatedAt = phoneCodeCreatedAt;

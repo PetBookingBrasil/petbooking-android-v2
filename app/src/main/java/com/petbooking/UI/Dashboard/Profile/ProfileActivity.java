@@ -1,4 +1,4 @@
-package com.petbooking.UI.SignUp;
+package com.petbooking.UI.Dashboard.Profile;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import android.widget.ImageButton;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.User.UserService;
 import com.petbooking.BaseActivity;
+import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Events.HideLoadingEvt;
 import com.petbooking.Events.ShowLoadingEvt;
@@ -43,7 +45,7 @@ import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SignUpActivity extends BaseActivity implements
+public class ProfileActivity extends BaseActivity implements
         PictureSelectDialogFragment.FinishDialogListener,
         FeedbackDialogFragment.FinishDialogListener,
         DatePickerFragment.DatePickerListener {
@@ -51,7 +53,6 @@ public class SignUpActivity extends BaseActivity implements
     private FragmentManager mFragmentManager;
     private UserService mUserService;
     private SessionManager mSessionManager;
-    private LocationManager mLocationManager;
 
     /**
      * Picture Select
@@ -92,7 +93,7 @@ public class SignUpActivity extends BaseActivity implements
     View.OnClickListener mSubmitListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            registerUser();
+            updateUser();
         }
     };
 
@@ -136,11 +137,14 @@ public class SignUpActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.user_form);
-        user = new User();
+
+        mSessionManager = SessionManager.getInstance();
+        mUserService = new UserService();
+
+        user = mSessionManager.getUserLogged();
+        user.password = "";
 
         mFragmentManager = getSupportFragmentManager();
-        mUserService = new UserService();
-        mSessionManager = SessionManager.getInstance();
         mDialogFragmentPictureSelect = PictureSelectDialogFragment.newInstance();
         mDialogFragmentFeedback = FeedbackDialogFragment.newInstance();
         mDatePicker = DatePickerFragment.newInstance();
@@ -169,18 +173,19 @@ public class SignUpActivity extends BaseActivity implements
         mBtnSubmit.setOnClickListener(mSubmitListener);
         mIBtnSelectPicture.setOnClickListener(mSelectListener);
         mCiUserPhoto.setOnClickListener(mSelectListener);
+
         mBinding.setUser(user);
     }
 
     /**
-     * Register User
+     * Update User
      */
-    public void registerUser() {
+    public void updateUser() {
         int message = FormUtils.validateUser(user);
         String repeatPassword = mEdtRepeatPass.getText().toString();
 
         if (message == -1 && (user.password.equals(repeatPassword))) {
-            createRequest(user);
+            updateRequest(user);
         } else if (message == -1 && (!user.password.equals(repeatPassword))) {
             EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_different_password, Snackbar.LENGTH_LONG));
         } else if (message != -1) {
@@ -244,39 +249,30 @@ public class SignUpActivity extends BaseActivity implements
     }
 
     /**
-     * Request to Create a new User
+     * Request to Update User
      *
      * @param user
      */
-    public void createRequest(User user) {
-        mUserService.createUser(user, new APICallback() {
+    public void updateRequest(User user) {
+        mUserService.updateUser(user.id, user, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 AuthUserResp authUserResp = (AuthUserResp) response;
                 User user = APIUtils.parseUser(authUserResp);
                 mSessionManager.setUserLogged(user);
-                mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.success_create_user,
+                mDialogFragmentFeedback.setDialogInfo(R.string.profile_dialog_title, R.string.success_create_user,
                         R.string.dialog_button_ok, AppConstants.OK_ACTION);
                 mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
             }
 
             @Override
             public void onError(Object error) {
-                mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.error_create_user,
+                mDialogFragmentFeedback.setDialogInfo(R.string.profile_dialog_title, R.string.error_update_user,
                         R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
                 mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
             }
         });
     }
-
-    /**
-     * Go to Dashboard after logged
-     */
-    public void goToDashboard() {
-        Intent dashboardIntent = new Intent(this, DashboardActivity.class);
-        startActivity(dashboardIntent);
-    }
-
 
     @Override
     public void onFinishDialog(int action) {
@@ -284,9 +280,14 @@ public class SignUpActivity extends BaseActivity implements
             openGalery();
         } else if (action == AppConstants.TAKE_PHOTO) {
             openCamera();
-        } else if (action == AppConstants.OK_ACTION) {
-            goToDashboard();
+        }else if(action == AppConstants.OK_ACTION){
+            onBackPressed();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override

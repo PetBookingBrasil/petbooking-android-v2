@@ -46,4 +46,10 @@ public class AppConstants {
      * Permissions
      */
     public static final String PERMISSION_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+
+    /**
+     * Configs
+     */
+    public static final int CONNECTION_TIMEOUT = 30;
+    public static final int READ_TIMEOUT = 30;
 }

@@ -3,12 +3,15 @@ package com.petbooking.UI.SplashScreen;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.petbooking.API.Auth.AuthService;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.API.Auth.Models.AuthConsumerResp;
+import com.petbooking.R;
 import com.petbooking.UI.Login.LoginActivity;
 import com.petbooking.UI.Presentation.PresentationActivity;
 
@@ -20,9 +23,17 @@ public class SplashActivity extends AppCompatActivity {
     private AuthService mAuthService;
     private SessionManager mSessionManager;
 
+    private ImageView mIvAppLogo;
+    private Animation mPulseAnimation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash_screen);
+
+        mPulseAnimation = AnimationUtils.loadAnimation(this, R.anim.pulse);
+        mIvAppLogo = (ImageView) findViewById(R.id.appLogo);
+        mIvAppLogo.startAnimation(mPulseAnimation);
 
         mSessionManager = SessionManager.getInstance();
         mAuthService = new AuthService();
@@ -50,7 +61,7 @@ public class SplashActivity extends AppCompatActivity {
     /**
      * Auth Consumer
      */
-    public void authConsumer(){
+    public void authConsumer() {
         mAuthService.authConsumer(new APICallback() {
             @Override
             public void onSuccess(Object response) {

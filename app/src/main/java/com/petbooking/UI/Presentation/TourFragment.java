@@ -62,8 +62,7 @@ public class TourFragment extends Fragment {
 
         mIvPresentation.setImageResource(getResources().getIdentifier(imageId, "drawable", packageName));
         mTvTitle.setText(getResources().getIdentifier(titleId, "string", packageName));
-        //mTvText.setText(getResources().getIdentifier(textId, "string", packageName));
-        mTvText.setText(R.string.small_lorem);
+        mTvText.setText(getResources().getIdentifier(textId, "string", packageName));
         mPresentationLayout.setBackgroundColor(getResources().getColor(colorId));
 
         return view;

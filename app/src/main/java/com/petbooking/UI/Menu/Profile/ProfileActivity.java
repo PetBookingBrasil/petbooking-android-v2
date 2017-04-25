@@ -1,4 +1,4 @@
-package com.petbooking.UI.Dashboard.Profile;
+package com.petbooking.UI.Menu.Profile;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;

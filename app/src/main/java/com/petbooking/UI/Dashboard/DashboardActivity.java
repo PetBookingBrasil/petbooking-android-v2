@@ -3,11 +3,9 @@ package com.petbooking.UI.Dashboard;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -24,14 +22,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
 import com.petbooking.Models.UserAddress;
 import com.petbooking.R;
-import com.petbooking.UI.Dashboard.Profile.ProfileActivity;
+import com.petbooking.UI.Menu.Profile.ProfileActivity;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Login.LoginActivity;
 import com.petbooking.Utils.APIUtils;
@@ -41,6 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class DashboardActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, FeedbackDialogFragment.FinishDialogListener {
 
+    private boolean permissionDenied = false;
     private static final int RC_PERMISSION = 234;
 
     private SessionManager mSessionManager;
@@ -111,12 +109,21 @@ public class DashboardActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (permissionDenied) {
+            permissionDenied = false;
+            mFeedbackDialogFragment.setDialogInfo(R.string.permission_location_title, R.string.permission_location,
+                    R.string.dialog_button_ok, AppConstants.OK_ACTION);
+            mFeedbackDialogFragment.show(mFragmentManager, "LOCATION_PERMISSION");
+        }
+
         updateUserInfo();
     }
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+
         checkLocationPermission();
     }
 
@@ -169,9 +176,7 @@ public class DashboardActivity extends AppCompatActivity implements
             if (ContextCompat.checkSelfPermission(this, AppConstants.PERMISSION_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 mLocationManager.requestLocation();
             } else {
-                mFeedbackDialogFragment.setDialogInfo(R.string.permission_location_title, R.string.permission_location,
-                        R.string.dialog_button_ok, AppConstants.OK_ACTION);
-                mFeedbackDialogFragment.show(mFragmentManager, "LOCATION_PERMISSION");
+                permissionDenied = true;
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -216,6 +221,8 @@ public class DashboardActivity extends AppCompatActivity implements
             mTvSideMenuAddress.setText(mUserAddress.city + ", " + mUserAddress.state);
         } else if (currentUser.city != null && currentUser.state != null) {
             mTvSideMenuAddress.setText(currentUser.city + ", " + currentUser.state);
+        } else {
+            mTvSideMenuAddress.setText(R.string.prompt_loading);
         }
 
         Glide.with(this)

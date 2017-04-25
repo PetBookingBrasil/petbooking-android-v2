@@ -38,6 +38,25 @@ public class PresentationActivity extends AppCompatActivity {
         }
     };
 
+    ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            if (position == 2) {
+                goToLogin();
+            }
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            mBtnNextTour.setTextColor(getResources().getColor(AppConstants.PRESENTATION_COLORS[position]));
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +71,8 @@ public class PresentationActivity extends AppCompatActivity {
         mBtnSkip = (Button) findViewById(R.id.skip);
 
         mBtnNextTour.setOnClickListener(mListener);
+        mViewPager.setOnPageChangeListener(pageChangeListener);
+
         mBtnNextTour.setTextColor(getResources().getColor(AppConstants.PRESENTATION_COLORS[0]));
         mBtnSkip.setOnClickListener(mListener);
     }

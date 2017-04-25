@@ -1,7 +1,10 @@
 package com.petbooking.Utils;
 
+import android.app.Activity;
+import android.content.Context;
 import android.location.Address;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Models.UserAddress;
@@ -16,6 +19,15 @@ import java.util.regex.Pattern;
 public class CommonUtils {
 
     public static final int PASSWORD_LENGTH = 6;
+
+    public static void hideKeyboard(Activity activity) {
+        if (activity == null || activity.getCurrentFocus() == null) {
+            return;
+        }
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
 
     public static boolean isEmpty(String text) {
         if (text == null || text.equals("")) {
@@ -119,8 +131,12 @@ public class CommonUtils {
         return date;
     }
 
-    public static String formatDate(String date){
-        String formatedDate = date.substring(8, 10) + "/" + date.substring(5,7) + "/" + date.substring(0, 4);
+    public static String formatDate(String date) {
+        String formatedDate = "";
+
+        if (date != null) {
+            formatedDate = date.substring(8, 10) + "/" + date.substring(5, 7) + "/" + date.substring(0, 4);
+        }
 
         return formatedDate;
     }

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Pet Booking</string>
+    <string name="app_slogan">Esse app é animal</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -17,12 +18,12 @@
     <string name="presentation_text_format">presentation_%d_text</string>
     <string name="presentation_image_format">presentation_%d</string>
     <string name="presentation_color_format">presentation_%d</string>
-    <string name="presentation_1_title">Title 01</string>
-    <string name="presentation_2_title">Title 02</string>
-    <string name="presentation_3_title">Title 03</string>
-    <string name="presentation_1_text">Text 01</string>
-    <string name="presentation_2_text">Text 02</string>
-    <string name="presentation_3_text">Text 03</string>
+    <string name="presentation_1_title">Encontre e agende serviços para seus Pets, em poucos segundos, a qualquer hora do dia!</string>
+    <string name="presentation_2_title">Realize seu cadastro, encontre o serviço desejado e agende o horário mais conveniente para você!</string>
+    <string name="presentation_3_title">Cuidar dos seus Pets nunca foi tão fácil e prático!</string>
+    <string name="presentation_1_text">Banho, tosa, consultas veterinárias e muito mais!</string>
+    <string name="presentation_2_text"></string>
+    <string name="presentation_3_text">Simples, rápido, seguro e gratuito.</string>
     <string name="next">Próximo</string>
     <string name="skip">Pular</string>
 

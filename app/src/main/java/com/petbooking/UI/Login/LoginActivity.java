@@ -1,6 +1,7 @@
 package com.petbooking.UI.Login;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -42,7 +43,9 @@ public class LoginActivity extends BaseActivity {
     private UserService mUserService;
     private FacebookAuthManager mFacebookAuthManager;
 
+    private Typeface mCustomFont;
     private ImageView mIvAppLogo;
+    private TextView mTvAppSlogan;
     private EditText mEdtEmail;
     private EditText mEdtPassword;
     private Button mBtnLogin;
@@ -86,7 +89,10 @@ public class LoginActivity extends BaseActivity {
         mUserService = new UserService();
         mFacebookAuthManager = new FacebookAuthManager();
 
+        mCustomFont = Typeface.createFromAsset(getAssets(), "fonts/FFADMatro.ttf");
+
         mIvAppLogo = (ImageView) findViewById(R.id.appLogo);
+        mTvAppSlogan = (TextView) findViewById(R.id.appSlogan);
         mTvForgotPassword = (TextView) findViewById(R.id.forgotPassword);
         mEdtEmail = (EditText) findViewById(R.id.email);
         mEdtPassword = (EditText) findViewById(R.id.password);
@@ -101,7 +107,7 @@ public class LoginActivity extends BaseActivity {
         mBtnFacebookLogin.setOnClickListener(clickListener);
 
         mFacebookAuthManager.init(fbRequestCallback);
-
+        mTvAppSlogan.setTypeface(mCustomFont);
     }
 
     @Override

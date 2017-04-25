@@ -81,7 +81,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".UI.Dashboard.Profile.ProfileActivity"
+            android:name=".UI.Menu.Profile.ProfileActivity"
             android:configChanges="orientation"
             android:label="@string/profile_title"
             android:parentActivityName=".UI.Dashboard.DashboardActivity"

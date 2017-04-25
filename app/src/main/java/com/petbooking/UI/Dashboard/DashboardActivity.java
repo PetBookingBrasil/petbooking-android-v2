@@ -126,6 +126,7 @@ public class DashboardActivity extends AppCompatActivity implements
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+
         checkLocationPermission();
     }
 

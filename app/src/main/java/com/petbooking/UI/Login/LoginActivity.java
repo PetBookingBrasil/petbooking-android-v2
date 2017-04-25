@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -41,6 +42,7 @@ public class LoginActivity extends BaseActivity {
     private UserService mUserService;
     private FacebookAuthManager mFacebookAuthManager;
 
+    private ImageView mIvAppLogo;
     private EditText mEdtEmail;
     private EditText mEdtPassword;
     private Button mBtnLogin;
@@ -61,6 +63,8 @@ public class LoginActivity extends BaseActivity {
                 goToSignup();
             } else if (id == R.id.forgotPassword) {
                 recoverPassword();
+            } else if (id == R.id.appLogo) {
+                CommonUtils.hideKeyboard(LoginActivity.this);
             }
         }
     };
@@ -82,6 +86,7 @@ public class LoginActivity extends BaseActivity {
         mUserService = new UserService();
         mFacebookAuthManager = new FacebookAuthManager();
 
+        mIvAppLogo = (ImageView) findViewById(R.id.appLogo);
         mTvForgotPassword = (TextView) findViewById(R.id.forgotPassword);
         mEdtEmail = (EditText) findViewById(R.id.email);
         mEdtPassword = (EditText) findViewById(R.id.password);
@@ -92,9 +97,11 @@ public class LoginActivity extends BaseActivity {
         mBtnLogin.setOnClickListener(clickListener);
         mBtnSignup.setOnClickListener(clickListener);
         mTvForgotPassword.setOnClickListener(clickListener);
-
+        mIvAppLogo.setOnClickListener(clickListener);
         mBtnFacebookLogin.setOnClickListener(clickListener);
+
         mFacebookAuthManager.init(fbRequestCallback);
+
     }
 
     @Override

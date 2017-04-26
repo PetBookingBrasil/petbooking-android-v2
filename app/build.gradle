@@ -1,9 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+    dataBinding {
+        enabled = true
+    }
     defaultConfig {
         applicationId "com.petbooking"
         minSdkVersion 17
@@ -27,6 +31,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -52,6 +57,11 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
         transitive = true;
     }
+
+    // Goggle API
+    compile "com.google.android.gms:play-services-location:9.0.0"
+    compile "com.google.android.gms:play-services-maps:9.0.0"
+
     // Tests
     testCompile 'junit:junit:4.12'
 }

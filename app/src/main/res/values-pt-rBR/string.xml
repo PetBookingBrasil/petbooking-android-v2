@@ -1,29 +1,63 @@
 <resources>
     <string name="app_name" translatable="false">Pet Booking</string>
+    <string name="app_slogan">Esse app é animal</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="small_lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec justo a libero bibendum varius.</string>
 
     <!-- Screen Title -->
     <string name="recover_password_title">Esqueci a senha</string>
+    <string name="signup_title">Preencha seus dados</string>
+    <string name="profile_title">Perfil</string>
 
+    <!-- Presentation -->
+    <string name="presentation_title_format">presentation_%d_title</string>
+    <string name="presentation_text_format">presentation_%d_text</string>
+    <string name="presentation_image_format">presentation_%d</string>
+    <string name="presentation_color_format">presentation_%d</string>
+    <string name="presentation_1_title">Encontre e agende serviços para seus Pets, em poucos segundos, a qualquer hora do dia!</string>
+    <string name="presentation_2_title">Realize seu cadastro, encontre o serviço desejado e agende o horário mais conveniente para você!</string>
+    <string name="presentation_3_title">Cuidar dos seus Pets nunca foi tão fácil e prático!</string>
+    <string name="presentation_1_text">Banho, tosa, consultas veterinárias e muito mais!</string>
+    <string name="presentation_2_text"></string>
+    <string name="presentation_3_text">Simples, rápido, seguro e gratuito.</string>
+    <string name="next">Próximo</string>
+    <string name="skip">Pular</string>
 
     <!-- Login -->
     <string name="description">Encontre serviços para seu Pet \n mais póximos de você e agende online!</string>
     <string name="sign_up">Cadastre-se</string>
     <string name="login">Entrar</string>
     <string name="login_facebook">Entrar com <b>Facebook</b></string>
-    <string name="hint_email">petbooking@gmail.com</string>
-    <string name="hint_password">......</string>
     <string name="app_terms_info"><i>Utilizando o app, você concorda com os <b><u>Termos de uso</u></b>
         \n e com a <b><u>Política de Privacidade.</u></b></i></string>
     <string name="forgot_password">Esqueceu a senha ?</string>
 
+    <!-- Register -->
+    <string name="register_dialog_title">Cadastro de Usuário</string>
+    <string name="hint_name">Nome Completo</string>
+    <string name="hint_cpf">CPF</string>
+    <string name="hint_birthday">Data Nasc.</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_zipcode">CEP</string>
+    <string name="hint_city">Cidade</string>
+    <string name="hint_state">UF</string>
+    <string name="hint_neighborhood">Bairro</string>
+    <string name="hint_street">Rua</string>
+    <string name="hint_street_number">Número</string>
+    <string name="hint_phone">Celular</string>
+    <string name="hint_password">Senha</string>
+    <string name="hint_repeat_password">Conf. senha</string>
+    <string name="register">Salvar</string>
+
     <!-- Forgot Password -->
     <string name="recover_password_text">Insira o seu email de cadastro \n associado à sua conta no petbooking.</string>
     <string name="email_empty">Informe o email.</string>
+    <string name="recover_email_title">Recuperar Senha</string>
+    <string name="recover_email_text">As instruções para recuperação foram enviadas para seu email.</string>
     <string name="send_button">Enviar</string>
 
     <!-- Sidemenu Options-->
@@ -34,10 +68,36 @@
     <string name="settings">Configurações</string>
     <string name="logout">Sair</string>
 
+    <!-- Profile -->
+    <string name="profile_dialog_title">Atualizar Perfil</string>
+
+    <!-- Dialog -->
+    <string name="dialog_picture_title">Selecionar Foto</string>
+    <string name="dialog_picture_text">Selecione o método de entrada de imagens que deseja usar.</string>
+    <string name="dialog_button_ok">Ok</string>
+    <string name="dialog_back_screen">Voltar à Tela</string>
+
     <!-- Errors -->
     <string name="error_fields_empty">Preencha todos os campos.</string>
     <string name="error_invalid_email">Email inválido.</string>
-
+    <string name="error_invalid_cpf">CPF inválido.</string>
+    <string name="error_invalid_phone">Telefone Inválido.</string>
+    <string name="error_invalid_password">A senha deve ter ao menos 6 caracteres.</string>
+    <string name="error_different_password">As senhas não coincidem.</string>
+    <string name="error_create_user">Não foi possível cadastrar o usuário.</string>
+    <string name="error_update_user">Não foi possível atualizar o perfil.</string>
     <string name="error_auth_invalid">Token de autenticação inválido. Requisite um novo token.</string>
     <string name="error_invalid_login">Email ou senha inválidos.</string>
+
+    <string name="error_no_location">Localização não dísponível.</string>
+
+    <!-- Success -->
+    <string name="success_create_user">Usuário cadastrado com sucesso.</string>
+
+    <!-- Prompt -->
+    <string name="prompt_loading">Loading…</string>
+
+    <!-- Permissions -->
+    <string name="permission_location_title">Ativar Localização</string>
+    <string name="permission_location">Sua localização é necessária para utilizar as nossas funcionalidades.</string>
 </resources>

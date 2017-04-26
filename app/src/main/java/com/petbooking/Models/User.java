@@ -1,7 +1,7 @@
 package com.petbooking.Models;
 
-import com.google.gson.annotations.SerializedName;
 import com.petbooking.API.Generic.AvatarResp;
+import com.petbooking.Utils.CommonUtils;
 
 /**
  * Created by Luciano José on 14/04/2017.
@@ -26,6 +26,7 @@ public class User {
     public String nickname;
     public String gender;
     public String cpf;
+    public String password;
     public String searchRange;
     public boolean phoneActivated;
     public boolean acceptsSms;
@@ -35,6 +36,9 @@ public class User {
     public boolean validForScheduling;
     public AvatarResp avatar;
 
+    public User() {
+    }
+
     public User(String id, String authToken, String name, String birthday, String phone, boolean phoneActivated,
                 String phoneCodeCreatedAt, String email, String futureEventsCount, boolean acceptsSms, String zipcode,
                 String street, String neighborhood, String streetNumber, String city, String state, String nickname,
@@ -43,7 +47,7 @@ public class User {
         this.id = id;
         this.authToken = authToken;
         this.name = name;
-        this.birthday = birthday;
+        this.birthday = CommonUtils.formatDate(birthday);
         this.phone = phone;
         this.phoneActivated = phoneActivated;
         this.phoneCodeCreatedAt = phoneCodeCreatedAt;

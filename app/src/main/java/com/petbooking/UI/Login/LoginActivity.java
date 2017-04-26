@@ -1,12 +1,14 @@
 package com.petbooking.UI.Login;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -26,8 +28,10 @@ import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.RecoverPassword.RecoverPasswordActivity;
+import com.petbooking.UI.SignUp.SignUpActivity;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
+import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,6 +43,9 @@ public class LoginActivity extends BaseActivity {
     private UserService mUserService;
     private FacebookAuthManager mFacebookAuthManager;
 
+    private Typeface mCustomFont;
+    private ImageView mIvAppLogo;
+    private TextView mTvAppSlogan;
     private EditText mEdtEmail;
     private EditText mEdtPassword;
     private Button mBtnLogin;
@@ -56,9 +63,11 @@ public class LoginActivity extends BaseActivity {
             } else if (id == R.id.facebookLogin) {
                 mFacebookAuthManager.auth(LoginActivity.this);
             } else if (id == R.id.signup) {
-
+                goToSignup();
             } else if (id == R.id.forgotPassword) {
                 recoverPassword();
+            } else if (id == R.id.appLogo) {
+                CommonUtils.hideKeyboard(LoginActivity.this);
             }
         }
     };
@@ -80,6 +89,10 @@ public class LoginActivity extends BaseActivity {
         mUserService = new UserService();
         mFacebookAuthManager = new FacebookAuthManager();
 
+        mCustomFont = Typeface.createFromAsset(getAssets(), "fonts/FFADMatro.ttf");
+
+        mIvAppLogo = (ImageView) findViewById(R.id.appLogo);
+        mTvAppSlogan = (TextView) findViewById(R.id.appSlogan);
         mTvForgotPassword = (TextView) findViewById(R.id.forgotPassword);
         mEdtEmail = (EditText) findViewById(R.id.email);
         mEdtPassword = (EditText) findViewById(R.id.password);
@@ -90,9 +103,11 @@ public class LoginActivity extends BaseActivity {
         mBtnLogin.setOnClickListener(clickListener);
         mBtnSignup.setOnClickListener(clickListener);
         mTvForgotPassword.setOnClickListener(clickListener);
-
+        mIvAppLogo.setOnClickListener(clickListener);
         mBtnFacebookLogin.setOnClickListener(clickListener);
+
         mFacebookAuthManager.init(fbRequestCallback);
+        mTvAppSlogan.setTypeface(mCustomFont);
     }
 
     @Override
@@ -114,7 +129,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-        if (!FormUtils.isValidEmail(email)) {
+        if (!CommonUtils.isValidEmail(email)) {
             EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_invalid_email, Snackbar.LENGTH_SHORT));
             return;
         }
@@ -169,6 +184,15 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
+
+    /**
+     * Go To Register Page
+     */
+    private void goToSignup() {
+        Intent signupIntent = new Intent(this, SignUpActivity.class);
+        startActivity(signupIntent);
+    }
+
 
     @Override
     public void onBackPressed() {

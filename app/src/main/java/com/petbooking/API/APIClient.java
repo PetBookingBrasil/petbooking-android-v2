@@ -41,6 +41,7 @@ public class APIClient {
         mBuilder.addNetworkInterceptor(new HeaderInterceptor());
         mBuilder.addNetworkInterceptor(mLogger);
         mBuilder.connectTimeout(AppConstants.CONNECTION_TIMEOUT, TimeUnit.SECONDS);
+        mBuilder.writeTimeout(AppConstants.WRITE_TIMEOUT, TimeUnit.SECONDS);
         mBuilder.readTimeout(AppConstants.READ_TIMEOUT, TimeUnit.SECONDS);
 
         mClient = mBuilder.build();

@@ -41,9 +41,7 @@ public class PresentationActivity extends AppCompatActivity {
     ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            if (position == 2) {
-                goToLogin();
-            }
+
         }
 
         @Override
@@ -53,7 +51,6 @@ public class PresentationActivity extends AppCompatActivity {
 
         @Override
         public void onPageScrollStateChanged(int state) {
-
         }
     };
 
@@ -71,7 +68,7 @@ public class PresentationActivity extends AppCompatActivity {
         mBtnSkip = (Button) findViewById(R.id.skip);
 
         mBtnNextTour.setOnClickListener(mListener);
-        mViewPager.setOnPageChangeListener(pageChangeListener);
+        mViewPager.addOnPageChangeListener(pageChangeListener);
 
         mBtnNextTour.setTextColor(getResources().getColor(AppConstants.PRESENTATION_COLORS[0]));
         mBtnSkip.setOnClickListener(mListener);

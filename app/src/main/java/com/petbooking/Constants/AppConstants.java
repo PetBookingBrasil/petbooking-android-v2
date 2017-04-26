@@ -51,5 +51,7 @@ public class AppConstants {
      * Configs
      */
     public static final int CONNECTION_TIMEOUT = 30;
+    public static final int WRITE_TIMEOUT = 30;
     public static final int READ_TIMEOUT = 30;
+
 }

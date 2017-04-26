@@ -28,7 +28,6 @@ public class CommonUtils {
         imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 
-
     public static boolean isEmpty(String text) {
         if (text == null || text.equals("")) {
             return true;
@@ -36,7 +35,6 @@ public class CommonUtils {
             return false;
         }
     }
-
 
     public static boolean isValidEmail(String email) {
         Pattern pattern = Pattern.compile(AppConstants.EMAIL_PATTERN);
@@ -50,21 +48,6 @@ public class CommonUtils {
         }
         String phoneNumber = phone.replace("(", "").replace(")", "").replace(".", "").trim();
         return phoneNumber.length() >= 10 && phoneNumber.length() <= 11;
-    }
-
-    public static String formatPhone(String phone) {
-        switch (phone.length()) {
-            case 8:
-                return phone.substring(0, 4) + "." + phone.substring(4, 8);
-            case 9:
-                return phone.substring(0, 5) + "." + phone.substring(5, 9);
-            case 10:
-                return "(" + phone.substring(0, 2) + ") " + phone.substring(2, 6) + "." + phone.substring(6, 10);
-            case 11:
-                return "(" + phone.substring(0, 2) + ") " + phone.substring(2, 7) + "." + phone.substring(7, 11);
-            default:
-                return "";
-        }
     }
 
     public static boolean isCPFValid(String cpf) {
@@ -154,7 +137,4 @@ public class CommonUtils {
         return userAddress;
     }
 
-    public static String formatCpf(String cpf) {
-        return cpf;
-    }
 }

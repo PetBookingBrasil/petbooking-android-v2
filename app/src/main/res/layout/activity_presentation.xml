@@ -49,6 +49,7 @@
             android:layout_marginLeft="@dimen/spacing_xmicro"
             android:layout_weight="1"
             android:background="@drawable/secondary_button"
+            android:stateListAnimator="@null"
             android:text="@string/next"
             android:theme="@style/AppTheme.SecondaryButton" />
     </LinearLayout>

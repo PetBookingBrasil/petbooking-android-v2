@@ -16,10 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.User.UserService;
 import com.petbooking.BaseActivity;
+import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Events.HideLoadingEvt;
 import com.petbooking.Events.ShowLoadingEvt;
@@ -43,6 +46,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.view.View.GONE;
 
 public class SignUpActivity extends BaseActivity implements
         PictureSelectDialogFragment.FinishDialogListener,
@@ -138,14 +143,7 @@ public class SignUpActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.user_form);
-
         isSocialLogin = getIntent().getBooleanExtra(AppConstants.SOCIAL_LOGIN, false);
-        if (isSocialLogin) {
-            String userWrapped = getIntent().getStringExtra(AppConstants.USER_WRAPPED);
-            user = new Gson().fromJson(userWrapped, User.class);
-        } else {
-            user = new User();
-        }
 
         mFragmentManager = getSupportFragmentManager();
         mUserService = new UserService();
@@ -178,6 +176,25 @@ public class SignUpActivity extends BaseActivity implements
         mBtnSubmit.setOnClickListener(mSubmitListener);
         mIBtnSelectPicture.setOnClickListener(mSelectListener);
         mCiUserPhoto.setOnClickListener(mSelectListener);
+
+        if (isSocialLogin) {
+            String userWrapped = getIntent().getStringExtra(AppConstants.USER_WRAPPED);
+            user = new Gson().fromJson(userWrapped, User.class);
+            mIBtnSelectPicture.setVisibility(View.GONE);
+            mCiUserPhoto.setVisibility(View.VISIBLE);
+            Glide.with(this)
+                    .load(user.avatar.url)
+                    .error(R.drawable.ic_menu_user)
+                    .placeholder(R.drawable.ic_menu_user)
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .centerCrop()
+                    .dontAnimate()
+                    .into(mCiUserPhoto);
+        } else {
+            user = new User();
+        }
+
+
         mBinding.setUser(user);
     }
 
@@ -187,9 +204,13 @@ public class SignUpActivity extends BaseActivity implements
     public void registerUser() {
         int message = FormUtils.validateUser(user, true);
         String repeatPassword = mEdtRepeatPass.getText().toString();
-        
+
         if (message == -1 && (user.password.equals(repeatPassword))) {
-            createRequest(user);
+            if (isSocialLogin) {
+                createSocialUser(user);
+            } else {
+                createUser(user);
+            }
         } else if (message == -1 && (!user.password.equals(repeatPassword))) {
             EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_different_password, Snackbar.LENGTH_LONG));
         } else if (message != -1) {
@@ -247,7 +268,7 @@ public class SignUpActivity extends BaseActivity implements
      * @param photo
      */
     public void updatePhoto(Bitmap photo) {
-        mIBtnSelectPicture.setVisibility(View.GONE);
+        mIBtnSelectPicture.setVisibility(GONE);
         mCiUserPhoto.setVisibility(View.VISIBLE);
         mCiUserPhoto.setImageBitmap(photo);
     }
@@ -257,8 +278,34 @@ public class SignUpActivity extends BaseActivity implements
      *
      * @param user
      */
-    public void createRequest(User user) {
+    public void createUser(User user) {
         mUserService.createUser(user, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                AuthUserResp authUserResp = (AuthUserResp) response;
+                User user = APIUtils.parseUser(authUserResp);
+                mSessionManager.setUserLogged(user);
+                mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.success_create_user,
+                        R.string.dialog_button_ok, AppConstants.OK_ACTION);
+                mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
+            }
+
+            @Override
+            public void onError(Object error) {
+                mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.error_create_user,
+                        R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
+                mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
+            }
+        });
+    }
+
+    /**
+     * Request to Create new Social User
+     *
+     * @param user
+     */
+    public void createSocialUser(User user) {
+        mUserService.createSocialUser(user, APIConstants.DATA_PROVIDER_FACEBOOK, user.providerToken, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 AuthUserResp authUserResp = (AuthUserResp) response;

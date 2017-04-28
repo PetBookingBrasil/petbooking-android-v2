@@ -10,7 +10,6 @@ import com.petbooking.Utils.CommonUtils;
 public class User {
 
     public String id;
-    public String providerToken;
     public String authToken;
     public String name;
     public String birthday;
@@ -36,8 +35,10 @@ public class User {
     public boolean acceptsTerms;
     public boolean validForScheduling;
     public AvatarResp avatar;
+    public String providerToken;
 
     public User() {
+        this.avatar = new AvatarResp();
     }
 
     public User(String id, String authToken, String name, String birthday, String phone, boolean phoneActivated,

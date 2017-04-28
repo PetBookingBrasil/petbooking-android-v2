@@ -23,16 +23,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.gson.Gson;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
 import com.petbooking.Models.UserAddress;
 import com.petbooking.R;
-import com.petbooking.UI.Menu.Profile.ProfileActivity;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Login.LoginActivity;
+import com.petbooking.UI.Menu.Profile.ProfileActivity;
 import com.petbooking.Utils.APIUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;

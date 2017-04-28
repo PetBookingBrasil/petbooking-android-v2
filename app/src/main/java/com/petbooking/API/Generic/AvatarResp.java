@@ -12,6 +12,9 @@ public class AvatarResp {
     public ImageURL medium;
     public ImageURL large;
 
+    public AvatarResp() {
+    }
+
     public static class ImageURL {
         public String url;
     }

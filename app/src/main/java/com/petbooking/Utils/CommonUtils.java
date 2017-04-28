@@ -108,8 +108,10 @@ public class CommonUtils {
     }
 
     public static String formatDate(int day, int month, int year) {
+        month++;
+        String dayAux = day < 10 ? ("0" + day) : (day + "");
         String monthAux = month < 10 ? ("0" + month) : (month + "");
-        String date = day + "/" + monthAux + "/" + year;
+        String date = dayAux + "/" + monthAux + "/" + year;
 
         return date;
     }

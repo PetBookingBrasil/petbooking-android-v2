@@ -2,6 +2,7 @@ package com.petbooking.API.User;
 
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.User.Models.CreateUserRqt;
+import com.petbooking.API.User.Models.CreateSocialUserRqt;
 import com.petbooking.API.User.Models.RecoverPasswordRqt;
 import com.petbooking.API.User.Models.UpdateUserRqt;
 import com.petbooking.Constants.APIConstants;
@@ -24,6 +25,11 @@ public interface UserInterface {
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @POST(APIUserConstants.USER_ENDPOINT)
     Call<AuthUserResp> createUser(@Body CreateUserRqt createUserRqt);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
+    @POST(APIUserConstants.USER_ENDPOINT)
+    Call<AuthUserResp> createSocialUser(@Body CreateSocialUserRqt createSocialUserRqt);
+
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
     @PUT(APIUserConstants.ENDPOINT_UPDATE_USER)

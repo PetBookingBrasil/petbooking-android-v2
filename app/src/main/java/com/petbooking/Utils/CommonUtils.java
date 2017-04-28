@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Models.UserAddress;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -145,6 +146,17 @@ public class CommonUtils {
         Date date = new Date(epoch * 1000);
 
         return date;
+    }
+
+    public static long getRefreshDate(long timestamp) {
+        String epochAuth = String.valueOf(timestamp);
+        Date expirationDate = CommonUtils.getUTCDate(epochAuth);
+        Calendar mCalendar = Calendar.getInstance();
+
+        mCalendar.setTime(expirationDate);
+        mCalendar.add(Calendar.MINUTE, -2);
+
+        return mCalendar.getTimeInMillis();
     }
 
 }

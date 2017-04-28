@@ -18,12 +18,12 @@
     <string name="presentation_text_format">presentation_%d_text</string>
     <string name="presentation_image_format">presentation_%d</string>
     <string name="presentation_color_format">presentation_%d</string>
-    <string name="presentation_1_title">Agende serviços para seus Pets, em poucos segundos!</string>
-    <string name="presentation_2_title">Encontre o serviço desejado e agende o melhor horário!</string>
-    <string name="presentation_3_title">Cuidar dos seus Pets nunca foi tão prático!</string>
+    <string name="presentation_1_title">Encontre e agende serviços para seus Pets, em poucos segundos, a qualquer hora do dia!</string>
+    <string name="presentation_2_title">Realize seu cadastro, encontre o serviço desejado e agende o horário mais conveniente para você!</string>
+    <string name="presentation_3_title">Cuidar dos seus Pets nunca foi tão fácil e prático!</string>
     <string name="presentation_1_text">Banho, tosa, consultas veterinárias e muito mais!</string>
     <string name="presentation_2_text"></string>
-    <string name="presentation_3_text">Simples, rápido e seguro.</string>
+    <string name="presentation_3_text">Simples, rápido, seguro e gratuito.</string>
     <string name="next">Próximo</string>
     <string name="skip">Pular</string>
 

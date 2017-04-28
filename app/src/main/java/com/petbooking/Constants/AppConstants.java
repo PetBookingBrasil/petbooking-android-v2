@@ -18,6 +18,7 @@ public class AppConstants {
     public static final String CONSUMER_TOKEN = "consumerToken";
     public static final String CONSUMER_EXPIRATION_DATE = "consumerExpirationDate";
     public static final String SESSION_TOKEN = "sessionToken";
+    public static final String SESSION_EXPIRATION_DATE = "sessionExpirationDate";
     public static final String USER_LOGGED = "userLogged";
     public static final String ALREADY_LOGGED = "alreadyLogged";
     public static final String SOCIAL_LOGIN = "socialLogin";

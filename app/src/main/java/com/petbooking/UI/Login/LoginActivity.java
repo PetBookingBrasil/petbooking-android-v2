@@ -138,6 +138,7 @@ public class LoginActivity extends BaseActivity {
             public void onSuccess(Object response) {
                 SessionResp sessionResp = (SessionResp) response;
                 mSessionManager.setSessionToken(sessionResp.data.attributes.token);
+                mSessionManager.setSessionExpirationDate(sessionResp.data.attributes.expiresAt);
                 requestData(sessionResp.data.attributes.userID);
             }
 
@@ -160,6 +161,7 @@ public class LoginActivity extends BaseActivity {
             public void onSuccess(Object response) {
                 SessionResp sessionResp = (SessionResp) response;
                 mSessionManager.setSessionToken(sessionResp.data.attributes.token);
+                mSessionManager.setSessionExpirationDate(sessionResp.data.attributes.expiresAt);
                 requestData(sessionResp.data.attributes.userID);
             }
 

@@ -1,12 +1,16 @@
 package com.petbooking.Managers;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Models.User;
+import com.petbooking.Utils.CommonUtils;
+
+import java.util.Date;
 
 /**
  * Created by Luciano José on 18/12/2016.
@@ -51,6 +55,14 @@ public class SessionManager {
         mPreferenceManager.putString(AppConstants.SESSION_TOKEN, token);
     }
 
+    public void setSessionExpirationDate(long date) {
+        mPreferenceManager.putLong(AppConstants.SESSION_EXPIRATION_DATE, date);
+    }
+
+    public long getSessionExpirationDate() {
+        return mPreferenceManager.getLong(AppConstants.CONSUMER_EXPIRATION_DATE);
+    }
+
     public String getSessionToken() {
         return mPreferenceManager.getString(AppConstants.SESSION_TOKEN);
     }
@@ -71,6 +83,41 @@ public class SessionManager {
     public void setAlreadyLogged(boolean alreadyLogged) {
         mPreferenceManager.putBoolean(AppConstants.ALREADY_LOGGED, alreadyLogged);
     }
+
+    public boolean hasAuthTokenValid() {
+        String token = getConsumerToken();
+        String epoch = String.valueOf(getConsumerExpirationDate());
+        Date today = new Date();
+        Date expireDate = CommonUtils.getUTCDate(epoch);
+
+        if (CommonUtils.isEmpty(token)) {
+            return false;
+        }
+
+        if (today.after(expireDate)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean hasSessionTokenValid() {
+        String token = getSessionToken();
+        String epoch = String.valueOf(getSessionExpirationDate());
+        Date today = new Date();
+        Date expireDate = CommonUtils.getUTCDate(epoch);
+
+        if (CommonUtils.isEmpty(token)) {
+            return false;
+        }
+
+        if (today.after(expireDate)) {
+            return false;
+        }
+
+        return true;
+    }
+
 
     public void logout() {
         mPreferenceManager

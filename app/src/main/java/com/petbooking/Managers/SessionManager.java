@@ -1,14 +1,13 @@
 package com.petbooking.Managers;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
-import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Models.User;
 import com.petbooking.Utils.CommonUtils;
+import com.petbooking.Utils.CryptUtils;
 
 import java.util.Date;
 
@@ -67,6 +66,34 @@ public class SessionManager {
         return mPreferenceManager.getString(AppConstants.SESSION_TOKEN);
     }
 
+    public void setLastLogin(String email, String password) {
+        mPreferenceManager.putString(AppConstants.LAST_USER_EMAIL, email);
+        mPreferenceManager.putString(AppConstants.LAST_USER_PASS, CryptUtils.encrypt(password));
+        mPreferenceManager.putString(AppConstants.LOGIN_TYPE, AppConstants.EMAIL_TYPE);
+    }
+
+    public String getLastPassword() {
+        String passEncypted = mPreferenceManager.getString(AppConstants.LAST_USER_PASS);
+        return CryptUtils.decrypt(passEncypted);
+    }
+
+    public String getLastEmail() {
+        return mPreferenceManager.getString(AppConstants.LAST_USER_EMAIL);
+    }
+
+    public String getLoginType() {
+        return mPreferenceManager.getString(AppConstants.LOGIN_TYPE);
+    }
+
+    public void setLastFBToken(String token) {
+        mPreferenceManager.putString(AppConstants.LAST_USER_FB_TOKEN, token);
+        mPreferenceManager.putString(AppConstants.LOGIN_TYPE, AppConstants.FACEBOOK_TYPE);
+    }
+
+    public String getLastFBToken() {
+        return mPreferenceManager.getString(AppConstants.LAST_USER_FB_TOKEN);
+    }
+
     public void setUserLogged(User user) {
         mPreferenceManager.putString(AppConstants.USER_LOGGED, mJsonManager.toJson(user));
     }
@@ -118,11 +145,15 @@ public class SessionManager {
         return true;
     }
 
-
     public void logout() {
         mPreferenceManager
                 .removeKey(AppConstants.USER_LOGGED)
-                .removeKey(AppConstants.SESSION_TOKEN);
+                .removeKey(AppConstants.SESSION_TOKEN)
+                .removeKey(AppConstants.SESSION_EXPIRATION_DATE)
+                .removeKey(AppConstants.LAST_USER_EMAIL)
+                .removeKey(AppConstants.LAST_USER_PASS)
+                .removeKey(AppConstants.LAST_USER_FB_TOKEN)
+                .removeKey(AppConstants.LOGIN_TYPE);
         LoginManager.getInstance().logOut();
     }
 }

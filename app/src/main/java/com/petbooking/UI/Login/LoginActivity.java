@@ -1,5 +1,8 @@
 package com.petbooking.UI.Login;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -23,6 +26,7 @@ import com.petbooking.Constants.AppConstants;
 import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Interfaces.SocialCallback;
+import com.petbooking.Managers.AlarmReceiver;
 import com.petbooking.Managers.FacebookAuthManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
@@ -41,6 +45,7 @@ public class LoginActivity extends BaseActivity {
     private AuthService mAuthService;
     private UserService mUserService;
     private FacebookAuthManager mFacebookAuthManager;
+    private AlarmManager mAlarmManager;
 
     private Typeface mCustomFont;
     private ImageView mIvAppLogo;
@@ -120,8 +125,8 @@ public class LoginActivity extends BaseActivity {
      * email and password
      */
     public void login() {
-        String email = mEdtEmail.getText().toString();
-        String password = mEdtPassword.getText().toString();
+        final String email = mEdtEmail.getText().toString();
+        final String password = mEdtPassword.getText().toString();
 
         if (email.equals("") || password.equals("")) {
             EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_fields_empty, Snackbar.LENGTH_SHORT));
@@ -139,6 +144,8 @@ public class LoginActivity extends BaseActivity {
                 SessionResp sessionResp = (SessionResp) response;
                 mSessionManager.setSessionToken(sessionResp.data.attributes.token);
                 mSessionManager.setSessionExpirationDate(sessionResp.data.attributes.expiresAt);
+                mSessionManager.setLastLogin(email, password);
+                scheduleRefreshToken(AppConstants.SESSION_TOKEN);
                 requestData(sessionResp.data.attributes.userID);
             }
 
@@ -162,6 +169,8 @@ public class LoginActivity extends BaseActivity {
                 SessionResp sessionResp = (SessionResp) response;
                 mSessionManager.setSessionToken(sessionResp.data.attributes.token);
                 mSessionManager.setSessionExpirationDate(sessionResp.data.attributes.expiresAt);
+                mSessionManager.setLastFBToken(user.providerToken);
+                scheduleRefreshToken(AppConstants.SESSION_TOKEN);
                 requestData(sessionResp.data.attributes.userID);
             }
 
@@ -190,7 +199,6 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onError(Object error) {
-                Log.d("ERROR", new Gson().toJson(error));
             }
         });
     }
@@ -224,6 +232,21 @@ public class LoginActivity extends BaseActivity {
         }
 
         startActivity(signupIntent);
+    }
+
+    /**
+     * Refresh Auth Token
+     */
+    public void scheduleRefreshToken(String type) {
+        Intent mIntent;
+        PendingIntent mAlarmIntent;
+        long dateMillis = CommonUtils.getRefreshDate(mSessionManager.getSessionExpirationDate());
+
+        mAlarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        mIntent = new Intent(this, AlarmReceiver.class);
+        mIntent.putExtra(type, true);
+        mAlarmIntent = PendingIntent.getBroadcast(this, AppConstants.REFRESH_SESSION, mIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        mAlarmManager.set(AlarmManager.RTC_WAKEUP, dateMillis, mAlarmIntent);
     }
 
     @Override

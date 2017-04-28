@@ -5,28 +5,22 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.petbooking.API.Auth.AuthService;
+import com.petbooking.API.Auth.Models.AuthConsumerResp;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.AlarmReceiver;
 import com.petbooking.Managers.SessionManager;
-import com.petbooking.API.Auth.Models.AuthConsumerResp;
-import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.Login.LoginActivity;
 import com.petbooking.UI.Presentation.PresentationActivity;
 import com.petbooking.Utils.CommonUtils;
-
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by Luciano Junior on 04,December,2016
@@ -120,7 +114,7 @@ public class SplashActivity extends AppCompatActivity {
                 mSessionManager.setConsumerExpirationDate(authConsumerResp.data.attributes.tokenExpiresAt);
                 boolean alreadyLogged = mSessionManager.alreadyLogged();
                 scheduleRefreshAuth();
-                
+
                 if (alreadyLogged) {
                     goToLogin();
                 } else {
@@ -147,7 +141,7 @@ public class SplashActivity extends AppCompatActivity {
         mAlarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         mIntent = new Intent(this, AlarmReceiver.class);
         mIntent.putExtra(AppConstants.CONSUMER_TOKEN, true);
-        mAlarmIntent = PendingIntent.getBroadcast(this, 0, mIntent, 0);
+        mAlarmIntent = PendingIntent.getBroadcast(this, AppConstants.REFRESH_CONSUMER, mIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         mAlarmManager.set(AlarmManager.RTC_WAKEUP, dateMillis, mAlarmIntent);
     }
 }

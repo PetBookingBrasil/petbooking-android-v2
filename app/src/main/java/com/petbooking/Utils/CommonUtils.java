@@ -3,7 +3,6 @@ package com.petbooking.Utils;
 import android.app.Activity;
 import android.content.Context;
 import android.location.Address;
-import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 import com.petbooking.Constants.AppConstants;

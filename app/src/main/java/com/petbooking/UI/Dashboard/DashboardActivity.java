@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
@@ -227,6 +228,9 @@ public class DashboardActivity extends AppCompatActivity implements
 
         Glide.with(this)
                 .load(APIUtils.getAssetEndpoint(currentUser.avatar.large.url))
+                .error(R.drawable.ic_menu_user)
+                .placeholder(R.drawable.ic_menu_user)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .centerCrop()
                 .dontAnimate()
                 .into(mCivSideMenuPicture);

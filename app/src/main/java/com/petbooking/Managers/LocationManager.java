@@ -140,7 +140,6 @@ public class LocationManager implements GoogleApiClient.ConnectionCallbacks,
             if (addresses.size() > 0) {
                 Address address = addresses.get(0);
                 cityState = address.getLocality() + " - " + address.getAdminArea();
-                Log.d("ADDRESS", new Gson().toJson(address));
             }
         } catch (IOException e) {
             return cityState;

@@ -58,7 +58,7 @@ public class PreferenceManager {
         return pref.getLong(key, 0);
     }
 
-    public void clear(){
+    public void clear() {
         editor.clear();
         editor.commit();
     }
@@ -67,5 +67,8 @@ public class PreferenceManager {
         return pref.getString(key, "");
     }
 
-
+    public PreferenceManager removeKey(String key) {
+        pref.edit().remove(key).apply();
+        return this;
+    }
 }

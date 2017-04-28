@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.gson.Gson;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
@@ -162,6 +163,7 @@ public class DashboardActivity extends AppCompatActivity implements
         if (id == R.id.payments) {
             Log.d("PAYMENTS", "PAYMENTS");
         } else if (id == R.id.logout) {
+            mSessionManager.logout();
             Intent logoutIntent = new Intent(this, LoginActivity.class);
             startActivity(logoutIntent);
         }

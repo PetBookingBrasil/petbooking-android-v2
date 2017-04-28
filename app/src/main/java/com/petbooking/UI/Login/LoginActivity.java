@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 import com.petbooking.API.Auth.AuthService;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Auth.Models.SessionResp;
-import com.petbooking.API.Generic.ErrorResp;
 import com.petbooking.API.User.UserService;
 import com.petbooking.BaseActivity;
 import com.petbooking.Events.ShowSnackbarEvt;
@@ -30,9 +29,7 @@ import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.RecoverPassword.RecoverPasswordActivity;
 import com.petbooking.UI.SignUp.SignUpActivity;
 import com.petbooking.Utils.APIUtils;
-import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
-import com.petbooking.Utils.FormUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -76,6 +73,7 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onFacebookLoginSuccess(SocialUser user) {
             Log.d("USERS", new Gson().toJson(user));
+            authFB(user.accessToken);
         }
     };
 
@@ -163,6 +161,24 @@ public class LoginActivity extends BaseActivity {
     public void goToDashboard() {
         Intent dashboardIntent = new Intent(this, DashboardActivity.class);
         startActivity(dashboardIntent);
+    }
+
+    /**
+     * Login With Facebook
+     */
+    public void authFB(String token) {
+        mAuthService.authUserSocial("facebook", token, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                SessionResp sessionResp = (SessionResp) response;
+                requestData(sessionResp.data.attributes.userID);
+            }
+
+            @Override
+            public void onError(Object error) {
+
+            }
+        });
     }
 
     /**

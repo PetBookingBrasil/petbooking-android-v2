@@ -77,8 +77,7 @@ public class FacebookAuthManager implements com.facebook.FacebookCallback {
      *
      * @param loginResult
      */
-    public void getUserInfo(LoginResult loginResult) {
-
+    public void getUserInfo(final LoginResult loginResult) {
         GraphRequest request = GraphRequest.newMeRequest(
                 loginResult.getAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
@@ -91,6 +90,7 @@ public class FacebookAuthManager implements com.facebook.FacebookCallback {
                             SocialUser user = new SocialUser();
 
                             user.id = object.getString("id").toString();
+                            user.accessToken = loginResult.getAccessToken().getToken();
                             user.email = object.getString("email").toString();
                             user.name = object.getString("name").toString();
                             user.profilePicture = String.format(Locale.getDefault(), AppConstants.USER_PICTURE_URL, object.getString("id").toString());

@@ -2,6 +2,7 @@ package com.petbooking.Managers;
 
 import android.content.Context;
 
+import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
@@ -69,5 +70,12 @@ public class SessionManager {
 
     public void setAlreadyLogged(boolean alreadyLogged) {
         mPreferenceManager.putBoolean(AppConstants.ALREADY_LOGGED, alreadyLogged);
+    }
+
+    public void logout() {
+        mPreferenceManager
+                .removeKey(AppConstants.USER_LOGGED)
+                .removeKey(AppConstants.SESSION_TOKEN);
+        LoginManager.getInstance().logOut();
     }
 }

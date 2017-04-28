@@ -7,6 +7,7 @@ package com.petbooking.Models;
 public class SocialUser {
 
     public String id;
+    public String accessToken;
     public String name;
     public String email;
     public String profilePicture;

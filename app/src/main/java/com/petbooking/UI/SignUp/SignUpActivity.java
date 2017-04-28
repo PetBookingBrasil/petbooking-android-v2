@@ -10,11 +10,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.google.gson.Gson;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.User.UserService;
 import com.petbooking.BaseActivity;
@@ -23,7 +25,6 @@ import com.petbooking.Events.HideLoadingEvt;
 import com.petbooking.Events.ShowLoadingEvt;
 import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
-import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.MaskManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
@@ -51,7 +52,8 @@ public class SignUpActivity extends BaseActivity implements
     private FragmentManager mFragmentManager;
     private UserService mUserService;
     private SessionManager mSessionManager;
-    private LocationManager mLocationManager;
+
+    private boolean isSocialLogin;
 
     /**
      * Picture Select
@@ -136,7 +138,14 @@ public class SignUpActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.user_form);
-        user = new User();
+
+        isSocialLogin = getIntent().getBooleanExtra(AppConstants.SOCIAL_LOGIN, false);
+        if (isSocialLogin) {
+            String userWrapped = getIntent().getStringExtra(AppConstants.USER_WRAPPED);
+            user = new Gson().fromJson(userWrapped, User.class);
+        } else {
+            user = new User();
+        }
 
         mFragmentManager = getSupportFragmentManager();
         mUserService = new UserService();
@@ -178,7 +187,7 @@ public class SignUpActivity extends BaseActivity implements
     public void registerUser() {
         int message = FormUtils.validateUser(user, true);
         String repeatPassword = mEdtRepeatPass.getText().toString();
-
+        
         if (message == -1 && (user.password.equals(repeatPassword))) {
             createRequest(user);
         } else if (message == -1 && (!user.password.equals(repeatPassword))) {

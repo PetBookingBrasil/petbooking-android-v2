@@ -4,6 +4,7 @@ import android.support.design.widget.Snackbar;
 
 import com.google.gson.Gson;
 import com.petbooking.API.Auth.Models.AuthUserResp;
+import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.Generic.ErrorResp;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Events.ShowSnackbarEvt;
@@ -24,13 +25,6 @@ import retrofit2.Response;
  */
 
 public class APIUtils {
-
-    private static final String ERROR_STATUS_UNAUTHORIZED = "401";
-
-    private static final int ERROR_CODE_INVALID_LOGIN = 124;
-    private static final int ERROR_CODE_OBJECT_REQUEST = 125;
-    private static final int ERROR_CODE_INVALID_AUTH_TOKEN = 126;
-    private static final int ERROR_CODE_INVALID_USER_TOKEN = 127;
 
     /**
      * Create User from
@@ -78,8 +72,8 @@ public class APIUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        getErrorMessage(new Gson().fromJson(error, ErrorResp.class));
-        return new Gson().fromJson(error, ErrorResp.class);
+        APIError apiError = getFirstError(new Gson().fromJson(error, ErrorResp.class));
+        return apiError;
     }
 
     /**
@@ -87,33 +81,16 @@ public class APIUtils {
      *
      * @param errorRsp
      */
-    public static void getErrorMessage(ErrorResp errorRsp) {
+    public static APIError getFirstError(ErrorResp errorRsp) {
         if (errorRsp.errors != null && errorRsp.errors.size() > 0) {
             ErrorResp.Error firstError = errorRsp.errors.get(0);
-            switch (firstError.status) {
-                case ERROR_STATUS_UNAUTHORIZED:
-                    handlerUnauthorizedError(firstError.code);
-                    break;
-            }
+            APIError error = new APIError(firstError.title, firstError.detail.toString(), firstError.code, firstError.status);
+            return error;
         }
+
+        return null;
     }
 
-    /**
-     * Handle authorization error
-     *
-     * @param code
-     */
-    private static void handlerUnauthorizedError(int code) {
-        switch (code) {
-            case ERROR_CODE_INVALID_AUTH_TOKEN:
-                break;
-            case ERROR_CODE_INVALID_USER_TOKEN:
-                break;
-            case ERROR_CODE_INVALID_LOGIN:
-                EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_invalid_login, Snackbar.LENGTH_SHORT));
-                break;
-        }
-    }
 
     /**
      * Get Asset Endpoint

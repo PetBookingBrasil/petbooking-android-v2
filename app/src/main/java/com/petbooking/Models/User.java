@@ -10,6 +10,7 @@ import com.petbooking.Utils.CommonUtils;
 public class User {
 
     public String id;
+    public String providerToken;
     public String authToken;
     public String name;
     public String birthday;

@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Interfaces.SocialCallback;
 import com.petbooking.Models.SocialUser;
+import com.petbooking.Models.User;
 
 import org.json.JSONObject;
 
@@ -87,13 +88,12 @@ public class FacebookAuthManager implements com.facebook.FacebookCallback {
                             GraphResponse response) {
 
                         try {
-                            SocialUser user = new SocialUser();
+                            User user = new User();
 
-                            user.id = object.getString("id").toString();
-                            user.accessToken = loginResult.getAccessToken().getToken();
+                            user.providerToken = loginResult.getAccessToken().getToken();
                             user.email = object.getString("email").toString();
                             user.name = object.getString("name").toString();
-                            user.profilePicture = String.format(Locale.getDefault(), AppConstants.USER_PICTURE_URL, object.getString("id").toString());
+
                             mReqCallback.onFacebookLoginSuccess(user);
                         } catch (Exception e) {
                             e.printStackTrace();

@@ -15,14 +15,16 @@ import com.google.gson.Gson;
 import com.petbooking.API.Auth.AuthService;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Auth.Models.SessionResp;
+import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.User.UserService;
 import com.petbooking.BaseActivity;
+import com.petbooking.Constants.APIConstants;
+import com.petbooking.Constants.AppConstants;
 import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Interfaces.SocialCallback;
 import com.petbooking.Managers.FacebookAuthManager;
 import com.petbooking.Managers.SessionManager;
-import com.petbooking.Models.SocialUser;
 import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
@@ -60,7 +62,7 @@ public class LoginActivity extends BaseActivity {
             } else if (id == R.id.facebookLogin) {
                 mFacebookAuthManager.auth(LoginActivity.this);
             } else if (id == R.id.signup) {
-                goToSignup();
+                goToSignup(null);
             } else if (id == R.id.forgotPassword) {
                 recoverPassword();
             } else if (id == R.id.appLogo) {
@@ -71,9 +73,8 @@ public class LoginActivity extends BaseActivity {
 
     SocialCallback fbRequestCallback = new SocialCallback() {
         @Override
-        public void onFacebookLoginSuccess(SocialUser user) {
-            Log.d("USERS", new Gson().toJson(user));
-            authFB(user.accessToken);
+        public void onFacebookLoginSuccess(User user) {
+            authFB(user);
         }
     };
 
@@ -142,41 +143,32 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onError(Object error) {
-
+                APIError apiError = (APIError) error;
+                if (apiError.code == APIConstants.ERROR_CODE_INVALID_LOGIN) {
+                    EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_invalid_login, Snackbar.LENGTH_SHORT));
+                }
             }
         });
     }
 
     /**
-     * Go to Recover Password Screen
-     */
-    public void recoverPassword() {
-        Intent recoverIntent = new Intent(this, RecoverPasswordActivity.class);
-        startActivity(recoverIntent);
-    }
-
-    /**
-     * Go to Dashboard after logged
-     */
-    public void goToDashboard() {
-        Intent dashboardIntent = new Intent(this, DashboardActivity.class);
-        startActivity(dashboardIntent);
-    }
-
-    /**
      * Login With Facebook
      */
-    public void authFB(String token) {
-        mAuthService.authUserSocial("facebook", token, new APICallback() {
+    public void authFB(final User user) {
+        mAuthService.authUserSocial("facebook", user.providerToken, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 SessionResp sessionResp = (SessionResp) response;
+                mSessionManager.setSessionToken(sessionResp.data.attributes.token);
                 requestData(sessionResp.data.attributes.userID);
             }
 
             @Override
             public void onError(Object error) {
-
+                APIError apiError = (APIError) error;
+                if (apiError.code == APIConstants.ERROR_CODE_INVALID_LOGIN) {
+                    goToSignup(user);
+                }
             }
         });
     }
@@ -202,13 +194,35 @@ public class LoginActivity extends BaseActivity {
     }
 
     /**
-     * Go To Register Page
+     * Go to Recover Password Screen
      */
-    private void goToSignup() {
-        Intent signupIntent = new Intent(this, SignUpActivity.class);
-        startActivity(signupIntent);
+    public void recoverPassword() {
+        Intent recoverIntent = new Intent(this, RecoverPasswordActivity.class);
+        startActivity(recoverIntent);
     }
 
+    /**
+     * Go to Dashboard after logged
+     */
+    public void goToDashboard() {
+        Intent dashboardIntent = new Intent(this, DashboardActivity.class);
+        startActivity(dashboardIntent);
+    }
+
+    /**
+     * Go To Register Page
+     */
+    private void goToSignup(User user) {
+        Intent signupIntent = new Intent(this, SignUpActivity.class);
+
+        if (user != null) {
+            String parsedUser = new Gson().toJson(user);
+            signupIntent.putExtra(AppConstants.SOCIAL_LOGIN, true);
+            signupIntent.putExtra(AppConstants.USER_WRAPPED, parsedUser);
+        }
+
+        startActivity(signupIntent);
+    }
 
     @Override
     public void onBackPressed() {

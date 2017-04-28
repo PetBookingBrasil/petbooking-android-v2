@@ -42,4 +42,10 @@ public class APIConstants {
     public static final String HEADER_SESSION_TOKEN_FORMAT = "Token token=\"%s\"";
 
 
+    /**
+     * Error Code
+     */
+
+    public static final int ERROR_CODE_INVALID_LOGIN = 124;
+
 }

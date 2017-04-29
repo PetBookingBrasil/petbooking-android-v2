@@ -3,12 +3,13 @@ package com.petbooking.Utils;
 import android.app.Activity;
 import android.content.Context;
 import android.location.Address;
-import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Models.UserAddress;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -108,8 +109,10 @@ public class CommonUtils {
     }
 
     public static String formatDate(int day, int month, int year) {
+        month++;
+        String dayAux = day < 10 ? ("0" + day) : (day + "");
         String monthAux = month < 10 ? ("0" + month) : (month + "");
-        String date = day + "/" + monthAux + "/" + year;
+        String date = dayAux + "/" + monthAux + "/" + year;
 
         return date;
     }
@@ -135,6 +138,24 @@ public class CommonUtils {
                 address.getThoroughfare(), address.getSubLocality(), state, address.getFeatureName());
 
         return userAddress;
+    }
+
+    public static Date getUTCDate(String timestamp) {
+        long epoch = Long.parseLong(timestamp);
+        Date date = new Date(epoch * 1000);
+
+        return date;
+    }
+
+    public static long getRefreshDate(long timestamp) {
+        String epochAuth = String.valueOf(timestamp);
+        Date expirationDate = CommonUtils.getUTCDate(epochAuth);
+        Calendar mCalendar = Calendar.getInstance();
+
+        mCalendar.setTime(expirationDate);
+        mCalendar.add(Calendar.MINUTE, -2);
+
+        return mCalendar.getTimeInMillis();
     }
 
 }

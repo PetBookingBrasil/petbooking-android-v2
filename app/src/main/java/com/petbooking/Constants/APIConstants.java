@@ -15,7 +15,8 @@ public class APIConstants {
      * DATA TYPES
      */
 
-    public static String DATA_PROVIDER = "b2beauty";
+    public static final String DATA_PROVIDER = "b2beauty";
+    public static final String DATA_PROVIDER_FACEBOOK = "facebook";
     public static final String DATA_CONSUMERS = "consumers";
     public static final String DATA_USERS = "users";
     public static final String DATA_SESSIONS = "sessions";
@@ -41,5 +42,11 @@ public class APIConstants {
     public static final String HEADER_SESSION_TOKEN = "X-PetBooking-Session-Token";
     public static final String HEADER_SESSION_TOKEN_FORMAT = "Token token=\"%s\"";
 
+
+    /**
+     * Error Code
+     */
+
+    public static final int ERROR_CODE_INVALID_LOGIN = 124;
 
 }

@@ -1,6 +1,6 @@
 package com.petbooking.Interfaces;
 
-import com.petbooking.Models.SocialUser;
+import com.petbooking.Models.User;
 
 /**
  * Created by Luciano José on 19/12/2016.
@@ -8,6 +8,6 @@ import com.petbooking.Models.SocialUser;
 
 public interface SocialCallback {
 
-    void onFacebookLoginSuccess(SocialUser user);
+    void onFacebookLoginSuccess(User user);
 
 }

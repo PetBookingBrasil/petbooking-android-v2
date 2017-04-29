@@ -119,6 +119,9 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             tools:replace="android:theme" />
 
+        <!-- Receivers -->
+        <receiver
+            android:name=".Managers.AlarmReceiver" />
     </application>
 
 </manifest>

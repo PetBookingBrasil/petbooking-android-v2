@@ -5,6 +5,7 @@ import com.petbooking.API.Auth.Models.AuthConsumerResp;
 import com.petbooking.API.Auth.Models.AuthConsumerRqt;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Auth.Models.AuthUserRqt;
+import com.petbooking.API.Auth.Models.AuthUserSocialRqt;
 import com.petbooking.API.Auth.Models.SessionResp;
 import com.petbooking.Constants.APIConstants;
 
@@ -27,5 +28,9 @@ public interface AuthInterface {
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @POST(APIAuthConstants.SESSION_ENDPOINT)
     Call<SessionResp> authUser(@Body AuthUserRqt authUserRqt);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
+    @POST(APIAuthConstants.SESSION_ENDPOINT)
+    Call<SessionResp> authUserSocial(@Body AuthUserSocialRqt authUserSocialRqt);
 
 }

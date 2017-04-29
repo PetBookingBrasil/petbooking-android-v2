@@ -29,9 +29,9 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
 import com.petbooking.Models.UserAddress;
 import com.petbooking.R;
-import com.petbooking.UI.Menu.Profile.ProfileActivity;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Login.LoginActivity;
+import com.petbooking.UI.Menu.Profile.ProfileActivity;
 import com.petbooking.Utils.APIUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -162,6 +162,7 @@ public class DashboardActivity extends AppCompatActivity implements
         if (id == R.id.payments) {
             Log.d("PAYMENTS", "PAYMENTS");
         } else if (id == R.id.logout) {
+            mSessionManager.logout();
             Intent logoutIntent = new Intent(this, LoginActivity.class);
             startActivity(logoutIntent);
         }

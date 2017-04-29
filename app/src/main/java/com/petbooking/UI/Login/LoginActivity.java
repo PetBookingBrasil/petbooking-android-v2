@@ -1,5 +1,8 @@
 package com.petbooking.UI.Login;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -15,24 +18,24 @@ import com.google.gson.Gson;
 import com.petbooking.API.Auth.AuthService;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Auth.Models.SessionResp;
-import com.petbooking.API.Generic.ErrorResp;
+import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.User.UserService;
 import com.petbooking.BaseActivity;
+import com.petbooking.Constants.APIConstants;
+import com.petbooking.Constants.AppConstants;
 import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Interfaces.SocialCallback;
+import com.petbooking.Managers.AlarmReceiver;
 import com.petbooking.Managers.FacebookAuthManager;
 import com.petbooking.Managers.SessionManager;
-import com.petbooking.Models.SocialUser;
 import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.RecoverPassword.RecoverPasswordActivity;
 import com.petbooking.UI.SignUp.SignUpActivity;
 import com.petbooking.Utils.APIUtils;
-import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
-import com.petbooking.Utils.FormUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -42,6 +45,7 @@ public class LoginActivity extends BaseActivity {
     private AuthService mAuthService;
     private UserService mUserService;
     private FacebookAuthManager mFacebookAuthManager;
+    private AlarmManager mAlarmManager;
 
     private Typeface mCustomFont;
     private ImageView mIvAppLogo;
@@ -63,7 +67,7 @@ public class LoginActivity extends BaseActivity {
             } else if (id == R.id.facebookLogin) {
                 mFacebookAuthManager.auth(LoginActivity.this);
             } else if (id == R.id.signup) {
-                goToSignup();
+                goToSignup(null);
             } else if (id == R.id.forgotPassword) {
                 recoverPassword();
             } else if (id == R.id.appLogo) {
@@ -74,8 +78,8 @@ public class LoginActivity extends BaseActivity {
 
     SocialCallback fbRequestCallback = new SocialCallback() {
         @Override
-        public void onFacebookLoginSuccess(SocialUser user) {
-            Log.d("USERS", new Gson().toJson(user));
+        public void onFacebookLoginSuccess(User user) {
+            authFB(user);
         }
     };
 
@@ -121,8 +125,8 @@ public class LoginActivity extends BaseActivity {
      * email and password
      */
     public void login() {
-        String email = mEdtEmail.getText().toString();
-        String password = mEdtPassword.getText().toString();
+        final String email = mEdtEmail.getText().toString();
+        final String password = mEdtPassword.getText().toString();
 
         if (email.equals("") || password.equals("")) {
             EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_fields_empty, Snackbar.LENGTH_SHORT));
@@ -139,12 +143,62 @@ public class LoginActivity extends BaseActivity {
             public void onSuccess(Object response) {
                 SessionResp sessionResp = (SessionResp) response;
                 mSessionManager.setSessionToken(sessionResp.data.attributes.token);
+                mSessionManager.setSessionExpirationDate(sessionResp.data.attributes.expiresAt);
+                mSessionManager.setLastLogin(email, password);
+                scheduleRefreshToken(AppConstants.SESSION_TOKEN);
                 requestData(sessionResp.data.attributes.userID);
             }
 
             @Override
             public void onError(Object error) {
+                APIError apiError = (APIError) error;
+                if (apiError.code == APIConstants.ERROR_CODE_INVALID_LOGIN) {
+                    EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_invalid_login, Snackbar.LENGTH_SHORT));
+                }
+            }
+        });
+    }
 
+    /**
+     * Login With Facebook
+     */
+    public void authFB(final User user) {
+        mAuthService.authUserSocial("facebook", user.providerToken, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                SessionResp sessionResp = (SessionResp) response;
+                mSessionManager.setSessionToken(sessionResp.data.attributes.token);
+                mSessionManager.setSessionExpirationDate(sessionResp.data.attributes.expiresAt);
+                mSessionManager.setLastFBToken(user.providerToken);
+                scheduleRefreshToken(AppConstants.SESSION_TOKEN);
+                requestData(sessionResp.data.attributes.userID);
+            }
+
+            @Override
+            public void onError(Object error) {
+                APIError apiError = (APIError) error;
+                if (apiError.code == APIConstants.ERROR_CODE_INVALID_LOGIN) {
+                    goToSignup(user);
+                }
+            }
+        });
+    }
+
+    /**
+     * Get User information
+     */
+    public void requestData(String id) {
+        mUserService.getUser(id, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                AuthUserResp authUserResp = (AuthUserResp) response;
+                User user = APIUtils.parseUser(authUserResp);
+                mSessionManager.setUserLogged(user);
+                goToDashboard();
+            }
+
+            @Override
+            public void onError(Object error) {
             }
         });
     }
@@ -166,33 +220,34 @@ public class LoginActivity extends BaseActivity {
     }
 
     /**
-     * Get User information
-     */
-    public void requestData(String id) {
-        mUserService.getUser(id, new APICallback() {
-            @Override
-            public void onSuccess(Object response) {
-                AuthUserResp authUserResp = (AuthUserResp) response;
-                User user = APIUtils.parseUser(authUserResp);
-                mSessionManager.setUserLogged(user);
-                goToDashboard();
-            }
-
-            @Override
-            public void onError(Object error) {
-                Log.d("ERROR", new Gson().toJson(error));
-            }
-        });
-    }
-
-    /**
      * Go To Register Page
      */
-    private void goToSignup() {
+    private void goToSignup(User user) {
         Intent signupIntent = new Intent(this, SignUpActivity.class);
+
+        if (user != null) {
+            String parsedUser = new Gson().toJson(user);
+            signupIntent.putExtra(AppConstants.SOCIAL_LOGIN, true);
+            signupIntent.putExtra(AppConstants.USER_WRAPPED, parsedUser);
+        }
+
         startActivity(signupIntent);
     }
 
+    /**
+     * Refresh Auth Token
+     */
+    public void scheduleRefreshToken(String type) {
+        Intent mIntent;
+        PendingIntent mAlarmIntent;
+        long dateMillis = CommonUtils.getRefreshDate(mSessionManager.getSessionExpirationDate());
+
+        mAlarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        mIntent = new Intent(this, AlarmReceiver.class);
+        mIntent.putExtra(type, true);
+        mAlarmIntent = PendingIntent.getBroadcast(this, AppConstants.REFRESH_SESSION, mIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        mAlarmManager.set(AlarmManager.RTC_WAKEUP, dateMillis, mAlarmIntent);
+    }
 
     @Override
     public void onBackPressed() {

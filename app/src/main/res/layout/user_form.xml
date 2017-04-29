@@ -106,6 +106,7 @@
                         android:drawableStart="@drawable/ic_cpf"
                         android:hint="@string/hint_cpf"
                         android:inputType="number"
+                        android:nextFocusDown="@+id/user_birthday"
                         android:paddingLeft="@dimen/spacing_xmicro"
                         android:text="@={user.cpf}" />
                 </android.support.design.widget.TextInputLayout>
@@ -212,6 +213,7 @@
                         android:drawableStart="@drawable/ic_point"
                         android:hint="@string/hint_street"
                         android:inputType="text"
+                        android:nextFocusDown="@+id/user_street_number"
                         android:paddingLeft="@dimen/spacing_xmicro"
                         android:text="@={user.street}" />
                 </android.support.design.widget.TextInputLayout>
@@ -222,6 +224,7 @@
                     android:layout_weight="2">
 
                     <EditText
+                        android:id="@+id/user_street_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_point"
@@ -286,6 +289,7 @@
                         android:drawableStart="@drawable/ic_point"
                         android:hint="@string/hint_city"
                         android:inputType="text"
+                        android:nextFocusDown="@+id/user_state"
                         android:paddingLeft="@dimen/spacing_xmicro"
                         android:text="@={user.city}" />
                 </android.support.design.widget.TextInputLayout>
@@ -332,6 +336,7 @@
                     android:drawableStart="@drawable/ic_phone"
                     android:hint="@string/hint_phone"
                     android:inputType="phone"
+                    android:nextFocusDown="@+id/user_password"
                     android:paddingLeft="@dimen/spacing_xmicro"
                     android:text="@={user.phone}" />
             </android.support.design.widget.TextInputLayout>
@@ -360,6 +365,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/spacing_xmicro"
+                        android:nextFocusDown="@+id/repeat_password"
                         android:layout_marginTop="@dimen/spacing_xmicro"
                         android:drawableLeft="@drawable/ic_password_black"
                         android:drawablePadding="@dimen/spacing_xmicro"

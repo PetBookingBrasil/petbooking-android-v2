@@ -3,6 +3,7 @@ package com.petbooking.API.User;
 import com.petbooking.API.APIClient;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.User.Models.CreateUserRqt;
+import com.petbooking.API.User.Models.CreateSocialUserRqt;
 import com.petbooking.API.User.Models.RecoverPasswordRqt;
 import com.petbooking.API.User.Models.UpdateUserRqt;
 import com.petbooking.Interfaces.APICallback;
@@ -76,6 +77,22 @@ public class UserService {
     public void createUser(User user, final APICallback callback) {
         CreateUserRqt userRqt = new CreateUserRqt(user);
         Call<AuthUserResp> call = mUserInterface.createUser(userRqt);
+        call.enqueue(new Callback<AuthUserResp>() {
+            @Override
+            public void onResponse(Call<AuthUserResp> call, Response<AuthUserResp> response) {
+                APIUtils.handleResponse(response, callback);
+            }
+
+            @Override
+            public void onFailure(Call<AuthUserResp> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void createSocialUser(User user, String provider, String providerToken, final APICallback callback) {
+        CreateSocialUserRqt userRqt = new CreateSocialUserRqt(user, provider, providerToken);
+        Call<AuthUserResp> call = mUserInterface.createSocialUser(userRqt);
         call.enqueue(new Callback<AuthUserResp>() {
             @Override
             public void onResponse(Call<AuthUserResp> call, Response<AuthUserResp> response) {

@@ -12,6 +12,8 @@
     <string name="recover_password_title">Esqueci a senha</string>
     <string name="signup_title">Preencha seus dados</string>
     <string name="profile_title">Perfil</string>
+    <string name="pets_title">Meus Pets</string>
+    <string name="new_pet_title">Preencha os dados do pet</string>
 
     <!-- Presentation -->
     <string name="presentation_title_format">presentation_%d_title</string>
@@ -60,16 +62,31 @@
     <string name="recover_email_text">As instruções para recuperação foram enviadas para seu email.</string>
     <string name="send_button">Enviar</string>
 
-    <!-- Sidemenu Options-->
+    <!-- Sidemenu and Toolbar Options-->
+    <string name="my_pets">Meus Pets</string>
     <string name="search">Pesquisar</string>
     <string name="calendar">Agenda</string>
     <string name="payments">Pagamentos</string>
     <string name="favorites">Favoritos</string>
     <string name="settings">Configurações</string>
     <string name="logout">Sair</string>
+    <string name="notifications">Notificações</string>
+    <string name="schedules">Agendamentos</string>
+    <string name="new_pet">Novo Pet</string>
 
     <!-- Profile -->
     <string name="profile_dialog_title">Atualizar Perfil</string>
+
+    <!-- Register Pet -->
+    <string name="hint_pet_name">Nome do pet</string>
+    <string name="hint_pet_birthday">Nascimento</string>
+    <string name="hint_gender">Gênero</string>
+    <string name="hint_type">Tipo</string>
+    <string name="hint_size">Porte</string>
+    <string name="hint_breed">Raça</string>
+    <string name="hint_coat">Pelagem</string>
+    <string name="hint_temper">Temperamento</string>
+    <string name="hint_observation">Observação</string>
 
     <!-- Dialog -->
     <string name="dialog_picture_title">Selecionar Foto</string>

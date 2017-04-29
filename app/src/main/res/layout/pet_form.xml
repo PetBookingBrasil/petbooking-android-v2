@@ -154,7 +154,6 @@
                         android:hint="@string/hint_type"
                         android:inputType="text"
                         android:nextFocusDown="@+id/pet_size"
-                        android:drawableRight="@drawable/ic_info"
                         android:paddingLeft="@dimen/spacing_xmicro" />
                 </android.support.design.widget.TextInputLayout>
 

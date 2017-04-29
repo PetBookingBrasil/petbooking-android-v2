@@ -31,8 +31,10 @@ The application is organized by feature in following package structure inside co
  
 ### Libraries
 The application uses the libraries below:
-+ [Volley](https://github.com/google/volley) - Volley is an HTTP library that makes networking for Android apps easier and most importantly, faster.
++ [Retrofit](http://square.github.io/retrofit/) - A type-safe HTTP client for Android and Java.
 + [Glide](https://github.com/bumptech/glide) - Glide is a fast and efficient open source media management and image loading framework for Android.
 + [GSON](https://github.com/google/gson) - A Java serialization/deserialization library that can convert Java Objects into JSON and back.
 + [Facebook](https://developers.facebook.com/docs/android/) - SDK to Use Facebook API.
++ [Eventbus](http://greenrobot.org/eventbus/) - EventBus is an open-source library for Android using the publisher/subscriber pattern for loose coupling.
++ [FabricIO](https://get.fabric.io/) - Fabric is a platform that helps your mobile team build better apps, understand your users, and grow your business.
 

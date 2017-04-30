@@ -49,4 +49,9 @@ public class APIConstants {
 
     public static final int ERROR_CODE_INVALID_LOGIN = 124;
 
+    /**
+     * Query
+     */
+    public static final String QUERY_PAGE_INDEX = "page[number]";
+
 }

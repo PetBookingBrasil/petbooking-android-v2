@@ -17,7 +17,7 @@ public class CreatePetRqt {
     public CreatePetRqt() {
     }
 
-    public CreatePetRqt(Context context, String userID, Pet pet) {
+    public CreatePetRqt(String userID, Pet pet) {
         this.data = null;
     }
 

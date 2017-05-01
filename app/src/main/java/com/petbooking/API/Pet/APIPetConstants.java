@@ -31,15 +31,15 @@ public class APIPetConstants {
     /**
      * APIs
      */
-    public static final String ENDPOINT_LIST_BREEDS_CAT = "breeds/cat" + QUERY_PAGE_SIZE_DEAFULT;
+    public static final String LIST_BREEDS_CAT_ENDPOINT = "breeds/cat" + QUERY_PAGE_SIZE_DEAFULT;
 
-    public static final String ENDPOINT_LIST_BREEDS_DOG = "breeds/dog" + QUERY_PAGE_SIZE_DEAFULT;
+    public static final String LIST_BREEDS_DOG_ENDPOINT = "breeds/dog" + QUERY_PAGE_SIZE_DEAFULT;
 
-    public static final String ENDPOINT_LIST_PETS = "users/{" + APIConstants.PATH_PARAM + "}/pets";
+    public static final String LIST_PETS_ENDPOINT = "users/{" + APIConstants.PATH_PARAM + "}/pets";
 
-    public static final String ENDPOINT_CREATE_USER = ENDPOINT_LIST_PETS;
+    public static final String CREATE_USER_ENDPOINT = LIST_PETS_ENDPOINT;
 
-    public static final String ENDPOINT_UPDATE_PET = ENDPOINT_LIST_PETS + "/{" + PATH_PET_ID + "}";
+    public static final String UPDATE_PET_ENDPOINT = LIST_PETS_ENDPOINT + "/{" + PATH_PET_ID + "}";
 
-    public static final String ENDPOINT_REMOVE_PET = ENDPOINT_UPDATE_PET;
+    public static final String REMOVE_PET_ENDPOINT = UPDATE_PET_ENDPOINT;
 }

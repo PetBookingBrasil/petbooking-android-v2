@@ -25,31 +25,31 @@ public interface PetInterface {
 
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
-    @GET(APIPetConstants.ENDPOINT_LIST_PETS)
+    @GET(APIPetConstants.LIST_PETS_ENDPOINT)
     Call<ListPetsResp> listPets(@Path(APIConstants.PATH_PARAM) String userID);
 
     @Headers(APIConstants.HEADER_AUTHORIZATION_REQUIRED)
-    @GET(APIPetConstants.ENDPOINT_LIST_BREEDS_CAT)
-    Call<BreedResp> listBreedsCat(@Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex);
+    @GET(APIPetConstants.LIST_BREEDS_CAT_ENDPOINT)
+    Call<BreedResp> listCatBreeds();
 
     @Headers(APIConstants.HEADER_AUTHORIZATION_REQUIRED)
-    @GET(APIPetConstants.ENDPOINT_LIST_BREEDS_DOG)
-    Call<BreedResp> listBreedsDog(@Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex);
+    @GET(APIPetConstants.LIST_BREEDS_DOG_ENDPOINT)
+    Call<BreedResp> listDogBreeds();
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
-    @POST(APIPetConstants.ENDPOINT_CREATE_USER)
+    @POST(APIPetConstants.CREATE_USER_ENDPOINT)
     Call<PetResp> createPet(@Path(APIConstants.PATH_PARAM) String userID,
                             @Body CreatePetRqt createPetRqt);
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
-    @PUT(APIPetConstants.ENDPOINT_UPDATE_PET)
+    @PUT(APIPetConstants.UPDATE_PET_ENDPOINT)
     Call<PetResp> updatePet(@Path(APIConstants.PATH_PARAM) String userID,
-                           @Path(APIPetConstants.PATH_PET_ID) String petID,
-                           @Body CreatePetRqt updatePetRqt);
+                            @Path(APIPetConstants.PATH_PET_ID) String petID,
+                            @Body CreatePetRqt updatePetRqt);
 
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
-    @DELETE(APIPetConstants.ENDPOINT_REMOVE_PET)
+    @DELETE(APIPetConstants.REMOVE_PET_ENDPOINT)
     Call<Void> removePet(@Path(APIConstants.PATH_PARAM) String userID,
                          @Path(APIPetConstants.PATH_PET_ID) String petID);
 }

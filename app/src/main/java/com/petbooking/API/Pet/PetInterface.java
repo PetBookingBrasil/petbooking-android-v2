@@ -4,7 +4,6 @@ import com.petbooking.API.Pet.Models.BreedResp;
 import com.petbooking.API.Pet.Models.CreatePetRqt;
 import com.petbooking.API.Pet.Models.ListPetsResp;
 import com.petbooking.API.Pet.Models.PetResp;
-import com.petbooking.API.User.APIUserConstants;
 import com.petbooking.Constants.APIConstants;
 
 import retrofit2.Call;
@@ -15,7 +14,6 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 /**
  * Created by Luciano José on 30/04/2017.

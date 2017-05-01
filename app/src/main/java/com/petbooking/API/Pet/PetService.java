@@ -3,6 +3,7 @@ package com.petbooking.API.Pet;
 import com.petbooking.API.APIClient;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Pet.Models.BreedResp;
+import com.petbooking.API.Pet.Models.ListPetsResp;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Pet;
 import com.petbooking.Utils.APIUtils;
@@ -35,8 +36,19 @@ public class PetService {
 
     }
 
-    public void listPets(String userID, APICallback callback) {
+    public void listPets(String userID, final APICallback callback) {
+        Call<ListPetsResp> call = mPetInterface.listPets(userID);
+        call.enqueue(new Callback<ListPetsResp>() {
+            @Override
+            public void onResponse(Call<ListPetsResp> call, Response<ListPetsResp> response) {
+                APIUtils.handleResponse(response, callback);
+            }
 
+            @Override
+            public void onFailure(Call<ListPetsResp> call, Throwable t) {
+
+            }
+        });
     }
 
     public void listCatBreeds(final APICallback callback) {

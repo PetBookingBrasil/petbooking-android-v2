@@ -32,8 +32,19 @@ public class PetService {
 
     }
 
-    public void removePet(String userID, Pet pet, APICallback callback) {
+    public void removePet(String userId, String petId, final APICallback callback) {
+        Call<Void> call = mPetInterface.removePet(userId, petId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                APIUtils.handleResponse(response, callback);
+            }
 
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
     }
 
     public void listPets(String userID, final APICallback callback) {

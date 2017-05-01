@@ -35,6 +35,7 @@
         <item name="android:paddingLeft">@dimen/spacing_xnormal</item>
         <item name="android:paddingRight">@dimen/spacing_normal</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:minHeight">48dp</item>
     </style>
 
     <style name="AppTheme.PrimaryButton" parent="Widget.AppCompat.Button.Colored">

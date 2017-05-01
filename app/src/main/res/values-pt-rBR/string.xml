@@ -77,6 +77,12 @@
     <!-- Profile -->
     <string name="profile_dialog_title">Atualizar Perfil</string>
 
+    <!-- Pets -->
+    <string name="remove_pet_title">Excluir Pet</string>
+    <string name="remove_pet_text">Você está excluindo seu pet, e com isso
+        será cancelado todos os seus agendamentos e históricos.</string>
+    <string name="confirm_remove_pet">Quero Excluir</string>
+
     <!-- Register Pet -->
     <string name="hint_pet_name">Nome do pet</string>
     <string name="hint_pet_birthday">Nascimento</string>
@@ -93,6 +99,7 @@
     <string name="dialog_picture_text">Selecione o método de entrada de imagens que deseja usar.</string>
     <string name="dialog_button_ok">Ok</string>
     <string name="dialog_back_screen">Voltar à Tela</string>
+    <string name="dialog_cancel">Cancelar</string>
 
     <!-- Errors -->
     <string name="error_fields_empty">Preencha todos os campos.</string>

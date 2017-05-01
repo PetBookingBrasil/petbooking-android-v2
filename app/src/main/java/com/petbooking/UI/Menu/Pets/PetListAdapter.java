@@ -2,9 +2,11 @@ package com.petbooking.UI.Menu.Pets;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -25,10 +27,12 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
 
     private ArrayList<Pet> mPetList;
     private Context mContext;
+    private AdapterInterface mInterface;
 
     public PetListAdapter(Context context, ArrayList<Pet> petList) {
         this.mPetList = petList;
         this.mContext = context;
+        this.mInterface = (AdapterInterface) context;
     }
 
     public void updateList(ArrayList<Pet> petList) {
@@ -52,6 +56,14 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
 
         holder.mTvName.setText(pet.name);
         holder.mTvBreed.setText(pet.description);
+
+        holder.mBtnRemovePet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mInterface.onRemoveClick(pet.id);
+            }
+        });
+
         Glide.with(mContext)
                 .load(APIUtils.getAssetEndpoint(pet.avatar.url))
                 .error(R.drawable.ic_menu_user)
@@ -60,6 +72,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
                 .centerCrop()
                 .dontAnimate()
                 .into(holder.mCvPicture);
+
     }
 
     @Override
@@ -72,6 +85,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
         CircleImageView mCvPicture;
         TextView mTvName;
         TextView mTvBreed;
+        ImageButton mBtnRemovePet;
 
         public PetViewHolder(View view) {
             super(view);
@@ -79,7 +93,14 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
             mCvPicture = (CircleImageView) view.findViewById(R.id.pet_picture);
             mTvName = (TextView) view.findViewById(R.id.pet_name);
             mTvBreed = (TextView) view.findViewById(R.id.pet_breed);
+            mBtnRemovePet = (ImageButton) view.findViewById(R.id.remove_button);
         }
+    }
+
+    public interface AdapterInterface {
+
+        void onRemoveClick(String id);
+
     }
 
 }

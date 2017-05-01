@@ -17,12 +17,15 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Pet;
 import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
 import com.petbooking.UI.Menu.Pets.RegisterPet.RegisterPetActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PetsActivity extends BaseActivity {
+public class PetsActivity extends BaseActivity implements
+        PetListAdapter.AdapterInterface,
+        ConfirmDialogFragment.FinishDialogListener {
 
     private SessionManager mSessionManager;
     private PetService mPetService;
@@ -31,6 +34,8 @@ public class PetsActivity extends BaseActivity {
     private RecyclerView mRvPets;
     private PetListAdapter mAdapter;
     private ArrayList<Pet> mPets;
+
+    private ConfirmDialogFragment mConfirmDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,7 @@ public class PetsActivity extends BaseActivity {
         mPetService = new PetService();
         currentUser = mSessionManager.getUserLogged();
 
+        mConfirmDialogFragment = ConfirmDialogFragment.newInstance();
         mRvPets = (RecyclerView) findViewById(R.id.pet_list);
         mRvPets.setHasFixedSize(true);
 
@@ -100,4 +106,35 @@ public class PetsActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Remove Pet
+     *
+     * @param userId
+     * @param petId
+     */
+    public void removePet(String userId, String petId) {
+        mPetService.removePet(userId, petId, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+
+            }
+
+            @Override
+            public void onError(Object error) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onRemoveClick(String id) {
+        Log.d("PET", id);
+        mConfirmDialogFragment.setDialogInfo(R.string.remove_pet_title, R.string.remove_pet_text, R.string.confirm_remove_pet);
+        mConfirmDialogFragment.show(getSupportFragmentManager(), "REMOVE_PET");
+    }
+
+    @Override
+    public void onFinishDialog(int action) {
+        Log.d("ACT", action + "");
+    }
 }

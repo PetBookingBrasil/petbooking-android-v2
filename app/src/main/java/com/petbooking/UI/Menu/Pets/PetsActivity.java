@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.petbooking.API.Pet.Models.ListPetsResp;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.BaseActivity;
+import com.petbooking.Constants.AppConstants;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Pet;
@@ -30,6 +31,7 @@ public class PetsActivity extends BaseActivity implements
     private SessionManager mSessionManager;
     private PetService mPetService;
     private User currentUser;
+    private String petId;
 
     private RecyclerView mRvPets;
     private PetListAdapter mAdapter;
@@ -45,6 +47,8 @@ public class PetsActivity extends BaseActivity implements
         mSessionManager = SessionManager.getInstance();
         mPetService = new PetService();
         currentUser = mSessionManager.getUserLogged();
+
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         mConfirmDialogFragment = ConfirmDialogFragment.newInstance();
         mRvPets = (RecyclerView) findViewById(R.id.pet_list);
@@ -74,9 +78,12 @@ public class PetsActivity extends BaseActivity implements
 
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
-        if (item.getItemId() == R.id.new_pet) {
+        int id = item.getItemId();
+        if (id == R.id.new_pet) {
             Intent newPetIntent = new Intent(this, RegisterPetActivity.class);
             startActivity(newPetIntent);
+        } else if (id == android.R.id.home) {
+            onBackPressed();
         }
 
         return true;
@@ -116,7 +123,7 @@ public class PetsActivity extends BaseActivity implements
         mPetService.removePet(userId, petId, new APICallback() {
             @Override
             public void onSuccess(Object response) {
-
+                listPets(currentUser.id);
             }
 
             @Override
@@ -127,14 +134,21 @@ public class PetsActivity extends BaseActivity implements
     }
 
     @Override
-    public void onRemoveClick(String id) {
-        Log.d("PET", id);
+    public void onRemoveClick(String petId) {
+        this.petId = petId;
         mConfirmDialogFragment.setDialogInfo(R.string.remove_pet_title, R.string.remove_pet_text, R.string.confirm_remove_pet);
         mConfirmDialogFragment.show(getSupportFragmentManager(), "REMOVE_PET");
     }
 
     @Override
     public void onFinishDialog(int action) {
-        Log.d("ACT", action + "");
+        if (action == AppConstants.CONFIRM_ACTION) {
+            removePet(currentUser.id, this.petId);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

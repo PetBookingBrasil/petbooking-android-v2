@@ -19,6 +19,7 @@ import com.petbooking.Models.Pet;
 import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
+import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Menu.Pets.RegisterPet.RegisterPetActivity;
 
 import java.util.ArrayList;
@@ -26,7 +27,8 @@ import java.util.List;
 
 public class PetsActivity extends BaseActivity implements
         PetListAdapter.AdapterInterface,
-        ConfirmDialogFragment.FinishDialogListener {
+        ConfirmDialogFragment.FinishDialogListener,
+        FeedbackDialogFragment.FinishDialogListener {
 
     private SessionManager mSessionManager;
     private PetService mPetService;
@@ -38,6 +40,7 @@ public class PetsActivity extends BaseActivity implements
     private ArrayList<Pet> mPets;
 
     private ConfirmDialogFragment mConfirmDialogFragment;
+    private FeedbackDialogFragment mFeedbackDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,8 @@ public class PetsActivity extends BaseActivity implements
         getSupportActionBar().setHomeButtonEnabled(true);
 
         mConfirmDialogFragment = ConfirmDialogFragment.newInstance();
+        mFeedbackDialogFragment = FeedbackDialogFragment.newInstance();
+
         mRvPets = (RecyclerView) findViewById(R.id.pet_list);
         mRvPets.setHasFixedSize(true);
 
@@ -123,7 +128,9 @@ public class PetsActivity extends BaseActivity implements
         mPetService.removePet(userId, petId, new APICallback() {
             @Override
             public void onSuccess(Object response) {
-                listPets(currentUser.id);
+                mFeedbackDialogFragment.setDialogInfo(R.string.remove_pet_title, R.string.success_remove_pet,
+                        R.string.dialog_button_ok, AppConstants.OK_ACTION);
+                mFeedbackDialogFragment.show(getSupportFragmentManager(), "FEEDBACK");
             }
 
             @Override
@@ -144,6 +151,8 @@ public class PetsActivity extends BaseActivity implements
     public void onFinishDialog(int action) {
         if (action == AppConstants.CONFIRM_ACTION) {
             removePet(currentUser.id, this.petId);
+        } else if (action == AppConstants.OK_ACTION) {
+            listPets(currentUser.id);
         }
     }
 

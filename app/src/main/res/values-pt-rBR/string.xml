@@ -82,6 +82,7 @@
     <string name="remove_pet_text">Você está excluindo seu pet, e com isso
         será cancelado todos os seus agendamentos e históricos.</string>
     <string name="confirm_remove_pet">Quero Excluir</string>
+    <string name="success_remove_pet">Pet removido com sucesso.</string>
 
     <!-- Register Pet -->
     <string name="hint_pet_name">Nome do pet</string>

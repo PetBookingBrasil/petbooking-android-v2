@@ -3,7 +3,9 @@ package com.petbooking.API.Pet;
 import com.petbooking.API.APIClient;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Pet.Models.BreedResp;
+import com.petbooking.API.Pet.Models.CreatePetRqt;
 import com.petbooking.API.Pet.Models.ListPetsResp;
+import com.petbooking.API.Pet.Models.PetResp;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Pet;
 import com.petbooking.Utils.APIUtils;
@@ -24,8 +26,20 @@ public class PetService {
         mPetInterface = APIClient.getClient().create(PetInterface.class);
     }
 
-    public void createPet(String userID, Pet pet, APICallback callback) {
+    public void createPet(String userId, Pet pet, final APICallback callback) {
+        CreatePetRqt petRqt = new CreatePetRqt(pet);
+        Call<PetResp> call = mPetInterface.createPet(userId, petRqt);
+        call.enqueue(new Callback<PetResp>() {
+            @Override
+            public void onResponse(Call<PetResp> call, Response<PetResp> response) {
+                APIUtils.handleResponse(response, callback);
+            }
 
+            @Override
+            public void onFailure(Call<PetResp> call, Throwable t) {
+
+            }
+        });
     }
 
     public void updatePet(String userID, Pet pet, APICallback callback) {

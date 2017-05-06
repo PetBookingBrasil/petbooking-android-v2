@@ -13,12 +13,13 @@ import com.petbooking.Models.Pet;
 public class CreatePetRqt {
 
     public Data data;
+    public transient Attributes attributes;
 
-    public CreatePetRqt() {
-    }
-
-    public CreatePetRqt(String userID, Pet pet) {
-        this.data = null;
+    public CreatePetRqt(Pet pet) {
+        this.attributes = new Attributes(pet.userId, pet.photo, pet.name, pet.gender,
+                pet.mood, pet.description, pet.size, pet.breedId, pet.birthday,
+                pet.coatType);
+        this.data = new Data(this.attributes);
     }
 
     public static class Data {
@@ -27,11 +28,7 @@ public class CreatePetRqt {
         public String type;
         public Attributes attributes;
 
-        public Data() {
-        }
-
-        public Data(String petID, Attributes attributes) {
-            this.id = petID;
+        public Data(Attributes attributes) {
             this.type = APIPetConstants.DATA_PETS;
             this.attributes = attributes;
         }
@@ -59,22 +56,19 @@ public class CreatePetRqt {
         @SerializedName("coat_type")
         public String coatType;
 
-        public Attributes() {
-        }
-
-        public Attributes(Context context, String userID, String photo, String name, String gender,
+        public Attributes(String userID, String photo, String name, String gender,
                           String mood, String description, String size, String breedID, String birth,
                           String coatType) {
-            this.photo = TextUtils.isEmpty(photo) ? null : APIPetConstants.DATA_BASE64 + photo;
+            this.photo = photo;
             this.name = name;
-            this.gender = "";
+            this.gender = gender;
             this.mood = mood;
             this.description = description;
-            this.size = "";
+            this.size = size;
             this.breedID = breedID;
             this.userID = userID;
-            this.birth = TextUtils.isEmpty(birth) ? null : birth;
-            this.coatType = "";
+            this.birth = birth;
+            this.coatType = coatType;
         }
 
     }

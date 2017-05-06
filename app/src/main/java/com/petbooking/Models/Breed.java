@@ -17,4 +17,5 @@ public class Breed {
         this.kind = kind;
         this.size = size;
     }
+
 }

@@ -72,6 +72,13 @@ public class PetsActivity extends BaseActivity implements
         listPets(currentUser.id);
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listPets(currentUser.id);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_pets, menu);
@@ -101,6 +108,7 @@ public class PetsActivity extends BaseActivity implements
             @Override
             public void onSuccess(Object response) {
                 ListPetsResp pets = (ListPetsResp) response;
+                mPets.clear();
                 for (ListPetsResp.Item pet : pets.data) {
                     mPets.add(new Pet(pet.id, pet.attributes.name, pet.attributes.breedName, pet.attributes.description, pet.attributes.photo));
                 }

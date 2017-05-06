@@ -42,4 +42,6 @@
         <item>@string/temper_quiet</item>
         <item>@string/temper_brave</item>
     </string-array>
+
+    <string-array name="empty_array"></string-array>
 </resources>

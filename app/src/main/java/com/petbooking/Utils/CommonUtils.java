@@ -157,7 +157,7 @@ public class CommonUtils {
         Calendar mCalendar = Calendar.getInstance();
 
         mCalendar.setTime(expirationDate);
-        mCalendar.add(Calendar.MINUTE, -2);
+        mCalendar.add(Calendar.SECOND, 10);
 
         return mCalendar.getTimeInMillis();
     }

@@ -102,6 +102,7 @@ public class MaterialSpinner extends RelativeLayout {
         mSpinner.setAdapter(mAdapter);
     }
 
+
     /**
      * Set Spinner options with
      * Reference
@@ -109,7 +110,7 @@ public class MaterialSpinner extends RelativeLayout {
      * @param itens
      */
     public void setItems(int itens) {
-        mAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, mContext.getResources().getStringArray(itens));
+        mAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_item, mContext.getResources().getStringArray(itens));
         mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(mAdapter);
     }
@@ -152,7 +153,17 @@ public class MaterialSpinner extends RelativeLayout {
     }
 
     /**
+     * Get Selected Position
+     *
+     * @return
+     */
+    public int getPosition() {
+        return mSpinner.getSelectedItemPosition();
+    }
+
+    /**
      * Set Action for Info Button
+     *
      * @param onInfoClickListener
      */
     public void setOnInfoClickListener(View.OnClickListener onInfoClickListener) {

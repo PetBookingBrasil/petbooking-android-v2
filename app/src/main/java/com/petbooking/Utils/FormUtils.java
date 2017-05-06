@@ -1,5 +1,6 @@
 package com.petbooking.Utils;
 
+import com.petbooking.Constants.AppConstants;
 import com.petbooking.Models.User;
 import com.petbooking.R;
 
@@ -26,6 +27,10 @@ public class FormUtils {
         }
 
         return -1;
+    }
+
+    public static String getPhoto(String imageBase){
+        return AppConstants.BASE64 + imageBase;
     }
 
 }

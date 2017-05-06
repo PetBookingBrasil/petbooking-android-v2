@@ -30,8 +30,8 @@ public class AppConstants {
     public static final String FACEBOOK_TYPE = "facebook";
     public static final String EMAIL_TYPE = "email";
     public static final String LAST_USER_EMAIL = "lastUserEmailPref";
-    public static final String LAST_USER_PASS= "lastUserPassPref";
-    public static final String LAST_USER_FB_TOKEN= "lastUserFBTokenPref";
+    public static final String LAST_USER_PASS = "lastUserPassPref";
+    public static final String LAST_USER_FB_TOKEN = "lastUserFBTokenPref";
     public static final String USER_VALID_FOR_SCHEDULING = "userValidForScheduling";
 
     public static String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -70,5 +70,6 @@ public class AppConstants {
     public static final int CONNECTION_TIMEOUT = 30;
     public static final int WRITE_TIMEOUT = 30;
     public static final int READ_TIMEOUT = 30;
+    public static final String BASE64 = "data:image/jpeg;base64,";
 
 }

@@ -1,42 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?><!--suppress CheckTagEmptyBody -->
 <resources>
 
-    <!-- Main Dashboard Title Array -->
-    <string-array name="main_dashboard">
-        <item>@string/action_menu_category</item>
-        <item>@string/action_menu_featured</item>
-        <item>@string/action_menu_favorite</item>
-    </string-array>
-
-    <!-- Business Dashboard Array -->
-    <string-array name="business_dashboard">
-        <item>@string/action_menu_services</item>
-        <item>@string/action_menu_reviews</item>
-        <item>@string/action_menu_info</item>
-        <item>@string/action_menu_map</item>
-    </string-array>
-
-    <!-- Events Array -->
-    <string-array name="appointments_type">
-        <item>@string/appointment_type_current</item>
-        <item>@string/appointment_type_past</item>
-    </string-array>
-
-    <!-- Profile Array -->
-    <string-array name="type_array">
-        <item>@string/type_dog</item>
-        <item>@string/type_cat</item>
-    </string-array>
-
     <string-array name="gender_array">
         <item>@string/gender_male</item>
         <item>@string/gender_female</item>
     </string-array>
 
-    <string-array name="pelage_array">
-        <item>@string/coat_short</item>
-        <item>@string/coat_medium</item>
-        <item>@string/coat_long</item>
+    <string-array name="type_array">
+        <item>@string/type_dog</item>
+        <item>@string/type_cat</item>
     </string-array>
 
     <string-array name="size_dog_array">
@@ -52,6 +24,12 @@
         <item>@string/size_big</item>
     </string-array>
 
+    <string-array name="coat_array">
+        <item>@string/coat_short</item>
+        <item>@string/coat_medium</item>
+        <item>@string/coat_long</item>
+    </string-array>
+
     <string-array name="temper_array">
         <item>@string/temper_agitated</item>
         <item>@string/temper_happy</item>
@@ -64,37 +42,4 @@
         <item>@string/temper_quiet</item>
         <item>@string/temper_brave</item>
     </string-array>
-
-    <!-- UF Brazil Array -->
-    <string-array name="uf_array" translatable="false">
-        <item></item>
-        <item>AC</item>
-        <item>AL</item>
-        <item>AM</item>
-        <item>AP</item>
-        <item>BA</item>
-        <item>CE</item>
-        <item>DF</item>
-        <item>ES</item>
-        <item>GO</item>
-        <item>MA</item>
-        <item>MG</item>
-        <item>MS</item>
-        <item>MT</item>
-        <item>PA</item>
-        <item>PB</item>
-        <item>PE</item>
-        <item>PI</item>
-        <item>PR</item>
-        <item>RJ</item>
-        <item>RN</item>
-        <item>RO</item>
-        <item>RR</item>
-        <item>RS</item>
-        <item>SC</item>
-        <item>SE</item>
-        <item>SP</item>
-        <item>TO</item>
-    </string-array>
-
 </resources>

@@ -15,6 +15,37 @@
     <string name="pets_title">Meus Pets</string>
     <string name="new_pet_title">Preencha os dados do pet</string>
 
+    <!-- Pet -->
+    <string name="gender_male">Macho</string>
+    <string name="gender_female">Fêmea</string>
+    <string name="type_cat">Gato</string>
+    <string name="type_dog">Cachorro</string>
+    <string name="size_small">Pequeno</string>
+    <string name="size_medium">Médio</string>
+    <string name="size_big">Grande</string>
+    <string name="size_giant">Gigante</string>
+    <string name="coat_short">Curto</string>
+    <string name="coat_medium">Médio</string>
+    <string name="coat_long">Longo</string>
+    <string name="size_small_ex_dog">Menor que 9kg \nEx: Yorkshire, Chihuaua</string>
+    <string name="size_small_ex_cat">Menor que 33cm \nEx: Cornish Rex, Egyptian mau</string>
+    <string name="size_medium_ex_dog">Entre 9kg e 22kg \nEx: Beagle, Cocker Spaniel</string>
+    <string name="size_medium_ex_cat">Entre 33cm e 41cm \nEx: Chartreux, Burmês</string>
+    <string name="size_big_ex_dog">Entre 22kg e 40kg \nEx: Golden, Rottweiller</string>
+    <string name="size_big_ex_cat">Acima de 41cm \nEx: Gato de Bengala, Maine Coon American Longhair</string>
+    <string name="size_giant_ex_dog">Acima de 40kg \nEx: Dog Alemão, São Bernardo</string>
+
+    <string name="temper_agitated">Agitado</string>
+    <string name="temper_happy">Alegre</string>
+    <string name="temper_lovely">Amoroso</string>
+    <string name="temper_angry">Bravo</string>
+    <string name="temper_playful">Brincalhão</string>
+    <string name="temper_needy">Carente</string>
+    <string name="temper_affectionate">Carinhoso</string>
+    <string name="temper_docile">Dócil</string>
+    <string name="temper_quiet">Tranquilo</string>
+    <string name="temper_brave">Valente</string>
+
     <!-- Presentation -->
     <string name="presentation_title_format">presentation_%d_title</string>
     <string name="presentation_text_format">presentation_%d_text</string>

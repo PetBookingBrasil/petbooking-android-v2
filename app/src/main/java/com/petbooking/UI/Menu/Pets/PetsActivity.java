@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 
-import com.google.gson.Gson;
 import com.petbooking.API.Pet.Models.ListPetsResp;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.BaseActivity;
@@ -23,7 +21,6 @@ import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Menu.Pets.RegisterPet.RegisterPetActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PetsActivity extends BaseActivity implements
         PetListAdapter.AdapterInterface,
@@ -105,7 +102,7 @@ public class PetsActivity extends BaseActivity implements
             public void onSuccess(Object response) {
                 ListPetsResp pets = (ListPetsResp) response;
                 for (ListPetsResp.Item pet : pets.data) {
-                    mPets.add(new Pet(pet.id, pet.attributes.name, pet.attributes.description, pet.attributes.photo));
+                    mPets.add(new Pet(pet.id, pet.attributes.name, pet.attributes.breedName, pet.attributes.description, pet.attributes.photo));
                 }
                 mAdapter.updateList(mPets);
                 mAdapter.notifyDataSetChanged();
@@ -160,4 +157,5 @@ public class PetsActivity extends BaseActivity implements
     public void onBackPressed() {
         super.onBackPressed();
     }
+
 }

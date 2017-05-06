@@ -31,6 +31,9 @@ public class PetResp {
         @SerializedName("breed_id")
         public String breedID;
 
+        @SerializedName("breed_name")
+        public String breedName;
+
         @SerializedName("user_id")
         public int userID;
 

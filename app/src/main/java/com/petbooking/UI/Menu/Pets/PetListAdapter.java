@@ -55,7 +55,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
         final Pet pet = mPetList.get(position);
 
         holder.mTvName.setText(pet.name);
-        holder.mTvBreed.setText(pet.description);
+        holder.mTvBreed.setText(pet.breedName);
 
         holder.mBtnRemovePet.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -4,10 +4,9 @@
     android:layout_height="match_parent"
     tools:context="com.petbooking.UI.Dashboard.BusinessList.BusinessListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/businessList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="LIST" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

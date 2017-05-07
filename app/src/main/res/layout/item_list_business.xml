@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/business_photo"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/side_nav_bar" />
+
+    <TextView
+        android:id="@+id/business_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="@dimen/spacing_xtiny"
+        android:text="4.5"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@+id/business_name"
+        app:layout_constraintLeft_toLeftOf="@+id/business_photo" />
+
+    <TextView
+        android:id="@+id/business_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_xtiny"
+        android:layout_marginLeft="@dimen/spacing_xtiny"
+        android:layout_marginRight="@dimen/spacing_xmicro"
+        android:text="TextView"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/business_photo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/business_photo"
+        app:layout_constraintRight_toRightOf="@+id/business_photo" />
+
+    <ImageView
+        android:id="@+id/icon_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_xtiny"
+        android:layout_marginTop="@dimen/spacing_smallest"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/business_photo"
+        app:srcCompat="@drawable/ic_point" />
+
+    <TextView
+        android:id="@+id/business_street"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_tiny"
+        android:layout_marginRight="@dimen/spacing_xmicro"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:text="Av. José Albino, 30"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/icon_point"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/business_photo" />
+
+    <TextView
+        android:id="@+id/business_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_tiny"
+        android:layout_marginLeft="@dimen/spacing_tiny"
+        android:layout_marginRight="@dimen/spacing_xmicro"
+        android:layout_marginTop="0dp"
+        android:text="Parque Capibaribe, Recife, SP, 55740-000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/icon_point"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/business_street" />
+
+    <ImageButton
+        android:id="@+id/favorite_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_xmicro"
+        android:layout_marginLeft="@dimen/spacing_xmicro"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="@dimen/spacing_xmicro"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/business_photo"
+        app:layout_constraintHorizontal_bias="0.980"
+        app:layout_constraintLeft_toLeftOf="@+id/business_photo"
+        app:layout_constraintRight_toRightOf="@+id/business_photo"
+        app:layout_constraintTop_toTopOf="@+id/business_photo"
+        app:layout_constraintVertical_bias="0.100"
+        app:srcCompat="@drawable/ic_favorite_border" />
+
+    <TextView
+        android:id="@+id/business_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_xtiny"
+        android:layout_marginLeft="@dimen/spacing_xmicro"
+        android:layout_marginRight="@dimen/spacing_xmicro"
+        android:background="@drawable/distance_background"
+        android:paddingBottom="@dimen/spacing_nano"
+        android:paddingLeft="@dimen/spacing_xmicro"
+        android:paddingRight="@dimen/spacing_xmicro"
+        android:paddingTop="@dimen/spacing_nano"
+        android:text="12 Km"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/business_photo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/business_name"
+        app:layout_constraintRight_toRightOf="@+id/business_photo" />
+
+    <RatingBar
+        android:id="@+id/average_rate"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="@dimen/spacing_xmicro"
+        android:rating="4"
+        android:theme="@style/AppTheme.RatingBar"
+        app:layout_constraintBottom_toTopOf="@+id/business_name"
+        app:layout_constraintLeft_toRightOf="@+id/business_rate" />
+
+    <TextView
+        android:id="@+id/ratings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="@dimen/spacing_micro"
+        android:text="(52)"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/business_name"
+        app:layout_constraintLeft_toRightOf="@+id/average_rate" />
+
+    <ImageView
+        android:id="@+id/icon_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="38dp"
+        android:layout_marginRight="@dimen/spacing_tiny"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/ic_card" />
+</android.support.constraint.ConstraintLayout>

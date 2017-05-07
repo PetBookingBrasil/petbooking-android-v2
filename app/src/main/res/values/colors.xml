@@ -6,6 +6,7 @@
     <color name="black">#000000</color>
     <color name="red">#D11326</color>
     <color name="gray">#AFB4B7</color>
+    <color name="yellow">#FFC600</color>
 
     <!-- Presentation -->
     <color name="presentation_1">#FBCFD5</color>

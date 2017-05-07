@@ -100,7 +100,7 @@
         android:id="@+id/business_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_xtiny"
+        android:layout_marginBottom="16dp"
         android:layout_marginLeft="@dimen/spacing_xmicro"
         android:layout_marginRight="@dimen/spacing_xmicro"
         android:background="@drawable/distance_background"
@@ -112,7 +112,7 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/business_photo"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toRightOf="@+id/business_name"
         app:layout_constraintRight_toRightOf="@+id/business_photo" />
 

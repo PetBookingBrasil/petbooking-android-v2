@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.gson.Gson;
 import com.petbooking.API.Pet.APIPetConstants;
 import com.petbooking.API.Pet.Models.BreedResp;
 import com.petbooking.API.Pet.PetService;
@@ -31,6 +35,7 @@ import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
 import com.petbooking.UI.Dialogs.TableDialogFragment;
 import com.petbooking.UI.Widget.MaterialSpinner;
+import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
 import com.petbooking.Utils.PetUtils;
@@ -55,6 +60,7 @@ public class ProfilePetActivity extends BaseActivity implements
     private PetService mPetService;
     private SessionManager mSessionManager;
     private FragmentManager mFragmentManager;
+    private Gson mGson;
 
     /**
      * Binding
@@ -100,7 +106,7 @@ public class ProfilePetActivity extends BaseActivity implements
     private MaterialSpinner mSpBreed;
     private MaterialSpinner mSpCoat;
     private MaterialSpinner mSpTemper;
-    private CircleImageView mCiUserPhoto;
+    private CircleImageView mCivPetPhoto;
     private EditText mEdtBirthday;
     private ImageButton mIBtnSelectPicture;
     private Button mBtnSubmit;
@@ -108,15 +114,15 @@ public class ProfilePetActivity extends BaseActivity implements
     AdapterView.OnItemSelectedListener typeListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (position == 0) {
-                mSpBreed.setItems(dogBreedsString);
-                mSpSize.setItems(R.array.size_dog_array);
-            } else if (position == 1) {
+            if (position == 1) {
                 mSpBreed.setItems(catBreedsString);
                 mSpSize.setItems(R.array.size_cat_array);
             } else {
-                mSpBreed.setItems(R.array.empty_array);
+                mSpBreed.setItems(dogBreedsString);
+                mSpSize.setItems(R.array.size_dog_array);
             }
+
+            mSpSize.selectItem(PetUtils.getDisplaySize(ProfilePetActivity.this, pet.size));
         }
 
         @Override
@@ -151,7 +157,7 @@ public class ProfilePetActivity extends BaseActivity implements
     View.OnClickListener mSubmitListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            registerPet();
+            updatePet();
         }
     };
 
@@ -164,6 +170,7 @@ public class ProfilePetActivity extends BaseActivity implements
         mSessionManager = SessionManager.getInstance();
         mPetService = new PetService();
 
+        mGson = new Gson();
         mUser = mSessionManager.getUserLogged();
 
         mFragmentManager = getSupportFragmentManager();
@@ -172,7 +179,7 @@ public class ProfilePetActivity extends BaseActivity implements
         mTableDialogFragment = TableDialogFragment.newInstance();
         mDatePicker = DatePickerFragment.newInstance();
 
-        mCiUserPhoto = (CircleImageView) findViewById(R.id.pet_photo);
+        mCivPetPhoto = (CircleImageView) findViewById(R.id.pet_photo);
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
         mEdtBirthday = (EditText) findViewById(R.id.pet_birthday);
         mSpGender = (MaterialSpinner) findViewById(R.id.pet_gender);
@@ -189,7 +196,7 @@ public class ProfilePetActivity extends BaseActivity implements
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
         mIBtnSelectPicture.setOnClickListener(mSelectListener);
         mEdtBirthday.setOnClickListener(mBirthdayListener);
-        mCiUserPhoto.setOnClickListener(mSelectListener);
+        mCivPetPhoto.setOnClickListener(mSelectListener);
         mBtnSubmit.setOnClickListener(mSubmitListener);
 
         dogBreeds = new ArrayList<>();
@@ -200,7 +207,12 @@ public class ProfilePetActivity extends BaseActivity implements
         listDogBreeds();
         listCatBreeds();
 
-        pet = new Pet();
+        if (getIntent().hasExtra("pet")) {
+            pet = mGson.fromJson(getIntent().getStringExtra("pet"), Pet.class);
+            renderPet(pet);
+        } else {
+            pet = new Pet();
+        }
 
         mBinding.setPet(pet);
     }
@@ -271,19 +283,19 @@ public class ProfilePetActivity extends BaseActivity implements
      */
     public void updatePhoto(Bitmap photo) {
         mIBtnSelectPicture.setVisibility(GONE);
-        mCiUserPhoto.setVisibility(View.VISIBLE);
-        mCiUserPhoto.setImageBitmap(photo);
+        mCivPetPhoto.setVisibility(View.VISIBLE);
+        mCivPetPhoto.setImageBitmap(photo);
     }
 
     /**
-     * Register Pet
+     * Update Pet
      */
-    public void registerPet() {
+    public void updatePet() {
         parsePet();
         int message = FormUtils.validatePet(pet);
 
         if (message == -1) {
-            createRequest(pet);
+            updateRequest(pet);
         } else {
             EventBus.getDefault().post(new ShowSnackbarEvt(message, Snackbar.LENGTH_LONG));
         }
@@ -294,8 +306,8 @@ public class ProfilePetActivity extends BaseActivity implements
      *
      * @param pet
      */
-    public void createRequest(Pet pet) {
-        mPetService.createPet(mUser.id, pet, new APICallback() {
+    public void updateRequest(Pet pet) {
+        mPetService.updatePet(mUser.id, pet, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 mDialogFragmentFeedback.setDialogInfo(R.string.register_pet_dialog_title, R.string.success_create_pet,
@@ -309,7 +321,6 @@ public class ProfilePetActivity extends BaseActivity implements
             }
         });
     }
-
 
     /**
      * Parse Pet Info
@@ -336,6 +347,18 @@ public class ProfilePetActivity extends BaseActivity implements
             pet.breedId = "";
             pet.breedName = "";
         }
+    }
+
+    /**
+     * Render Pet Info
+     */
+    public void renderPet(Pet pet) {
+        pet.birthday = CommonUtils.formatDate(pet.birthday);
+        mSpGender.selectItem(PetUtils.getDisplayGender(this, pet.gender));
+        mSpType.selectItem(PetUtils.getDisplayType(this, pet.type));
+        mSpCoat.selectItem(PetUtils.getDisplayCoatType(this, pet.coatType));
+        mSpTemper.selectItem(PetUtils.getDisplayTemper(this, pet.mood));
+        mSpSize.selectItem(PetUtils.getDisplaySize(this, pet.size));
     }
 
     @Override

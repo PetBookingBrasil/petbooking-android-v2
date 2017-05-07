@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.petbooking.R;
+import com.petbooking.Utils.PetUtils;
 
 import java.util.List;
 
@@ -170,7 +171,24 @@ public class MaterialSpinner extends RelativeLayout {
         mBtnInfo.setOnClickListener(onInfoClickListener);
     }
 
-    public void selectItem(int position){
+    /**
+     * Select item by Value
+     *
+     * @param value
+     */
+    public void selectItem(String value) {
+        int pos = mAdapter.getPosition(value);
+        Log.d("VALUE", value);
+        Log.d("POS", pos + "-" + mSpinner.getHint());
+        mSpinner.setSelection(pos + 1);
+    }
+
+    /**
+     * Select item by Value
+     *
+     * @param position
+     */
+    public void selectItem(int position) {
         mSpinner.setSelection(position);
     }
 }

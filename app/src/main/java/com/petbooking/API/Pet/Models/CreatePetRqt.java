@@ -18,7 +18,7 @@ public class CreatePetRqt {
     public CreatePetRqt(Pet pet) {
         this.attributes = new Attributes(pet.userId, pet.photo, pet.name, pet.gender, pet.type,
                 pet.mood, pet.description, pet.size, pet.breedId, pet.birthday, pet.coatType);
-        this.data = new Data(this.attributes);
+        this.data = new Data(pet.id, this.attributes);
     }
 
     public static class Data {
@@ -27,7 +27,8 @@ public class CreatePetRqt {
         public String type;
         public Attributes attributes;
 
-        public Data(Attributes attributes) {
+        public Data(String petId, Attributes attributes) {
+            this.id = petId;
             this.type = APIPetConstants.DATA_PETS;
             this.attributes = attributes;
         }

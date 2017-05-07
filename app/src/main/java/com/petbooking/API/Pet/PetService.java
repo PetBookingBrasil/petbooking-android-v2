@@ -42,8 +42,20 @@ public class PetService {
         });
     }
 
-    public void updatePet(String userID, Pet pet, APICallback callback) {
+    public void updatePet(String userId, Pet pet, final APICallback callback) {
+        CreatePetRqt petRqt = new CreatePetRqt(pet);
+        Call<PetResp> call = mPetInterface.updatePet(userId, pet.id, petRqt);
+        call.enqueue(new Callback<PetResp>() {
+            @Override
+            public void onResponse(Call<PetResp> call, Response<PetResp> response) {
+                APIUtils.handleResponse(response, callback);
+            }
 
+            @Override
+            public void onFailure(Call<PetResp> call, Throwable t) {
+
+            }
+        });
     }
 
     public void removePet(String userId, String petId, final APICallback callback) {

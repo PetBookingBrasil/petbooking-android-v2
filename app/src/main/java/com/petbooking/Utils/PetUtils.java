@@ -6,8 +6,6 @@ import android.text.TextUtils;
 import com.petbooking.API.Pet.APIPetConstants;
 import com.petbooking.R;
 
-import org.w3c.dom.Text;
-
 /**
  * Created by Luciano José on 06/05/2017.
  */
@@ -105,5 +103,76 @@ public abstract class PetUtils {
         }
 
         return "";
+    }
+
+    public static String getDisplayTemper(Context context, String temper) {
+        if (TextUtils.equals(temper, APIPetConstants.DATA_TEMPER_AGITATED)) {
+            return context.getString(R.string.temper_agitated);
+        }
+        if (TextUtils.equals(temper, APIPetConstants.DATA_TEMPER_HAPPY)) {
+            return context.getString(R.string.temper_happy);
+        }
+        if (TextUtils.equals(temper, APIPetConstants.DATA_TEMPER_LOVELY)) {
+            return context.getString(R.string.temper_lovely);
+        }
+        if (TextUtils.equals(temper, APIPetConstants.DATA_TEMPER_ANGRY)) {
+            return context.getString(R.string.temper_angry);
+        }
+        if (TextUtils.equals(temper, APIPetConstants.DATA_TEMPER_PLAYFUL)) {
+            return context.getString(R.string.temper_playful);
+        }
+        if (TextUtils.equals(temper, APIPetConstants.DATA_TEMPER_NEEDY)) {
+            return context.getString(R.string.temper_needy);
+        }
+        if (TextUtils.equals(temper, APIPetConstants.DATA_TEMPER_AFFECTIONATE)) {
+            return context.getString(R.string.temper_affectionate);
+        }
+        if (TextUtils.equals(temper, APIPetConstants.DATA_TEMPER_DOCILE)) {
+            return context.getString(R.string.temper_docile);
+        }
+        if (TextUtils.equals(temper, APIPetConstants.DATA_TEMPER_QUIET)) {
+            return context.getString(R.string.temper_quiet);
+        }
+        if (TextUtils.equals(temper, APIPetConstants.DATA_TEMPER_BRAVE)) {
+            return context.getString(R.string.temper_brave);
+        }
+        return "";
+    }
+
+    public static String getDisplayType(Context context, String type) {
+        if (TextUtils.equals(type.toLowerCase(), APIPetConstants.DATA_TYPE_CAT)) {
+            return context.getString(R.string.type_cat);
+        }
+        return context.getString(R.string.type_dog);
+    }
+
+    public static String getDisplayGender(Context context, String gender) {
+        if (TextUtils.equals(gender.toLowerCase(), APIPetConstants.DATA_GENDER_FEMALE)) {
+            return context.getString(R.string.gender_female);
+        } else {
+            return context.getString(R.string.gender_male);
+        }
+    }
+
+    public static String getDisplaySize(Context context, String size) {
+        if (TextUtils.equals(size.toLowerCase(), APIPetConstants.DATA_SIZE_MEDIUM)) {
+            return context.getString(R.string.size_medium);
+        } else if (TextUtils.equals(size.toLowerCase(), APIPetConstants.DATA_SIZE_BIG)) {
+            return context.getString(R.string.size_big);
+        } else if (TextUtils.equals(size.toLowerCase(), APIPetConstants.DATA_SIZE_GIANT)) {
+            return context.getString(R.string.size_giant);
+        } else {
+            return context.getString(R.string.size_small);
+        }
+    }
+
+    public static String getDisplayCoatType(Context context, String coatType) {
+        if (TextUtils.equals(coatType.toLowerCase(), APIPetConstants.DATA_TYPE_MEDIUM)) {
+            return context.getString(R.string.coat_medium);
+        } else if (TextUtils.equals(coatType.toLowerCase(), APIPetConstants.DATA_TYPE_LONG)) {
+            return context.getString(R.string.coat_long);
+        } else {
+            return context.getString(R.string.coat_short);
+        }
     }
 }

@@ -34,11 +34,13 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
     private ArrayList<Pet> mPetList;
     private Context mContext;
     private AdapterInterface mInterface;
+    private Gson mGson;
 
     public PetListAdapter(Context context, ArrayList<Pet> petList) {
         this.mPetList = petList;
         this.mContext = context;
         this.mInterface = (AdapterInterface) context;
+        this.mGson = new Gson();
     }
 
     public void updateList(ArrayList<Pet> petList) {
@@ -66,8 +68,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
         holder.mClItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("PET", new Gson().toJson(pet));
-                goToProfile(pet.id);
+                goToProfile(mGson.toJson(pet));
             }
         });
 
@@ -117,9 +118,9 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
         void onRemoveClick(String id);
     }
 
-    public void goToProfile(String id) {
+    public void goToProfile(String pet) {
         Intent profileIntent = new Intent(mContext, ProfilePetActivity.class);
-        profileIntent.putExtra("petId", id);
+        profileIntent.putExtra("pet", pet);
         mContext.startActivity(profileIntent);
     }
 

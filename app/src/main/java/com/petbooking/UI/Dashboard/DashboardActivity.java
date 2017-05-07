@@ -31,6 +31,7 @@ import com.petbooking.Models.UserAddress;
 import com.petbooking.R;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Login.LoginActivity;
+import com.petbooking.UI.Menu.Pets.PetsActivity;
 import com.petbooking.UI.Menu.Profile.ProfileActivity;
 import com.petbooking.Utils.APIUtils;
 
@@ -159,7 +160,10 @@ public class DashboardActivity extends AppCompatActivity implements
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.payments) {
+        if (id == R.id.my_pets) {
+            Intent logoutIntent = new Intent(this, PetsActivity.class);
+            startActivity(logoutIntent);
+        } else if (id == R.id.payments) {
             Log.d("PAYMENTS", "PAYMENTS");
         } else if (id == R.id.logout) {
             mSessionManager.logout();

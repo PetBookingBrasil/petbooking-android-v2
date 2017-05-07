@@ -33,6 +33,7 @@ public class APIConstants {
     /**
      * Headers
      */
+    public static final String HEADER_LANGUAGE = "X-PB-language";
     public static final String HEADER_CONTENT_TYPE = "Content-Type";
     public static final String HEADER_CONTENT_TYPE_VALUE = "application/vnd.api+json";
     public static final String HEADER_AUTHORIZATION_REQUIRED = "Authorization: required";
@@ -48,5 +49,10 @@ public class APIConstants {
      */
 
     public static final int ERROR_CODE_INVALID_LOGIN = 124;
+
+    /**
+     * Query
+     */
+    public static final String QUERY_PAGE_INDEX = "page[number]";
 
 }

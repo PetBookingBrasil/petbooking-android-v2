@@ -12,6 +12,40 @@
     <string name="recover_password_title">Esqueci a senha</string>
     <string name="signup_title">Preencha seus dados</string>
     <string name="profile_title">Perfil</string>
+    <string name="pets_title">Meus Pets</string>
+    <string name="new_pet_title">Preencha os dados do pet</string>
+
+    <!-- Pet -->
+    <string name="gender_male">Macho</string>
+    <string name="gender_female">Fêmea</string>
+    <string name="type_cat">Gato</string>
+    <string name="type_dog">Cachorro</string>
+    <string name="size_small">Pequeno</string>
+    <string name="size_medium">Médio</string>
+    <string name="size_big">Grande</string>
+    <string name="size_giant">Gigante</string>
+    <string name="coat_short">Curto</string>
+    <string name="coat_medium">Médio</string>
+    <string name="coat_long">Longo</string>
+    <string name="table_size">Tabela de Portes</string>
+    <string name="size_small_ex_dog"><b>Menor que 9kg</b> \nEx: Yorkshire, Chihuaua</string>
+    <string name="size_small_ex_cat"><b>Menor que 33cm </b>\nEx: Cornish Rex, Egyptian mau</string>
+    <string name="size_medium_ex_dog"><b>Entre 9kg e 22kg </b>\nEx: Beagle, Cocker Spaniel</string>
+    <string name="size_medium_ex_cat"><b>Entre 33cm e 41cm </b>\nEx: Chartreux, Burmês</string>
+    <string name="size_big_ex_dog"><b>Entre 22kg e 40kg </b>\nEx: Golden, Rottweiller</string>
+    <string name="size_big_ex_cat"><b>Acima de 41cm </b>\nEx: Gato de Bengala, Maine Coon American Longhair</string>
+    <string name="size_giant_ex_dog"><b>Acima de 40kg</b> \nEx: Dog Alemão, São Bernardo</string>
+
+    <string name="temper_agitated">Agitado</string>
+    <string name="temper_happy">Alegre</string>
+    <string name="temper_lovely">Amoroso</string>
+    <string name="temper_angry">Bravo</string>
+    <string name="temper_playful">Brincalhão</string>
+    <string name="temper_needy">Carente</string>
+    <string name="temper_affectionate">Carinhoso</string>
+    <string name="temper_docile">Dócil</string>
+    <string name="temper_quiet">Tranquilo</string>
+    <string name="temper_brave">Valente</string>
 
     <!-- Presentation -->
     <string name="presentation_title_format">presentation_%d_title</string>
@@ -60,22 +94,48 @@
     <string name="recover_email_text">As instruções para recuperação foram enviadas para seu email.</string>
     <string name="send_button">Enviar</string>
 
-    <!-- Sidemenu Options-->
+    <!-- Sidemenu and Toolbar Options-->
+    <string name="my_pets">Meus Pets</string>
     <string name="search">Pesquisar</string>
     <string name="calendar">Agenda</string>
     <string name="payments">Pagamentos</string>
     <string name="favorites">Favoritos</string>
     <string name="settings">Configurações</string>
     <string name="logout">Sair</string>
+    <string name="notifications">Notificações</string>
+    <string name="schedules">Agendamentos</string>
+    <string name="new_pet">Novo Pet</string>
 
     <!-- Profile -->
     <string name="profile_dialog_title">Atualizar Perfil</string>
+
+    <!-- Pets -->
+    <string name="remove_pet_title">Excluir Pet</string>
+    <string name="remove_pet_text">Você está excluindo seu pet, e com isso
+        será cancelado todos os seus agendamentos e históricos.</string>
+    <string name="confirm_remove_pet">Quero Excluir</string>
+    <string name="success_remove_pet">Pet removido com sucesso.</string>
+
+    <!-- Register Pet -->
+    <string name="register_pet_dialog_title">Cadastro Pet</string>
+    <string name="update_pet_dialog_title">Atualizar Pet</string>
+    <string name="hint_pet_name">Nome do pet</string>
+    <string name="hint_pet_birthday">Nascimento</string>
+    <string name="hint_gender">Gênero</string>
+    <string name="hint_type">Tipo</string>
+    <string name="hint_size">Porte</string>
+    <string name="hint_breed">Raça</string>
+    <string name="hint_coat">Pelagem</string>
+    <string name="hint_temper">Temperamento</string>
+    <string name="hint_observation">Observação</string>
+
 
     <!-- Dialog -->
     <string name="dialog_picture_title">Selecionar Foto</string>
     <string name="dialog_picture_text">Selecione o método de entrada de imagens que deseja usar.</string>
     <string name="dialog_button_ok">Ok</string>
     <string name="dialog_back_screen">Voltar à Tela</string>
+    <string name="dialog_cancel">Cancelar</string>
 
     <!-- Errors -->
     <string name="error_fields_empty">Preencha todos os campos.</string>
@@ -86,6 +146,7 @@
     <string name="error_different_password">As senhas não coincidem.</string>
     <string name="error_create_user">Não foi possível cadastrar o usuário.</string>
     <string name="error_update_user">Não foi possível atualizar o perfil.</string>
+    <string name="error_update_pet">Não foi possível atualizar o pet.</string>
     <string name="error_auth_invalid">Token de autenticação inválido. Requisite um novo token.</string>
     <string name="error_invalid_login">Email ou senha inválidos.</string>
 
@@ -93,6 +154,8 @@
 
     <!-- Success -->
     <string name="success_create_user">Usuário cadastrado com sucesso.</string>
+    <string name="success_create_pet">Pet cadastrado com sucesso.</string>
+    <string name="success_update_pet">Pet atualizado com sucesso.</string>
 
     <!-- Prompt -->
     <string name="prompt_loading">Loading…</string>

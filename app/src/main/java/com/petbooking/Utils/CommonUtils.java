@@ -2,12 +2,16 @@ package com.petbooking.Utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
+import android.util.Base64;
 import android.view.inputmethod.InputMethodManager;
 
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Models.UserAddress;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -153,9 +157,26 @@ public class CommonUtils {
         Calendar mCalendar = Calendar.getInstance();
 
         mCalendar.setTime(expirationDate);
-        mCalendar.add(Calendar.MINUTE, -2);
+        mCalendar.add(Calendar.SECOND, 10);
 
         return mCalendar.getTimeInMillis();
+    }
+
+    public static String encodeBase64(Bitmap image) {
+        String encoded = null;
+        byte[] bytes;
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+        image.compress(Bitmap.CompressFormat.JPEG, 100, output);
+        bytes = output.toByteArray();
+        encoded = Base64.encodeToString(bytes, Base64.NO_WRAP);
+
+        return encoded;
+    }
+
+    public static Bitmap decodeBase64(String input) {
+        byte[] decodedBytes = Base64.decode(input, Base64.NO_WRAP);
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
     }
 
 }

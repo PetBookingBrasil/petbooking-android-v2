@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?><!--suppress CheckTagEmptyBody -->
+<resources>
+
+    <string-array name="gender_array">
+        <item>@string/gender_male</item>
+        <item>@string/gender_female</item>
+    </string-array>
+
+    <string-array name="type_array">
+        <item>@string/type_dog</item>
+        <item>@string/type_cat</item>
+    </string-array>
+
+    <string-array name="size_dog_array">
+        <item>@string/size_small</item>
+        <item>@string/size_medium</item>
+        <item>@string/size_big</item>
+        <item>@string/size_giant</item>
+    </string-array>
+
+    <string-array name="size_cat_array">
+        <item>@string/size_small</item>
+        <item>@string/size_medium</item>
+        <item>@string/size_big</item>
+    </string-array>
+
+    <string-array name="coat_array">
+        <item>@string/coat_short</item>
+        <item>@string/coat_medium</item>
+        <item>@string/coat_long</item>
+    </string-array>
+
+    <string-array name="temper_array">
+        <item>@string/temper_agitated</item>
+        <item>@string/temper_happy</item>
+        <item>@string/temper_lovely</item>
+        <item>@string/temper_angry</item>
+        <item>@string/temper_playful</item>
+        <item>@string/temper_needy</item>
+        <item>@string/temper_affectionate</item>
+        <item>@string/temper_docile</item>
+        <item>@string/temper_quiet</item>
+        <item>@string/temper_brave</item>
+    </string-array>
+
+    <string-array name="empty_array"></string-array>
+</resources>

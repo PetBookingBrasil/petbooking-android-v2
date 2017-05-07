@@ -81,6 +81,37 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".UI.Menu.Pets.PetsActivity"
+            android:configChanges="orientation"
+            android:label="@string/my_pets"
+            android:parentActivityName=".UI.Dashboard.DashboardActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Dashboard.DashboardActivity" />
+        </activity>
+        <activity
+            android:name=".UI.Menu.Pets.RegisterPet.RegisterPetActivity"
+            android:configChanges="orientation"
+            android:label="@string/new_pet_title"
+            android:parentActivityName=".UI.Menu.Pets.PetsActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Menu.Pets.PetsActivity" />
+        </activity>
+
+        <activity
+            android:name=".UI.Menu.Pets.ProfilePetActivity.ProfilePetActivity"
+            android:configChanges="orientation"
+            android:label="@string/new_pet_title"
+            android:parentActivityName=".UI.Menu.Pets.PetsActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Menu.Pets.PetsActivity" />
+        </activity>
+        <activity
             android:name=".UI.Menu.Profile.ProfileActivity"
             android:configChanges="orientation"
             android:label="@string/profile_title"
@@ -90,7 +121,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Dashboard.DashboardActivity" />
         </activity>
-
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -120,8 +150,8 @@
             tools:replace="android:theme" />
 
         <!-- Receivers -->
-        <receiver
-            android:name=".Managers.AlarmReceiver" />
+        <receiver android:name=".Managers.AlarmReceiver" />
+
     </application>
 
 </manifest>

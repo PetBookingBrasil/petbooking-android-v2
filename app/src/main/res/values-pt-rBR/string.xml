@@ -118,6 +118,7 @@
 
     <!-- Register Pet -->
     <string name="register_pet_dialog_title">Cadastro Pet</string>
+    <string name="update_pet_dialog_title">Atualizar Pet</string>
     <string name="hint_pet_name">Nome do pet</string>
     <string name="hint_pet_birthday">Nascimento</string>
     <string name="hint_gender">Gênero</string>
@@ -145,6 +146,7 @@
     <string name="error_different_password">As senhas não coincidem.</string>
     <string name="error_create_user">Não foi possível cadastrar o usuário.</string>
     <string name="error_update_user">Não foi possível atualizar o perfil.</string>
+    <string name="error_update_pet">Não foi possível atualizar o pet.</string>
     <string name="error_auth_invalid">Token de autenticação inválido. Requisite um novo token.</string>
     <string name="error_invalid_login">Email ou senha inválidos.</string>
 
@@ -153,6 +155,7 @@
     <!-- Success -->
     <string name="success_create_user">Usuário cadastrado com sucesso.</string>
     <string name="success_create_pet">Pet cadastrado com sucesso.</string>
+    <string name="success_update_pet">Pet atualizado com sucesso.</string>
 
     <!-- Prompt -->
     <string name="prompt_loading">Loading…</string>

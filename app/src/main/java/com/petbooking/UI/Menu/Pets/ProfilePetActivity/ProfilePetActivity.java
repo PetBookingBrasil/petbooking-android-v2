@@ -310,14 +310,16 @@ public class ProfilePetActivity extends BaseActivity implements
         mPetService.updatePet(mUser.id, pet, new APICallback() {
             @Override
             public void onSuccess(Object response) {
-                mDialogFragmentFeedback.setDialogInfo(R.string.register_pet_dialog_title, R.string.success_create_pet,
+                mDialogFragmentFeedback.setDialogInfo(R.string.update_pet_dialog_title, R.string.success_update_pet,
                         R.string.dialog_button_ok, AppConstants.OK_ACTION);
                 mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
             }
 
             @Override
             public void onError(Object error) {
-
+                mDialogFragmentFeedback.setDialogInfo(R.string.update_pet_dialog_title, R.string.error_update_user,
+                        R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
+                mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
             }
         });
     }

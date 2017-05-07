@@ -1,4 +1,4 @@
-package com.petbooking.UI.Menu.Pets.ProfilePetActivity;
+package com.petbooking.UI.Menu.Pets.ProfilePet;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -8,15 +8,12 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.petbooking.API.Pet.APIPetConstants;
 import com.petbooking.API.Pet.Models.BreedResp;
@@ -35,7 +32,6 @@ import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
 import com.petbooking.UI.Dialogs.TableDialogFragment;
 import com.petbooking.UI.Widget.MaterialSpinner;
-import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
 import com.petbooking.Utils.PetUtils;

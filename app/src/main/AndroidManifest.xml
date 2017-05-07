@@ -102,7 +102,7 @@
         </activity>
 
         <activity
-            android:name=".UI.Menu.Pets.ProfilePetActivity.ProfilePetActivity"
+            android:name=".UI.Menu.Pets.ProfilePet.ProfilePetActivity"
             android:configChanges="orientation"
             android:label="@string/new_pet_title"
             android:parentActivityName=".UI.Menu.Pets.PetsActivity"

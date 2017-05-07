@@ -16,9 +16,8 @@ public class CreatePetRqt {
     public transient Attributes attributes;
 
     public CreatePetRqt(Pet pet) {
-        this.attributes = new Attributes(pet.userId, pet.photo, pet.name, pet.gender,
-                pet.mood, pet.description, pet.size, pet.breedId, pet.birthday,
-                pet.coatType);
+        this.attributes = new Attributes(pet.userId, pet.photo, pet.name, pet.gender, pet.type,
+                pet.mood, pet.description, pet.size, pet.breedId, pet.birthday, pet.coatType);
         this.data = new Data(this.attributes);
     }
 
@@ -40,6 +39,7 @@ public class CreatePetRqt {
         public String photo;
         public String name;
         public String gender;
+        public String kind;
         public String mood;
         public String description;
         public String size;
@@ -57,11 +57,12 @@ public class CreatePetRqt {
         public String coatType;
 
         public Attributes(String userID, String photo, String name, String gender,
-                          String mood, String description, String size, String breedID, String birth,
+                          String kind, String mood, String description, String size, String breedID, String birth,
                           String coatType) {
             this.photo = photo;
             this.name = name;
             this.gender = gender;
+            this.kind = kind;
             this.mood = mood;
             this.description = description;
             this.size = size;

@@ -217,6 +217,7 @@ public class RegisterPetActivity extends BaseActivity implements
                     dogBreedsString.add(breed.attributes.name);
                     dogBreeds.add(new Breed(breed.id, breed.attributes.name, breed.attributes.kind, breed.attributes.size));
                 }
+
             }
 
             @Override
@@ -329,9 +330,9 @@ public class RegisterPetActivity extends BaseActivity implements
             pet.photo = APIPetConstants.DATA_BASE64 + pet.photo;
         }
 
-        if (breedPosition > 0) {
-            pet.breedId = mSpType.getPosition() == 0 ? dogBreeds.get(breedPosition - 1).id : catBreeds.get(breedPosition - 1).id;
-            pet.breedName = mSpType.getPosition() == 0 ? dogBreeds.get(breedPosition - 1).name : catBreeds.get(breedPosition - 1).name;
+        if (mSpType.getPosition() > 0 && breedPosition > 0) {
+            pet.breedId = mSpType.getPosition() == 1 ? dogBreeds.get(breedPosition - 1).id : catBreeds.get(breedPosition - 1).id;
+            pet.breedName = mSpType.getPosition() == 1 ? dogBreeds.get(breedPosition - 1).name : catBreeds.get(breedPosition - 1).name;
         } else {
             pet.breedId = "";
             pet.breedName = "";

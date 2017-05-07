@@ -169,4 +169,8 @@ public class MaterialSpinner extends RelativeLayout {
     public void setOnInfoClickListener(View.OnClickListener onInfoClickListener) {
         mBtnInfo.setOnClickListener(onInfoClickListener);
     }
+
+    public void selectItem(int position){
+        mSpinner.setSelection(position);
+    }
 }

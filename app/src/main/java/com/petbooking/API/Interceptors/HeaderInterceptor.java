@@ -10,6 +10,7 @@ import com.petbooking.Managers.SessionManager;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Set;
 
 import okhttp3.Interceptor;
@@ -40,6 +41,8 @@ public class HeaderInterceptor implements Interceptor {
             String sessionToken = String.format(APIConstants.HEADER_SESSION_TOKEN_FORMAT, SessionManager.getInstance().getSessionToken());
             newRequestBuilder.header(APIConstants.HEADER_SESSION_TOKEN, sessionToken);
         }
+
+        newRequestBuilder.header(APIConstants.HEADER_LANGUAGE, Locale.getDefault().toString());
 
         EventBus.getDefault().post(new ShowLoadingEvt());
         Response response = chain.proceed(newRequestBuilder.build());

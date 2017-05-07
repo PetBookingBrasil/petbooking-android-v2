@@ -27,6 +27,24 @@ public class Pet {
     public Pet() {
     }
 
+    public Pet(String id, String name, String type, String breedName, String size, String breedId,
+               String userId, String gender, String mood, String description, String birthday, String coatType,
+               AvatarResp avatar) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.breedName = breedName;
+        this.size = size;
+        this.breedId = breedId;
+        this.userId = userId;
+        this.gender = gender;
+        this.mood = mood;
+        this.description = description;
+        this.birthday = birthday;
+        this.coatType = coatType;
+        this.avatar = avatar;
+    }
+
     public Pet(String id, String name, String description, String breedName, AvatarResp avatar) {
         this.id = id;
         this.name = name;

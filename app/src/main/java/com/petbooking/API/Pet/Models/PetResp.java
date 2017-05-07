@@ -35,7 +35,7 @@ public class PetResp {
         public String breedName;
 
         @SerializedName("user_id")
-        public int userID;
+        public String userID;
 
         @SerializedName("birth_date")
         public String birth;

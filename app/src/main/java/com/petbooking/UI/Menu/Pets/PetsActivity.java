@@ -110,7 +110,11 @@ public class PetsActivity extends BaseActivity implements
                 ListPetsResp pets = (ListPetsResp) response;
                 mPets.clear();
                 for (ListPetsResp.Item pet : pets.data) {
-                    mPets.add(new Pet(pet.id, pet.attributes.name, pet.attributes.breedName, pet.attributes.description, pet.attributes.photo));
+                    //mPets.add(new Pet(pet.id, pet.attributes.name, pet.attributes.breedName, pet.attributes.description, pet.attributes.photo));
+                    mPets.add(new Pet(pet.id, pet.attributes.name, pet.attributes.kind, pet.attributes.breedName,
+                            pet.attributes.size, pet.attributes.breedID, pet.attributes.userID, pet.attributes.gender,
+                            pet.attributes.mood, pet.attributes.description, pet.attributes.birth, pet.attributes.coatType,
+                            pet.attributes.photo));
                 }
                 mAdapter.updateList(mPets);
                 mAdapter.notifyDataSetChanged();

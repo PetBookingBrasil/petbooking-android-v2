@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.gson.Gson;
+import com.petbooking.API.Pet.APIPetConstants;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
 import com.petbooking.UI.Menu.Pets.ProfilePetActivity.ProfilePetActivity;
@@ -64,7 +66,8 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
         holder.mClItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToProfile();
+                Log.i("PET", new Gson().toJson(pet));
+                goToProfile(pet.id);
             }
         });
 
@@ -114,8 +117,9 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
         void onRemoveClick(String id);
     }
 
-    public void goToProfile() {
+    public void goToProfile(String id) {
         Intent profileIntent = new Intent(mContext, ProfilePetActivity.class);
+        profileIntent.putExtra("petId", id);
         mContext.startActivity(profileIntent);
     }
 

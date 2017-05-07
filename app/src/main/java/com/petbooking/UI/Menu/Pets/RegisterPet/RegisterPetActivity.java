@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.google.gson.Gson;
 import com.petbooking.API.Pet.APIPetConstants;
 import com.petbooking.API.Pet.Models.BreedResp;
 import com.petbooking.API.Pet.PetService;
@@ -31,6 +30,7 @@ import com.petbooking.R;
 import com.petbooking.UI.Dialogs.DatePickerFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
+import com.petbooking.UI.Dialogs.TableDialogFragment;
 import com.petbooking.UI.Widget.MaterialSpinner;
 import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
@@ -88,6 +88,11 @@ public class RegisterPetActivity extends BaseActivity implements
     private DatePickerFragment mDatePicker;
 
     /**
+     * Table Fragment
+     */
+    TableDialogFragment mTableDialogFragment = new TableDialogFragment();
+
+    /**
      * Form Inputs
      */
     private MaterialSpinner mSpGender;
@@ -124,7 +129,9 @@ public class RegisterPetActivity extends BaseActivity implements
     View.OnClickListener infoSizeListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Log.d("DIALOG", "SIZE DIALOG");
+            int layout = mSpType.getPosition() == 1 ? R.layout.dialog_pet_dog_size : R.layout.dialog_pet_cat_size;
+            mTableDialogFragment.setLayout(layout);
+            mTableDialogFragment.show(mFragmentManager, "TABLE");
         }
     };
 
@@ -163,6 +170,7 @@ public class RegisterPetActivity extends BaseActivity implements
         mFragmentManager = getSupportFragmentManager();
         mDialogFragmentPictureSelect = PictureSelectDialogFragment.newInstance();
         mDialogFragmentFeedback = FeedbackDialogFragment.newInstance();
+        mTableDialogFragment = TableDialogFragment.newInstance();
         mDatePicker = DatePickerFragment.newInstance();
 
         mCiUserPhoto = (CircleImageView) findViewById(R.id.pet_photo);

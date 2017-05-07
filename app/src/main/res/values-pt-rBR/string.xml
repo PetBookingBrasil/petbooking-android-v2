@@ -27,13 +27,14 @@
     <string name="coat_short">Curto</string>
     <string name="coat_medium">Médio</string>
     <string name="coat_long">Longo</string>
-    <string name="size_small_ex_dog">Menor que 9kg \nEx: Yorkshire, Chihuaua</string>
-    <string name="size_small_ex_cat">Menor que 33cm \nEx: Cornish Rex, Egyptian mau</string>
-    <string name="size_medium_ex_dog">Entre 9kg e 22kg \nEx: Beagle, Cocker Spaniel</string>
-    <string name="size_medium_ex_cat">Entre 33cm e 41cm \nEx: Chartreux, Burmês</string>
-    <string name="size_big_ex_dog">Entre 22kg e 40kg \nEx: Golden, Rottweiller</string>
-    <string name="size_big_ex_cat">Acima de 41cm \nEx: Gato de Bengala, Maine Coon American Longhair</string>
-    <string name="size_giant_ex_dog">Acima de 40kg \nEx: Dog Alemão, São Bernardo</string>
+    <string name="table_size">Tabela de Portes</string>
+    <string name="size_small_ex_dog"><b>Menor que 9kg</b> \nEx: Yorkshire, Chihuaua</string>
+    <string name="size_small_ex_cat"><b>Menor que 33cm </b>\nEx: Cornish Rex, Egyptian mau</string>
+    <string name="size_medium_ex_dog"><b>Entre 9kg e 22kg </b>\nEx: Beagle, Cocker Spaniel</string>
+    <string name="size_medium_ex_cat"><b>Entre 33cm e 41cm </b>\nEx: Chartreux, Burmês</string>
+    <string name="size_big_ex_dog"><b>Entre 22kg e 40kg </b>\nEx: Golden, Rottweiller</string>
+    <string name="size_big_ex_cat"><b>Acima de 41cm </b>\nEx: Gato de Bengala, Maine Coon American Longhair</string>
+    <string name="size_giant_ex_dog"><b>Acima de 40kg</b> \nEx: Dog Alemão, São Bernardo</string>
 
     <string name="temper_agitated">Agitado</string>
     <string name="temper_happy">Alegre</string>

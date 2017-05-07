@@ -1,6 +1,8 @@
 package com.petbooking.UI.Menu.Pets;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
+import com.petbooking.UI.Menu.Pets.ProfilePetActivity.ProfilePetActivity;
+import com.petbooking.UI.Menu.Profile.ProfileActivity;
 import com.petbooking.Utils.APIUtils;
 
 import java.util.ArrayList;
@@ -57,6 +61,13 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
         holder.mTvName.setText(pet.name);
         holder.mTvBreed.setText(pet.breedName);
 
+        holder.mClItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToProfile();
+            }
+        });
+
         holder.mBtnRemovePet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +93,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
 
     public class PetViewHolder extends RecyclerView.ViewHolder {
 
+        ConstraintLayout mClItem;
         CircleImageView mCvPicture;
         TextView mTvName;
         TextView mTvBreed;
@@ -90,6 +102,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
         public PetViewHolder(View view) {
             super(view);
 
+            mClItem = (ConstraintLayout) view.findViewById(R.id.layout);
             mCvPicture = (CircleImageView) view.findViewById(R.id.pet_picture);
             mTvName = (TextView) view.findViewById(R.id.pet_name);
             mTvBreed = (TextView) view.findViewById(R.id.pet_breed);
@@ -98,9 +111,12 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
     }
 
     public interface AdapterInterface {
-
         void onRemoveClick(String id);
+    }
 
+    public void goToProfile() {
+        Intent profileIntent = new Intent(mContext, ProfilePetActivity.class);
+        mContext.startActivity(profileIntent);
     }
 
 }

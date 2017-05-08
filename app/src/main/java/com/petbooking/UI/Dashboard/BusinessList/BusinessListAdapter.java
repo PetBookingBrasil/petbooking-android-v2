@@ -5,9 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
 import com.petbooking.Utils.CommonUtils;
@@ -60,6 +63,11 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         holder.mTvStreet.setText(street);
         holder.mTvAddress.setText(address);
         holder.mTvDistance.setText(distance);
+
+        Glide.with(mContext)
+                .load("http://www.hospitalamigobicho.com.br/images/slide/slide-petshop.jpg")
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .into(holder.mIvBusinessPhoto);
     }
 
     @Override
@@ -69,6 +77,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
 
     public class BusinessViewHolder extends RecyclerView.ViewHolder {
 
+        ImageView mIvBusinessPhoto;
         TextView mTvName;
         TextView mTvStreet;
         TextView mTvAddress;
@@ -80,6 +89,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         public BusinessViewHolder(View view) {
             super(view);
 
+            mIvBusinessPhoto = (ImageView) view.findViewById(R.id.business_photo);
             mTvName = (TextView) view.findViewById(R.id.business_name);
             mTvStreet = (TextView) view.findViewById(R.id.business_street);
             mTvAddress = (TextView) view.findViewById(R.id.business_address);

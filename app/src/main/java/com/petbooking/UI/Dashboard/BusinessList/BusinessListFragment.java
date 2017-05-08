@@ -77,8 +77,8 @@ public class BusinessListFragment extends Fragment {
                 Business business;
                 for (BusinessesResp.Item item : businessList.data) {
                     business = new Business(item.id, item.attributes.name, item.attributes.city, item.attributes.state,
-                            item.attributes.street,item.attributes.neighborhood, item.attributes.streetNumber, item.attributes.zipcode, item.attributes.ratingAverage,
-                            item.attributes.ratingCount, item.attributes.distance, "", item.attributes.imported);
+                            item.attributes.street, item.attributes.neighborhood, item.attributes.streetNumber, item.attributes.zipcode, item.attributes.ratingAverage,
+                            item.attributes.ratingCount, item.attributes.distance, item.attributes.businesstype, item.attributes.imported);
                     mBusinessList.add(business);
                 }
 

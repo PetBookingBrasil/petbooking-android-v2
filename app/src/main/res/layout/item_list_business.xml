@@ -9,6 +9,8 @@
         android:id="@+id/business_photo"
         android:layout_width="0dp"
         android:layout_height="180dp"
+        android:scaleType="fitXY"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,26 +22,60 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_micro"
         android:layout_marginLeft="@dimen/spacing_xtiny"
+        android:text="4.5"
         android:textColor="@color/white"
         android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/business_name"
+        app:layout_constraintBottom_toTopOf="@+id/business_title"
         app:layout_constraintLeft_toLeftOf="@+id/business_photo" />
 
-    <TextView
-        android:id="@+id/business_name"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/business_title"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_xtiny"
-        android:layout_marginLeft="@dimen/spacing_xtiny"
-        android:layout_marginRight="@dimen/spacing_xmicro"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:maxLines="2"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/business_photo"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/business_photo"
-        app:layout_constraintRight_toRightOf="@+id/business_photo" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/icon_category"
+        app:layout_constraintTop_toTopOf="@+id/business_photo"
+        app:layout_constraintVertical_bias="0.946">
 
+        <TextView
+            android:id="@+id/business_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginRight="@dimen/spacing_xmicro"
+            android:layout_toLeftOf="@+id/business_distance"
+            android:layout_toStartOf="@+id/business_distance"
+            android:maxLines="2"
+            android:text="PetShop do Carlos da Maria e de José da Silva"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/business_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/spacing_xmicro"
+            android:background="@drawable/distance_background"
+            android:paddingBottom="@dimen/spacing_nano"
+            android:paddingLeft="@dimen/spacing_xmicro"
+            android:paddingRight="@dimen/spacing_xmicro"
+            android:paddingTop="@dimen/spacing_nano"
+            android:text="50 Km"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <RatingBar
         android:id="@+id/average_rate"
@@ -48,8 +84,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_micro"
         android:layout_marginLeft="@dimen/spacing_xmicro"
+        android:rating="4.5"
         android:theme="@style/AppTheme.RatingBar"
-        app:layout_constraintBottom_toTopOf="@+id/business_name"
+        app:layout_constraintBottom_toTopOf="@+id/business_title"
         app:layout_constraintLeft_toRightOf="@+id/business_rate" />
 
     <TextView
@@ -58,9 +95,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_micro"
         android:layout_marginLeft="@dimen/spacing_micro"
+        android:text="(50)"
         android:textColor="@color/white"
         android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/business_name"
+        app:layout_constraintBottom_toTopOf="@+id/business_title"
         app:layout_constraintLeft_toRightOf="@+id/average_rate" />
 
     <ImageView
@@ -80,6 +118,7 @@
         android:layout_marginLeft="@dimen/spacing_tiny"
         android:layout_marginRight="@dimen/spacing_xmicro"
         android:layout_marginTop="@dimen/spacing_tiny"
+        android:text="Rua Manoel João, 42"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/icon_point"
         app:layout_constraintRight_toRightOf="parent"
@@ -93,6 +132,7 @@
         android:layout_marginLeft="@dimen/spacing_tiny"
         android:layout_marginRight="@dimen/spacing_xmicro"
         android:layout_marginTop="0dp"
+        android:text="Baixada Santista, Santos, SP, 88888-000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/icon_point"
@@ -116,33 +156,19 @@
         app:layout_constraintVertical_bias="0.100"
         app:srcCompat="@drawable/ic_favorite_border" />
 
-    <TextView
-        android:id="@+id/business_distance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="@dimen/spacing_xmicro"
-        android:layout_marginRight="@dimen/spacing_xmicro"
-        android:background="@drawable/distance_background"
-        android:paddingBottom="@dimen/spacing_nano"
-        android:paddingLeft="@dimen/spacing_xmicro"
-        android:paddingRight="@dimen/spacing_xmicro"
-        android:paddingTop="@dimen/spacing_nano"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/business_photo"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintLeft_toRightOf="@+id/business_name"
-        app:layout_constraintRight_toRightOf="@+id/business_photo" />
-
     <ImageView
         android:id="@+id/icon_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="38dp"
-        android:layout_marginRight="@dimen/spacing_tiny"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="156dp"
+        app:layout_constraintBottom_toTopOf="@+id/business_street"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="@+id/business_photo"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/business_photo"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_card" />
 </android.support.constraint.ConstraintLayout>

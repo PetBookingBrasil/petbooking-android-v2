@@ -62,7 +62,7 @@
         <item name="android:radius">2dp</item>
     </style>
 
-    <style name="AppTheme.RatingBar">
+    <style name="AppTheme.RatingBar" parent="Widget.AppCompat.RatingBar.Small">
         <item name="colorControlNormal">@color/white</item>
         <item name="colorControlActivated">@color/yellow</item>
     </style>

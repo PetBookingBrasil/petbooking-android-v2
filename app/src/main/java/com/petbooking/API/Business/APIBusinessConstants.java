@@ -30,7 +30,7 @@ public class APIBusinessConstants {
     public static final String FIELDS_BUSINESS_CONTENT = "fields[businesses]=id,name,slug,description,street,street_number," +
             "neighborhood,city,state,zipcode,rating_average,rating_count,favorite_count,cover_image,pictures," +
             "distance,location,user_favorite,phone,website,instagram,snapchat,facebook_fanpage," +
-            "twitter_profile,transportation_fee,googleplus_profile,services,service_categories,bitmask_values,imported";
+            "twitter_profile,transportation_fee,googleplus_profile,services,service_categories,bitmask_values,businesstype,imported";
     public static final String FIELDS_BUSINESS = "?" + FIELDS_BUSINESS_CONTENT;
     public static final String FIELDS_BUSINESS_REVIEWS = "?fields[reviews]=id,comment,rating,business_id,user_id";
     public static final String FIELDS_CATEGORIES = "?fields[category_templates]=id,name,slug,cover_image";

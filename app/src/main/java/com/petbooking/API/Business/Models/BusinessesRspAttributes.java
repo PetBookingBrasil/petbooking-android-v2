@@ -1,9 +1,3 @@
-/*
- * PetBooking - http://www.petbooking.com
- * Created by edipo2s on 5/7/2016
- * Copyright (c) 2016 PetBooking. All rights reserved.
- */
-
 package com.petbooking.API.Business.Models;
 
 import com.google.gson.annotations.SerializedName;
@@ -53,7 +47,7 @@ public class BusinessesRspAttributes {
     @SerializedName("googleplus_profile")
     public String googlePlus;
 
-
+    public String businesstype;
     @SerializedName("imported")
     public boolean imported;
 

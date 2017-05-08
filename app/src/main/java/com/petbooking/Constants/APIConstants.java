@@ -23,12 +23,14 @@ public class APIConstants {
 
 
     /**
-     * CONFIG
+     * CONFIG AND QUERYS
      */
     public static final String UUID_PRODUCTION = "fe2e0261-2cac-440d-8027-c8cfc4720940";
     public static final String UUID_BETA = "489ceffe-d387-4416-a9b0-0318c8a83dd2";
     public static final String PATH_PARAM = "ID_PARAM";
-    public static final int PAGE_SIZE_DEFAULT = 10;
+    public static final int PAGE_SIZE_DEAFULT = 10;
+    public static final String QUERY_COORDS = "coords";
+    public static final String QUERY_PAGE_SIZE_DEAFULT = "&page[size]=" + PAGE_SIZE_DEAFULT;
 
     /**
      * Headers

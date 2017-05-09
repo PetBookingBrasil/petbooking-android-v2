@@ -10,7 +10,6 @@
         android:id="@+id/business_photo"
         android:layout_width="0dp"
         android:layout_height="180dp"
-        android:background="@drawable/gradient_background"
         android:scaleType="fitXY"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -40,7 +39,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/business_photo"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/icon_category"
+        app:layout_constraintRight_toLeftOf="@+id/category_icon"
         app:layout_constraintTop_toTopOf="@+id/business_photo"
         app:layout_constraintVertical_bias="0.946">
 
@@ -108,7 +107,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/spacing_xtiny"
-        android:layout_marginTop="@dimen/spacing_smallest"
+        android:layout_marginTop="22dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/business_photo"
         app:srcCompat="@drawable/ic_point" />
@@ -136,13 +135,11 @@
         android:layout_marginRight="@dimen/spacing_xmicro"
         android:layout_marginTop="0dp"
         android:text="Baixada Santista, Santos, SP, 88888-000"
-        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/icon_point"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/business_street" />
-
     <ImageButton
         android:id="@+id/favorite_button"
         android:layout_width="wrap_content"
@@ -161,7 +158,7 @@
         app:srcCompat="@drawable/ic_favorite_border" />
 
     <ImageView
-        android:id="@+id/icon_category"
+        android:id="@+id/category_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="0dp"

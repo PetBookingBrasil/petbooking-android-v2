@@ -1,8 +1,10 @@
 package com.petbooking.Utils;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
+import com.petbooking.API.Business.APIBusinessConstants;
 import com.petbooking.API.Pet.APIPetConstants;
 import com.petbooking.R;
 
@@ -10,7 +12,7 @@ import com.petbooking.R;
  * Created by Luciano José on 06/05/2017.
  */
 
-public abstract class PetUtils {
+public abstract class AppUtils {
 
     public static String getGender(Context context, String gender) {
         if (TextUtils.equals(gender, context.getString(R.string.gender_male))) {
@@ -174,5 +176,15 @@ public abstract class PetUtils {
         } else {
             return context.getString(R.string.coat_short);
         }
+    }
+
+    public static Drawable getBusinessIcon(Context context, String businesstype) {
+        if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_APPOINTMENT)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_appointment);
+        }
+        if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CLINIC)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_clinic);
+        }
+        return context.getResources().getDrawable(R.drawable.ic_category_other);
     }
 }

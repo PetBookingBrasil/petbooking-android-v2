@@ -8,6 +8,12 @@ import com.petbooking.Constants.APIConstants;
 
 public class APIBusinessConstants {
 
+    /**
+     * Data
+     */
+    public static final String DATA_APPOINTMENT = "Clínica veterinária";
+    public static final String DATA_CLINIC = "Petshop";
+
 
     public static final String PATH_CATEGORY_ID = "categoryID";
     public static final String PATH_BUSINESS_ID = "businessID";

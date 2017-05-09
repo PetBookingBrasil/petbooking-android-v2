@@ -1,8 +1,10 @@
 package com.petbooking.UI.Dashboard.BusinessList;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
+import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 
 import java.util.ArrayList;
@@ -51,6 +54,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
 
         final Business business = mBusinessList.get(position);
 
+        Drawable categoryIcon = AppUtils.getBusinessIcon(mContext, business.businesstype);
         String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber);
         String address = mContext.getResources().getString(R.string.business_address, business.neighborhood, business.city,
                 business.state, CommonUtils.formatZipcode(business.zipcode));
@@ -64,6 +68,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         holder.mTvStreet.setText(street);
         holder.mTvAddress.setText(address);
         holder.mTvDistance.setText(distance);
+        holder.mIvCategoryIcon.setImageDrawable(categoryIcon);
 
         Glide.with(mContext)
                 .load("http://www.hospitalamigobicho.com.br/images/slide/slide-petshop.jpg")
@@ -82,6 +87,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
 
         ConstraintLayout mClBusiness;
         ImageView mIvBusinessPhoto;
+        ImageView mIvCategoryIcon;
         TextView mTvName;
         TextView mTvStreet;
         TextView mTvAddress;
@@ -95,6 +101,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
 
             mClBusiness = (ConstraintLayout) view.findViewById(R.id.business_item);
             mIvBusinessPhoto = (ImageView) view.findViewById(R.id.business_photo);
+            mIvCategoryIcon = (ImageView) view.findViewById(R.id.category_icon);
             mTvName = (TextView) view.findViewById(R.id.business_name);
             mTvStreet = (TextView) view.findViewById(R.id.business_street);
             mTvAddress = (TextView) view.findViewById(R.id.business_address);

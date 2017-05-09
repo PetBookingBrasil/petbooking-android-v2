@@ -1,6 +1,7 @@
 package com.petbooking.UI.Dashboard.BusinessList;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,6 +67,8 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
 
         Glide.with(mContext)
                 .load("http://www.hospitalamigobicho.com.br/images/slide/slide-petshop.jpg")
+                .error(R.drawable.business_background)
+                .placeholder(R.drawable.business_background)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(holder.mIvBusinessPhoto);
     }
@@ -77,6 +80,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
 
     public class BusinessViewHolder extends RecyclerView.ViewHolder {
 
+        ConstraintLayout mClBusiness;
         ImageView mIvBusinessPhoto;
         TextView mTvName;
         TextView mTvStreet;
@@ -89,6 +93,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         public BusinessViewHolder(View view) {
             super(view);
 
+            mClBusiness = (ConstraintLayout) view.findViewById(R.id.business_item);
             mIvBusinessPhoto = (ImageView) view.findViewById(R.id.business_photo);
             mTvName = (TextView) view.findViewById(R.id.business_name);
             mTvStreet = (TextView) view.findViewById(R.id.business_street);

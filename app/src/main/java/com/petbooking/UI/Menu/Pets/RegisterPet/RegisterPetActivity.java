@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -34,7 +33,7 @@ import com.petbooking.UI.Dialogs.TableDialogFragment;
 import com.petbooking.UI.Widget.MaterialSpinner;
 import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
-import com.petbooking.Utils.PetUtils;
+import com.petbooking.Utils.AppUtils;
 import com.petbooking.databinding.PetFormBinding;
 
 import org.greenrobot.eventbus.EventBus;
@@ -319,11 +318,11 @@ public class RegisterPetActivity extends BaseActivity implements
         int breedPosition = mSpBreed.getPosition();
 
         pet.userId = mUser.id;
-        pet.gender = PetUtils.getGender(this, mSpGender.getSelectedItem());
-        pet.size = PetUtils.getSize(this, mSpSize.getSelectedItem());
-        pet.coatType = PetUtils.getCoatType(this, mSpCoat.getSelectedItem());
-        pet.mood = PetUtils.getTemper(this, mSpTemper.getSelectedItem());
-        pet.type = PetUtils.getType(this, mSpType.getSelectedItem());
+        pet.gender = AppUtils.getGender(this, mSpGender.getSelectedItem());
+        pet.size = AppUtils.getSize(this, mSpSize.getSelectedItem());
+        pet.coatType = AppUtils.getCoatType(this, mSpCoat.getSelectedItem());
+        pet.mood = AppUtils.getTemper(this, mSpTemper.getSelectedItem());
+        pet.type = AppUtils.getType(this, mSpType.getSelectedItem());
 
         if (mBitmap != null) {
             pet.photo = CommonUtils.encodeBase64(mBitmap);

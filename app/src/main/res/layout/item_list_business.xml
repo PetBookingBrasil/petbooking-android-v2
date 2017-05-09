@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/business_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -9,6 +10,7 @@
         android:id="@+id/business_photo"
         android:layout_width="0dp"
         android:layout_height="180dp"
+        android:background="@drawable/gradient_background"
         android:scaleType="fitXY"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -119,6 +121,7 @@
         android:layout_marginRight="@dimen/spacing_xmicro"
         android:layout_marginTop="@dimen/spacing_tiny"
         android:text="Rua Manoel João, 42"
+        android:textSize="13sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/icon_point"
         app:layout_constraintRight_toRightOf="parent"
@@ -133,6 +136,7 @@
         android:layout_marginRight="@dimen/spacing_xmicro"
         android:layout_marginTop="0dp"
         android:text="Baixada Santista, Santos, SP, 88888-000"
+        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/icon_point"
@@ -170,5 +174,5 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/business_photo"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_card" />
+        app:srcCompat="@drawable/ic_category_hospital" />
 </android.support.constraint.ConstraintLayout>

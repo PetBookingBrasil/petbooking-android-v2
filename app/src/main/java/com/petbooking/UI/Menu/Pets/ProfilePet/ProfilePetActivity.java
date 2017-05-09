@@ -34,7 +34,7 @@ import com.petbooking.UI.Dialogs.TableDialogFragment;
 import com.petbooking.UI.Widget.MaterialSpinner;
 import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
-import com.petbooking.Utils.PetUtils;
+import com.petbooking.Utils.AppUtils;
 import com.petbooking.databinding.PetFormBinding;
 
 import org.greenrobot.eventbus.EventBus;
@@ -118,7 +118,7 @@ public class ProfilePetActivity extends BaseActivity implements
                 mSpSize.setItems(R.array.size_dog_array);
             }
 
-            mSpSize.selectItem(PetUtils.getDisplaySize(ProfilePetActivity.this, pet.size));
+            mSpSize.selectItem(AppUtils.getDisplaySize(ProfilePetActivity.this, pet.size));
         }
 
         @Override
@@ -327,11 +327,11 @@ public class ProfilePetActivity extends BaseActivity implements
         int breedPosition = mSpBreed.getPosition();
 
         pet.userId = mUser.id;
-        pet.gender = PetUtils.getGender(this, mSpGender.getSelectedItem());
-        pet.size = PetUtils.getSize(this, mSpSize.getSelectedItem());
-        pet.coatType = PetUtils.getCoatType(this, mSpCoat.getSelectedItem());
-        pet.mood = PetUtils.getTemper(this, mSpTemper.getSelectedItem());
-        pet.type = PetUtils.getType(this, mSpType.getSelectedItem());
+        pet.gender = AppUtils.getGender(this, mSpGender.getSelectedItem());
+        pet.size = AppUtils.getSize(this, mSpSize.getSelectedItem());
+        pet.coatType = AppUtils.getCoatType(this, mSpCoat.getSelectedItem());
+        pet.mood = AppUtils.getTemper(this, mSpTemper.getSelectedItem());
+        pet.type = AppUtils.getType(this, mSpType.getSelectedItem());
 
         if (mBitmap != null) {
             pet.photo = CommonUtils.encodeBase64(mBitmap);
@@ -352,11 +352,11 @@ public class ProfilePetActivity extends BaseActivity implements
      */
     public void renderPet(Pet pet) {
         pet.birthday = CommonUtils.formatDate(pet.birthday);
-        mSpGender.selectItem(PetUtils.getDisplayGender(this, pet.gender));
-        mSpType.selectItem(PetUtils.getDisplayType(this, pet.type));
-        mSpCoat.selectItem(PetUtils.getDisplayCoatType(this, pet.coatType));
-        mSpTemper.selectItem(PetUtils.getDisplayTemper(this, pet.mood));
-        mSpSize.selectItem(PetUtils.getDisplaySize(this, pet.size));
+        mSpGender.selectItem(AppUtils.getDisplayGender(this, pet.gender));
+        mSpType.selectItem(AppUtils.getDisplayType(this, pet.type));
+        mSpCoat.selectItem(AppUtils.getDisplayCoatType(this, pet.coatType));
+        mSpTemper.selectItem(AppUtils.getDisplayTemper(this, pet.mood));
+        mSpSize.selectItem(AppUtils.getDisplaySize(this, pet.size));
     }
 
     @Override

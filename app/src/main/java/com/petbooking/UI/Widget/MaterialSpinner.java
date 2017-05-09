@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.petbooking.R;
-import com.petbooking.Utils.PetUtils;
 
 import java.util.List;
 

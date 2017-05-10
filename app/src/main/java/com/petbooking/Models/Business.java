@@ -18,11 +18,14 @@ public class Business {
     public int ratingCount;
     public float distance;
     public String businesstype;
+    public String latitude;
+    public String longitude;
     public boolean imported;
 
 
     public Business(String id, String name, String city, String state, String street, String neighborhood, String streetNumber,
-                    String zipcode, float ratingAverage, int ratingCount, float distance, String businesstype, boolean imported) {
+                    String zipcode, float ratingAverage, int ratingCount, float distance, String businesstype,
+                    String latitude, String longitude, boolean imported) {
         this.id = id;
         this.name = name;
         this.city = city;
@@ -35,6 +38,8 @@ public class Business {
         this.ratingCount = ratingCount;
         this.distance = distance;
         this.businesstype = businesstype;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.imported = imported;
     }
 

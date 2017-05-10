@@ -182,8 +182,8 @@ public abstract class AppUtils {
         if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_APPOINTMENT)) {
             return context.getResources().getDrawable(R.drawable.ic_category_appointment);
         }
-        if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CLINIC)) {
-            return context.getResources().getDrawable(R.drawable.ic_category_clinic);
+        if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_TRAINING)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_trainer);
         }
         return context.getResources().getDrawable(R.drawable.ic_category_other);
     }

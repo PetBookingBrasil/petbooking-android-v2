@@ -11,9 +11,15 @@ public class APIBusinessConstants {
     /**
      * Data
      */
-    public static final String DATA_APPOINTMENT = "Clínica veterinária";
-    public static final String DATA_CLINIC = "Petshop";
-
+    public static final String DATA_APPOINTMENT = "Consulta veterinária";
+    public static final String DATA_TRAINING = "Adestramento";
+    public static final String DATA_BATH = "Banho e Tosa";
+    public static final String DATA_TRANSPORT = "Transporte (Leva e traz)";
+    public static final String DATA_WALKER = "Passeadores";
+    public static final String DATA_DAYCARE = "Creche";
+    public static final String DATA_HOTEL = "Hotelzinho";
+    public static final String DATA_EMERGENCY = "Emergências e Serviços 24 horas";
+    public static final String DATA_EXAMS = "Exames";
 
     public static final String PATH_CATEGORY_ID = "categoryID";
     public static final String PATH_BUSINESS_ID = "businessID";

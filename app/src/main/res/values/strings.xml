@@ -7,9 +7,10 @@
     <string name="action_settings">Settings</string>
 
     <!--  Third-party Apps ID -->
-    <string name="fabric_app_id">fe0c61a27b92b4a7f90ab0fc8f69e3a4326250e5</string>
-    <string name="facebook_app_id">1799017433691061</string>
-    <string name="fb_login_protocol_scheme">fb1799017433691061</string>
+    <string name="fabric_app_id" translatable="false">fe0c61a27b92b4a7f90ab0fc8f69e3a4326250e5</string>
+    <string name="facebook_app_id" translatable="false">1799017433691061</string>
+    <string name="maps_keys" translatable="false">AIzaSyClDGISERmgKZYmpVhmZsmm5RMcXKA4mmU</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb1799017433691061</string>
 
     <!-- Login -->
     <string name="description">Encontre serviços para seu Pet \n mais póximos de você e agende online!</string>

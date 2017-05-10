@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.petbooking.UI.Dashboard.BusinessList.BusinessListFragment;
+import com.petbooking.UI.Dashboard.BusinessMap.BusinessMap;
 
 /**
  * Created by Luciano José on 29/01/2017.
@@ -26,7 +27,7 @@ public class ContentTabsAdapter extends FragmentStatePagerAdapter {
         if (position == 0) {
             return new BusinessListFragment();
         } else if (position == 1) {
-            return new BusinessListFragment();
+            return new BusinessMap();
         }
 
         return null;

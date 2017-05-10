@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -225,6 +226,10 @@ public class ProfilePetActivity extends BaseActivity implements
                     dogBreedsString.add(breed.attributes.name);
                     dogBreeds.add(new Breed(breed.id, breed.attributes.name, breed.attributes.kind, breed.attributes.size));
                 }
+
+                if (pet.type.equals(APIPetConstants.DATA_TYPE_DOG)) {
+                    mSpBreed.selectItem(pet.breedName);
+                }
             }
 
             @Override
@@ -245,6 +250,10 @@ public class ProfilePetActivity extends BaseActivity implements
                 for (BreedResp.Item breed : breeds.data) {
                     catBreedsString.add(breed.attributes.name);
                     catBreeds.add(new Breed(breed.id, breed.attributes.name, breed.attributes.kind, breed.attributes.size));
+                }
+
+                if (pet.type.equals(APIPetConstants.DATA_TYPE_CAT)) {
+                    mSpBreed.selectItem(pet.breedName);
                 }
             }
 

@@ -1,6 +1,7 @@
 package com.petbooking.Utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
@@ -179,12 +180,58 @@ public abstract class AppUtils {
     }
 
     public static Drawable getBusinessIcon(Context context, String businesstype) {
-        if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_APPOINTMENT)) {
-            return context.getResources().getDrawable(R.drawable.ic_category_appointment);
-        }
-        if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_TRAINING)) {
+        if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CLINIC)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_clinic);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_TRAINING)) {
             return context.getResources().getDrawable(R.drawable.ic_category_trainer);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_BATH)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_bath);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_TRANSPORT)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_transport);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_WALKER)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_walker);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_DAYCARE)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_daycare);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_HOTEL)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_hotel);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_EMERGENCY)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_emergency);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_EXAMS)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_exam);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_HOSPITAL)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_hospital);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_DIAGNOSIS)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_diagnosis);
+        } else {
+            return context.getResources().getDrawable(R.drawable.ic_category_other);
         }
-        return context.getResources().getDrawable(R.drawable.ic_category_other);
+    }
+
+    public static int getCategoryColor(Context context, String businesstype) {
+        if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CLINIC)) {
+            return context.getResources().getColor(R.color.category_clinic);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_TRAINING)) {
+            return context.getResources().getColor(R.color.category_trainer);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_BATH)) {
+            return context.getResources().getColor(R.color.category_bath);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_TRANSPORT)) {
+            return context.getResources().getColor(R.color.category_transport);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_WALKER)) {
+            return context.getResources().getColor(R.color.category_walker);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_DAYCARE)) {
+            return context.getResources().getColor(R.color.category_daycare);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_HOTEL)) {
+            return context.getResources().getColor(R.color.category_hotel);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_EMERGENCY)) {
+            return context.getResources().getColor(R.color.category_emergency);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_EXAMS)) {
+            return context.getResources().getColor(R.color.category_exam);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_HOSPITAL)) {
+            return context.getResources().getColor(R.color.category_hospital);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_DIAGNOSIS)) {
+            return context.getResources().getColor(R.color.category_diagnosis);
+        } else {
+            return context.getResources().getColor(R.color.category_other);
+        }
     }
 }

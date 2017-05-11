@@ -81,7 +81,6 @@ public class BusinessListFragment extends Fragment {
                             item.attributes.ratingAverage, item.attributes.ratingCount, item.attributes.distance, item.attributes.businesstype,
                             item.attributes.location.get(0), item.attributes.location.get(1), item.attributes.imported);
                     mBusinessList.add(business);
-                    Log.i("ITEM", new Gson().toJson(business));
                 }
 
                 mAdapter.updateList(mBusinessList);

@@ -1,7 +1,11 @@
 package com.petbooking.UI.Dashboard.BusinessList;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -54,7 +58,9 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
 
         final Business business = mBusinessList.get(position);
 
+        int categoryColor = AppUtils.getCategoryColor(mContext, business.businesstype);
         Drawable categoryIcon = AppUtils.getBusinessIcon(mContext, business.businesstype);
+        GradientDrawable mDistanceBackground = (GradientDrawable) holder.mTvDistance.getBackground();
         String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber);
         String address = mContext.getResources().getString(R.string.business_address, business.neighborhood, business.city,
                 business.state, CommonUtils.formatZipcode(business.zipcode));
@@ -68,7 +74,9 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         holder.mTvStreet.setText(street);
         holder.mTvAddress.setText(address);
         holder.mTvDistance.setText(distance);
+
         holder.mIvCategoryIcon.setImageDrawable(categoryIcon);
+        mDistanceBackground.setColor(categoryColor);
 
         Glide.with(mContext)
                 .load("http://www.hospitalamigobicho.com.br/images/slide/slide-petshop.jpg")

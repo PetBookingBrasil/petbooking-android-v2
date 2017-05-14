@@ -1,7 +1,10 @@
-package com.petbooking.API.Business.Models;
+package com.petbooking.API.Business;
+
+import android.util.Log;
 
 import com.petbooking.API.APIClient;
 import com.petbooking.API.Business.BusinessInterface;
+import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Utils.APIUtils;
 
@@ -27,6 +30,22 @@ public class BusinessService {
         call.enqueue(new Callback<BusinessesResp>() {
             @Override
             public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {
+                APIUtils.handleResponse(response, callback);
+            }
+
+            @Override
+            public void onFailure(Call<BusinessesResp> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void listHighlightBusiness(final APICallback callback) {
+        Call<BusinessesResp> call = mBusinessInterface.listHighlightBusiness();
+        call.enqueue(new Callback<BusinessesResp>() {
+            @Override
+            public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {
+                Log.d("AQUI", "AQUI");
                 APIUtils.handleResponse(response, callback);
             }
 

@@ -60,6 +60,8 @@ public class APIBusinessConstants {
 
     public static final String BUSINESS_ENDPOINT = "businesses" + FIELDS_BUSINESS + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 
+    public static final String BUSINESS_HIGHLIGHT_ENDPOINT = "businesses/highlights";
+
     public static final String BUSINESS_BY_CATEGORY_ENDPOINT = "category-templates/{" + PATH_CATEGORY_ID + "}/businesses" +
             FIELDS_BUSINESS + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 

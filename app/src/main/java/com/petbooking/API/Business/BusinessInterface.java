@@ -22,6 +22,11 @@ public interface BusinessInterface {
 
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
+    @GET(APIBusinessConstants.BUSINESS_HIGHLIGHT_ENDPOINT)
+    Call<BusinessesResp> listHighlightBusiness();
+
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @GET(APIBusinessConstants.BUSINESS_BY_CATEGORY_ENDPOINT)
     Call<BusinessesResp> listByCategory(@Path(APIBusinessConstants.PATH_CATEGORY_ID) String categoryID,
                                         @Query(APIBusinessConstants.QUERY_USER_ID) String userID,

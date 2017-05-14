@@ -26,7 +26,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".BaseActivity"
-            android:label="@string/title_activity_base"
             android:parentActivityName="android.support.v7.app.AppCompatActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

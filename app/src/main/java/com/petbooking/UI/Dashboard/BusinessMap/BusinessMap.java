@@ -1,8 +1,10 @@
 package com.petbooking.UI.Dashboard.BusinessMap;
 
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.petbooking.R;
+import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 
 /**
@@ -34,7 +37,6 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_business_map, container, false);
-
         Bundle mapViewBundle = null;
 
         if (savedInstanceState != null) {
@@ -54,7 +56,8 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
         mGMap = googleMap;
         LatLng center = new LatLng(-8.0578381, -34.8828969);
         MarkerOptions markerOptions = new MarkerOptions()
-                .position(center);
+                .position(center)
+                .icon(BitmapDescriptorFactory.fromBitmap(AppUtils.getBitmap(getContext(), R.drawable.ic_marker)));
         googleMap.addMarker(markerOptions);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(center, 16));
     }

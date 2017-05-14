@@ -33,6 +33,7 @@ public class BusinessListFragment extends Fragment {
     /**
      * Business List
      */
+    private LinearLayoutManager mVerticalLayoutManager;
     private BusinessListAdapter mAdapter;
     private RecyclerView mRvBusinessList;
     private ArrayList<Business> mBusinessList;
@@ -40,6 +41,7 @@ public class BusinessListFragment extends Fragment {
     /**
      * Hightlight Business
      */
+    private LinearLayoutManager mHorizontalLayoutManager;
     private BusinessListAdapter mSliderAdapter;
     private RecyclerView mRvBusinessSlider;
     private ArrayList<Business> mBusinessSlider;
@@ -48,10 +50,33 @@ public class BusinessListFragment extends Fragment {
     /**
      * Auto Scroll
      */
-
     private int speedScroll = 8000;
     private Handler mHandler;
     private Runnable mRunnable;
+
+    /**
+     * Pagination
+     */
+    private boolean isLoading = false;
+    private boolean isLastPage = false;
+    private int currentPage = 1;
+
+    RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+
+            int lastItemPosition = mVerticalLayoutManager.findLastVisibleItemPosition();
+
+            if (lastItemPosition == mAdapter.getItemCount() - 1) {
+
+                if (!isLoading && !isLastPage) {
+                    currentPage++;
+                    loadMore();
+                }
+            }
+        }
+    };
 
     public BusinessListFragment() {
         // Required empty public constructor
@@ -73,11 +98,10 @@ public class BusinessListFragment extends Fragment {
         mRvBusinessList.setHasFixedSize(true);
         mRvBusinessSlider.setHasFixedSize(true);
 
-        LinearLayoutManager mVerticalLayoutManager = new LinearLayoutManager(getContext());
-        LinearLayoutManager mHorizontalLayoutManager = new LinearLayoutManager(getContext());
+        mVerticalLayoutManager = new LinearLayoutManager(getContext());
+        mHorizontalLayoutManager = new LinearLayoutManager(getContext());
         mVerticalLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mHorizontalLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-
 
         mRvBusinessList.setLayoutManager(mVerticalLayoutManager);
         mRvBusinessSlider.setLayoutManager(mHorizontalLayoutManager);
@@ -91,6 +115,8 @@ public class BusinessListFragment extends Fragment {
         if (mSliderAdapter != null) {
             mRvBusinessSlider.setAdapter(mSliderAdapter);
         }
+
+        mRvBusinessList.addOnScrollListener(scrollListener);
 
         listBusiness();
         listHighlightsBusiness();
@@ -118,12 +144,45 @@ public class BusinessListFragment extends Fragment {
                     business = new Business(item.id, item.attributes.name, item.attributes.city, item.attributes.state,
                             item.attributes.street, item.attributes.neighborhood, item.attributes.streetNumber, item.attributes.zipcode,
                             item.attributes.ratingAverage, item.attributes.ratingCount, item.attributes.distance, item.attributes.businesstype,
-                            item.attributes.location.get(0), item.attributes.location.get(1), item.attributes.coverImage, item.attributes.imported);
+                            "", "", item.attributes.coverImage, item.attributes.imported);
                     mBusinessList.add(business);
                 }
 
                 mAdapter.updateList(mBusinessList);
                 mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(Object error) {
+
+            }
+        });
+    }
+
+    /**
+     * Load More Itens
+     */
+    public void loadMore() {
+        isLoading = true;
+        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), currentPage, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                BusinessesResp businessList = (BusinessesResp) response;
+                Business business;
+                for (BusinessesResp.Item item : businessList.data) {
+                    business = new Business(item.id, item.attributes.name, item.attributes.city, item.attributes.state,
+                            item.attributes.street, item.attributes.neighborhood, item.attributes.streetNumber, item.attributes.zipcode,
+                            item.attributes.ratingAverage, item.attributes.ratingCount, item.attributes.distance, item.attributes.businesstype,
+                            "", "", item.attributes.coverImage, item.attributes.imported);
+                    mBusinessList.add(business);
+                }
+
+                mAdapter.updateList(mBusinessList);
+                mAdapter.notifyDataSetChanged();
+                if (businessList.data.size() == 0) {
+                    isLastPage = true;
+                }
+                isLoading = false;
             }
 
             @Override

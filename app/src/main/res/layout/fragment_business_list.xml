@@ -1,20 +1,37 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.petbooking.UI.Dashboard.BusinessList.BusinessListFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/businessSlider"
+    <LinearLayout
+        android:id="@+id/listLayout"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/businessSlider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/businessList"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/businessList"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1" />
-
-</LinearLayout>
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="@dimen/spacing_xtiny"
+        android:layout_marginLeft="@dimen/spacing_xtiny"
+        app:layout_anchor="@id/listLayout"
+        app:layout_anchorGravity="bottom|left|end"
+        app:srcCompat="@drawable/ic_filter" />
+</android.support.design.widget.CoordinatorLayout>

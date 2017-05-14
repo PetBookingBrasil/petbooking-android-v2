@@ -1,17 +1,34 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.petbooking.UI.Dashboard.BusinessMap.BusinessMap">
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/map"
+
+    <LinearLayout
+        android:id="@+id/mapLayout"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        <!-- <include android:visibility="gone" layout="@layout/item_list_business"></include>-->
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="@dimen/spacing_smallest"
+        android:layout_marginLeft="@dimen/spacing_xtiny"
+        app:layout_anchor="@id/mapLayout"
+        app:layout_anchorGravity="bottom|left|end"
+        app:srcCompat="@drawable/ic_filter" />
 
-    <!-- <include android:visibility="gone" layout="@layout/item_list_business"></include>-->
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

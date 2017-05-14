@@ -2,6 +2,7 @@ package com.petbooking.UI.Dashboard.BusinessList;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,6 +43,15 @@ public class BusinessListFragment extends Fragment {
     private BusinessListAdapter mSliderAdapter;
     private RecyclerView mRvBusinessSlider;
     private ArrayList<Business> mBusinessSlider;
+
+
+    /**
+     * Auto Scroll
+     */
+
+    private int speedScroll = 8000;
+    private Handler mHandler;
+    private Runnable mRunnable;
 
     public BusinessListFragment() {
         // Required empty public constructor
@@ -85,9 +95,15 @@ public class BusinessListFragment extends Fragment {
         listBusiness();
         listHighlightsBusiness();
 
+
         return view;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacks(mRunnable);
+    }
 
     /**
      * List Business
@@ -137,12 +153,42 @@ public class BusinessListFragment extends Fragment {
 
                 mSliderAdapter.updateList(mBusinessSlider);
                 mSliderAdapter.notifyDataSetChanged();
+                setAutoScroll();
             }
 
             @Override
             public void onError(Object error) {
             }
         });
+    }
+
+    /**
+     * Set Auto Scroll
+     */
+    public void setAutoScroll() {
+        mHandler = new Handler();
+        mRunnable = new Runnable() {
+            int count = 0;
+            boolean flag = true;
+
+            @Override
+            public void run() {
+                if (count < mSliderAdapter.getItemCount()) {
+                    if (count == mSliderAdapter.getItemCount() - 1) {
+                        flag = false;
+                    } else if (count == 0) {
+                        flag = true;
+                    }
+                    if (flag) count++;
+                    else count--;
+
+                    mRvBusinessSlider.smoothScrollToPosition(count);
+                    mHandler.postDelayed(this, speedScroll);
+                }
+            }
+        };
+
+        mHandler.postDelayed(mRunnable, speedScroll);
     }
 
 }

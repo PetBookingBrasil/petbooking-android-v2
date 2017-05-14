@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
+import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 
@@ -79,7 +80,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         mDistanceBackground.setColor(categoryColor);
 
         Glide.with(mContext)
-                .load("http://www.hospitalamigobicho.com.br/images/slide/slide-petshop.jpg")
+                .load(APIUtils.getAssetEndpoint(business.image.url))
                 .error(R.drawable.business_background)
                 .placeholder(R.drawable.business_background)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)

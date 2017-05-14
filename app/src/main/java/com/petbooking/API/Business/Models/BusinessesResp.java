@@ -14,7 +14,6 @@ import java.util.List;
 public class BusinessesResp {
 
     public List<Item> data;
-    public Meta meta;
 
     public static class Item {
 

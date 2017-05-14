@@ -1,5 +1,7 @@
 package com.petbooking.Models;
 
+import com.petbooking.API.Business.Models.BusinessesRspAttributes;
+
 /**
  * Created by Luciano José on 07/05/2017.
  */
@@ -20,12 +22,13 @@ public class Business {
     public String businesstype;
     public String latitude;
     public String longitude;
+    public BusinessesRspAttributes.CoverImage image;
     public boolean imported;
 
 
     public Business(String id, String name, String city, String state, String street, String neighborhood, String streetNumber,
                     String zipcode, float ratingAverage, int ratingCount, float distance, String businesstype,
-                    String latitude, String longitude, boolean imported) {
+                    String latitude, String longitude, BusinessesRspAttributes.CoverImage image, boolean imported) {
         this.id = id;
         this.name = name;
         this.city = city;
@@ -40,6 +43,7 @@ public class Business {
         this.businesstype = businesstype;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.image = image;
         this.imported = imported;
     }
 

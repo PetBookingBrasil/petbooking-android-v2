@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.Interfaces.APICallback;
@@ -81,19 +82,12 @@ public class BusinessListFragment extends Fragment {
             mRvBusinessSlider.setAdapter(mSliderAdapter);
         }
 
-       // listBusiness();
+        listBusiness();
         listHighlightsBusiness();
 
         return view;
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        listBusiness();
-        listHighlightsBusiness();
-    }
 
     /**
      * List Business
@@ -108,7 +102,7 @@ public class BusinessListFragment extends Fragment {
                     business = new Business(item.id, item.attributes.name, item.attributes.city, item.attributes.state,
                             item.attributes.street, item.attributes.neighborhood, item.attributes.streetNumber, item.attributes.zipcode,
                             item.attributes.ratingAverage, item.attributes.ratingCount, item.attributes.distance, item.attributes.businesstype,
-                            item.attributes.location.get(0), item.attributes.location.get(1), item.attributes.imported);
+                            item.attributes.location.get(0), item.attributes.location.get(1), item.attributes.coverImage, item.attributes.imported);
                     mBusinessList.add(business);
                 }
 
@@ -136,8 +130,9 @@ public class BusinessListFragment extends Fragment {
                     business = new Business(item.id, item.attributes.name, item.attributes.city, item.attributes.state,
                             item.attributes.street, item.attributes.neighborhood, item.attributes.streetNumber, item.attributes.zipcode,
                             item.attributes.ratingAverage, item.attributes.ratingCount, item.attributes.distance, item.attributes.businesstype,
-                            item.attributes.location.get(0), item.attributes.location.get(1), item.attributes.imported);
+                            "", "", item.attributes.coverImage, item.attributes.imported);
                     mBusinessSlider.add(business);
+
                 }
 
                 mSliderAdapter.updateList(mBusinessSlider);
@@ -146,7 +141,6 @@ public class BusinessListFragment extends Fragment {
 
             @Override
             public void onError(Object error) {
-
             }
         });
     }

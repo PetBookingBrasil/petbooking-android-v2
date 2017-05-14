@@ -4,17 +4,15 @@ package com.petbooking.UI.Dashboard.BusinessList;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.BusinessesResp;
+import com.petbooking.BaseFragment;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Models.Business;
@@ -25,7 +23,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BusinessListFragment extends Fragment {
+public class BusinessListFragment extends BaseFragment {
 
     private BusinessService mBusinessService;
     private LocationManager mLocationManager;

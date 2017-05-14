@@ -44,6 +44,6 @@ public interface BusinessInterface {
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
     @DELETE(APIBusinessConstants.FAVORITES_DELETE_ENDPOINT)
-    Call<FavoriteResp> deleteFavorite(@Path(APIConstants.PATH_PARAM) String businessId);
+    Call<FavoriteResp> deleteFavorite(@Path(APIConstants.PATH_PARAM) String favoriteId);
 }
 

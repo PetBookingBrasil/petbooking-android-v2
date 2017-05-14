@@ -71,8 +71,8 @@ public class BusinessService {
         });
     }
 
-    public void deleteFavorite(String businessId, final APICallback callback) {
-        Call<FavoriteResp> call = mBusinessInterface.deleteFavorite(businessId);
+    public void deleteFavorite(String favoriteId, final APICallback callback) {
+        Call<FavoriteResp> call = mBusinessInterface.deleteFavorite(favoriteId);
         call.enqueue(new Callback<FavoriteResp>() {
             @Override
             public void onResponse(Call<FavoriteResp> call, Response<FavoriteResp> response) {

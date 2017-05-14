@@ -8,6 +8,12 @@
     <string name="action_settings">Settings</string>
     <string name="small_lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec justo a libero bibendum varius.</string>
 
+    <!--  Third-party Apps ID -->
+    <string name="fabric_app_id" translatable="false">fe0c61a27b92b4a7f90ab0fc8f69e3a4326250e5</string>
+    <string name="facebook_app_id" translatable="false">1799017433691061</string>
+    <string name="google_maps_key" translatable="false">AIzaSyAH5EPkWMPgU0zuL1y9ePlEusxOZ_y1Zx0</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb1799017433691061</string>
+
     <!-- Screen Title -->
     <string name="recover_password_title">Esqueci a senha</string>
     <string name="signup_title">Preencha seus dados</string>
@@ -128,6 +134,12 @@
     <string name="hint_coat">Pelagem</string>
     <string name="hint_temper">Temperamento</string>
     <string name="hint_observation">Observação</string>
+
+    <!-- Business -->
+    <string name="business_street">%1$s, %2$s</string>
+    <string name="business_address">%1$s, %2$s, %3$s, %4$s</string>
+    <string name="business_rating_count">(%1$d)</string>
+    <string name="business_distance">%1$s Km</string>
 
 
     <!-- Dialog -->

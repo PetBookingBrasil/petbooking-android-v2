@@ -29,6 +29,7 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
 import com.petbooking.Models.UserAddress;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Content.ContentFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Login.LoginActivity;
 import com.petbooking.UI.Menu.Pets.PetsActivity;
@@ -106,6 +107,8 @@ public class DashboardActivity extends AppCompatActivity implements
         mTvSideMenuName = (TextView) mHeaderView.findViewById(R.id.sidemenu_name);
         mTvSideMenuAddress = (TextView) mHeaderView.findViewById(R.id.sidemenu_address);
         mIBtnProfile.setOnClickListener(btnProfileListener);
+
+        inflateBusinessFragment();
     }
 
     @Override
@@ -239,5 +242,13 @@ public class DashboardActivity extends AppCompatActivity implements
                 .centerCrop()
                 .dontAnimate()
                 .into(mCivSideMenuPicture);
+    }
+
+    /**
+     * Inflate Business List
+     */
+    private void inflateBusinessFragment(){
+        ContentFragment fragment = new ContentFragment();
+        mFragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 }

@@ -179,4 +179,7 @@ public class CommonUtils {
         return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
     }
 
+    public static String formatZipcode(String zipcode) {
+        return zipcode.substring(0, 5) + '-' + zipcode.substring(5);
+    }
 }

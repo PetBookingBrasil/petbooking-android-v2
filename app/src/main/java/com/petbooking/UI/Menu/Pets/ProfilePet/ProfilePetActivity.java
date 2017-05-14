@@ -1,4 +1,4 @@
-package com.petbooking.UI.Menu.Pets.ProfilePetActivity;
+package com.petbooking.UI.Menu.Pets.ProfilePet;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -15,8 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.petbooking.API.Pet.APIPetConstants;
 import com.petbooking.API.Pet.Models.BreedResp;
@@ -35,10 +33,9 @@ import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
 import com.petbooking.UI.Dialogs.TableDialogFragment;
 import com.petbooking.UI.Widget.MaterialSpinner;
-import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
-import com.petbooking.Utils.PetUtils;
+import com.petbooking.Utils.AppUtils;
 import com.petbooking.databinding.PetFormBinding;
 
 import org.greenrobot.eventbus.EventBus;
@@ -122,7 +119,7 @@ public class ProfilePetActivity extends BaseActivity implements
                 mSpSize.setItems(R.array.size_dog_array);
             }
 
-            mSpSize.selectItem(PetUtils.getDisplaySize(ProfilePetActivity.this, pet.size));
+            mSpSize.selectItem(AppUtils.getDisplaySize(ProfilePetActivity.this, pet.size));
         }
 
         @Override
@@ -229,6 +226,10 @@ public class ProfilePetActivity extends BaseActivity implements
                     dogBreedsString.add(breed.attributes.name);
                     dogBreeds.add(new Breed(breed.id, breed.attributes.name, breed.attributes.kind, breed.attributes.size));
                 }
+
+                if (pet.type.equals(APIPetConstants.DATA_TYPE_DOG)) {
+                    mSpBreed.selectItem(pet.breedName);
+                }
             }
 
             @Override
@@ -249,6 +250,10 @@ public class ProfilePetActivity extends BaseActivity implements
                 for (BreedResp.Item breed : breeds.data) {
                     catBreedsString.add(breed.attributes.name);
                     catBreeds.add(new Breed(breed.id, breed.attributes.name, breed.attributes.kind, breed.attributes.size));
+                }
+
+                if (pet.type.equals(APIPetConstants.DATA_TYPE_CAT)) {
+                    mSpBreed.selectItem(pet.breedName);
                 }
             }
 
@@ -331,11 +336,11 @@ public class ProfilePetActivity extends BaseActivity implements
         int breedPosition = mSpBreed.getPosition();
 
         pet.userId = mUser.id;
-        pet.gender = PetUtils.getGender(this, mSpGender.getSelectedItem());
-        pet.size = PetUtils.getSize(this, mSpSize.getSelectedItem());
-        pet.coatType = PetUtils.getCoatType(this, mSpCoat.getSelectedItem());
-        pet.mood = PetUtils.getTemper(this, mSpTemper.getSelectedItem());
-        pet.type = PetUtils.getType(this, mSpType.getSelectedItem());
+        pet.gender = AppUtils.getGender(this, mSpGender.getSelectedItem());
+        pet.size = AppUtils.getSize(this, mSpSize.getSelectedItem());
+        pet.coatType = AppUtils.getCoatType(this, mSpCoat.getSelectedItem());
+        pet.mood = AppUtils.getTemper(this, mSpTemper.getSelectedItem());
+        pet.type = AppUtils.getType(this, mSpType.getSelectedItem());
 
         if (mBitmap != null) {
             pet.photo = CommonUtils.encodeBase64(mBitmap);
@@ -356,11 +361,11 @@ public class ProfilePetActivity extends BaseActivity implements
      */
     public void renderPet(Pet pet) {
         pet.birthday = CommonUtils.formatDate(pet.birthday);
-        mSpGender.selectItem(PetUtils.getDisplayGender(this, pet.gender));
-        mSpType.selectItem(PetUtils.getDisplayType(this, pet.type));
-        mSpCoat.selectItem(PetUtils.getDisplayCoatType(this, pet.coatType));
-        mSpTemper.selectItem(PetUtils.getDisplayTemper(this, pet.mood));
-        mSpSize.selectItem(PetUtils.getDisplaySize(this, pet.size));
+        mSpGender.selectItem(AppUtils.getDisplayGender(this, pet.gender));
+        mSpType.selectItem(AppUtils.getDisplayType(this, pet.type));
+        mSpCoat.selectItem(AppUtils.getDisplayCoatType(this, pet.coatType));
+        mSpTemper.selectItem(AppUtils.getDisplayTemper(this, pet.mood));
+        mSpSize.selectItem(AppUtils.getDisplaySize(this, pet.size));
     }
 
     @Override

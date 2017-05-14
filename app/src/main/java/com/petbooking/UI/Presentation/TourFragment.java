@@ -20,6 +20,11 @@ import com.petbooking.R;
  */
 public class TourFragment extends Fragment {
 
+    private final int[] titles = {R.string.presentation_1_title, R.string.presentation_2_title, R.string.presentation_3_title};
+    private final int[] texts = {R.string.presentation_1_text, R.string.presentation_2_text, R.string.presentation_3_text};
+    private final int[] colors = {R.color.presentation_1, R.color.presentation_2, R.color.presentation_3};
+    private final int[] images = {R.drawable.presentation_1, R.drawable.presentation_2, R.drawable.presentation_3};
+
     private static final String PAGE_POSITION = "position";
     private ConstraintLayout mPresentationLayout;
     private ImageView mIvPresentation;
@@ -48,22 +53,16 @@ public class TourFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tour, container, false);
 
         int position = getPosition();
-        int colorId = AppConstants.PRESENTATION_COLORS[position];
-        position++;
-        String packageName = getContext().getPackageName();
-        String imageId = getContext().getString(R.string.presentation_image_format, position);
-        String titleId = getContext().getString(R.string.presentation_title_format, position);
-        String textId = getContext().getString(R.string.presentation_text_format, position);
 
         mPresentationLayout = (ConstraintLayout) view.findViewById(R.id.presentationLayout);
         mIvPresentation = (ImageView) view.findViewById(R.id.presentationImagem);
         mTvTitle = (TextView) view.findViewById(R.id.presentationTitle);
         mTvText = (TextView) view.findViewById(R.id.presentationText);
 
-        mIvPresentation.setImageResource(getResources().getIdentifier(imageId, "drawable", packageName));
-        mTvTitle.setText(getResources().getIdentifier(titleId, "string", packageName));
-        mTvText.setText(getResources().getIdentifier(textId, "string", packageName));
-        mPresentationLayout.setBackgroundColor(getResources().getColor(colorId));
+        mIvPresentation.setImageResource(images[position]);
+        mTvTitle.setText(getContext().getResources().getString(titles[position]));
+        mTvText.setText(getContext().getResources().getString(texts[position]));
+        mPresentationLayout.setBackgroundColor(getContext().getResources().getColor(colors[position]));
 
         return view;
     }

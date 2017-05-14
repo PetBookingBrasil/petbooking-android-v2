@@ -43,11 +43,6 @@ public class AppConstants {
     public static final String USER_PICTURE_URL = "https://graph.facebook.com/%s/picture?type=large";
 
     /**
-     * Pages Contants
-     */
-    public static final int PRESENTATION_COLORS[] = {R.color.presentation_1, R.color.presentation_2, R.color.presentation_3};
-
-    /**
      * Intent Codes
      */
     public static final int PICK_PHOTO = 1;

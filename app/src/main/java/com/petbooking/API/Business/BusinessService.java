@@ -1,10 +1,10 @@
 package com.petbooking.API.Business;
 
-import android.util.Log;
-
-import com.google.gson.Gson;
 import com.petbooking.API.APIClient;
 import com.petbooking.API.Business.Models.BusinessesResp;
+import com.petbooking.API.Business.Models.FavoriteResp;
+import com.petbooking.API.Business.Models.FavoriteRqt;
+import com.petbooking.Constants.APIConstants;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Utils.APIUtils;
 
@@ -45,7 +45,6 @@ public class BusinessService {
         call.enqueue(new Callback<BusinessesResp>() {
             @Override
             public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {
-                Log.i("HIGHLIG", new Gson().toJson(response.body()));
                 APIUtils.handleResponse(response, callback);
             }
 
@@ -56,5 +55,34 @@ public class BusinessService {
         });
     }
 
+    public void createFavorite(String userId, String businessId, final APICallback callback) {
+        FavoriteRqt favoriteRqt = new FavoriteRqt(APIConstants.DATA_FAVORITES_TYPE_BUSINESS, businessId);
+        Call<FavoriteResp> call = mBusinessInterface.createFavorite(userId, favoriteRqt);
+        call.enqueue(new Callback<FavoriteResp>() {
+            @Override
+            public void onResponse(Call<FavoriteResp> call, Response<FavoriteResp> response) {
+                APIUtils.handleResponse(response, callback);
+            }
 
+            @Override
+            public void onFailure(Call<FavoriteResp> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void deleteFavorite(String businessId, final APICallback callback) {
+        Call<FavoriteResp> call = mBusinessInterface.deleteFavorite(businessId);
+        call.enqueue(new Callback<FavoriteResp>() {
+            @Override
+            public void onResponse(Call<FavoriteResp> call, Response<FavoriteResp> response) {
+                APIUtils.handleResponse(response, callback);
+            }
+
+            @Override
+            public void onFailure(Call<FavoriteResp> call, Throwable t) {
+
+            }
+        });
+    }
 }

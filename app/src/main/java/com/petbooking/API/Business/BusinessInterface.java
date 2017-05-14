@@ -1,11 +1,16 @@
 package com.petbooking.API.Business;
 
 import com.petbooking.API.Business.Models.BusinessesResp;
+import com.petbooking.API.Business.Models.FavoriteResp;
+import com.petbooking.API.Business.Models.FavoriteRqt;
 import com.petbooking.Constants.APIConstants;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -33,5 +38,12 @@ public interface BusinessInterface {
                                         @Query(APIConstants.QUERY_COORDS) String coords,
                                         @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex);
 
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
+    @POST(APIBusinessConstants.FAVORITES_CREATE_ENDPOINT)
+    Call<FavoriteResp> createFavorite(@Path(APIConstants.PATH_PARAM) String userId, @Body FavoriteRqt favoriteRqt);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
+    @DELETE(APIBusinessConstants.FAVORITES_DELETE_ENDPOINT)
+    Call<FavoriteResp> deleteFavorite(@Path(APIConstants.PATH_PARAM) String businessId);
 }
 

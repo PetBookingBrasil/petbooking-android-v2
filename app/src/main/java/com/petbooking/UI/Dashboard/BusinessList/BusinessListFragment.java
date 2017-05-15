@@ -119,21 +119,22 @@ public class BusinessListFragment extends BaseFragment {
         listBusiness();
         listHighlightsBusiness();
 
-
         return view;
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mHandler.removeCallbacks(mRunnable);
+    public void onResume() {
+        super.onResume();
+        listBusiness();
+        listHighlightsBusiness();
     }
 
     /**
      * List Business
      */
     public void listBusiness() {
-        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), 1, new APICallback() {
+        currentPage = 1;
+        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), currentPage, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 BusinessesResp businessList = (BusinessesResp) response;

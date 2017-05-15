@@ -11,7 +11,7 @@ public class CreateUserRqt {
     public CreateUserRqt(User user) {
         this.attributes = new Attributes(user.name, user.birthday, user.phone, user.cpf,
                 user.email, user.password, user.zipcode, user.street, user.neighborhood,
-                user.streetNumber, user.city, user.state);
+                user.streetNumber, user.city, user.state, user.photo);
         this.data = new Data(attributes);
     }
 
@@ -39,10 +39,11 @@ public class CreateUserRqt {
         public String street_number;
         public String city;
         public String state;
-        
+        public String avatar;
+
         public Attributes(String name, String birthday, String phone, String cpf, String email, String password,
                           String zipcode, String street, String neighborhood, String street_number,
-                          String city, String state) {
+                          String city, String state, String photo) {
             this.name = name;
             this.birthday = birthday;
             this.phone = phone;
@@ -55,6 +56,7 @@ public class CreateUserRqt {
             this.street_number = street_number;
             this.city = city;
             this.state = state;
+            this.avatar = photo;
         }
     }
 }

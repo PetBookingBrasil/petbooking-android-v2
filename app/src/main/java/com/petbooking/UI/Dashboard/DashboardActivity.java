@@ -235,7 +235,7 @@ public class DashboardActivity extends AppCompatActivity implements
         }
 
         Glide.with(this)
-                .load(APIUtils.getAssetEndpoint(currentUser.avatar.large.url))
+                .load(currentUser.avatar.large.url)
                 .error(R.drawable.ic_menu_user)
                 .placeholder(R.drawable.ic_menu_user)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)

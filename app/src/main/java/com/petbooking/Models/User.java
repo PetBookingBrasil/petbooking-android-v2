@@ -36,6 +36,7 @@ public class User {
     public boolean validForScheduling;
     public AvatarResp avatar;
     public String providerToken;
+    public String photo;
 
     public User() {
         this.avatar = new AvatarResp();

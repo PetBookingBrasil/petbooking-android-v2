@@ -20,7 +20,6 @@ import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
-import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 
@@ -72,7 +71,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
         String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", business.distance));
 
-        holder.mTvRate.setText(String.valueOf(business.ratingAverage));
+        holder.mTvRate.setText(String.format("%.2f", business.ratingAverage));
         holder.mRbBusiness.setRating(business.ratingAverage);
         holder.mTvRatingCount.setText(ratingCount);
         holder.mTvName.setText(business.name);
@@ -90,7 +89,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         });
 
         Glide.with(mContext)
-                .load(APIUtils.getAssetEndpoint(business.image.url))
+                .load(business.image.url)
                 .error(R.drawable.business_background)
                 .placeholder(R.drawable.business_background)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
@@ -104,6 +103,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
 
     /**
      * Favoritar Estabelecimento
+     *
      * @param businessId
      */
     public void favoriteBusiness(String businessId) {
@@ -122,6 +122,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
 
     /**
      * Desfavoritar Estabelecimento
+     *
      * @param favoriteId
      */
     public void disfavorBusiness(String favoriteId) {

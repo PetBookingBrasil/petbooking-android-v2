@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="DrawerItem">
-        <attr name="item_text" format="string" />
-        <attr name="item_icon" format="integer" />
+    <declare-styleable name="MaterialSpinner">
+        <attr name="hint" format="string" />
+        <attr name="icon" format="reference" />
+        <attr name="entries" format="reference" />
+        <attr name="enableInfo" format="boolean" />
     </declare-styleable>
 
 </resources>

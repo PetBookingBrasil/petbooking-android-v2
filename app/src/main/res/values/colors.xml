@@ -6,11 +6,12 @@
     <color name="black">#000000</color>
     <color name="red">#D11326</color>
     <color name="gray">#AFB4B7</color>
+    <color name="yellow">#FFC600</color>
 
     <!-- Presentation -->
-    <color name="presentation_1">#FBCFD5</color>
-    <color name="presentation_2">#F6DAC4</color>
-    <color name="presentation_3">#ABDEDA</color>
+    <color name="presentation_1">#FFC500</color>
+    <color name="presentation_2">#FF7F0B</color>
+    <color name="presentation_3">#FF4B39</color>
 
     <!-- Login -->
     <color name="facebook_btn_login">#2556A0</color>
@@ -18,5 +19,19 @@
     <!-- Brand Colors -->
     <color name="brand_primary">#E74C3C</color>
     <color name="text_color">#545454</color>
+
+    <!-- Category Colors -->
+    <color name="category_other">#545454</color>
+    <color name="category_diagnosis">#5CBBFA</color>
+    <color name="category_hospital">#2D9782</color>
+    <color name="category_exam">#1ABC9C</color>
+    <color name="category_emergency">#E74C3C</color>
+    <color name="category_hotel">#D35400</color>
+    <color name="category_daycare">#E67E22</color>
+    <color name="category_walker">#8E44AD</color>
+    <color name="category_transport">#F1C40F</color>
+    <color name="category_bath">#2ECC71</color>
+    <color name="category_trainer">#9B59B6</color>
+    <color name="category_clinic">#156BA5</color>
 
 </resources>

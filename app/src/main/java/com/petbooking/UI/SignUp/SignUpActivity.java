@@ -10,7 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +37,7 @@ import com.petbooking.UI.Dialogs.DatePickerFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
 import com.petbooking.Utils.APIUtils;
+import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
 import com.petbooking.databinding.UserFormBinding;
 
@@ -271,6 +271,9 @@ public class SignUpActivity extends BaseActivity implements
         mIBtnSelectPicture.setVisibility(GONE);
         mCiUserPhoto.setVisibility(View.VISIBLE);
         mCiUserPhoto.setImageBitmap(photo);
+
+        user.photo = CommonUtils.encodeBase64(mBitmap);
+        user.photo = AppConstants.BASE64 + user.photo;
     }
 
     /**

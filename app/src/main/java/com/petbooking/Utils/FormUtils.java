@@ -1,5 +1,7 @@
 package com.petbooking.Utils;
 
+import com.petbooking.Constants.AppConstants;
+import com.petbooking.Models.Pet;
 import com.petbooking.Models.User;
 import com.petbooking.R;
 
@@ -26,6 +28,20 @@ public class FormUtils {
         }
 
         return -1;
+    }
+
+    public static int validatePet(Pet pet) {
+        if (CommonUtils.isEmpty(pet.name) || CommonUtils.isEmpty(pet.birthday) || CommonUtils.isEmpty(pet.gender)
+                || CommonUtils.isEmpty(pet.type) || CommonUtils.isEmpty(pet.size) || CommonUtils.isEmpty(pet.coatType)
+                || CommonUtils.isEmpty(pet.breedId) || CommonUtils.isEmpty(pet.mood)) {
+            return R.string.error_fields_empty;
+        }
+
+        return -1;
+    }
+
+    public static String getPhoto(String imageBase) {
+        return AppConstants.BASE64 + imageBase;
     }
 
 }

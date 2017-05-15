@@ -29,8 +29,10 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
 import com.petbooking.Models.UserAddress;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Content.ContentFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Login.LoginActivity;
+import com.petbooking.UI.Menu.Pets.PetsActivity;
 import com.petbooking.UI.Menu.Profile.ProfileActivity;
 import com.petbooking.Utils.APIUtils;
 
@@ -105,6 +107,8 @@ public class DashboardActivity extends AppCompatActivity implements
         mTvSideMenuName = (TextView) mHeaderView.findViewById(R.id.sidemenu_name);
         mTvSideMenuAddress = (TextView) mHeaderView.findViewById(R.id.sidemenu_address);
         mIBtnProfile.setOnClickListener(btnProfileListener);
+
+        inflateBusinessFragment();
     }
 
     @Override
@@ -159,7 +163,10 @@ public class DashboardActivity extends AppCompatActivity implements
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.payments) {
+        if (id == R.id.my_pets) {
+            Intent logoutIntent = new Intent(this, PetsActivity.class);
+            startActivity(logoutIntent);
+        } else if (id == R.id.payments) {
             Log.d("PAYMENTS", "PAYMENTS");
         } else if (id == R.id.logout) {
             mSessionManager.logout();
@@ -228,12 +235,20 @@ public class DashboardActivity extends AppCompatActivity implements
         }
 
         Glide.with(this)
-                .load(APIUtils.getAssetEndpoint(currentUser.avatar.large.url))
+                .load(currentUser.avatar.large.url)
                 .error(R.drawable.ic_menu_user)
                 .placeholder(R.drawable.ic_menu_user)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .centerCrop()
                 .dontAnimate()
                 .into(mCivSideMenuPicture);
+    }
+
+    /**
+     * Inflate Business List
+     */
+    private void inflateBusinessFragment(){
+        ContentFragment fragment = new ContentFragment();
+        mFragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 }

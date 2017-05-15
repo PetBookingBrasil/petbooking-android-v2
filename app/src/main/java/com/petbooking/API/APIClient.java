@@ -1,7 +1,7 @@
 package com.petbooking.API;
 
 import com.petbooking.API.Interceptors.HeaderInterceptor;
-import com.petbooking.Constants.APIConstants;
+import com.petbooking.BuildConfig;
 import com.petbooking.Constants.AppConstants;
 
 import java.util.concurrent.TimeUnit;
@@ -47,7 +47,7 @@ public class APIClient {
         mClient = mBuilder.build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(APIConstants.BASE_URL_BETA)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(mClient)
                 .build();

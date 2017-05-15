@@ -1,6 +1,5 @@
 package com.petbooking.API.Auth.Models;
 
-import com.petbooking.API.Auth.APIAuthConstants;
 import com.petbooking.Constants.APIConstants;
 
 public class AuthUserRqt {

@@ -3,8 +3,6 @@ package com.petbooking.Constants;
 import android.Manifest;
 import android.os.Build;
 
-import com.petbooking.R;
-
 /**
  * Created by Luciano José on 13/04/2017.
  */

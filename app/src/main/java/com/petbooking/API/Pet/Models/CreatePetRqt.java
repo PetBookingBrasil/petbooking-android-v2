@@ -1,8 +1,5 @@
 package com.petbooking.API.Pet.Models;
 
-import android.content.Context;
-import android.text.TextUtils;
-
 import com.google.gson.annotations.SerializedName;
 import com.petbooking.API.Pet.APIPetConstants;
 import com.petbooking.Models.Pet;

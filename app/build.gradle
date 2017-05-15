@@ -17,13 +17,19 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+
     buildTypes {
         debug {
             ext.enableCrashlytics = false
+            buildConfigField("String", "BASE_URL", '"https://staging.petbooking.com.br/api/v2/"')
+            buildConfigField("String", "BUILD_UIDD", '"489ceffe-d387-4416-a9b0-0318c8a83dd2"')
         }
 
         release {
             minifyEnabled false
+
+            buildConfigField("String", "BASE_URL", '"https://petbooking.com.br/api/v2/"')
+            buildConfigField("String", "BUILD_UIDD", '"fe2e0261-2cac-440d-8027-c8cfc4720940"')
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

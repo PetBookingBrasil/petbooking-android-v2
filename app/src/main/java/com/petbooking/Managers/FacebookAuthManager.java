@@ -14,7 +14,6 @@ import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Interfaces.SocialCallback;
-import com.petbooking.Models.SocialUser;
 import com.petbooking.Models.User;
 
 import org.json.JSONObject;

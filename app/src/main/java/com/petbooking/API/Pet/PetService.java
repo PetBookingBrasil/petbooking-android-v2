@@ -1,7 +1,6 @@
 package com.petbooking.API.Pet;
 
 import com.petbooking.API.APIClient;
-import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Pet.Models.BreedResp;
 import com.petbooking.API.Pet.Models.CreatePetRqt;
 import com.petbooking.API.Pet.Models.ListPetsResp;

@@ -9,7 +9,6 @@ import android.view.View;
 
 import com.petbooking.Events.HideLoadingEvt;
 import com.petbooking.Events.ShowLoadingEvt;
-import com.petbooking.Events.ShowSnackbarEvt;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

@@ -1,22 +1,14 @@
 package com.petbooking.API.Auth;
 
-import android.util.Log;
-
-import com.google.gson.Gson;
 import com.petbooking.API.APIClient;
 import com.petbooking.API.Auth.Models.AuthConsumerResp;
 import com.petbooking.API.Auth.Models.AuthConsumerRqt;
-import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Auth.Models.AuthUserRqt;
 import com.petbooking.API.Auth.Models.AuthUserSocialRqt;
 import com.petbooking.API.Auth.Models.SessionResp;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Utils.APIUtils;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

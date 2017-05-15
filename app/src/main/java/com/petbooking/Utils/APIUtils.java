@@ -1,18 +1,12 @@
 package com.petbooking.Utils;
 
-import android.support.design.widget.Snackbar;
-
 import com.google.gson.Gson;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.Generic.ErrorResp;
 import com.petbooking.Constants.APIConstants;
-import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.User;
-import com.petbooking.R;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

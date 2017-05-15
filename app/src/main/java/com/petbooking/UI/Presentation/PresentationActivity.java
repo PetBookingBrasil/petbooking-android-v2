@@ -2,19 +2,17 @@ package com.petbooking.UI.Presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.petbooking.Constants.AppConstants;
 import com.petbooking.R;
 import com.petbooking.UI.Login.LoginActivity;
 
 public class PresentationActivity extends AppCompatActivity {
 
+    private final int[] colors = {R.color.presentation_1, R.color.presentation_2, R.color.presentation_3};
     private PagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
     private Button mBtnNextTour;
@@ -29,7 +27,7 @@ public class PresentationActivity extends AppCompatActivity {
                 if (position == 3) {
                     goToLogin();
                 } else {
-                    mBtnNextTour.setTextColor(getResources().getColor(AppConstants.PRESENTATION_COLORS[position]));
+                    mBtnNextTour.setTextColor(getResources().getColor(colors[position]));
                     mViewPager.setCurrentItem(position);
                 }
             } else {
@@ -46,7 +44,7 @@ public class PresentationActivity extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
-            mBtnNextTour.setTextColor(getResources().getColor(AppConstants.PRESENTATION_COLORS[position]));
+            mBtnNextTour.setTextColor(getResources().getColor(colors[position]));
         }
 
         @Override
@@ -70,7 +68,7 @@ public class PresentationActivity extends AppCompatActivity {
         mBtnNextTour.setOnClickListener(mListener);
         mViewPager.addOnPageChangeListener(pageChangeListener);
 
-        mBtnNextTour.setTextColor(getResources().getColor(AppConstants.PRESENTATION_COLORS[0]));
+        mBtnNextTour.setTextColor(getResources().getColor(colors[0]));
         mBtnSkip.setOnClickListener(mListener);
     }
 

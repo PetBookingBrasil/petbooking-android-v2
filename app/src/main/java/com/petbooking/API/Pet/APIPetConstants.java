@@ -1,7 +1,6 @@
 package com.petbooking.API.Pet;
 
 import com.petbooking.Constants.APIConstants;
-import com.petbooking.Constants.AppConstants;
 
 /**
  * Created by Luciano José on 30/04/2017.

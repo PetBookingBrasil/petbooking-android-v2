@@ -1,9 +1,3 @@
-/*
- * PetBooking - http://www.petbooking.com
- * Created by ediposouza on 4/29/2016
- * Copyright (c) 2016 Pet Booking. All rights reserved.
- */
-
 package com.petbooking.API.User.Models;
 
 import com.petbooking.Constants.APIConstants;

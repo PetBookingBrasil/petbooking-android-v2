@@ -1,7 +1,5 @@
 package com.petbooking.API.Interceptors;
 
-import android.util.Log;
-
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Events.HideLoadingEvt;
 import com.petbooking.Events.ShowLoadingEvt;

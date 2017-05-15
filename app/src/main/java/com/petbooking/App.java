@@ -1,11 +1,9 @@
 package com.petbooking;
 
 import android.app.Application;
-import android.hardware.camera2.params.Face;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
-import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;

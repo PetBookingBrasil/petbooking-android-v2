@@ -3,8 +3,6 @@ package com.petbooking.Utils;
 import android.provider.Settings;
 import android.util.Base64;
 
-import com.petbooking.BuildConfig;
-
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;

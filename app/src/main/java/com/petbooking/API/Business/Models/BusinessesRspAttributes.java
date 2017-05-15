@@ -5,9 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by ediposouza on 5/4/16.
- */
 public class BusinessesRspAttributes {
 
     public String name;

@@ -2,8 +2,8 @@ package com.petbooking.API.User;
 
 import com.petbooking.API.APIClient;
 import com.petbooking.API.Auth.Models.AuthUserResp;
-import com.petbooking.API.User.Models.CreateUserRqt;
 import com.petbooking.API.User.Models.CreateSocialUserRqt;
+import com.petbooking.API.User.Models.CreateUserRqt;
 import com.petbooking.API.User.Models.RecoverPasswordRqt;
 import com.petbooking.API.User.Models.UpdateUserRqt;
 import com.petbooking.Interfaces.APICallback;

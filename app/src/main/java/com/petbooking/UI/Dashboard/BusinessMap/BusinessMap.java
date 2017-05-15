@@ -1,10 +1,8 @@
 package com.petbooking.UI.Dashboard.BusinessMap;
 
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatDelegate;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.petbooking.R;
 import com.petbooking.Utils.AppUtils;
-import com.petbooking.Utils.CommonUtils;
 
 /**
  * A simple {@link Fragment} subclass.

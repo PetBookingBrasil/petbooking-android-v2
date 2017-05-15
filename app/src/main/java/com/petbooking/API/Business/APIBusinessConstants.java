@@ -78,6 +78,6 @@ public class APIBusinessConstants {
 
     public static final String FAVORITES_CREATE_ENDPOINT = "users/{" + APIConstants.PATH_PARAM + "}/favorites" + FIELDS_FAVORITES;
 
-    public static final String FAVORITES_DELETE_ENDPOINT = "favorites/{" + PATH_FAVORITE_ID + "}" + FIELDS_FAVORITES;
+    public static final String FAVORITES_DELETE_ENDPOINT = "favorites/{" + APIConstants.PATH_PARAM + "}" + FIELDS_FAVORITES;
 
 }

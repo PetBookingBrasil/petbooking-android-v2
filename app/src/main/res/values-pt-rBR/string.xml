@@ -1,18 +1,8 @@
 <resources>
-    <string name="app_name" translatable="false">Pet Booking</string>
     <string name="app_slogan">Esse app é animal</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_settings">Settings</string>
-    <string name="small_lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec justo a libero bibendum varius.</string>
-
-    <!--  Third-party Apps ID -->
-    <string name="fabric_app_id" translatable="false">fe0c61a27b92b4a7f90ab0fc8f69e3a4326250e5</string>
-    <string name="facebook_app_id" translatable="false">1799017433691061</string>
-    <string name="google_maps_key" translatable="false">AIzaSyAH5EPkWMPgU0zuL1y9ePlEusxOZ_y1Zx0</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb1799017433691061</string>
+    <string name="navigation_drawer_open">Abrir Menu Lateral</string>
+    <string name="navigation_drawer_close">Fechar Menu Lateral</string>
 
     <!-- Screen Title -->
     <string name="recover_password_title">Esqueci a senha</string>
@@ -54,10 +44,6 @@
     <string name="temper_brave">Valente</string>
 
     <!-- Presentation -->
-    <string name="presentation_title_format">presentation_%d_title</string>
-    <string name="presentation_text_format">presentation_%d_text</string>
-    <string name="presentation_image_format">presentation_%d</string>
-    <string name="presentation_color_format">presentation_%d</string>
     <string name="presentation_1_title">Agende serviços para seus Pets, em poucos segundos!</string>
     <string name="presentation_2_title">Encontre o serviço desejado e agende o melhor horário!</string>
     <string name="presentation_3_title">Cuidar dos seus Pets nunca foi tão prático!</string>

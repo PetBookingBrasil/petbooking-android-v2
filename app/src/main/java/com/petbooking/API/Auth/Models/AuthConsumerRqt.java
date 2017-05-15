@@ -1,6 +1,6 @@
 package com.petbooking.API.Auth.Models;
 
-import com.petbooking.API.Auth.APIAuthConstants;
+import com.petbooking.BuildConfig;
 import com.petbooking.Constants.APIConstants;
 
 /**
@@ -32,7 +32,8 @@ public class AuthConsumerRqt {
 
         public Attributes() {
             //uuid = APIConstants.UUID_PRODUCTION;
-            uuid = APIConstants.UUID_BETA;
+            //uuid = APIConstants.UUID_BETA;
+            uuid = BuildConfig.BUILD_UIDD;
         }
     }
 

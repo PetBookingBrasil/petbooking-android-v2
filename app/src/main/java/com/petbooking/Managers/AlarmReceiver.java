@@ -5,24 +5,13 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 
 import com.petbooking.API.Auth.AuthService;
 import com.petbooking.API.Auth.Models.AuthConsumerResp;
 import com.petbooking.API.Auth.Models.SessionResp;
-import com.petbooking.API.Generic.APIError;
-import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
-import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
-import com.petbooking.Models.User;
-import com.petbooking.R;
 import com.petbooking.Utils.CommonUtils;
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.Date;
 
 /**
  * Created by Luciano José on 28/04/2017.

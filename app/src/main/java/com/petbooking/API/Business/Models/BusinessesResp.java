@@ -8,9 +8,6 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by ediposilva on 10/8/15.
- */
 public class BusinessesResp {
 
     public List<Item> data;

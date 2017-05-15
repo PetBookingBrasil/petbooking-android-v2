@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name" translatable="false">Pet Booking</string>
+    <string name="app_slogan">Esse app é animal</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_settings">Settings</string>
+    <string name="navigation_drawer_open">Abrir Menu Lateral</string>
+    <string name="navigation_drawer_close">Fechar Menu Lateral</string>
 
     <!--  Third-party Apps ID -->
     <string name="fabric_app_id" translatable="false">fe0c61a27b92b4a7f90ab0fc8f69e3a4326250e5</string>
@@ -12,14 +11,87 @@
     <string name="google_maps_key" translatable="false">AIzaSyAH5EPkWMPgU0zuL1y9ePlEusxOZ_y1Zx0</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb1799017433691061</string>
 
+    <!-- Screen Title -->
+    <string name="recover_password_title">Esqueci a senha</string>
+    <string name="signup_title">Preencha seus dados</string>
+    <string name="profile_title">Perfil</string>
+    <string name="pets_title">Meus Pets</string>
+    <string name="new_pet_title">Preencha os dados do pet</string>
+
+    <!-- Pet -->
+    <string name="gender_male">Macho</string>
+    <string name="gender_female">Fêmea</string>
+    <string name="type_cat">Gato</string>
+    <string name="type_dog">Cachorro</string>
+    <string name="size_small">Pequeno</string>
+    <string name="size_medium">Médio</string>
+    <string name="size_big">Grande</string>
+    <string name="size_giant">Gigante</string>
+    <string name="coat_short">Curto</string>
+    <string name="coat_medium">Médio</string>
+    <string name="coat_long">Longo</string>
+    <string name="table_size">Tabela de Portes</string>
+    <string name="size_small_ex_dog"><b>Menor que 9kg</b> \nEx: Yorkshire, Chihuaua</string>
+    <string name="size_small_ex_cat"><b>Menor que 33cm </b>\nEx: Cornish Rex, Egyptian mau</string>
+    <string name="size_medium_ex_dog"><b>Entre 9kg e 22kg </b>\nEx: Beagle, Cocker Spaniel</string>
+    <string name="size_medium_ex_cat"><b>Entre 33cm e 41cm </b>\nEx: Chartreux, Burmês</string>
+    <string name="size_big_ex_dog"><b>Entre 22kg e 40kg </b>\nEx: Golden, Rottweiller</string>
+    <string name="size_big_ex_cat"><b>Acima de 41cm </b>\nEx: Gato de Bengala, Maine Coon American Longhair</string>
+    <string name="size_giant_ex_dog"><b>Acima de 40kg</b> \nEx: Dog Alemão, São Bernardo</string>
+
+    <string name="temper_agitated">Agitado</string>
+    <string name="temper_happy">Alegre</string>
+    <string name="temper_lovely">Amoroso</string>
+    <string name="temper_angry">Bravo</string>
+    <string name="temper_playful">Brincalhão</string>
+    <string name="temper_needy">Carente</string>
+    <string name="temper_affectionate">Carinhoso</string>
+    <string name="temper_docile">Dócil</string>
+    <string name="temper_quiet">Tranquilo</string>
+    <string name="temper_brave">Valente</string>
+
+    <!-- Presentation -->
+    <string name="presentation_1_title">Agende serviços para seus Pets, em poucos segundos!</string>
+    <string name="presentation_2_title">Encontre o serviço desejado e agende o melhor horário!</string>
+    <string name="presentation_3_title">Cuidar dos seus Pets nunca foi tão prático!</string>
+    <string name="presentation_1_text">Banho, tosa, consultas veterinárias e muito mais!</string>
+    <string name="presentation_2_text"></string>
+    <string name="presentation_3_text">Simples, rápido e seguro.</string>
+    <string name="next">Próximo</string>
+    <string name="skip">Pular</string>
+
     <!-- Login -->
     <string name="description">Encontre serviços para seu Pet \n mais póximos de você e agende online!</string>
-    <string name="no_account">Ainda não é cadastrado?</string>
     <string name="sign_up">Cadastre-se</string>
     <string name="login">Entrar</string>
-    <string name="login_facebook">Login com Facebook</string>
-    <string name="hint_email">petbooking@gmail.com</string>
-    <string name="hint_password">......</string>
+    <string name="login_facebook">Entrar com <b>Facebook</b></string>
+    <string name="app_terms_info"><i>Utilizando o app, você concorda com os <b><u>Termos de uso</u></b>
+        \n e com a <b><u>Política de Privacidade.</u></b></i></string>
+    <string name="forgot_password">Esqueceu a senha ?</string>
+
+    <!-- Register -->
+    <string name="register_dialog_title">Cadastro de Usuário</string>
+    <string name="hint_name">Nome Completo</string>
+    <string name="hint_cpf">CPF</string>
+    <string name="hint_birthday">Data Nasc.</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_zipcode">CEP</string>
+    <string name="hint_city">Cidade</string>
+    <string name="hint_state">UF</string>
+    <string name="hint_neighborhood">Bairro</string>
+    <string name="hint_street">Rua</string>
+    <string name="hint_street_number">Número</string>
+    <string name="hint_phone">Celular</string>
+    <string name="hint_password">Senha</string>
+    <string name="hint_repeat_password">Conf. senha</string>
+    <string name="register">Salvar</string>
+
+    <!-- Forgot Password -->
+    <string name="recover_password_text">Insira o seu email de cadastro \n associado à sua conta no petbooking.</string>
+    <string name="email_empty">Informe o email.</string>
+    <string name="recover_email_title">Recuperar Senha</string>
+    <string name="recover_email_text">As instruções para recuperação foram enviadas para seu email.</string>
+    <string name="send_button">Enviar</string>
 
     <!-- Sidemenu and Toolbar Options-->
     <string name="my_pets">Meus Pets</string>
@@ -31,8 +103,69 @@
     <string name="logout">Sair</string>
     <string name="notifications">Notificações</string>
     <string name="schedules">Agendamentos</string>
-    <string name="title_activity_base">BaseActivity</string>
+    <string name="new_pet">Novo Pet</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Profile -->
+    <string name="profile_dialog_title">Atualizar Perfil</string>
+
+    <!-- Pets -->
+    <string name="remove_pet_title">Excluir Pet</string>
+    <string name="remove_pet_text">Você está excluindo seu pet, e com isso
+        será cancelado todos os seus agendamentos e históricos.</string>
+    <string name="confirm_remove_pet">Quero Excluir</string>
+    <string name="success_remove_pet">Pet removido com sucesso.</string>
+
+    <!-- Register Pet -->
+    <string name="register_pet_dialog_title">Cadastro Pet</string>
+    <string name="update_pet_dialog_title">Atualizar Pet</string>
+    <string name="hint_pet_name">Nome do pet</string>
+    <string name="hint_pet_birthday">Nascimento</string>
+    <string name="hint_gender">Gênero</string>
+    <string name="hint_type">Tipo</string>
+    <string name="hint_size">Porte</string>
+    <string name="hint_breed">Raça</string>
+    <string name="hint_coat">Pelagem</string>
+    <string name="hint_temper">Temperamento</string>
+    <string name="hint_observation">Observação</string>
+
+    <!-- Business -->
+    <string name="business_street">%1$s, %2$s</string>
+    <string name="business_address">%1$s, %2$s, %3$s, %4$s</string>
+    <string name="business_rating_count">(%1$d)</string>
+    <string name="business_distance">%1$s Km</string>
+
+
+    <!-- Dialog -->
+    <string name="dialog_picture_title">Selecionar Foto</string>
+    <string name="dialog_picture_text">Selecione o método de entrada de imagens que deseja usar.</string>
+    <string name="dialog_button_ok">Ok</string>
+    <string name="dialog_back_screen">Voltar à Tela</string>
+    <string name="dialog_cancel">Cancelar</string>
+
+    <!-- Errors -->
+    <string name="error_fields_empty">Preencha todos os campos.</string>
+    <string name="error_invalid_email">Email inválido.</string>
+    <string name="error_invalid_cpf">CPF inválido.</string>
+    <string name="error_invalid_phone">Telefone Inválido.</string>
+    <string name="error_invalid_password">A senha deve ter ao menos 6 caracteres.</string>
+    <string name="error_different_password">As senhas não coincidem.</string>
+    <string name="error_create_user">Não foi possível cadastrar o usuário.</string>
+    <string name="error_update_user">Não foi possível atualizar o perfil.</string>
+    <string name="error_update_pet">Não foi possível atualizar o pet.</string>
+    <string name="error_auth_invalid">Token de autenticação inválido. Requisite um novo token.</string>
+    <string name="error_invalid_login">Email ou senha inválidos.</string>
+
+    <string name="error_no_location">Localização não dísponível.</string>
+
+    <!-- Success -->
+    <string name="success_create_user">Usuário cadastrado com sucesso.</string>
+    <string name="success_create_pet">Pet cadastrado com sucesso.</string>
+    <string name="success_update_pet">Pet atualizado com sucesso.</string>
+
+    <!-- Prompt -->
+    <string name="prompt_loading">Loading…</string>
+
+    <!-- Permissions -->
+    <string name="permission_location_title">Ativar Localização</string>
+    <string name="permission_location">Sua localização é necessária para utilizar as nossas funcionalidades.</string>
 </resources>

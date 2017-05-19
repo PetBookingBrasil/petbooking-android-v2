@@ -6,7 +6,10 @@ import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.API.Business.Models.FavoriteRqt;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Models.Business;
 import com.petbooking.Utils.APIUtils;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +33,17 @@ public class BusinessService {
         call.enqueue(new Callback<BusinessesResp>() {
             @Override
             public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {
-                APIUtils.handleResponse(response, callback);
+                if (response.isSuccessful()) {
+                    BusinessesResp responseList = response.body();
+                    ArrayList<Business> businessList = new ArrayList<>();
+                    for (BusinessesResp.Item item : responseList.data) {
+                        businessList.add(APIUtils.parseBusiness(item.id, item.attributes));
+                    }
+
+                    callback.onSuccess(businessList);
+                } else {
+                    callback.onError(APIUtils.handleError(response));
+                }
             }
 
             @Override
@@ -45,7 +58,17 @@ public class BusinessService {
         call.enqueue(new Callback<BusinessesResp>() {
             @Override
             public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {
-                APIUtils.handleResponse(response, callback);
+                if (response.isSuccessful()) {
+                    BusinessesResp responseList = response.body();
+                    ArrayList<Business> businessList = new ArrayList<>();
+                    for (BusinessesResp.Item item : responseList.data) {
+                        businessList.add(APIUtils.parseBusiness(item.id, item.attributes));
+                    }
+
+                    callback.onSuccess(businessList);
+                } else {
+                    callback.onError(APIUtils.handleError(response));
+                }
             }
 
             @Override

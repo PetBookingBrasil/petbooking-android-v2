@@ -71,6 +71,16 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         String average = String.format("%.1f", business.ratingAverage);
         average = average.replace(",", ".");
 
+        if (business.ratingCount == 0) {
+            holder.mTvRate.setVisibility(View.GONE);
+            holder.mTvRatingCount.setVisibility(View.GONE);
+            holder.mRbBusiness.setVisibility(View.GONE);
+        } else {
+            holder.mTvRate.setText(average);
+            holder.mRbBusiness.setRating(business.ratingAverage);
+            holder.mTvRatingCount.setText(ratingCount);
+        }
+
         holder.mTvName.setText(business.name);
         holder.mTvStreet.setText(street);
         holder.mTvDistance.setText(distance);
@@ -90,16 +100,6 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
                 .placeholder(R.drawable.business_background)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(holder.mIvBusinessPhoto);
-
-        if (business.ratingCount == 0) {
-            holder.mTvRate.setVisibility(View.GONE);
-            holder.mTvRatingCount.setVisibility(View.GONE);
-            holder.mRbBusiness.setVisibility(View.GONE);
-        }else{
-            holder.mTvRate.setText(average);
-            holder.mRbBusiness.setRating(business.ratingAverage);
-            holder.mTvRatingCount.setText(ratingCount);
-        }
     }
 
     @Override

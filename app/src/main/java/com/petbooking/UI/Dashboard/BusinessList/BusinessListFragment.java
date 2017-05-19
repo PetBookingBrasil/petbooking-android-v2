@@ -67,7 +67,7 @@ public class BusinessListFragment extends Fragment {
 
             if (lastItemPosition == mAdapter.getItemCount() - 1) {
 
-                if (!isLoading && !isLastPage) {
+                if (!isLastPage) {
                     currentPage++;
                     loadMore();
                 }
@@ -136,15 +136,7 @@ public class BusinessListFragment extends Fragment {
         mBusinessService.listBusiness(mLocationManager.getLocationCoords(), currentPage, new APICallback() {
             @Override
             public void onSuccess(Object response) {
-                BusinessesResp businessList = (BusinessesResp) response;
-                Business business;
-                for (BusinessesResp.Item item : businessList.data) {
-                    business = new Business(item.id, item.attributes.name, item.attributes.city, item.attributes.state,
-                            item.attributes.street, item.attributes.neighborhood, item.attributes.streetNumber, item.attributes.zipcode,
-                            item.attributes.ratingAverage, item.attributes.ratingCount, item.attributes.distance, item.attributes.businesstype,
-                            "", "", item.attributes.coverImage, item.attributes.imported);
-                    mBusinessList.add(business);
-                }
+                mBusinessList = (ArrayList<Business>) response;
 
                 mAdapter.updateList(mBusinessList);
                 mAdapter.notifyDataSetChanged();
@@ -165,22 +157,14 @@ public class BusinessListFragment extends Fragment {
         mBusinessService.listBusiness(mLocationManager.getLocationCoords(), currentPage, new APICallback() {
             @Override
             public void onSuccess(Object response) {
-                BusinessesResp businessList = (BusinessesResp) response;
-                Business business;
-                for (BusinessesResp.Item item : businessList.data) {
-                    business = new Business(item.id, item.attributes.name, item.attributes.city, item.attributes.state,
-                            item.attributes.street, item.attributes.neighborhood, item.attributes.streetNumber, item.attributes.zipcode,
-                            item.attributes.ratingAverage, item.attributes.ratingCount, item.attributes.distance, item.attributes.businesstype,
-                            "", "", item.attributes.coverImage, item.attributes.imported);
-                    mBusinessList.add(business);
-                }
+                ArrayList<Business> nextPage = (ArrayList<Business>) response;
+                mBusinessList.addAll(nextPage);
 
                 mAdapter.updateList(mBusinessList);
                 mAdapter.notifyDataSetChanged();
-                if (businessList.data.size() == 0) {
+                if (nextPage.size() == 0) {
                     isLastPage = true;
                 }
-                isLoading = false;
             }
 
             @Override
@@ -193,20 +177,11 @@ public class BusinessListFragment extends Fragment {
     /**
      * List Highlights Business
      */
-    public void listHighlightsBusiness() {
+    public synchronized void listHighlightsBusiness() {
         mBusinessService.listHighlightBusiness(new APICallback() {
             @Override
             public void onSuccess(Object response) {
-                BusinessesResp businessList = (BusinessesResp) response;
-                Business business;
-                for (BusinessesResp.Item item : businessList.data) {
-                    business = new Business(item.id, item.attributes.name, item.attributes.city, item.attributes.state,
-                            item.attributes.street, item.attributes.neighborhood, item.attributes.streetNumber, item.attributes.zipcode,
-                            item.attributes.ratingAverage, item.attributes.ratingCount, item.attributes.distance, item.attributes.businesstype,
-                            "", "", item.attributes.coverImage, item.attributes.imported);
-                    mBusinessSlider.add(business);
-
-                }
+                mBusinessSlider = (ArrayList<Business>) response;
 
                 mSliderAdapter.updateList(mBusinessSlider);
                 mSliderAdapter.notifyDataSetChanged();

@@ -87,6 +87,10 @@ public class DashboardActivity extends AppCompatActivity implements
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false); //optional
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -247,7 +251,7 @@ public class DashboardActivity extends AppCompatActivity implements
     /**
      * Inflate Business List
      */
-    private void inflateBusinessFragment(){
+    private void inflateBusinessFragment() {
         ContentFragment fragment = new ContentFragment();
         mFragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
     }

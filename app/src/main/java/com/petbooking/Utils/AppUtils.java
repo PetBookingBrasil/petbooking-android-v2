@@ -209,6 +209,10 @@ public abstract class AppUtils {
             return context.getResources().getDrawable(R.drawable.ic_category_hospital);
         } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_DIAGNOSIS)) {
             return context.getResources().getDrawable(R.drawable.ic_category_diagnosis);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_PETSHOP)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_petshop);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_PETSHOP_MOVEL)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_petshop_delivery);
         } else {
             return context.getResources().getDrawable(R.drawable.ic_category_other);
         }
@@ -237,6 +241,10 @@ public abstract class AppUtils {
             return context.getResources().getColor(R.color.category_hospital);
         } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_DIAGNOSIS)) {
             return context.getResources().getColor(R.color.category_diagnosis);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_PETSHOP)) {
+            return context.getResources().getColor(R.color.category_petshop);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_PETSHOP_MOVEL)) {
+            return context.getResources().getColor(R.color.category_petshop_delivery);
         } else {
             return context.getResources().getColor(R.color.category_other);
         }

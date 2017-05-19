@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.BusinessesResp;
-import com.petbooking.BaseFragment;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Models.Business;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BusinessListFragment extends BaseFragment {
+public class BusinessListFragment extends Fragment {
 
     private BusinessService mBusinessService;
     private LocationManager mLocationManager;

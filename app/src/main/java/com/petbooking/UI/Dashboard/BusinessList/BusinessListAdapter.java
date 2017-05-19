@@ -66,17 +66,13 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         Drawable categoryIcon = AppUtils.getBusinessIcon(mContext, business.businesstype);
         GradientDrawable mDistanceBackground = (GradientDrawable) holder.mTvDistance.getBackground();
         String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber);
-        String address = mContext.getResources().getString(R.string.business_address, business.neighborhood, business.city,
-                business.state, CommonUtils.formatZipcode(business.zipcode));
-        String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
         String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", business.distance));
+        String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
+        String average = String.format("%.1f", business.ratingAverage);
+        average = average.replace(",", ".");
 
-        holder.mTvRate.setText(String.format("%.2f", business.ratingAverage));
-        holder.mRbBusiness.setRating(business.ratingAverage);
-        holder.mTvRatingCount.setText(ratingCount);
         holder.mTvName.setText(business.name);
         holder.mTvStreet.setText(street);
-        holder.mTvAddress.setText(address);
         holder.mTvDistance.setText(distance);
 
         holder.mIvCategoryIcon.setImageDrawable(categoryIcon);
@@ -94,6 +90,16 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
                 .placeholder(R.drawable.business_background)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(holder.mIvBusinessPhoto);
+
+        if (business.ratingCount == 0) {
+            holder.mTvRate.setVisibility(View.GONE);
+            holder.mTvRatingCount.setVisibility(View.GONE);
+            holder.mRbBusiness.setVisibility(View.GONE);
+        }else{
+            holder.mTvRate.setText(average);
+            holder.mRbBusiness.setRating(business.ratingAverage);
+            holder.mTvRatingCount.setText(ratingCount);
+        }
     }
 
     @Override
@@ -147,7 +153,6 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         ImageButton mBtnFavorite;
         TextView mTvName;
         TextView mTvStreet;
-        TextView mTvAddress;
         TextView mTvRate;
         TextView mTvRatingCount;
         TextView mTvDistance;
@@ -162,7 +167,6 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
             mIvCategoryIcon = (ImageView) view.findViewById(R.id.category_icon);
             mTvName = (TextView) view.findViewById(R.id.business_name);
             mTvStreet = (TextView) view.findViewById(R.id.business_street);
-            mTvAddress = (TextView) view.findViewById(R.id.business_address);
             mTvRatingCount = (TextView) view.findViewById(R.id.ratings);
             mTvRate = (TextView) view.findViewById(R.id.business_rate);
             mTvDistance = (TextView) view.findViewById(R.id.business_distance);

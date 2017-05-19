@@ -33,5 +33,7 @@
     <color name="category_bath">#2ECC71</color>
     <color name="category_trainer">#9B59B6</color>
     <color name="category_clinic">#156BA5</color>
+    <color name="category_petshop_delivery">#543B32</color>
+    <color name="category_petshop">#72554A</color>
 
 </resources>

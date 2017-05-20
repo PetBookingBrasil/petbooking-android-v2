@@ -79,8 +79,7 @@ public class LoginActivity extends BaseActivity {
     SocialCallback fbRequestCallback = new SocialCallback() {
         @Override
         public void onFacebookLoginSuccess(User user) {
-            Log.d("USER", new Gson().toJson(user));
-            //authFB(user);
+            authFB(user);
         }
     };
 

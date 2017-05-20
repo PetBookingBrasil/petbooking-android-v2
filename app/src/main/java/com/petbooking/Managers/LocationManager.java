@@ -17,6 +17,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
+import com.petbooking.Constants.States;
 import com.petbooking.Events.LocationChangedEvt;
 import com.petbooking.Events.ShowLoadingEvt;
 import com.petbooking.Models.UserAddress;
@@ -43,6 +44,7 @@ public class LocationManager implements GoogleApiClient.ConnectionCallbacks,
     private double mLastLocationX;
     private double mLastLocationY;
     private GoogleApiClient mGoogleApiClient;
+    private States states;
     private WeakReference<LocationReadyCallback> mLocationReadyCallback;
 
     private LocationManager() {
@@ -63,6 +65,7 @@ public class LocationManager implements GoogleApiClient.ConnectionCallbacks,
                 .addOnConnectionFailedListener(this)
                 .build();
         mGoogleApiClient.connect();
+        states = new States();
     }
 
     @Override
@@ -144,8 +147,7 @@ public class LocationManager implements GoogleApiClient.ConnectionCallbacks,
             List<Address> addresses = geocoder.getFromLocation(mLastLocationX, mLastLocationY, 1);
             if (addresses.size() > 0) {
                 Address address = addresses.get(0);
-                cityState = address.getMaxAddressLineIndex() >= 2 ? address.getAddressLine(1) : address.getAddressLine(0);
-                cityState = cityState.replace(" - ", ", ");
+                cityState = address.getLocality() + ", " + states.getAbreviation(address.getAdminArea());
             }
         } catch (IOException e) {
             return cityState;

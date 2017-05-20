@@ -24,6 +24,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.Constants.AppConstants;
+import com.petbooking.Events.HideLoadingEvt;
+import com.petbooking.Events.LocationChangedEvt;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
@@ -36,11 +38,17 @@ import com.petbooking.UI.Menu.Pets.PetsActivity;
 import com.petbooking.UI.Menu.Profile.ProfileActivity;
 import com.petbooking.Utils.APIUtils;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashboardActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener, FeedbackDialogFragment.FinishDialogListener {
+        NavigationView.OnNavigationItemSelectedListener,
+        FeedbackDialogFragment.FinishDialogListener {
 
+    protected final EventBus mEventBus = EventBus.getDefault();
     private boolean permissionDenied = false;
     private static final int RC_PERMISSION = 234;
 
@@ -48,8 +56,7 @@ public class DashboardActivity extends AppCompatActivity implements
     private LocationManager mLocationManager;
 
     private FeedbackDialogFragment mFeedbackDialogFragment;
-    private UserAddress mUserAddress;
-
+    private String mUserAddress;
 
     private FragmentManager mFragmentManager;
     ContentFragment contentFragment;
@@ -230,10 +237,10 @@ public class DashboardActivity extends AppCompatActivity implements
         currentUser = mSessionManager.getUserLogged();
 
         mTvSideMenuName.setText(currentUser.name);
-        mUserAddress = mLocationManager.getAddress();
+        mUserAddress = mLocationManager.getLocationCityState();
 
         if (mUserAddress != null) {
-            mTvSideMenuAddress.setText(mUserAddress.city + ", " + mUserAddress.state);
+            mTvSideMenuAddress.setText(mUserAddress);
         } else if (currentUser.city != null && currentUser.state != null) {
             mTvSideMenuAddress.setText(currentUser.city + ", " + currentUser.state);
         } else {
@@ -256,5 +263,22 @@ public class DashboardActivity extends AppCompatActivity implements
     private void inflateBusinessFragment() {
         contentFragment = new ContentFragment();
         mFragmentManager.beginTransaction().replace(R.id.content_main, contentFragment).commit();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mEventBus.register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mEventBus.unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public synchronized void locationChanged(LocationChangedEvt locationChangedEvt) {
+        mTvSideMenuAddress.setText(locationChangedEvt.cityState);
     }
 }

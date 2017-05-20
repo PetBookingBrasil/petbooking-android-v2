@@ -9,15 +9,21 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.gson.Gson;
+import com.petbooking.Events.LocationChangedEvt;
+import com.petbooking.Events.ShowLoadingEvt;
 import com.petbooking.Models.UserAddress;
 import com.petbooking.R;
 import com.petbooking.Utils.CommonUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -96,6 +102,8 @@ public class LocationManager implements GoogleApiClient.ConnectionCallbacks,
         }
 
         setLastLocation(location);
+        EventBus.getDefault().post(new LocationChangedEvt(getLocationCityState()));
+
         if (mGoogleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
@@ -136,7 +144,8 @@ public class LocationManager implements GoogleApiClient.ConnectionCallbacks,
             List<Address> addresses = geocoder.getFromLocation(mLastLocationX, mLastLocationY, 1);
             if (addresses.size() > 0) {
                 Address address = addresses.get(0);
-                cityState = address.getLocality() + " - " + address.getAdminArea();
+                cityState = address.getMaxAddressLineIndex() >= 2 ? address.getAddressLine(1) : address.getAddressLine(0);
+                cityState = cityState.replace(" - ", ", ");
             }
         } catch (IOException e) {
             return cityState;

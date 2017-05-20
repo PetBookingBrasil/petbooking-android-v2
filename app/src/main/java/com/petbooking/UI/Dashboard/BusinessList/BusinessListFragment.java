@@ -14,6 +14,7 @@ import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.LocationManager;
+import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
 
@@ -26,6 +27,7 @@ public class BusinessListFragment extends Fragment {
 
     private BusinessService mBusinessService;
     private LocationManager mLocationManager;
+    private String userId;
 
     /**
      * Business List
@@ -87,6 +89,7 @@ public class BusinessListFragment extends Fragment {
 
         mBusinessService = new BusinessService();
         mLocationManager = LocationManager.getInstance();
+        userId = SessionManager.getInstance().getUserLogged().id;
 
         mBusinessList = new ArrayList<>();
         mBusinessSlider = new ArrayList<>();
@@ -133,7 +136,7 @@ public class BusinessListFragment extends Fragment {
      */
     public void listBusiness() {
         currentPage = 1;
-        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), currentPage, new APICallback() {
+        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 mBusinessList = (ArrayList<Business>) response;
@@ -152,9 +155,9 @@ public class BusinessListFragment extends Fragment {
     /**
      * Load More Itens
      */
-    public void loadMore() {
+    public synchronized void loadMore() {
         isLoading = true;
-        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), currentPage, new APICallback() {
+        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 ArrayList<Business> nextPage = (ArrayList<Business>) response;
@@ -177,8 +180,8 @@ public class BusinessListFragment extends Fragment {
     /**
      * List Highlights Business
      */
-    public synchronized void listHighlightsBusiness() {
-        mBusinessService.listHighlightBusiness(new APICallback() {
+    public void listHighlightsBusiness() {
+        mBusinessService.listHighlightBusiness(userId, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 mBusinessSlider = (ArrayList<Business>) response;

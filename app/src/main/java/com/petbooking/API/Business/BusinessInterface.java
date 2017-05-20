@@ -23,12 +23,13 @@ public interface BusinessInterface {
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @GET(APIBusinessConstants.BUSINESS_ENDPOINT)
     Call<BusinessesResp> listBusiness(@Query(APIConstants.QUERY_COORDS) String coords,
+                                      @Query(APIConstants.QUERY_USER_ID) String userId,
                                       @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex);
 
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @GET(APIBusinessConstants.BUSINESS_HIGHLIGHT_ENDPOINT)
-    Call<BusinessesResp> listHighlightBusiness();
+    Call<BusinessesResp> listHighlightBusiness(@Query(APIConstants.QUERY_USER_ID) String userId);
 
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})

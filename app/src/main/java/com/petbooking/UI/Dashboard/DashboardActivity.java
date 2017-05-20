@@ -52,6 +52,7 @@ public class DashboardActivity extends AppCompatActivity implements
 
 
     private FragmentManager mFragmentManager;
+    ContentFragment contentFragment;
     NavigationView mNavView;
     View mHeaderView;
     DrawerLayout mDrawerLayout;
@@ -139,6 +140,7 @@ public class DashboardActivity extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        contentFragment.backToList();
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -252,7 +254,7 @@ public class DashboardActivity extends AppCompatActivity implements
      * Inflate Business List
      */
     private void inflateBusinessFragment() {
-        ContentFragment fragment = new ContentFragment();
-        mFragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
+        contentFragment = new ContentFragment();
+        mFragmentManager.beginTransaction().replace(R.id.content_main, contentFragment).commit();
     }
 }

@@ -28,8 +28,8 @@ public class BusinessService {
         mBusinessInterface = APIClient.getClient().create(BusinessInterface.class);
     }
 
-    public void listBusiness(String coords, int page, final APICallback callback) {
-        Call<BusinessesResp> call = mBusinessInterface.listBusiness(coords, page);
+    public void listBusiness(String coords, String userId, int page, final APICallback callback) {
+        Call<BusinessesResp> call = mBusinessInterface.listBusiness(coords,userId, page);
         call.enqueue(new Callback<BusinessesResp>() {
             @Override
             public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {
@@ -53,8 +53,8 @@ public class BusinessService {
         });
     }
 
-    public void listHighlightBusiness(final APICallback callback) {
-        Call<BusinessesResp> call = mBusinessInterface.listHighlightBusiness();
+    public void listHighlightBusiness(String userId, final APICallback callback) {
+        Call<BusinessesResp> call = mBusinessInterface.listHighlightBusiness(userId);
         call.enqueue(new Callback<BusinessesResp>() {
             @Override
             public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {

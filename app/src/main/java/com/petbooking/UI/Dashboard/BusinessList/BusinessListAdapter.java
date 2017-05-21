@@ -1,6 +1,7 @@
 package com.petbooking.UI.Dashboard.BusinessList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -19,6 +19,7 @@ import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.BusinessActivity;
 import com.petbooking.UI.Widget.StarsRating;
 import com.petbooking.Utils.AppUtils;
 
@@ -90,6 +91,13 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
                 favoriteBusiness(business.id);
             }
         });
+        holder.mClBusiness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToBusiness(business.id);
+            }
+        });
+
 
         Glide.with(mContext)
                 .load(business.image.url)
@@ -141,6 +149,15 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
 
             }
         });
+    }
+
+    /**
+     * Go to Business
+     */
+    public void goToBusiness(String businessId) {
+        Intent businessIntent = new Intent(mContext, BusinessActivity.class);
+        businessIntent.putExtra("businessId", businessId);
+        mContext.startActivity(businessIntent);
     }
 
     public class BusinessViewHolder extends RecyclerView.ViewHolder {

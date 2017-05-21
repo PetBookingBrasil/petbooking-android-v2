@@ -80,6 +80,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".UI.Dashboard.Business.BusinessActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".UI.Dashboard.DashboardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BusinessTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Dashboard.DashboardActivity" />
+        </activity>
+        <activity
             android:name=".UI.Menu.Pets.PetsActivity"
             android:configChanges="orientation"
             android:label="@string/my_pets"
@@ -99,7 +109,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Menu.Pets.PetsActivity" />
         </activity>
-
         <activity
             android:name=".UI.Menu.Pets.ProfilePet.ProfilePetActivity"
             android:configChanges="orientation"
@@ -139,7 +148,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="fe0c61a27b92b4a7f90ab0fc8f69e3a4326250e5" />

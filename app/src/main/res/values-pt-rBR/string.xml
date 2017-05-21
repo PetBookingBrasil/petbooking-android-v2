@@ -126,6 +126,8 @@
     <string name="business_address">%1$s, %2$s, %3$s, %4$s</string>
     <string name="business_rating_count">(%1$d)</string>
     <string name="business_distance">%1$s Km</string>
+    <string name="business_tab_services">Serviços</string>
+    <string name="business_tab_information">Informações</string>
 
 
     <!-- Dialog -->

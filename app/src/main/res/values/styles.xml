@@ -89,4 +89,9 @@
         <item name="colorControlHighlight">@color/text_color</item>
     </style>
 
+    <style name="BusinessTheme" parent="AppTheme">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

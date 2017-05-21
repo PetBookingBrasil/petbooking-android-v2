@@ -34,7 +34,7 @@ public class StarsRating extends LinearLayout {
     }
 
     private void initView(Context context) {
-        View view = View.inflate(context, R.layout.widget_material_spinner, this);
+        View view = View.inflate(context, R.layout.widget_star_rating, this);
 
         mIvStar1 = (ImageView) view.findViewById(R.id.star1);
         mIvStar2 = (ImageView) view.findViewById(R.id.star2);

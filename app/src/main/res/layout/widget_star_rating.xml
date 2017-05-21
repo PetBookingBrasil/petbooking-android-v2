@@ -9,38 +9,38 @@
 
     <ImageView
         android:id="@+id/star1"
-        android:layout_width="@dimen/spacing_smallest"
-        android:layout_height="@dimen/spacing_smallest"
+        android:layout_width="@dimen/star_rating_dimen"
+        android:layout_height="@dimen/star_rating_dimen"
         android:src="@drawable/ic_star_rating_off" />
 
     <ImageView
         android:id="@+id/star2"
-        android:layout_width="@dimen/spacing_smallest"
-        android:layout_height="@dimen/spacing_smallest"
+        android:layout_width="@dimen/star_rating_dimen"
+        android:layout_height="@dimen/star_rating_dimen"
         android:layout_marginLeft="@dimen/spacing_micro"
         android:layout_marginStart="@dimen/spacing_micro"
         android:src="@drawable/ic_star_rating_off" />
 
     <ImageView
         android:id="@+id/star3"
-        android:layout_width="@dimen/spacing_smallest"
-        android:layout_height="@dimen/spacing_smallest"
+        android:layout_width="@dimen/star_rating_dimen"
+        android:layout_height="@dimen/star_rating_dimen"
         android:layout_marginLeft="@dimen/spacing_micro"
         android:layout_marginStart="@dimen/spacing_micro"
         android:src="@drawable/ic_star_rating_off" />
 
     <ImageView
         android:id="@+id/star4"
-        android:layout_width="@dimen/spacing_smallest"
-        android:layout_height="@dimen/spacing_smallest"
+        android:layout_width="@dimen/star_rating_dimen"
+        android:layout_height="@dimen/star_rating_dimen"
         android:layout_marginLeft="@dimen/spacing_micro"
         android:layout_marginStart="@dimen/spacing_micro"
         android:src="@drawable/ic_star_rating_off" />
 
     <ImageView
         android:id="@+id/star5"
-        android:layout_width="@dimen/spacing_smallest"
-        android:layout_height="@dimen/spacing_smallest"
+        android:layout_width="@dimen/star_rating_dimen"
+        android:layout_height="@dimen/star_rating_dimen"
         android:layout_marginLeft="@dimen/spacing_micro"
         android:layout_marginStart="@dimen/spacing_micro"
         android:src="@drawable/ic_star_rating_off" />

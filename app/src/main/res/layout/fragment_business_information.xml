@@ -249,43 +249,43 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/spacing_xmicro"
-                app:srcCompat="@drawable/ic_facebook" />
+                app:srcCompat="@drawable/ic_social_facebook" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/spacing_xmicro"
-                app:srcCompat="@drawable/ic_twitter" />
+                app:srcCompat="@drawable/ic_social_twitter" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/spacing_xmicro"
-                app:srcCompat="@drawable/ic_instagram" />
+                app:srcCompat="@drawable/ic_social_instagram" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/spacing_xmicro"
-                app:srcCompat="@drawable/ic_google" />
+                app:srcCompat="@drawable/ic_social_google" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/spacing_xmicro"
-                app:srcCompat="@drawable/ic_skype" />
+                app:srcCompat="@drawable/ic_social_skype" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/spacing_xmicro"
-                app:srcCompat="@drawable/ic_whatsapp" />
+                app:srcCompat="@drawable/ic_social_whatsapp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/spacing_xmicro"
-                app:srcCompat="@drawable/ic_youtube" />
+                app:srcCompat="@drawable/ic_social_youtube" />
 
         </LinearLayout>
 

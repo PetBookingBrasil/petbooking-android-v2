@@ -90,6 +90,8 @@
     </style>
 
     <style name="BusinessTheme" parent="AppTheme">
+        <item name="android:editTextColor">@color/text_color</item>
+        <item name="android:textColorHint">@color/text_color</item>
         <item name="colorControlNormal">@color/white</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

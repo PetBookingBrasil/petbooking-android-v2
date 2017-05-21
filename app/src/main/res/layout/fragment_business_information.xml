@@ -1,13 +1,256 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="none"
     tools:context="com.petbooking.UI.Dashboard.Business.BusinessInformation.BusinessInformationFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_horizontal_margin">
 
-</FrameLayout>
+        <FrameLayout
+            android:id="@+id/business_cover"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/business_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/side_nav_bar" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_background" />
+
+        </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/favorite_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_xmicro"
+            android:layout_marginEnd="@dimen/spacing_xmicro"
+            android:layout_marginLeft="@dimen/business_fragment_spacing"
+            android:layout_marginRight="@dimen/business_fragment_spacing"
+            android:layout_marginStart="@dimen/spacing_xmicro"
+            android:layout_marginTop="@dimen/spacing_xmicro"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="@+id/business_cover"
+            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintLeft_toLeftOf="@+id/business_cover"
+            app:layout_constraintRight_toRightOf="@+id/business_cover"
+            app:layout_constraintTop_toTopOf="@+id/business_cover"
+            app:layout_constraintVertical_bias="0.1"
+            app:srcCompat="@drawable/ic_favorite_border" />
+
+        <TextView
+            android:id="@+id/business_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_xtiny"
+            android:layout_marginEnd="@dimen/business_fragment_spacing"
+            android:layout_marginLeft="@dimen/business_fragment_spacing"
+            android:layout_marginRight="@dimen/business_fragment_spacing"
+            android:layout_marginStart="@dimen/business_fragment_spacing"
+            android:text="Petshop Maior de Pernambuco"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/business_cover"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            android:id="@+id/description_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/business_fragment_spacing"
+            android:layout_marginLeft="@dimen/business_fragment_spacing"
+            android:layout_marginRight="@dimen/business_fragment_spacing"
+            android:layout_marginStart="@dimen/business_fragment_spacing"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:text="@string/business_label_description"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/business_cover" />
+
+        <TextView
+            android:id="@+id/business_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/business_fragment_spacing"
+            android:layout_marginLeft="@dimen/business_fragment_spacing"
+            android:layout_marginRight="@dimen/business_fragment_spacing"
+            android:layout_marginStart="@dimen/business_fragment_spacing"
+            android:layout_marginTop="@dimen/spacing_xmicro"
+            android:text="Estabelecimento que trabalha a 30 anos no mercado de pets e trata muito bem seus clientes"
+            android:textSize="13sp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_label" />
+
+        <View
+            android:id="@+id/separatorDescription"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:background="@color/light_gray"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/business_description" />
+
+        <TextView
+            android:id="@+id/contact_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/business_fragment_spacing"
+            android:layout_marginLeft="@dimen/business_fragment_spacing"
+            android:layout_marginRight="@dimen/business_fragment_spacing"
+            android:layout_marginStart="@dimen/business_fragment_spacing"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:text="@string/business_label_contact"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_bias="0.025"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/separatorDescription" />
+
+        <LinearLayout
+            android:id="@+id/contactLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/business_fragment_spacing"
+            android:layout_marginLeft="@dimen/business_fragment_spacing"
+            android:layout_marginRight="@dimen/business_fragment_spacing"
+            android:layout_marginStart="@dimen/business_fragment_spacing"
+            android:layout_marginTop="@dimen/spacing_xmicro"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contact_label">
+
+            <TextView
+                android:id="@+id/business_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/spacing_xmicro"
+                android:layout_weight="1"
+                android:text="Telefone: 89 9999-8885" />
+
+            <TextView
+                android:id="@+id/business_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Email: teste@gmail.com" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/separatorContact"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:background="@color/light_gray"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contactLayout" />
+
+        <TextView
+            android:id="@+id/website_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/business_fragment_spacing"
+            android:layout_marginLeft="@dimen/business_fragment_spacing"
+            android:layout_marginRight="@dimen/business_fragment_spacing"
+            android:layout_marginStart="@dimen/business_fragment_spacing"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:text="@string/business_label_website"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/separatorContact" />
+
+        <TextView
+            android:id="@+id/business_website"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/business_fragment_spacing"
+            android:layout_marginLeft="@dimen/business_fragment_spacing"
+            android:layout_marginRight="@dimen/business_fragment_spacing"
+            android:layout_marginStart="@dimen/business_fragment_spacing"
+            android:layout_marginTop="@dimen/spacing_xmicro"
+            android:text="www.petbooking.com.br"
+            android:textSize="13sp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/website_label" />
+
+        <View
+            android:id="@+id/separatorWebsite"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:background="@color/light_gray"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/business_website" />
+
+        <TextView
+            android:id="@+id/social_network_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/business_fragment_spacing"
+            android:layout_marginLeft="@dimen/business_fragment_spacing"
+            android:layout_marginRight="@dimen/business_fragment_spacing"
+            android:layout_marginStart="@dimen/business_fragment_spacing"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:text="@string/business_label_social_network"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/separatorWebsite" />
+
+        <LinearLayout
+            android:id="@+id/socialNetworkLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/business_fragment_spacing"
+            android:layout_marginLeft="@dimen/business_fragment_spacing"
+            android:layout_marginRight="@dimen/business_fragment_spacing"
+            android:layout_marginStart="@dimen/business_fragment_spacing"
+            android:layout_marginTop="@dimen/spacing_xmicro"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/social_network_label">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_twitter" />
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

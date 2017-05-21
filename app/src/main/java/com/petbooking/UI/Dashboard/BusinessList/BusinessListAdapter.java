@@ -19,6 +19,7 @@ import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
+import com.petbooking.UI.Widget.StarsRating;
 import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
@@ -152,7 +153,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         TextView mTvRate;
         TextView mTvRatingCount;
         TextView mTvDistance;
-        RatingBar mRbBusiness;
+        StarsRating mRbBusiness;
 
         public BusinessViewHolder(View view) {
             super(view);
@@ -165,7 +166,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
             mTvRatingCount = (TextView) view.findViewById(R.id.ratings);
             mTvRate = (TextView) view.findViewById(R.id.business_rate);
             mTvDistance = (TextView) view.findViewById(R.id.business_distance);
-            mRbBusiness = (RatingBar) view.findViewById(R.id.average_rate);
+            mRbBusiness = (StarsRating) view.findViewById(R.id.average_rate);
         }
     }
 

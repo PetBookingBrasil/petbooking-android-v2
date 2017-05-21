@@ -93,16 +93,14 @@
 
     </RelativeLayout>
 
-    <RatingBar
+    <com.petbooking.UI.Widget.StarsRating
         android:id="@+id/average_rate"
-        style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_micro"
         android:layout_marginLeft="@dimen/spacing_xmicro"
         android:layout_marginStart="@dimen/spacing_xmicro"
         android:rating="4.5"
-        android:theme="@style/AppTheme.RatingBar"
         app:layout_constraintBottom_toTopOf="@+id/business_title"
         app:layout_constraintLeft_toRightOf="@+id/business_rate" />
 

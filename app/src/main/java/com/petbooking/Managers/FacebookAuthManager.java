@@ -97,9 +97,7 @@ public class FacebookAuthManager implements com.facebook.FacebookCallback {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                     }
-
                 });
 
         Bundle parameters = new Bundle();

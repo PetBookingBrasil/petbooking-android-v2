@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/star1"
+        android:layout_width="@dimen/star_rating_dimen"
+        android:layout_height="@dimen/star_rating_dimen"
+        android:src="@drawable/ic_star_rating_off" />
+
+    <ImageView
+        android:id="@+id/star2"
+        android:layout_width="@dimen/star_rating_dimen"
+        android:layout_height="@dimen/star_rating_dimen"
+        android:layout_marginLeft="@dimen/spacing_micro"
+        android:layout_marginStart="@dimen/spacing_micro"
+        android:src="@drawable/ic_star_rating_off" />
+
+    <ImageView
+        android:id="@+id/star3"
+        android:layout_width="@dimen/star_rating_dimen"
+        android:layout_height="@dimen/star_rating_dimen"
+        android:layout_marginLeft="@dimen/spacing_micro"
+        android:layout_marginStart="@dimen/spacing_micro"
+        android:src="@drawable/ic_star_rating_off" />
+
+    <ImageView
+        android:id="@+id/star4"
+        android:layout_width="@dimen/star_rating_dimen"
+        android:layout_height="@dimen/star_rating_dimen"
+        android:layout_marginLeft="@dimen/spacing_micro"
+        android:layout_marginStart="@dimen/spacing_micro"
+        android:src="@drawable/ic_star_rating_off" />
+
+    <ImageView
+        android:id="@+id/star5"
+        android:layout_width="@dimen/star_rating_dimen"
+        android:layout_height="@dimen/star_rating_dimen"
+        android:layout_marginLeft="@dimen/spacing_micro"
+        android:layout_marginStart="@dimen/spacing_micro"
+        android:src="@drawable/ic_star_rating_off" />
+
+</LinearLayout>

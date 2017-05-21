@@ -33,6 +33,7 @@ public class APIConstants {
     public static final int PAGE_SIZE_DEAFULT = 10;
     public static final String QUERY_COORDS = "coords";
     public static final String QUERY_PAGE_SIZE_DEAFULT = "&page[size]=" + PAGE_SIZE_DEAFULT;
+    public static final String QUERY_USER_ID = "user_id";
 
     /**
      * Headers

@@ -39,5 +39,5 @@
         android:layout_marginLeft="@dimen/spacing_xtiny"
         app:layout_anchor="@id/listLayout"
         app:layout_anchorGravity="bottom|left|end"
-        app:srcCompat="@drawable/ic_filter" />
+        app:srcCompat="@drawable/ic_menu_search" />
 </android.support.design.widget.CoordinatorLayout>

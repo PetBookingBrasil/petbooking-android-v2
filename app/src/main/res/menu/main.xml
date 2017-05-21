@@ -8,7 +8,7 @@
         app:showAsAction="ifRoom"></item>
     <item
         android:id="@+id/schedules"
-        android:icon="@drawable/ic_scheduling"
+        android:icon="@drawable/ic_menu_scheduling"
         android:title="@string/schedules"
         app:showAsAction="ifRoom"></item>
 </menu>

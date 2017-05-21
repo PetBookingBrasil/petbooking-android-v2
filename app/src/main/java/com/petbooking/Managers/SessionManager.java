@@ -121,11 +121,8 @@ public class SessionManager {
             return false;
         }
 
-        if (today.after(expireDate)) {
-            return false;
-        }
+        return !today.after(expireDate);
 
-        return true;
     }
 
     public boolean hasSessionTokenValid() {
@@ -138,11 +135,8 @@ public class SessionManager {
             return false;
         }
 
-        if (today.after(expireDate)) {
-            return false;
-        }
+        return !today.after(expireDate);
 
-        return true;
     }
 
     public void logout() {

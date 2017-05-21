@@ -6,7 +6,10 @@ import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.API.Business.Models.FavoriteRqt;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Models.Business;
 import com.petbooking.Utils.APIUtils;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,12 +28,22 @@ public class BusinessService {
         mBusinessInterface = APIClient.getClient().create(BusinessInterface.class);
     }
 
-    public void listBusiness(String coords, int page, final APICallback callback) {
-        Call<BusinessesResp> call = mBusinessInterface.listBusiness(coords, page);
+    public void listBusiness(String coords, String userId, int page, final APICallback callback) {
+        Call<BusinessesResp> call = mBusinessInterface.listBusiness(coords,userId, page);
         call.enqueue(new Callback<BusinessesResp>() {
             @Override
             public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {
-                APIUtils.handleResponse(response, callback);
+                if (response.isSuccessful()) {
+                    BusinessesResp responseList = response.body();
+                    ArrayList<Business> businessList = new ArrayList<>();
+                    for (BusinessesResp.Item item : responseList.data) {
+                        businessList.add(APIUtils.parseBusiness(item.id, item.attributes));
+                    }
+
+                    callback.onSuccess(businessList);
+                } else {
+                    callback.onError(APIUtils.handleError(response));
+                }
             }
 
             @Override
@@ -40,12 +53,22 @@ public class BusinessService {
         });
     }
 
-    public void listHighlightBusiness(final APICallback callback) {
-        Call<BusinessesResp> call = mBusinessInterface.listHighlightBusiness();
+    public void listHighlightBusiness(String userId, final APICallback callback) {
+        Call<BusinessesResp> call = mBusinessInterface.listHighlightBusiness(userId);
         call.enqueue(new Callback<BusinessesResp>() {
             @Override
             public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {
-                APIUtils.handleResponse(response, callback);
+                if (response.isSuccessful()) {
+                    BusinessesResp responseList = response.body();
+                    ArrayList<Business> businessList = new ArrayList<>();
+                    for (BusinessesResp.Item item : responseList.data) {
+                        businessList.add(APIUtils.parseBusiness(item.id, item.attributes));
+                    }
+
+                    callback.onSuccess(businessList);
+                } else {
+                    callback.onError(APIUtils.handleError(response));
+                }
             }
 
             @Override

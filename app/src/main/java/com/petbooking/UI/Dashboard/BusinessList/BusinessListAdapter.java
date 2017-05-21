@@ -1,7 +1,6 @@
 package com.petbooking.UI.Dashboard.BusinessList;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -20,8 +19,8 @@ import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
+import com.petbooking.UI.Widget.StarsRating;
 import com.petbooking.Utils.AppUtils;
-import com.petbooking.Utils.CommonUtils;
 
 import java.util.ArrayList;
 
@@ -63,23 +62,27 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         final Business business = mBusinessList.get(position);
 
         int categoryColor = AppUtils.getCategoryColor(mContext, business.businesstype);
-        Drawable categoryIcon = AppUtils.getBusinessIcon(mContext, business.businesstype);
         GradientDrawable mDistanceBackground = (GradientDrawable) holder.mTvDistance.getBackground();
         String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber);
-        String address = mContext.getResources().getString(R.string.business_address, business.neighborhood, business.city,
-                business.state, CommonUtils.formatZipcode(business.zipcode));
-        String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
         String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", business.distance));
+        String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
+        String average = String.format("%.1f", business.ratingAverage);
+        average = average.replace(",", ".");
 
-        holder.mTvRate.setText(String.format("%.2f", business.ratingAverage));
-        holder.mRbBusiness.setRating(business.ratingAverage);
-        holder.mTvRatingCount.setText(ratingCount);
+        if (business.ratingCount == 0) {
+            holder.mTvRate.setVisibility(View.GONE);
+            holder.mTvRatingCount.setVisibility(View.GONE);
+            holder.mRbBusiness.setVisibility(View.GONE);
+        } else {
+            holder.mTvRate.setText(average);
+            holder.mRbBusiness.setRating(business.ratingAverage);
+            holder.mTvRatingCount.setText(ratingCount);
+        }
+
         holder.mTvName.setText(business.name);
         holder.mTvStreet.setText(street);
-        holder.mTvAddress.setText(address);
         holder.mTvDistance.setText(distance);
 
-        holder.mIvCategoryIcon.setImageDrawable(categoryIcon);
         mDistanceBackground.setColor(categoryColor);
         holder.mBtnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +96,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
                 .error(R.drawable.business_background)
                 .placeholder(R.drawable.business_background)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .centerCrop()
                 .into(holder.mIvBusinessPhoto);
     }
 
@@ -102,7 +106,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
     }
 
     /**
-     * Favoritar Estabelecimento
+     * Favorite Business
      *
      * @param businessId
      */
@@ -121,7 +125,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
     }
 
     /**
-     * Desfavoritar Estabelecimento
+     * Disfavor Business
      *
      * @param favoriteId
      */
@@ -143,15 +147,13 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
 
         ConstraintLayout mClBusiness;
         ImageView mIvBusinessPhoto;
-        ImageView mIvCategoryIcon;
         ImageButton mBtnFavorite;
         TextView mTvName;
         TextView mTvStreet;
-        TextView mTvAddress;
         TextView mTvRate;
         TextView mTvRatingCount;
         TextView mTvDistance;
-        RatingBar mRbBusiness;
+        StarsRating mRbBusiness;
 
         public BusinessViewHolder(View view) {
             super(view);
@@ -159,14 +161,12 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
             mClBusiness = (ConstraintLayout) view.findViewById(R.id.business_item);
             mIvBusinessPhoto = (ImageView) view.findViewById(R.id.business_photo);
             mBtnFavorite = (ImageButton) view.findViewById(R.id.favorite_button);
-            mIvCategoryIcon = (ImageView) view.findViewById(R.id.category_icon);
             mTvName = (TextView) view.findViewById(R.id.business_name);
             mTvStreet = (TextView) view.findViewById(R.id.business_street);
-            mTvAddress = (TextView) view.findViewById(R.id.business_address);
             mTvRatingCount = (TextView) view.findViewById(R.id.ratings);
             mTvRate = (TextView) view.findViewById(R.id.business_rate);
             mTvDistance = (TextView) view.findViewById(R.id.business_distance);
-            mRbBusiness = (RatingBar) view.findViewById(R.id.average_rate);
+            mRbBusiness = (StarsRating) view.findViewById(R.id.average_rate);
         }
     }
 

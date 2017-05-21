@@ -34,11 +34,7 @@ public class CommonUtils {
     }
 
     public static boolean isEmpty(String text) {
-        if (text == null || text.equals("")) {
-            return true;
-        } else {
-            return false;
-        }
+        return text == null || text.equals("");
     }
 
     public static boolean isValidEmail(String email) {
@@ -105,11 +101,8 @@ public class CommonUtils {
     }
 
     public static boolean isValidPassword(String password) {
-        if (password.length() < PASSWORD_LENGTH) {
-            return false;
-        }
+        return password.length() >= PASSWORD_LENGTH;
 
-        return true;
     }
 
     public static String formatDate(int day, int month, int year) {

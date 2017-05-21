@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -46,4 +48,7 @@ public class ContentFragment extends Fragment {
         return view;
     }
 
+    public void backToList() {
+        mViewPager.setCurrentItem(0);
+    }
 }

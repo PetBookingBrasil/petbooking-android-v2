@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.MapView;
 import com.google.gson.Gson;
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.Interfaces.APICallback;
@@ -30,13 +31,18 @@ public class BusinessInformationFragment extends Fragment {
     private Context mContext;
     private BusinessService mBusinessService;
     private String businessId;
+    private Business business;
 
+    /**
+     * Business Info
+     */
     private ImageView mIvBusinessPhoto;
     private TextView mTvName;
     private TextView mTvDescription;
     private TextView mTvPhone;
     private TextView mTvEmail;
     private TextView mTvWebsite;
+    private MapView mMapView;
 
     /**
      * Social Icons
@@ -46,7 +52,9 @@ public class BusinessInformationFragment extends Fragment {
     private ImageView mIvInstagram;
     private ImageView mIvGooglePlus;
 
-
+    /**
+     * Business Rating
+     */
     private StarsRating mRbBusiness;
     private TextView mTvRatingAverage;
     private TextView mTvRatingCount;
@@ -108,7 +116,7 @@ public class BusinessInformationFragment extends Fragment {
         mBusinessService.getBusiness(id, new APICallback() {
             @Override
             public void onSuccess(Object response) {
-                Business business = (Business) response;
+                business = (Business) response;
                 updateBusinessInfo(business);
             }
 

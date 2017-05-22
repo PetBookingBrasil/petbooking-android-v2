@@ -71,6 +71,8 @@ public class APIBusinessConstants {
     public static final String SERVICES_CATEGORIES_ENDPOINT = "category-templates" + FIELDS_CATEGORIES +
             APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 
+    public static final String BUSINESS_INFO_ENDPOINT = "businesses/{" + PATH_BUSINESS_ID + "}";
+
     public static final String BUSINESS_REVIEWS_ENDPOINT = "businesses/{" + PATH_BUSINESS_ID + "}/reviews" +
             FIELDS_BUSINESS_REVIEWS + INCLUDE_REVIEW_BY_USER + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 

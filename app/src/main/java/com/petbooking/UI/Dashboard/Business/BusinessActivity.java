@@ -18,6 +18,7 @@ public class BusinessActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private BusinessTabsAdapter mAdapter;
+    private String businessId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class BusinessActivity extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        businessId = getIntent().getStringExtra("businessId");
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -35,7 +37,7 @@ public class BusinessActivity extends AppCompatActivity {
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mViewPager = (ViewPager) findViewById(R.id.pager);
 
-        mAdapter = new BusinessTabsAdapter(getSupportFragmentManager(), this);
+        mAdapter = new BusinessTabsAdapter(getSupportFragmentManager(), this, businessId);
         mViewPager.setAdapter(mAdapter);
 
         mTabLayout.setBackgroundColor(getResources().getColor(R.color.brand_primary));

@@ -45,15 +45,25 @@ public class APIUtils {
     /**
      * Create a business from
      * BusinessResponse
+     *
      * @param id
      * @param attr
      * @return
      */
     public static Business parseBusiness(String id, BusinessesRspAttributes attr) {
-        Business business = new Business(id, attr.name, attr.city, attr.state,
+        String latitude = "";
+        String longitude = "";
+
+        if (attr.location != null && attr.location.size() == 2) {
+            latitude = attr.location.get(0);
+            longitude = attr.location.get(1);
+        }
+
+        Business business = new Business(id, attr.name, attr.description, attr.city, attr.state,
                 attr.street, attr.neighborhood, attr.streetNumber, attr.zipcode,
                 attr.ratingAverage, attr.ratingCount, attr.distance, attr.businesstype,
-                "", "", attr.coverImage, attr.imported);
+                latitude, longitude, attr.website, attr.phone, attr.facebook, attr.instagram,
+                attr.twitter, attr.googlePlus, attr.coverImage, attr.imported);
 
         return business;
     }

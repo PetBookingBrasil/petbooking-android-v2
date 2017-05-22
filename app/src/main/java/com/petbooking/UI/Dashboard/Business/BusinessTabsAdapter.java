@@ -13,20 +13,22 @@ import com.petbooking.UI.Dashboard.Business.BusinessInformation.BusinessInformat
 
 public class BusinessTabsAdapter extends FragmentStatePagerAdapter {
 
-    Context mContext;
-    final int PAGES_COUNT = 2;
+    private Context mContext;
+    private String businessId;
+    private final int PAGES_COUNT = 2;
 
-    public BusinessTabsAdapter(FragmentManager fm, Context context) {
+    public BusinessTabsAdapter(FragmentManager fm, Context context, String businessId) {
         super(fm);
         this.mContext = context;
+        this.businessId = businessId;
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return new BusinessInformationFragment();
+            return BusinessInformationFragment.newInstance(this.businessId);
         } else if (position == 1) {
-            return new BusinessInformationFragment();
+            return BusinessInformationFragment.newInstance(this.businessId);
         }
 
         return null;

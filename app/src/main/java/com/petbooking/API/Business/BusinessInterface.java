@@ -1,5 +1,6 @@
 package com.petbooking.API.Business;
 
+import com.petbooking.API.Business.Models.BusinessResp;
 import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.API.Business.Models.FavoriteRqt;
@@ -26,6 +27,10 @@ public interface BusinessInterface {
                                       @Query(APIConstants.QUERY_USER_ID) String userId,
                                       @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex);
 
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
+    @GET(APIBusinessConstants.BUSINESS_INFO_ENDPOINT)
+    Call<BusinessResp> getBusiness(@Path(APIBusinessConstants.PATH_BUSINESS_ID) String businessId);
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @GET(APIBusinessConstants.BUSINESS_HIGHLIGHT_ENDPOINT)

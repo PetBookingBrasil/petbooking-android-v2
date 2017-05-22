@@ -25,8 +25,7 @@
                 android:id="@+id/business_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/side_nav_bar" />
+                android:scaleType="fitXY" />
 
             <View
                 android:layout_width="match_parent"
@@ -246,45 +245,56 @@
             app:layout_constraintTop_toBottomOf="@+id/social_network_label">
 
             <ImageView
+                android:id="@+id/social_facebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/spacing_xmicro"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_social_facebook" />
 
             <ImageView
+                android:id="@+id/social_twitter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/spacing_xmicro"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_social_twitter" />
 
             <ImageView
+                android:id="@+id/social_instagram"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/spacing_xmicro"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_social_instagram" />
 
             <ImageView
+                android:id="@+id/social_googleplus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/spacing_xmicro"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_social_google" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/spacing_xmicro"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_social_skype" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/spacing_xmicro"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_social_whatsapp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/spacing_xmicro"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_social_youtube" />
 
         </LinearLayout>
@@ -315,7 +325,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
+                android:layout_centerVertical="true"
                 android:text="@string/business_label_reviews"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -324,26 +334,26 @@
                 android:id="@+id/business_rating_average"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/business_rating_stars"
-                android:gravity="center_horizontal"
                 android:text="4.5" />
 
-            <TextView
+            <com.petbooking.UI.Widget.StarsRating
                 android:id="@+id/business_rating_stars"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/spacing_xmicro"
-                android:layout_toLeftOf="@+id/rating_count"
-                android:gravity="center_horizontal"
-                android:text="rating" />
+                android:layout_marginTop="@dimen/spacing_nano"
+                android:layout_toLeftOf="@+id/business_rating_count" />
 
             <TextView
-                android:id="@+id/rating_count"
+                android:id="@+id/business_rating_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/spacing_xmicro"
                 android:layout_toLeftOf="@+id/accordionButton"
-                android:gravity="center_horizontal"
                 android:text="(52)" />
 
             <ImageButton
@@ -351,9 +361,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/spacing_xmicro"
                 android:background="@null"
-                android:gravity="center_horizontal"
                 app:srcCompat="@drawable/ic_arrow_down" />
 
         </RelativeLayout>

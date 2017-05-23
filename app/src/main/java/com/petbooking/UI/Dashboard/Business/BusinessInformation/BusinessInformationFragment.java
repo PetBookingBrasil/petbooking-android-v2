@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,9 +21,12 @@ import com.google.gson.Gson;
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Business;
+import com.petbooking.Models.Review;
 import com.petbooking.R;
 import com.petbooking.UI.Widget.StarsRating;
 import com.petbooking.Utils.CommonUtils;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,6 +60,10 @@ public class BusinessInformationFragment extends Fragment {
     /**
      * Business Rating
      */
+    private ArrayList<Review> mReviewList;
+    private LinearLayoutManager mLayoutManager;
+    private RecyclerView mRvReviews;
+    private ReviewListAdapter mAdapter;
     private StarsRating mRbBusiness;
     private TextView mTvRatingAverage;
     private TextView mTvRatingCount;
@@ -102,9 +111,32 @@ public class BusinessInformationFragment extends Fragment {
         mRbBusiness = (StarsRating) view.findViewById(R.id.business_rating_stars);
 
 
+        mReviewList = new ArrayList<>();
+        mRvReviews = (RecyclerView) view.findViewById(R.id.reviewsList);
+        mAdapter = new ReviewListAdapter(mContext, mReviewList);
+
+        mLayoutManager = new LinearLayoutManager(mContext);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        mRvReviews.setHasFixedSize(true);
+        mRvReviews.setLayoutManager(mLayoutManager);
+
+        if (mAdapter != null) {
+            mRvReviews.setAdapter(mAdapter);
+        }
+
+        initReviews();
         getBusinessInfo(businessId);
 
         return view;
+    }
+
+    private void initReviews() {
+        for (int i = 0; i < 10; i++) {
+            mReviewList.add(new Review());
+        }
+        mAdapter.updateList(mReviewList);
+        mAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -133,8 +165,6 @@ public class BusinessInformationFragment extends Fragment {
      * @param business
      */
     public void updateBusinessInfo(Business business) {
-        Log.d("INFO", new Gson().toJson(business));
-        Log.d("web", business.website);
         String phone = mContext.getResources().getString(R.string.business_phone, CommonUtils.formatPhone(business.phone));
         String email = mContext.getResources().getString(R.string.business_email, business.website);
         String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
@@ -156,6 +186,7 @@ public class BusinessInformationFragment extends Fragment {
 
     /**
      * Check Social Network
+     *
      * @param facebook
      * @param twitter
      * @param instagram

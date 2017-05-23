@@ -9,8 +9,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:paddingBottom="@dimen/activity_horizontal_margin">
+        android:layout_marginBottom="@dimen/activity_horizontal_margin">
 
         <FrameLayout
             android:id="@+id/business_cover"
@@ -353,11 +352,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/spacing_xmicro"
-                android:layout_toLeftOf="@+id/accordionButton"
+                android:layout_toLeftOf="@+id/reviewButton"
                 android:text="(52)" />
 
             <ImageButton
-                android:id="@+id/accordionButton"
+                android:id="@+id/reviewButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

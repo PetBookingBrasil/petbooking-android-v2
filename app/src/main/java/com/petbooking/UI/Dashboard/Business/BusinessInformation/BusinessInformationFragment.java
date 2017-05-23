@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,15 +60,20 @@ public class BusinessInformationFragment extends Fragment {
     private ImageView mIvGooglePlus;
 
     /**
-     * Business Rating
+     * Business Rating and Review
+     */
+    private ImageButton mBtnShowReviews;
+    private StarsRating mRbBusiness;
+    private TextView mTvRatingAverage;
+    private TextView mTvRatingCount;
+
+    /**
+     * Review List
      */
     private ArrayList<Review> mReviewList;
     private LinearLayoutManager mLayoutManager;
     private RecyclerView mRvReviews;
     private ReviewListAdapter mAdapter;
-    private StarsRating mRbBusiness;
-    private TextView mTvRatingAverage;
-    private TextView mTvRatingCount;
 
     public BusinessInformationFragment() {
         // Required empty public constructor
@@ -80,6 +86,13 @@ public class BusinessInformationFragment extends Fragment {
         fragment.setArguments(bundle);
         return fragment;
     }
+
+    View.OnClickListener reviewButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Log.d("SHOW", "REVIEWS");
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,6 +120,7 @@ public class BusinessInformationFragment extends Fragment {
         mIvGooglePlus = (ImageView) view.findViewById(R.id.social_googleplus);
         mIvInstagram = (ImageView) view.findViewById(R.id.social_instagram);
 
+        mBtnShowReviews = (ImageButton) view.findViewById(R.id.reviewButton);
         mTvRatingAverage = (TextView) view.findViewById(R.id.business_rating_average);
         mTvRatingCount = (TextView) view.findViewById(R.id.business_rating_count);
         mRbBusiness = (StarsRating) view.findViewById(R.id.business_rating_stars);
@@ -125,6 +139,8 @@ public class BusinessInformationFragment extends Fragment {
         if (mAdapter != null) {
             mRvReviews.setAdapter(mAdapter);
         }
+
+        mBtnShowReviews.setOnClickListener(reviewButtonListener);
 
         initReviews();
         getBusinessInfo(businessId);

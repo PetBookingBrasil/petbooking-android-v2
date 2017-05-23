@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -110,7 +111,6 @@ public class BusinessInformationFragment extends Fragment {
         mTvRatingCount = (TextView) view.findViewById(R.id.business_rating_count);
         mRbBusiness = (StarsRating) view.findViewById(R.id.business_rating_stars);
 
-
         mReviewList = new ArrayList<>();
         mRvReviews = (RecyclerView) view.findViewById(R.id.reviewsList);
         mAdapter = new ReviewListAdapter(mContext, mReviewList);
@@ -120,6 +120,7 @@ public class BusinessInformationFragment extends Fragment {
 
         mRvReviews.setHasFixedSize(true);
         mRvReviews.setLayoutManager(mLayoutManager);
+        mRvReviews.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
 
         if (mAdapter != null) {
             mRvReviews.setAdapter(mAdapter);

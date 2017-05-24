@@ -72,7 +72,8 @@
             android:name=".UI.Login.LoginActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme" />
+            android:theme="@style/LoginTheme"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".UI.Dashboard.DashboardActivity"
             android:configChanges="orientation"

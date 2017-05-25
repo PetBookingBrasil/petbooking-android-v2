@@ -30,14 +30,18 @@ public class Business {
     public String twitter;
     public String googlePlus;
     public BusinessesRspAttributes.CoverImage image;
+    public BusinessesRspAttributes.UserFavorite userFavorite;
+    public boolean favorited;
     public boolean imported;
+    public String favoritedId;
 
 
     public Business(String id, String name, String description, String city, String state, String street,
                     String neighborhood, String streetNumber, String zipcode, float ratingAverage, int ratingCount,
                     float distance, String businesstype, String latitude, String longitude,
                     String website, String phone, String facebook, String instagram, String twitter,
-                    String googlePlus, BusinessesRspAttributes.CoverImage image, boolean imported) {
+                    String googlePlus, BusinessesRspAttributes.CoverImage image,
+                    BusinessesRspAttributes.UserFavorite userFavorite, boolean favorited, boolean imported, String favoritedId) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -60,11 +64,17 @@ public class Business {
         this.instagram = instagram;
         this.googlePlus = googlePlus;
         this.image = image;
+        this.userFavorite = userFavorite;
+        this.favorited = favorited;
         this.imported = imported;
+        this.favoritedId = favoritedId;
     }
 
-    public Business(String id, String name) {
-        this.id = id;
-        this.name = name;
+    public void setFavorited(boolean favorited) {
+        this.favorited = favorited;
+    }
+
+    public void setFavoritedId(String favoritedId) {
+        this.favoritedId = favoritedId;
     }
 }

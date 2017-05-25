@@ -22,6 +22,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.gson.Gson;
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.Models.Review;
 import com.petbooking.R;
@@ -44,10 +45,10 @@ public class BusinessInformationFragment extends Fragment {
      * Business Info
      */
     private ImageView mIvBusinessPhoto;
+    private ImageButton mIBtnFavorite;
     private TextView mTvName;
     private TextView mTvDescription;
     private TextView mTvPhone;
-    private TextView mTvEmail;
     private TextView mTvWebsite;
     private MapView mMapView;
 
@@ -109,10 +110,10 @@ public class BusinessInformationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_business_information, container, false);
 
         mIvBusinessPhoto = (ImageView) view.findViewById(R.id.business_photo);
+        mIBtnFavorite = (ImageButton) view.findViewById(R.id.favorite_button);
         mTvName = (TextView) view.findViewById(R.id.business_name);
         mTvDescription = (TextView) view.findViewById(R.id.business_description);
         mTvPhone = (TextView) view.findViewById(R.id.business_phone);
-        mTvEmail = (TextView) view.findViewById(R.id.business_email);
         mTvWebsite = (TextView) view.findViewById(R.id.business_website);
 
         mIvFacebook = (ImageView) view.findViewById(R.id.social_facebook);
@@ -162,7 +163,7 @@ public class BusinessInformationFragment extends Fragment {
      * @param id
      */
     public void getBusinessInfo(String id) {
-        mBusinessService.getBusiness(id, new APICallback() {
+        mBusinessService.getBusiness(id, SessionManager.getInstance().getUserLogged().id, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 business = (Business) response;
@@ -183,7 +184,6 @@ public class BusinessInformationFragment extends Fragment {
      */
     public void updateBusinessInfo(Business business) {
         String phone = mContext.getResources().getString(R.string.business_phone, CommonUtils.formatPhone(business.phone));
-        String email = mContext.getResources().getString(R.string.business_email, business.website);
         String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
         String average = String.format("%.1f", business.ratingAverage);
         average = average.replace(",", ".");
@@ -195,6 +195,12 @@ public class BusinessInformationFragment extends Fragment {
         mRbBusiness.setRating(business.ratingAverage);
         mTvRatingAverage.setText(average);
         mTvRatingCount.setText(ratingCount);
+
+        if (business.favorited) {
+            mIBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
+        } else {
+            mIBtnFavorite.setImageResource(R.drawable.ic_favorite_border);
+        }
 
         checkSocialIcon(business.facebook, business.twitter, business.instagram, business.googlePlus);
 

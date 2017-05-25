@@ -127,7 +127,6 @@
     <string name="business_rating_count">(%1$d)</string>
     <string name="business_distance">%1$s Km</string>
     <string name="business_phone"><b>Telefone</b>: %1$s</string>
-    <string name="business_email"><b>Email</b>: %1$s</string>
     <string name="business_tab_services">Serviços</string>
     <string name="business_tab_information">Informações</string>
     <string name="business_label_description">Descrição</string>

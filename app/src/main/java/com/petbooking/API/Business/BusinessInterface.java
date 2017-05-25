@@ -30,7 +30,8 @@ public interface BusinessInterface {
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @GET(APIBusinessConstants.BUSINESS_INFO_ENDPOINT)
-    Call<BusinessResp> getBusiness(@Path(APIBusinessConstants.PATH_BUSINESS_ID) String businessId);
+    Call<BusinessResp> getBusiness(@Path(APIBusinessConstants.PATH_BUSINESS_ID) String businessId,
+                                   @Query(APIConstants.QUERY_USER_ID) String userId);
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @GET(APIBusinessConstants.BUSINESS_HIGHLIGHT_ENDPOINT)

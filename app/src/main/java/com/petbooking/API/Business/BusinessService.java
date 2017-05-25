@@ -54,8 +54,8 @@ public class BusinessService {
         });
     }
 
-    public void getBusiness(String businessId, final APICallback callback) {
-        Call<BusinessResp> call = mBusinessInterface.getBusiness(businessId);
+    public void getBusiness(String businessId, String userId, final APICallback callback) {
+        Call<BusinessResp> call = mBusinessInterface.getBusiness(businessId, userId);
         call.enqueue(new Callback<BusinessResp>() {
             @Override
             public void onResponse(Call<BusinessResp> call, Response<BusinessResp> response) {

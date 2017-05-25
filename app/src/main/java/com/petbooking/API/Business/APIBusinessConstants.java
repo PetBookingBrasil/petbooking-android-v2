@@ -46,7 +46,7 @@ public class APIBusinessConstants {
     public static final String FIELDS_BUSINESS_CONTENT = "fields[businesses]=id,name,slug,description,street,street_number," +
             "neighborhood,city,state,zipcode,rating_average,rating_count,favorite_count,cover_image,pictures," +
             "distance,location,user_favorite,phone,website,instagram,snapchat,facebook_fanpage," +
-            "twitter_profile,transportation_fee,googleplus_profile,services,service_categories,bitmask_values,businesstype,imported";
+            "twitter_profile,transportation_fee,googleplus_profile,services,service_categories,bitmask_values,businesstype,favorited,imported";
     public static final String FIELDS_BUSINESS = "?" + FIELDS_BUSINESS_CONTENT;
     public static final String FIELDS_BUSINESS_REVIEWS = "?fields[reviews]=id,comment,rating,business_id,user_id";
     public static final String FIELDS_CATEGORIES = "?fields[category_templates]=id,name,slug,cover_image";
@@ -55,28 +55,22 @@ public class APIBusinessConstants {
     /**
      * APIs
      */
-    public static final String BUSINESS_FEATURED_ENDPOINT = "businesses/search" + FIELDS_BUSINESS + FILTER_FEATURED +
-            APIConstants.QUERY_PAGE_SIZE_DEAFULT;
+    public static final String BUSINESS_FEATURED_ENDPOINT = "businesses/search" +
+            APIConstants.QUERY_PAGE_SIZE_DEAFULT + FILTER_FEATURED;
 
-    public static final String BUSINESS_ENDPOINT = "businesses" + FIELDS_BUSINESS + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
+    public static final String BUSINESS_ENDPOINT = "businesses" + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 
     public static final String BUSINESS_HIGHLIGHT_ENDPOINT = "businesses/highlights";
 
-    public static final String BUSINESS_BY_CATEGORY_ENDPOINT = "category-templates/{" + PATH_CATEGORY_ID + "}/businesses" +
-            FIELDS_BUSINESS + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
+    public static final String BUSINESS_BY_CATEGORY_ENDPOINT = "category-templates/{" + PATH_CATEGORY_ID + "}/businesses" + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 
-    public static final String BUSINESS_SEARCH_ENDPOINT = "businesses/search" + FIELDS_BUSINESS + QUERY_INCLUDE_SEARCH +
+    public static final String BUSINESS_SEARCH_ENDPOINT = "businesses/search" +  QUERY_INCLUDE_SEARCH +
             APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 
-    public static final String SERVICES_CATEGORIES_ENDPOINT = "category-templates" + FIELDS_CATEGORIES +
-            APIConstants.QUERY_PAGE_SIZE_DEAFULT;
+    public static final String SERVICES_CATEGORIES_ENDPOINT = "category-templates" +
+            APIConstants.QUERY_PAGE_SIZE_DEAFULT + FIELDS_CATEGORIES;
 
     public static final String BUSINESS_INFO_ENDPOINT = "businesses/{" + PATH_BUSINESS_ID + "}";
-
-    public static final String BUSINESS_REVIEWS_ENDPOINT = "businesses/{" + PATH_BUSINESS_ID + "}/reviews" +
-            FIELDS_BUSINESS_REVIEWS + INCLUDE_REVIEW_BY_USER + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
-
-    public static final String REVIEW_CREATE_ENDPOINT = "businesses/{" + PATH_BUSINESS_ID + "}/reviews";
 
     public static final String FAVORITES_CREATE_ENDPOINT = "users/{" + APIConstants.PATH_PARAM + "}/favorites" + FIELDS_FAVORITES;
 

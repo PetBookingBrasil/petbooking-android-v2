@@ -61,7 +61,6 @@
             android:layout_marginLeft="@dimen/business_fragment_spacing"
             android:layout_marginRight="@dimen/business_fragment_spacing"
             android:layout_marginStart="@dimen/business_fragment_spacing"
-            android:text="Petshop Maior de Pernambuco"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -96,7 +95,6 @@
             android:layout_marginRight="@dimen/business_fragment_spacing"
             android:layout_marginStart="@dimen/business_fragment_spacing"
             android:layout_marginTop="@dimen/spacing_xmicro"
-            android:text="Estabelecimento que trabalha a 30 anos no mercado de pets e trata muito bem seus clientes"
             android:textSize="13sp"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -130,8 +128,8 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/separatorDescription" />
 
-        <TextView
-            android:id="@+id/business_phone"
+        <LinearLayout
+            android:id="@+id/contactLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/business_fragment_spacing"
@@ -140,10 +138,22 @@
             android:layout_marginStart="@dimen/business_fragment_spacing"
             android:layout_marginTop="@dimen/spacing_xmicro"
             android:orientation="horizontal"
-            android:text="Telefone: 89 9999-8885"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/contact_label" />
+            app:layout_constraintTop_toBottomOf="@+id/contact_label">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/business_phone"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/business_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_micro" />
+        </LinearLayout>
 
         <View
             android:id="@+id/separatorContact"
@@ -153,7 +163,7 @@
             android:background="@color/light_gray"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/business_phone" />
+            app:layout_constraintTop_toBottomOf="@+id/contactLayout" />
 
         <TextView
             android:id="@+id/website_label"
@@ -180,7 +190,6 @@
             android:layout_marginRight="@dimen/business_fragment_spacing"
             android:layout_marginStart="@dimen/business_fragment_spacing"
             android:layout_marginTop="@dimen/spacing_xmicro"
-            android:text="www.petbooking.com.br"
             android:textSize="13sp"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -365,6 +374,7 @@
             android:id="@+id/reviewsList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/separatorReview" />

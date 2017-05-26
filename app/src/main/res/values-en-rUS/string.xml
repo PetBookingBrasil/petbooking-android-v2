@@ -110,7 +110,7 @@
     <string name="business_address">%1$s, %2$s, %3$s, %4$s</string>
     <string name="business_rating_count">(%1$d)</string>
     <string name="business_distance">%1$s Km</string>
-    <string name="business_phone"><b>Phone</b>: %1$s</string>
+    <string name="business_phone">Phone: </string>
     <string name="business_tab_services">Services</string>
     <string name="business_tab_information">Information</string>
     <string name="business_label_description">Description</string>

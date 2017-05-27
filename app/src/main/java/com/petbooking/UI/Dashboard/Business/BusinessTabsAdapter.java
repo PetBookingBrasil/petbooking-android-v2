@@ -29,7 +29,7 @@ public class BusinessTabsAdapter extends FragmentStatePagerAdapter {
         if (position == 0) {
             return BusinessServicesFragment.newInstance(this.businessId);
         } else if (position == 1) {
-            return BusinessServicesFragment.newInstance(this.businessId);
+            return BusinessInformationFragment.newInstance(this.businessId);
         }
 
         return null;

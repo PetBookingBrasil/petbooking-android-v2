@@ -51,13 +51,13 @@ public class APIUtils {
      * @return
      */
     public static Business parseBusiness(String id, BusinessesRspAttributes attr) {
-        String latitude = "";
-        String longitude = "";
+        Double latitude = null;
+        Double longitude = null;
         String favoritedId = null;
 
         if (attr.location != null && attr.location.size() == 2) {
-            latitude = attr.location.get(0);
-            longitude = attr.location.get(1);
+            latitude = Double.parseDouble(attr.location.get(0));
+            longitude = Double.parseDouble(attr.location.get(1));
         }
 
         if (attr.favorited && attr.userFavorite != null) {

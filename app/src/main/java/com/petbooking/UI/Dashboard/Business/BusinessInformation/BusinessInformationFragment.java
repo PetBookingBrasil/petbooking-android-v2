@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,7 +29,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.Interfaces.APICallback;
@@ -37,14 +44,17 @@ import com.petbooking.Models.Business;
 import com.petbooking.Models.Review;
 import com.petbooking.R;
 import com.petbooking.UI.Widget.StarsRating;
+import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BusinessInformationFragment extends Fragment {
+public class BusinessInformationFragment extends Fragment implements OnMapReadyCallback {
 
     private Context mContext;
     private BusinessService mBusinessService;
@@ -63,6 +73,14 @@ public class BusinessInformationFragment extends Fragment {
     private TextView mTvDescription;
     private TextView mTvPhone;
     private TextView mTvWebsite;
+    private TextView mTvStreet;
+    private TextView mTvDistance;
+
+    /**
+     * Map
+     */
+    private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
+    private GoogleMap mGMap = null;
     private MapView mMapView;
 
     /**
@@ -77,7 +95,9 @@ public class BusinessInformationFragment extends Fragment {
     private View mSeparatorWebsite;
     private View mSeparatorSocial;
     private View mSeparatorReview;
+    private View mSeparatorLocation;
     private LinearLayout mContactLayout;
+    private LinearLayout mLocationLayout;
     private RelativeLayout mReviewLayout;
 
     /**
@@ -207,9 +227,51 @@ public class BusinessInformationFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        mMapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        mMapView.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);
+        if (mapViewBundle == null) {
+            mapViewBundle = new Bundle();
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle);
+        }
+
+        mMapView.onSaveInstanceState(mapViewBundle);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_business_information, container, false);
+
+        Bundle mapViewBundle = null;
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
+        }
 
         mSvInfo = (ScrollView) view.findViewById(R.id.infoView);
         mIvBusinessPhoto = (ImageView) view.findViewById(R.id.business_photo);
@@ -218,6 +280,9 @@ public class BusinessInformationFragment extends Fragment {
         mTvDescription = (TextView) view.findViewById(R.id.business_description);
         mTvPhone = (TextView) view.findViewById(R.id.business_phone);
         mTvWebsite = (TextView) view.findViewById(R.id.business_website);
+        mTvStreet = (TextView) view.findViewById(R.id.business_street);
+        mTvDistance = (TextView) view.findViewById(R.id.business_distance);
+        mMapView = (MapView) view.findViewById(R.id.business_location);
 
         mTvDescriptionLabel = (TextView) view.findViewById(R.id.description_label);
         mTvContactLabel = (TextView) view.findViewById(R.id.contact_label);
@@ -228,8 +293,10 @@ public class BusinessInformationFragment extends Fragment {
         mSeparatorWebsite = view.findViewById(R.id.separatorWebsite);
         mSeparatorSocial = view.findViewById(R.id.separatorSocialNetwork);
         mSeparatorReview = view.findViewById(R.id.separatorReview);
+        mSeparatorLocation = view.findViewById(R.id.separatorLocation);
         mContactLayout = (LinearLayout) view.findViewById(R.id.contactLayout);
         mReviewLayout = (RelativeLayout) view.findViewById(R.id.reviewLayout);
+        mLocationLayout = (LinearLayout) view.findViewById(R.id.locationLayout);
 
         mIvFacebook = (ImageView) view.findViewById(R.id.social_facebook);
         mIvTwitter = (ImageView) view.findViewById(R.id.social_twitter);
@@ -257,6 +324,8 @@ public class BusinessInformationFragment extends Fragment {
         }
 
         mBtnShowReviews.setOnClickListener(reviewButtonListener);
+        mMapView.onCreate(mapViewBundle);
+        mMapView.getMapAsync(this);
 
         initReviews();
 
@@ -300,6 +369,10 @@ public class BusinessInformationFragment extends Fragment {
      */
     public void updateBusinessInfo(final Business mBusiness) {
         boolean hasIcon = false;
+        int categoryColor = AppUtils.getCategoryColor(mContext, mBusiness.businesstype);
+        GradientDrawable mDistanceBackground = (GradientDrawable) mTvDistance.getBackground();
+        String street = mContext.getResources().getString(R.string.business_street, mBusiness.street, mBusiness.streetNumber);
+        String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", mBusiness.distance));
         String ratingCount = mContext.getResources().getString(R.string.business_rating_count, mBusiness.ratingCount);
         String average = String.format("%.1f", mBusiness.ratingAverage);
         average = average.replace(",", ".");
@@ -309,8 +382,11 @@ public class BusinessInformationFragment extends Fragment {
         mTvPhone.setText(CommonUtils.formatPhone(mBusiness.phone));
         mTvWebsite.setText(mBusiness.website);
         mRbBusiness.setRating(mBusiness.ratingAverage);
+        mTvStreet.setText(street);
+        mTvDistance.setText(distance);
         mTvRatingAverage.setText(average);
         mTvRatingCount.setText(ratingCount);
+        mDistanceBackground.setColor(categoryColor);
         hasIcon = checkSocialIcon(mBusiness.facebook, mBusiness.twitter, mBusiness.instagram, mBusiness.googlePlus);
 
         if (mBusiness.favorited) {
@@ -347,10 +423,30 @@ public class BusinessInformationFragment extends Fragment {
             mSeparatorSocial.setVisibility(View.GONE);
         }
 
+        if (mBusiness.latitude != null && mBusiness.longitude != null) {
+            updateLocation(mBusiness.latitude, mBusiness.longitude);
+        } else {
+            mLocationLayout.setVisibility(View.GONE);
+            mSeparatorLocation.setVisibility(View.GONE);
+        }
+
         mIBtnFavorite.setOnClickListener(favoriteListener);
         mTvWebsite.setOnClickListener(socialListener);
         Glide.with(mContext).load(mBusiness.image.url).error(R.drawable.business_background).into(mIvBusinessPhoto);
         hideLoading();
+    }
+
+
+    /**
+     * Update Business Location
+     */
+    public void updateLocation(Double latitude, Double longitude) {
+        LatLng center = new LatLng(latitude, longitude);
+        MarkerOptions markerOptions = new MarkerOptions()
+                .position(center)
+                .icon(BitmapDescriptorFactory.fromBitmap(AppUtils.getBitmap(getContext(), R.drawable.ic_marker)));
+        mGMap.addMarker(markerOptions);
+        mGMap.moveCamera(CameraUpdateFactory.newLatLngZoom(center, 16));
     }
 
     /**
@@ -392,11 +488,19 @@ public class BusinessInformationFragment extends Fragment {
         return hasIcon;
     }
 
+    /**
+     * Open Webpages
+     *
+     * @param url
+     */
     public void openPage(String url) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(browserIntent);
     }
 
+    /**
+     * Show Request Loading
+     */
     public void showLoading() {
         if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
@@ -408,10 +512,20 @@ public class BusinessInformationFragment extends Fragment {
         mLoadingDialog.show();
     }
 
+    /**
+     * Hide Request Loading
+     */
     public void hideLoading() {
         if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
             mLoadingDialog = null;
         }
+    }
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mGMap = googleMap;
+        mGMap.getUiSettings().setAllGesturesEnabled(false);
     }
 }

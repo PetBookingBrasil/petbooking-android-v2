@@ -21,8 +21,8 @@ public class Business {
     public int ratingCount;
     public float distance;
     public String businesstype;
-    public String latitude;
-    public String longitude;
+    public Double latitude;
+    public Double longitude;
     public String website;
     public String phone;
     public String facebook;
@@ -38,7 +38,7 @@ public class Business {
 
     public Business(String id, String name, String description, String city, String state, String street,
                     String neighborhood, String streetNumber, String zipcode, float ratingAverage, int ratingCount,
-                    float distance, String businesstype, String latitude, String longitude,
+                    float distance, String businesstype, Double latitude, Double longitude,
                     String website, String phone, String facebook, String instagram, String twitter,
                     String googlePlus, BusinessesRspAttributes.CoverImage image,
                     BusinessesRspAttributes.UserFavorite userFavorite, boolean favorited, boolean imported, String favoritedId) {

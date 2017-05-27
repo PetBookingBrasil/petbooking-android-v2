@@ -6,15 +6,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 
-import com.petbooking.API.Business.BusinessService;
 import com.petbooking.Models.Business;
+import com.petbooking.Models.BusinessServices;
 import com.petbooking.R;
-import com.petbooking.UI.Dashboard.Business.BusinessInformation.BusinessInformationFragment;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,10 +25,18 @@ import com.petbooking.UI.Dashboard.Business.BusinessInformation.BusinessInformat
 public class BusinessServicesFragment extends Fragment {
 
     private Context mContext;
-    private BusinessService mBusinessService;
+    private com.petbooking.API.Business.BusinessService mBusinessService;
     private String businessId;
     private Business mBusiness;
     private AlertDialog mLoadingDialog;
+
+    /**
+     * BusinessServices Components
+     */
+    private ArrayList<BusinessServices> mServiceList;
+    private LinearLayoutManager mLayoutManager;
+    private RecyclerView mRvServices;
+    private ServiceListAdapter mAdapter;
 
     public BusinessServicesFragment() {
         // Required empty public constructor
@@ -43,7 +54,7 @@ public class BusinessServicesFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mBusinessService = new BusinessService();
+        mBusinessService = new com.petbooking.API.Business.BusinessService();
         this.mContext = getContext();
         this.businessId = getArguments().getString("businessId", "0");
     }
@@ -52,7 +63,38 @@ public class BusinessServicesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_business_services, container, false);
+
+
+        mServiceList = new ArrayList<>();
+        prepareListData();
+        mRvServices = (RecyclerView) view.findViewById(R.id.service_list);
+        mAdapter = new ServiceListAdapter(mContext, mServiceList);
+
+        mLayoutManager = new LinearLayoutManager(mContext);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        mRvServices.setHasFixedSize(true);
+        mRvServices.setLayoutManager(mLayoutManager);
+
+        if (mAdapter != null) {
+            mRvServices.setAdapter(mAdapter);
+        }
+
         return view;
+    }
+
+    private void prepareListData() {
+        BusinessServices service;
+        ArrayList<BusinessServices> add = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            add.clear();
+            service = new BusinessServices(i + "", "Serviço " + i, i + "", "Serviço Número " + i, i * 20);
+            add.add(new BusinessServices("x", "Sub " + i, i + "", "DESCRIPTION " + i, i * 10));
+            add.add(new BusinessServices("x", "Sub " + i, i + "", "DESCRIPTION " + i, i * 10));
+            add.add(new BusinessServices("x", "Sub " + i, i + "", "DESCRIPTION " + i, i * 10));
+            service.setAdditionalServices(add);
+            mServiceList.add(service);
+        }
     }
 
 }

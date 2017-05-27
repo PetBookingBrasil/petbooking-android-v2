@@ -12,10 +12,10 @@ public class BusinessServices {
     public String name;
     public String duration;
     public String description;
-    public float price;
+    public double price;
     public ArrayList<BusinessServices> additionalServices;
 
-    public BusinessServices(String id, String name, String duration, String description, float price) {
+    public BusinessServices(String id, String name, String duration, String description, double price) {
         this.id = id;
         this.name = name;
         this.duration = duration;

@@ -85,14 +85,14 @@ public class BusinessServicesFragment extends Fragment {
 
     private void prepareListData() {
         BusinessServices service;
-        ArrayList<BusinessServices> add = new ArrayList<>();
+        ArrayList<BusinessServices> sub = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            add.clear();
-            service = new BusinessServices(i + "", "Serviço " + i, i + "", "Serviço Número " + i, i * 20);
-            add.add(new BusinessServices("x", "Sub " + i, i + "", "DESCRIPTION " + i, i * 10));
-            add.add(new BusinessServices("x", "Sub " + i, i + "", "DESCRIPTION " + i, i * 10));
-            add.add(new BusinessServices("x", "Sub " + i, i + "", "DESCRIPTION " + i, i * 10));
-            service.setAdditionalServices(add);
+            sub = new ArrayList<>();
+            service = new BusinessServices(i + "", "Serviço " + i, i + "", "Serviço Número " + i, i * 20.33);
+            sub.add(new BusinessServices(i + "", "SB " + i, i + "", "SB Número " + i, i * 20.33));
+            sub.add(new BusinessServices(i + "", "SB " + i, i + "", "SB Número " + i, i * 20.33));
+            sub.add(new BusinessServices(i + "", "SB " + i, i + "", "SB Número " + i, i * 20.33));
+            service.setAdditionalServices(sub);
             mServiceList.add(service);
         }
     }

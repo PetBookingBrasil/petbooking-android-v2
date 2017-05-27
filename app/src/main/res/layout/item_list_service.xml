@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -48,7 +49,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/service_time"
+        android:id="@+id/service_duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/spacing_xmicro"
@@ -69,12 +70,12 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/time_marker"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/service_time" />
+        app:layout_constraintTop_toBottomOf="@+id/service_duration" />
 
     <View
         android:id="@+id/service_separator"
         android:layout_width="0dp"
-        android:layout_height="2dp"
+        android:layout_height="@dimen/spacing_nano"
         android:layout_marginLeft="@dimen/spacing_xmicro"
         android:layout_marginRight="@dimen/spacing_xmicro"
         android:layout_marginTop="@dimen/spacing_xtiny"
@@ -85,14 +86,14 @@
         app:layout_constraintTop_toBottomOf="@+id/service_description" />
 
     <TextView
-        android:id="@+id/service_extra"
+        android:id="@+id/additional_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_xmicro"
         android:layout_marginLeft="@dimen/spacing_xmicro"
         android:layout_marginRight="@dimen/spacing_xmicro"
         android:layout_marginTop="@dimen/spacing_tiny"
-        android:text="Adicionais"
+        android:text="@string/business_label_additional"
         android:textSize="16sp"
         android:textStyle="bold"
         android:visibility="gone"
@@ -101,4 +102,27 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/service_separator" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/additional_services"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/time_marker"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/additional_label" />
+
+    <View
+        android:id="@+id/additional_separator"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/spacing_nano"
+        android:layout_marginLeft="@dimen/spacing_xmicro"
+        android:layout_marginRight="@dimen/spacing_xmicro"
+        android:layout_marginTop="@dimen/spacing_xtiny"
+        android:background="@color/default_gray"
+        android:paddingRight="@dimen/spacing_xtiny"
+        android:visibility="gone"
+        app:layout_constraintLeft_toRightOf="@+id/time_marker"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/additional_services" />
 </android.support.constraint.ConstraintLayout>

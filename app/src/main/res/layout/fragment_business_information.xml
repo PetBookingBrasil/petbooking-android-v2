@@ -351,7 +351,6 @@
                     android:layout_marginRight="@dimen/spacing_xmicro"
                     android:layout_toRightOf="@+id/icon_point"
                     android:maxLines="2"
-                    android:text="Ria do Teste"
                     android:textColor="@color/text_color"
                     android:textSize="14sp" />
 
@@ -369,7 +368,6 @@
                     android:paddingLeft="@dimen/spacing_xmicro"
                     android:paddingRight="@dimen/spacing_xmicro"
                     android:paddingTop="@dimen/spacing_nano"
-                    android:text="50 Km"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:textStyle="bold" />

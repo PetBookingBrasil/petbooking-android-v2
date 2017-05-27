@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.petbooking.UI.Dashboard.Business.BusinessInformation.BusinessInformationFragment;
+import com.petbooking.UI.Dashboard.Business.BusinessServices.BusinessServicesFragment;
 
 /**
  * Created by Luciano José on 29/01/2017.
@@ -26,7 +27,7 @@ public class BusinessTabsAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return BusinessInformationFragment.newInstance(this.businessId);
+            return BusinessServicesFragment.newInstance(this.businessId);
         } else if (position == 1) {
             return BusinessInformationFragment.newInstance(this.businessId);
         }

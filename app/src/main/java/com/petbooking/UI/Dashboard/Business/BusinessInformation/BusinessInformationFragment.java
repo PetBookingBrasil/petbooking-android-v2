@@ -18,10 +18,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -46,8 +49,10 @@ public class BusinessInformationFragment extends Fragment {
     private Context mContext;
     private BusinessService mBusinessService;
     private String businessId;
-    private Business business;
+    private Business mBusiness;
     private AlertDialog mLoadingDialog;
+    private ScrollView mSvInfo;
+    private boolean isShown = false;
 
     /**
      * Business Info
@@ -99,16 +104,15 @@ public class BusinessInformationFragment extends Fragment {
     private RecyclerView mRvReviews;
     private ReviewListAdapter mAdapter;
 
-
     View.OnClickListener favoriteListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (business.favorited) {
-                mBusinessService.deleteFavorite(business.favoritedId, new APICallback() {
+            if (mBusiness.favorited) {
+                mBusinessService.deleteFavorite(mBusiness.favoritedId, new APICallback() {
                     @Override
                     public void onSuccess(Object response) {
-                        business.setFavorited(false);
-                        business.setFavoritedId("");
+                        mBusiness.setFavorited(false);
+                        mBusiness.setFavoritedId("");
                         mIBtnFavorite.setImageResource(R.drawable.ic_favorite_border);
                     }
 
@@ -119,13 +123,13 @@ public class BusinessInformationFragment extends Fragment {
                 });
             } else {
                 mBusinessService.createFavorite(SessionManager.getInstance().getUserLogged().id,
-                        business.id, new APICallback() {
+                        mBusiness.id, new APICallback() {
                             @Override
                             public void onSuccess(Object response) {
                                 FavoriteResp resp = (FavoriteResp) response;
 
-                                business.setFavorited(true);
-                                business.setFavoritedId(resp.data.id);
+                                mBusiness.setFavorited(true);
+                                mBusiness.setFavoritedId(resp.data.id);
                                 mIBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
                             }
 
@@ -144,15 +148,15 @@ public class BusinessInformationFragment extends Fragment {
             int id = v.getId();
 
             if (id == mIvFacebook.getId()) {
-                openPage(business.facebook);
+                openPage(mBusiness.facebook);
             } else if (id == mIvTwitter.getId()) {
-                openPage(business.twitter);
+                openPage(mBusiness.twitter);
             } else if (id == mIvInstagram.getId()) {
-                openPage(business.instagram);
+                openPage(mBusiness.instagram);
             } else if (id == mIvGooglePlus.getId()) {
-                openPage(business.googlePlus);
+                openPage(mBusiness.googlePlus);
             } else if (id == mTvWebsite.getId()) {
-                openPage(business.website);
+                openPage(mBusiness.website);
             }
 
         }
@@ -173,7 +177,22 @@ public class BusinessInformationFragment extends Fragment {
     View.OnClickListener reviewButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Log.d("SHOW", "REVIEWS");
+            if (isShown) {
+                mRvReviews.setVisibility(View.GONE);
+                mBtnShowReviews.setImageResource(R.drawable.ic_arrow_down);
+            } else {
+                mRvReviews.setVisibility(View.VISIBLE);
+                mBtnShowReviews.setImageResource(R.drawable.ic_arrow_up);
+                mSvInfo.post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        mSvInfo.smoothScrollTo(mSvInfo.getScrollX(), mRvReviews.getTop());
+                    }
+                });
+            }
+
+            isShown = !isShown;
         }
     };
 
@@ -184,6 +203,7 @@ public class BusinessInformationFragment extends Fragment {
         mBusinessService = new BusinessService();
         this.mContext = getContext();
         this.businessId = getArguments().getString("businessId", "0");
+        getBusinessInfo(businessId);
     }
 
     @Override
@@ -191,6 +211,7 @@ public class BusinessInformationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_business_information, container, false);
 
+        mSvInfo = (ScrollView) view.findViewById(R.id.infoView);
         mIvBusinessPhoto = (ImageView) view.findViewById(R.id.business_photo);
         mIBtnFavorite = (ImageButton) view.findViewById(R.id.favorite_button);
         mTvName = (TextView) view.findViewById(R.id.business_name);
@@ -238,7 +259,6 @@ public class BusinessInformationFragment extends Fragment {
         mBtnShowReviews.setOnClickListener(reviewButtonListener);
 
         initReviews();
-        getBusinessInfo(businessId);
 
         return view;
     }
@@ -262,9 +282,8 @@ public class BusinessInformationFragment extends Fragment {
         mBusinessService.getBusiness(id, SessionManager.getInstance().getUserLogged().id, new APICallback() {
             @Override
             public void onSuccess(Object response) {
-                business = (Business) response;
-                updateBusinessInfo(business);
-                hideLoading();
+                mBusiness = (Business) response;
+                updateBusinessInfo(mBusiness);
             }
 
             @Override
@@ -277,48 +296,48 @@ public class BusinessInformationFragment extends Fragment {
     /**
      * Update Business Info
      *
-     * @param business
+     * @param mBusiness
      */
-    public void updateBusinessInfo(final Business business) {
+    public void updateBusinessInfo(final Business mBusiness) {
         boolean hasIcon = false;
-        String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
-        String average = String.format("%.1f", business.ratingAverage);
+        String ratingCount = mContext.getResources().getString(R.string.business_rating_count, mBusiness.ratingCount);
+        String average = String.format("%.1f", mBusiness.ratingAverage);
         average = average.replace(",", ".");
 
-        mTvName.setText(business.name);
-        mTvDescription.setText(business.description);
-        mTvPhone.setText(CommonUtils.formatPhone(business.phone));
-        mTvWebsite.setText(business.website);
-        mRbBusiness.setRating(business.ratingAverage);
+        mTvName.setText(mBusiness.name);
+        mTvDescription.setText(mBusiness.description);
+        mTvPhone.setText(CommonUtils.formatPhone(mBusiness.phone));
+        mTvWebsite.setText(mBusiness.website);
+        mRbBusiness.setRating(mBusiness.ratingAverage);
         mTvRatingAverage.setText(average);
         mTvRatingCount.setText(ratingCount);
-        hasIcon = checkSocialIcon(business.facebook, business.twitter, business.instagram, business.googlePlus);
+        hasIcon = checkSocialIcon(mBusiness.facebook, mBusiness.twitter, mBusiness.instagram, mBusiness.googlePlus);
 
-        if (business.favorited) {
+        if (mBusiness.favorited) {
             mIBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
         } else {
             mIBtnFavorite.setImageResource(R.drawable.ic_favorite_border);
         }
 
-        if (TextUtils.isEmpty(business.description)) {
+        if (TextUtils.isEmpty(mBusiness.description)) {
             mTvDescription.setVisibility(View.GONE);
             mTvDescriptionLabel.setVisibility(View.GONE);
             mSeparatorDescription.setVisibility(View.GONE);
         }
 
-        if (TextUtils.isEmpty(business.phone)) {
+        if (TextUtils.isEmpty(mBusiness.phone)) {
             mTvContactLabel.setVisibility(View.GONE);
             mContactLayout.setVisibility(View.GONE);
             mSeparatorContact.setVisibility(View.GONE);
         }
 
-        if (TextUtils.isEmpty(business.website) || TextUtils.equals("http://", business.website)) {
+        if (TextUtils.isEmpty(mBusiness.website) || TextUtils.equals("http://", mBusiness.website)) {
             mTvWebsiteLabel.setVisibility(View.GONE);
             mTvWebsite.setVisibility(View.GONE);
             mSeparatorWebsite.setVisibility(View.GONE);
         }
 
-        if (business.ratingCount == 0) {
+        if (mBusiness.ratingCount == 0) {
             mReviewLayout.setVisibility(View.GONE);
             mSeparatorReview.setVisibility(View.GONE);
         }
@@ -330,7 +349,8 @@ public class BusinessInformationFragment extends Fragment {
 
         mIBtnFavorite.setOnClickListener(favoriteListener);
         mTvWebsite.setOnClickListener(socialListener);
-        Glide.with(mContext).load(business.image.url).error(R.drawable.business_background).into(mIvBusinessPhoto);
+        Glide.with(mContext).load(mBusiness.image.url).error(R.drawable.business_background).into(mIvBusinessPhoto);
+        hideLoading();
     }
 
     /**

@@ -26,8 +26,8 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
 
     private LinearLayoutManager mLayoutManager;
 
-    public ServiceListAdapter(Context context, ArrayList<BusinessServices> reviewList) {
-        this.mServiceList = reviewList;
+    public ServiceListAdapter(Context context, ArrayList<BusinessServices> serviceList) {
+        this.mServiceList = serviceList;
         this.mContext = context;
     }
 

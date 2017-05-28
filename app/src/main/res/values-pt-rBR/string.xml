@@ -137,6 +137,7 @@
     <string name="business_label_reviews">Reviews</string>
     <string name="business_label_additional">Adicionais</string>
     <string name="business_service_price">R$ %1$s</string>
+    <string name="business_service_finish">Finalizar Agendamento</string>
 
     <!-- Dialog -->
     <string name="dialog_picture_title">Selecionar Foto</string>

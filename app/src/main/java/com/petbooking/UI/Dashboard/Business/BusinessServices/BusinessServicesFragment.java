@@ -64,7 +64,6 @@ public class BusinessServicesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_business_services, container, false);
 
-
         mServiceList = new ArrayList<>();
         prepareListData();
         mRvServices = (RecyclerView) view.findViewById(R.id.service_list);

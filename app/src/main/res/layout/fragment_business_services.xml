@@ -40,6 +40,13 @@
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/category_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_xmicro"
+            android:layout_marginTop="@dimen/spacing_xmicro" />
+
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/service_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,7 +61,7 @@
             android:padding="@dimen/spacing_xmicro">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/pet_photo"
+                android:id="@+id/employee_photo"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="@dimen/spacing_tiny"
@@ -64,7 +71,7 @@
                 app:civ_border_width="2dp" />
 
             <TextView
-                android:id="@+id/pet_name"
+                android:id="@+id/employee_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Doguinho"

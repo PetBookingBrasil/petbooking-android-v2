@@ -1,6 +1,7 @@
 package com.petbooking.UI.Dashboard.Business.BusinessServices;
 
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,17 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.petbooking.API.Business.APIBusinessConstants;
 import com.petbooking.Models.Business;
 import com.petbooking.Models.BusinessServices;
+import com.petbooking.Models.Category;
 import com.petbooking.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BusinessServicesFragment extends Fragment {
+public class BusinessServicesFragment extends Fragment implements CategoryListAdapter.OnItemClick {
 
     private Context mContext;
     private com.petbooking.API.Business.BusinessService mBusinessService;
@@ -33,9 +35,13 @@ public class BusinessServicesFragment extends Fragment {
     /**
      * BusinessServices Components
      */
+    private ArrayList<Category> mCategoryList;
     private ArrayList<BusinessServices> mServiceList;
     private LinearLayoutManager mLayoutManager;
+    private LinearLayoutManager mCategoryLayout;
+    private RecyclerView mRvCategory;
     private RecyclerView mRvServices;
+    private CategoryListAdapter mCategoryAdapter;
     private ServiceListAdapter mAdapter;
 
     public BusinessServicesFragment() {
@@ -65,19 +71,35 @@ public class BusinessServicesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_business_services, container, false);
 
         mServiceList = new ArrayList<>();
+        mCategoryList = new ArrayList<>();
         prepareListData();
+        initCategoryList();
+
+        mRvCategory = (RecyclerView) view.findViewById(R.id.category_list);
         mRvServices = (RecyclerView) view.findViewById(R.id.service_list);
+
+        mCategoryAdapter = new CategoryListAdapter(mContext, mCategoryList, this);
         mAdapter = new ServiceListAdapter(mContext, mServiceList);
 
         mLayoutManager = new LinearLayoutManager(mContext);
+        mCategoryLayout = new LinearLayoutManager(mContext);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mCategoryLayout.setOrientation(LinearLayoutManager.HORIZONTAL);
 
         mRvServices.setHasFixedSize(true);
         mRvServices.setLayoutManager(mLayoutManager);
+        mRvCategory.setHasFixedSize(true);
+        mRvCategory.setLayoutManager(mCategoryLayout);
 
         if (mAdapter != null) {
             mRvServices.setAdapter(mAdapter);
         }
+
+        if (mCategoryAdapter != null) {
+            mRvCategory.setAdapter(mCategoryAdapter);
+        }
+
+        mRvCategory.getLayoutManager().scrollToPosition(Integer.MAX_VALUE / 2);
 
         return view;
     }
@@ -96,4 +118,25 @@ public class BusinessServicesFragment extends Fragment {
         }
     }
 
+    private void initCategoryList() {
+        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_CLINIC, R.drawable.ic_category_clinic));
+        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_TRAINING, R.drawable.ic_category_trainer));
+        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_BATH, R.drawable.ic_category_bath));
+        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_TRANSPORT, R.drawable.ic_category_transport));
+        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_WALKER, R.drawable.ic_category_walker));
+        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_DAYCARE, R.drawable.ic_category_daycare));
+        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_HOTEL, R.drawable.ic_category_hotel));
+        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_EMERGENCY, R.drawable.ic_category_emergency));
+        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_EXAMS, R.drawable.ic_category_exam));
+        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_HOSPITAL, R.drawable.ic_category_hospital));
+        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_DIAGNOSIS, R.drawable.ic_category_diagnosis));
+        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_PETSHOP, R.drawable.ic_category_petshop));
+        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_PETSHOP_MOVEL, R.drawable.ic_category_petshop_delivery));
+        mCategoryList.add(new Category("1", "Outros", R.drawable.ic_category_other));
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        mCategoryLayout.scrollToPositionWithOffset(position, 10);
+    }
 }

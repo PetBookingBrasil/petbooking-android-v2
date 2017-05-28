@@ -4,12 +4,15 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.petbooking.Models.BusinessServices;
+import com.petbooking.Models.Category;
 import com.petbooking.R;
 
 import java.util.ArrayList;
@@ -19,107 +22,72 @@ import java.util.ArrayList;
  */
 
 
-public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.ServiceViewHolder> {
+public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder> {
 
-    private ArrayList<BusinessServices> mServiceList;
+    public OnItemClick itemClick;
+    private ArrayList<Category> mCategoryList;
     private Context mContext;
 
     private LinearLayoutManager mLayoutManager;
 
-    public ServiceListAdapter(Context context, ArrayList<BusinessServices> serviceList) {
-        this.mServiceList = serviceList;
+    public CategoryListAdapter(Context context, ArrayList<Category> categoryList, OnItemClick adapterInterface) {
+        this.mCategoryList = categoryList;
         this.mContext = context;
+        itemClick = adapterInterface;
     }
 
-    public void updateList(ArrayList<BusinessServices> serviceList) {
-        this.mServiceList = serviceList;
+    public void updateList(ArrayList<Category> categoryList) {
+        this.mCategoryList = categoryList;
     }
 
     @Override
-    public ServiceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_list_service, parent, false);
+                .inflate(R.layout.item_list_category, parent, false);
 
-        ServiceViewHolder holder = new ServiceViewHolder(view);
+        CategoryViewHolder holder = new CategoryViewHolder(view);
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(final ServiceViewHolder holder, int position) {
-        final BusinessServices service = mServiceList.get(position);
+    public void onBindViewHolder(final CategoryViewHolder holder, final int position) {
+        Category category = mCategoryList.get(position % mCategoryList.size());
 
-        AdditionalServiceListAdapter mAdapter;
-        String price = mContext.getResources().getString(R.string.business_service_price, String.format("%.2f", service.price));
+        holder.mIvCategoryIcon.setImageResource(category.icon);
+        holder.mTvCategoryName.setText(category.name);
 
-        holder.mTvServiceName.setText(service.name);
-        holder.mTvServicePrice.setText(price);
-        holder.mTvServiceDuration.setText(service.duration);
-        holder.mTvServiceDescription.setText(service.description);
-
-        if (service.additionalServices.size() != 0) {
-            mAdapter = new AdditionalServiceListAdapter(mContext, service.additionalServices);
-
-            mLayoutManager = new LinearLayoutManager(mContext);
-            mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-            holder.mRvAdditionalServices.setHasFixedSize(true);
-            holder.mRvAdditionalServices.setLayoutManager(mLayoutManager);
-
-            if (mAdapter != null) {
-                holder.mRvAdditionalServices.setAdapter(mAdapter);
-            }
-        }
-
-        holder.mClItem.setOnClickListener(new View.OnClickListener() {
+        holder.mIvCategoryIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (service.additionalServices.size() == 0) {
-                    return;
-                }
-
-                if (holder.mTvAdditionalLabel.isShown()) {
-                    holder.mTvAdditionalLabel.setVisibility(View.GONE);
-                    holder.mRvAdditionalServices.setVisibility(View.GONE);
-                    holder.mVAdditionalSeparator.setVisibility(View.GONE);
-                } else {
-                    holder.mTvAdditionalLabel.setVisibility(View.VISIBLE);
-                    holder.mRvAdditionalServices.setVisibility(View.VISIBLE);
-                    holder.mVAdditionalSeparator.setVisibility(View.VISIBLE);
-                }
+                itemClick.onItemClick(position);
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
-        return mServiceList.size();
+        return Integer.MAX_VALUE;
     }
 
-    public class ServiceViewHolder extends RecyclerView.ViewHolder {
+    public class CategoryViewHolder extends RecyclerView.ViewHolder {
 
-        public ConstraintLayout mClItem;
-        public TextView mTvServiceName;
-        public TextView mTvServicePrice;
-        public TextView mTvServiceDuration;
-        public TextView mTvServiceDescription;
-        public TextView mTvAdditionalLabel;
-        public RecyclerView mRvAdditionalServices;
-        public View mVAdditionalSeparator;
+        public ImageView mIvCategoryIcon;
+        public TextView mTvCategoryName;
 
-        public ServiceViewHolder(View view) {
+        public CategoryViewHolder(View view) {
             super(view);
 
-            mClItem = (ConstraintLayout) view.findViewById(R.id.item_layout);
-            mTvServiceName = (TextView) view.findViewById(R.id.service_name);
-            mTvServicePrice = (TextView) view.findViewById(R.id.service_price);
-            mTvServiceDuration = (TextView) view.findViewById(R.id.service_duration);
-            mTvServiceDescription = (TextView) view.findViewById(R.id.service_description);
-            mTvAdditionalLabel = (TextView) view.findViewById(R.id.additional_label);
-            mRvAdditionalServices = (RecyclerView) view.findViewById(R.id.additional_services);
-            mVAdditionalSeparator = (View) view.findViewById(R.id.additional_separator);
+            mIvCategoryIcon = (ImageView) view.findViewById(R.id.category_icon);
+            mTvCategoryName = (TextView) view.findViewById(R.id.category_name);
+
         }
+    }
+
+    public interface OnItemClick {
+
+        void onItemClick(int position);
+
     }
 
 }

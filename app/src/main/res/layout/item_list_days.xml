@@ -9,7 +9,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@color/brand_primary"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/spacing_xtiny"
+        android:paddingLeft="@dimen/spacing_xmicro"
+        android:paddingRight="@dimen/spacing_xmicro"
+        android:paddingTop="@dimen/spacing_tiny">
 
         <TextView
             android:id="@+id/day_name"
@@ -41,5 +45,6 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/hours_list"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 </LinearLayout>

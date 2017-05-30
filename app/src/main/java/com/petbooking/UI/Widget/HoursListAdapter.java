@@ -45,7 +45,20 @@ public class HoursListAdapter extends RecyclerView.Adapter<HoursListAdapter.Hour
 
     @Override
     public void onBindViewHolder(final HourViewHolder holder, int position) {
+
+
+        final GradientDrawable dayBackground = (GradientDrawable) holder.mTvHour.getBackground();
+
+        dayBackground.setColor(Color.TRANSPARENT);
         holder.mTvHour.setText(mHoursList.get(position));
+
+        holder.mTvHour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dayBackground.setColor(mContext.getResources().getColor(R.color.brand_primary));
+                holder.mTvHour.setTextColor(Color.WHITE);
+            }
+        });
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.petbooking.UI.Widget;
+package com.petbooking.UI.Widget.Adapters;
 
 import android.content.Context;
 import android.graphics.Color;

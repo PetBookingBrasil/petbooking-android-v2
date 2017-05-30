@@ -1,20 +1,16 @@
-package com.petbooking.UI.Widget;
+package com.petbooking.UI.Widget.Adapters;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.petbooking.R;
-import com.petbooking.UI.Dashboard.Business.BusinessServices.CategoryListAdapter;
-import com.petbooking.UI.Dashboard.Business.BusinessServices.ServiceListAdapter;
 
 import java.util.ArrayList;
 

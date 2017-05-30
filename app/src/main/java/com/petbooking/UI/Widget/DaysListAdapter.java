@@ -3,6 +3,7 @@ package com.petbooking.UI.Widget;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +24,17 @@ public class DaysListAdapter extends RecyclerView.Adapter<DaysListAdapter.DaysVi
     private Context mContext;
     private ArrayList<String> mDaysList;
 
+    /**
+     * Hours List
+     */
+    private ArrayList<String> mHoursList;
+    private LinearLayoutManager mLayoutManager;
+    private RecyclerView mRvHours;
+
     public DaysListAdapter(Context context, ArrayList<String> daysList) {
         this.mDaysList = daysList;
         this.mContext = context;
+        this.mHoursList = daysList;
     }
 
     public void updateList(ArrayList<String> daysList) {
@@ -66,12 +75,14 @@ public class DaysListAdapter extends RecyclerView.Adapter<DaysListAdapter.DaysVi
 
         public TextView mTvDayName;
         public TextView mTvDay;
+        public RecyclerView mRvHours;
 
         public DaysViewHolder(View view) {
             super(view);
 
             mTvDayName = (TextView) view.findViewById(R.id.day_name);
             mTvDay = (TextView) view.findViewById(R.id.day);
+            mRvHours = (RecyclerView) view.findViewById(R.id.hours_list);
         }
     }
 

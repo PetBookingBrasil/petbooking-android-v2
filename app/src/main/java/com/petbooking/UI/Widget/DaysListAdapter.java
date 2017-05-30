@@ -5,12 +5,16 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.BusinessServices.CategoryListAdapter;
+import com.petbooking.UI.Dashboard.Business.BusinessServices.ServiceListAdapter;
 
 import java.util.ArrayList;
 
@@ -28,8 +32,8 @@ public class DaysListAdapter extends RecyclerView.Adapter<DaysListAdapter.DaysVi
      * Hours List
      */
     private ArrayList<String> mHoursList;
+    private HoursListAdapter mHourAdapter;
     private LinearLayoutManager mLayoutManager;
-    private RecyclerView mRvHours;
 
     public DaysListAdapter(Context context, ArrayList<String> daysList) {
         this.mDaysList = daysList;
@@ -55,6 +59,18 @@ public class DaysListAdapter extends RecyclerView.Adapter<DaysListAdapter.DaysVi
     public void onBindViewHolder(final DaysViewHolder holder, int position) {
 
         GradientDrawable dayBackground = (GradientDrawable) holder.mTvDay.getBackground();
+
+        mHourAdapter = new HoursListAdapter(mContext, mHoursList);
+
+        mLayoutManager = new LinearLayoutManager(mContext);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        holder.mRvHours.setHasFixedSize(true);
+        holder.mRvHours.setLayoutManager(mLayoutManager);
+
+        if (mHourAdapter != null) {
+            holder.mRvHours.setAdapter(mHourAdapter);
+        }
 
         if (position == 5) {
             dayBackground.setColor(Color.WHITE);

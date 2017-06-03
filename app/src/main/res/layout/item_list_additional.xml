@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_micro"
+    android:layout_marginTop="@dimen/spacing_micro">
+
+    <CheckBox
+        android:id="@+id/additional_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/spacing_xmicro"
+        android:layout_marginRight="@dimen/spacing_xmicro"
+        android:button="@drawable/circle_checkbox" />
+
+    <TextView
+        android:id="@+id/additional_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/additional_check"
+        android:text="Name" />
+
+    <TextView
+        android:id="@+id/additional_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/spacing_tiny"
+        android:layout_marginRight="@dimen/spacing_tiny"
+        android:text="R$ 40"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+</RelativeLayout>

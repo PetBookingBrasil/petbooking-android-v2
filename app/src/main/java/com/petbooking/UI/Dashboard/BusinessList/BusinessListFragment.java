@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +68,7 @@ public class BusinessListFragment extends Fragment {
 
             int lastItemPosition = mVerticalLayoutManager.findLastVisibleItemPosition();
 
-            if (lastItemPosition == mAdapter.getItemCount() - 1) {
+            if ((lastItemPosition == mAdapter.getItemCount() - 3) || (lastItemPosition == mAdapter.getItemCount() - 1)) {
 
                 if (!isLastPage) {
                     currentPage++;

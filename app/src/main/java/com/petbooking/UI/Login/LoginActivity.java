@@ -138,6 +138,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
+        CommonUtils.hideKeyboard(LoginActivity.this);
         mAuthService.authUser(email, password, new APICallback() {
             @Override
             public void onSuccess(Object response) {

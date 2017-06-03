@@ -51,6 +51,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:percent:25.1.0'
     compile 'com.android.support:support-v4:25.1.0'
+    compile 'com.github.vipulasri:timelineview:1.0.5'
     compile('com.github.ganfra:material-spinner:1.1.1') {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }

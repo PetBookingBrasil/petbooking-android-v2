@@ -1,6 +1,7 @@
 package com.petbooking.UI.Dashboard.BusinessList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -9,16 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.API.Business.BusinessService;
+import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.BusinessActivity;
 import com.petbooking.UI.Widget.StarsRating;
 import com.petbooking.Utils.AppUtils;
 
@@ -57,7 +59,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
     }
 
     @Override
-    public void onBindViewHolder(BusinessViewHolder holder, int position) {
+    public void onBindViewHolder(final BusinessViewHolder holder, final int position) {
 
         final Business business = mBusinessList.get(position);
 
@@ -68,6 +70,12 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
         String average = String.format("%.1f", business.ratingAverage);
         average = average.replace(",", ".");
+
+        if (business.favorited) {
+            holder.mBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
+        } else {
+            holder.mBtnFavorite.setImageResource(R.drawable.ic_favorite_border);
+        }
 
         if (business.ratingCount == 0) {
             holder.mTvRate.setVisibility(View.GONE);
@@ -84,10 +92,48 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         holder.mTvDistance.setText(distance);
 
         mDistanceBackground.setColor(categoryColor);
+
+        holder.mClBusiness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToBusiness(business.id);
+            }
+        });
+
         holder.mBtnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                favoriteBusiness(business.id);
+                if (business.favorited) {
+                    mBusinessService.deleteFavorite(business.favoritedId, new APICallback() {
+                        @Override
+                        public void onSuccess(Object response) {
+                            mBusinessList.get(position).setFavorited(false);
+                            mBusinessList.get(position).setFavoritedId("");
+                            holder.mBtnFavorite.setImageResource(R.drawable.ic_favorite_border);
+                        }
+
+                        @Override
+                        public void onError(Object error) {
+
+                        }
+                    });
+                } else {
+                    mBusinessService.createFavorite(userId, business.id, new APICallback() {
+                        @Override
+                        public void onSuccess(Object response) {
+                            FavoriteResp resp = (FavoriteResp) response;
+
+                            mBusinessList.get(position).setFavorited(true);
+                            mBusinessList.get(position).setFavoritedId(resp.data.id);
+                            holder.mBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
+                        }
+
+                        @Override
+                        public void onError(Object error) {
+
+                        }
+                    });
+                }
             }
         });
 
@@ -106,41 +152,12 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
     }
 
     /**
-     * Favorite Business
-     *
-     * @param businessId
+     * Go to Business
      */
-    public void favoriteBusiness(String businessId) {
-        mBusinessService.createFavorite(userId, businessId, new APICallback() {
-            @Override
-            public void onSuccess(Object response) {
-
-            }
-
-            @Override
-            public void onError(Object error) {
-
-            }
-        });
-    }
-
-    /**
-     * Disfavor Business
-     *
-     * @param favoriteId
-     */
-    public void disfavorBusiness(String favoriteId) {
-        mBusinessService.deleteFavorite(favoriteId, new APICallback() {
-            @Override
-            public void onSuccess(Object response) {
-
-            }
-
-            @Override
-            public void onError(Object error) {
-
-            }
-        });
+    public void goToBusiness(String businessId) {
+        Intent businessIntent = new Intent(mContext, BusinessActivity.class);
+        businessIntent.putExtra("businessId", businessId);
+        mContext.startActivity(businessIntent);
     }
 
     public class BusinessViewHolder extends RecyclerView.ViewHolder {

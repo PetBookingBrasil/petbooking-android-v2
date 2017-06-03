@@ -110,6 +110,18 @@
     <string name="business_address">%1$s, %2$s, %3$s, %4$s</string>
     <string name="business_rating_count">(%1$d)</string>
     <string name="business_distance">%1$s Km</string>
+    <string name="business_phone">Phone: </string>
+    <string name="business_tab_services">Services</string>
+    <string name="business_tab_information">Information</string>
+    <string name="business_label_description">Description</string>
+    <string name="business_label_contact">Contact</string>
+    <string name="business_label_website">Website</string>
+    <string name="business_label_social_network">Social Network</string>
+    <string name="business_label_location">Location</string>
+    <string name="business_label_reviews">Reviews</string>
+    <string name="business_label_additional">Additional</string>
+    <string name="business_service_price">U$ %1$s</string>
+    <string name="business_service_finish">Finish Schedule</string>
 
     <!-- Dialog -->
     <string name="dialog_picture_title">Select Photo</string>

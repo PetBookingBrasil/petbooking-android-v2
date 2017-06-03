@@ -1,6 +1,7 @@
 package com.petbooking.API.Business;
 
 import com.petbooking.API.APIClient;
+import com.petbooking.API.Business.Models.BusinessResp;
 import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.API.Business.Models.FavoriteRqt;
@@ -29,7 +30,7 @@ public class BusinessService {
     }
 
     public void listBusiness(String coords, String userId, int page, final APICallback callback) {
-        Call<BusinessesResp> call = mBusinessInterface.listBusiness(coords,userId, page);
+        Call<BusinessesResp> call = mBusinessInterface.listBusiness(coords, userId, page);
         call.enqueue(new Callback<BusinessesResp>() {
             @Override
             public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {
@@ -52,6 +53,29 @@ public class BusinessService {
             }
         });
     }
+
+    public void getBusiness(String businessId, String userId, final APICallback callback) {
+        Call<BusinessResp> call = mBusinessInterface.getBusiness(businessId, userId);
+        call.enqueue(new Callback<BusinessResp>() {
+            @Override
+            public void onResponse(Call<BusinessResp> call, Response<BusinessResp> response) {
+                if (response.isSuccessful()) {
+                    BusinessResp responseItem = response.body();
+                    Business business = APIUtils.parseBusiness(responseItem.data.id, responseItem.data.attributes);
+
+                    callback.onSuccess(business);
+                } else {
+                    callback.onError(APIUtils.handleError(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BusinessResp> call, Throwable t) {
+
+            }
+        });
+    }
+
 
     public void listHighlightBusiness(String userId, final APICallback callback) {
         Call<BusinessesResp> call = mBusinessInterface.listHighlightBusiness(userId);

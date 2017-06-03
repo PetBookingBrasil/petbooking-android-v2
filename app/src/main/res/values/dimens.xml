@@ -9,6 +9,7 @@
     <dimen name="right_left_spinner_padding">20dp</dimen>
     <dimen name="floating_label_bottom_spacing">8dp</dimen>
     <dimen name="star_rating_dimen">15dp</dimen>
+    <dimen name="business_fragment_spacing">15dp</dimen>
 
     <!-- Common spacing used by views -->
     <dimen name="spacing_nano">2dp</dimen>

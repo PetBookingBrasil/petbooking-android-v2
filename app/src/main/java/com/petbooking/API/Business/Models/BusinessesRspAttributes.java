@@ -45,6 +45,8 @@ public class BusinessesRspAttributes {
     public String googlePlus;
 
     public String businesstype;
+    public boolean favorited;
+
     @SerializedName("imported")
     public boolean imported;
 
@@ -74,7 +76,7 @@ public class BusinessesRspAttributes {
 
     public static class UserFavorite {
 
-        public Integer id;
+        public String id;
 
         @SerializedName("user_id")
         public Integer userId;

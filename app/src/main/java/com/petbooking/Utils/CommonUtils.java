@@ -105,6 +105,21 @@ public class CommonUtils {
 
     }
 
+    public static String formatPhone(String phone) {
+        switch (phone.length()) {
+            case 8:
+                return phone.substring(0, 4) + "." + phone.substring(4, 8);
+            case 9:
+                return phone.substring(0, 5) + "." + phone.substring(5, 9);
+            case 10:
+                return "(" + phone.substring(0, 2) + ") " + phone.substring(2, 6) + "." + phone.substring(6, 10);
+            case 11:
+                return "(" + phone.substring(0, 2) + ") " + phone.substring(2, 7) + "." + phone.substring(7, 11);
+            default:
+                return "";
+        }
+    }
+
     public static String formatDate(int day, int month, int year) {
         month++;
         String dayAux = day < 10 ? ("0" + day) : (day + "");

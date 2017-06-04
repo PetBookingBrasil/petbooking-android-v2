@@ -2,14 +2,19 @@ package com.petbooking.API.User;
 
 import com.petbooking.API.APIClient;
 import com.petbooking.API.Auth.Models.AuthUserResp;
+import com.petbooking.API.Business.Models.BusinessResp;
+import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.API.User.Models.CreateSocialUserRqt;
 import com.petbooking.API.User.Models.CreateUserRqt;
 import com.petbooking.API.User.Models.RecoverPasswordRqt;
 import com.petbooking.API.User.Models.UpdateUserRqt;
 import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Models.Business;
 import com.petbooking.Models.User;
 import com.petbooking.Models.UserAddress;
 import com.petbooking.Utils.APIUtils;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,7 +47,6 @@ public class UserService {
             }
         });
     }
-
 
     public void getUser(String userId, final APICallback callback) {
         Call<AuthUserResp> call = mUserInterface.getUser(userId);
@@ -117,6 +121,31 @@ public class UserService {
 
             @Override
             public void onFailure(Call<AuthUserResp> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void listFavorites(String userId, String coords, int page, final APICallback callback) {
+        Call<BusinessesResp> call = mUserInterface.listFavorites(userId, coords, page);
+        call.enqueue(new Callback<BusinessesResp>() {
+            @Override
+            public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {
+                if (response.isSuccessful()) {
+                    BusinessesResp responseList = response.body();
+                    ArrayList<Business> businessList = new ArrayList<>();
+                    for (BusinessesResp.Item item : responseList.data) {
+                        businessList.add(APIUtils.parseBusiness(item.id, item.attributes));
+                    }
+
+                    callback.onSuccess(businessList);
+                } else {
+                    callback.onError(APIUtils.handleError(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BusinessesResp> call, Throwable t) {
 
             }
         });

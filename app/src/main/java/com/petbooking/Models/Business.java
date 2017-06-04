@@ -77,4 +77,6 @@ public class Business {
     public void setFavoritedId(String favoritedId) {
         this.favoritedId = favoritedId;
     }
+
 }
+

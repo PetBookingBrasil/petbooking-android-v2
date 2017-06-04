@@ -1,6 +1,8 @@
 package com.petbooking.API.User;
 
 import com.petbooking.API.Auth.Models.AuthUserResp;
+import com.petbooking.API.Business.Models.BusinessResp;
+import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.API.User.Models.CreateSocialUserRqt;
 import com.petbooking.API.User.Models.CreateUserRqt;
 import com.petbooking.API.User.Models.RecoverPasswordRqt;
@@ -15,6 +17,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Luciano José on 16/04/2017.
@@ -45,5 +48,11 @@ public interface UserInterface {
 
     @GET(APIUserConstants.ENDPOINT_USER_ADDRESS)
     Call<UserAddress> getAddress(@Path(APIConstants.PATH_PARAM) String zipcode);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
+    @GET(APIUserConstants.FAVORITES_ENDPOINT)
+    Call<BusinessesResp> listFavorites(@Path(APIConstants.PATH_PARAM) String userId,
+                                       @Query(APIConstants.QUERY_COORDS) String coords,
+                                       @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex);
 
 }

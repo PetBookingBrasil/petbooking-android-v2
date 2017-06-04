@@ -78,9 +78,5 @@ public class Business {
         this.favoritedId = favoritedId;
     }
 
-    public Business(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 }
 

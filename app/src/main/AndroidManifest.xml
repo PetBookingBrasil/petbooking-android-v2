@@ -109,6 +109,17 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Dashboard.DashboardActivity" />
+
+        </activity>
+        <activity
+            android:name=".UI.Menu.Settings.SettingsActivity"
+            android:configChanges="orientation"
+            android:label="@string/settings"
+            android:parentActivityName=".UI.Dashboard.DashboardActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Dashboard.DashboardActivity" />
         </activity>
         <activity
             android:name=".UI.Menu.Pets.RegisterPet.RegisterPetActivity"

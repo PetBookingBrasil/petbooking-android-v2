@@ -34,6 +34,7 @@ import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Content.ContentFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Login.LoginActivity;
+import com.petbooking.UI.Menu.Favorites.FavoritesActivity;
 import com.petbooking.UI.Menu.Pets.PetsActivity;
 import com.petbooking.UI.Menu.Profile.ProfileActivity;
 import com.petbooking.Utils.APIUtils;
@@ -175,16 +176,20 @@ public class DashboardActivity extends AppCompatActivity implements
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        Intent activity;
 
         if (id == R.id.my_pets) {
-            Intent logoutIntent = new Intent(this, PetsActivity.class);
-            startActivity(logoutIntent);
+            activity = new Intent(this, PetsActivity.class);
+            startActivity(activity);
         } else if (id == R.id.payments) {
             Log.d("PAYMENTS", "PAYMENTS");
+        } else if (id == R.id.favorites) {
+            activity = new Intent(this, FavoritesActivity.class);
+            startActivity(activity);
         } else if (id == R.id.logout) {
             mSessionManager.logout();
-            Intent logoutIntent = new Intent(this, LoginActivity.class);
-            startActivity(logoutIntent);
+            activity = new Intent(this, LoginActivity.class);
+            startActivity(activity);
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);

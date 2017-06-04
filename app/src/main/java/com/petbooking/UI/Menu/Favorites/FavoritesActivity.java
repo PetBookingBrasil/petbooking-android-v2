@@ -1,7 +1,8 @@
 package com.petbooking.UI.Menu.Favorites;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -31,6 +32,7 @@ public class FavoritesActivity extends AppCompatActivity {
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRvFavorites.setHasFixedSize(true);
         mRvFavorites.setLayoutManager(mLayoutManager);
+        mRvFavorites.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         if (mAdapter != null) {
             mRvFavorites.setAdapter(mAdapter);

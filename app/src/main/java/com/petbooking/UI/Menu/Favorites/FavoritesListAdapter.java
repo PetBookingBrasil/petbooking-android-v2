@@ -1,6 +1,7 @@
 package com.petbooking.UI.Menu.Favorites;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.petbooking.Models.Business;
 import com.petbooking.R;
+import com.petbooking.UI.Widget.StarsRating;
 
 import java.util.ArrayList;
 
@@ -45,9 +47,16 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
     public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
 
         final Business business = mBusinessList.get(position);
+        String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber);
+        String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
+        String average = String.format("%.1f", business.ratingAverage);
+        average = average.replace(",", ".");
 
         holder.mTvName.setText(business.name);
-
+        holder.mTvStreet.setText(street);
+        holder.mTvRate.setText(average);
+        holder.mRbBusiness.setRating(business.ratingAverage);
+        holder.mTvRatingCount.setText(ratingCount);
     }
 
     @Override
@@ -58,14 +67,22 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
 
     public class FavoriteViewHolder extends RecyclerView.ViewHolder {
 
-        LinearLayout mClBusiness;
+        ConstraintLayout mClBusiness;
         TextView mTvName;
+        TextView mTvStreet;
+        TextView mTvRate;
+        TextView mTvRatingCount;
+        StarsRating mRbBusiness;
 
         public FavoriteViewHolder(View view) {
             super(view);
 
-            mClBusiness = (LinearLayout) view.findViewById(R.id.business_item);
+            mClBusiness = (ConstraintLayout) view.findViewById(R.id.business_item);
             mTvName = (TextView) view.findViewById(R.id.business_name);
+            mTvStreet = (TextView) view.findViewById(R.id.business_street);
+            mTvRatingCount = (TextView) view.findViewById(R.id.business_rating_count);
+            mTvRate = (TextView) view.findViewById(R.id.business_rating_average);
+            mRbBusiness = (StarsRating) view.findViewById(R.id.business_rating_stars);
         }
     }
 

@@ -36,35 +36,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/distance_background"
+            android:background="@drawable/seekbar_value_background"
             android:paddingBottom="@dimen/spacing_micro"
             android:paddingLeft="@dimen/spacing_xmicro"
             android:paddingRight="@dimen/spacing_xmicro"
             android:paddingTop="@dimen/spacing_micro"
-            android:text="0 Km" />
+            android:text="0 Km"
+            android:textSize="12sp" />
 
         <SeekBar
             android:id="@+id/distanceBar"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/maxDistance"
-            android:max="10"
-            android:progress="3"
-            android:layout_toEndOf="@+id/minDistance"
-            android:layout_alignParentStart="true" />
+            android:layout_toRightOf="@+id/minDistance"
+            android:max="100"
+            android:maxHeight="5dp"
+            android:paddingEnd="0dp"
+            android:paddingStart="0dp"
+            android:progress="50"
+            android:progressDrawable="@drawable/custom_seekbar"
+            android:splitTrack="false"
+            android:thumb="@drawable/seekbar_thumb" />
 
         <TextView
             android:id="@+id/maxDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:background="@drawable/distance_background"
+            android:background="@drawable/seekbar_value_background"
             android:paddingBottom="@dimen/spacing_micro"
             android:paddingLeft="@dimen/spacing_xmicro"
             android:paddingRight="@dimen/spacing_xmicro"
             android:paddingTop="@dimen/spacing_micro"
-            android:text="50 Km" />
+            android:text="50 Km"
+            android:textSize="12sp" />
 
     </RelativeLayout>
 

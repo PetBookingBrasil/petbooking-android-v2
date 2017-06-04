@@ -1,6 +1,7 @@
 package com.petbooking.UI.Menu.Favorites;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.petbooking.Models.Business;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.BusinessActivity;
 import com.petbooking.UI.Widget.StarsRating;
 
 import java.util.ArrayList;
@@ -57,13 +59,27 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
         holder.mTvRate.setText(average);
         holder.mRbBusiness.setRating(business.ratingAverage);
         holder.mTvRatingCount.setText(ratingCount);
+        holder.mClBusiness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToBusiness(business.id);
+            }
+        });
     }
-
+    
     @Override
     public int getItemCount() {
         return mBusinessList.size();
     }
 
+    /**
+     * Go to Business
+     */
+    public void goToBusiness(String businessId) {
+        Intent businessIntent = new Intent(mContext, BusinessActivity.class);
+        businessIntent.putExtra("businessId", businessId);
+        mContext.startActivity(businessIntent);
+    }
 
     public class FavoriteViewHolder extends RecyclerView.ViewHolder {
 

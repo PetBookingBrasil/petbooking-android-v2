@@ -66,7 +66,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
             }
         });
     }
-    
+
     @Override
     public int getItemCount() {
         return mBusinessList.size();

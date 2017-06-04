@@ -1,6 +1,7 @@
 package com.petbooking.UI.Menu.Favorites;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +18,7 @@ import com.petbooking.R;
 
 import java.util.ArrayList;
 
-public class FavoritesActivity extends BaseActivity {
+public class FavoritesActivity extends AppCompatActivity {
 
     private UserService mUserService;
     private LocationManager mLocationManager;
@@ -53,6 +54,9 @@ public class FavoritesActivity extends BaseActivity {
         }
     }
 
+    /**
+     * List Favorites Business
+     */
     public void listFavorites() {
         mUserService.listFavorites(userId, mLocationManager.getLocationCoords(), 1, new APICallback() {
             @Override

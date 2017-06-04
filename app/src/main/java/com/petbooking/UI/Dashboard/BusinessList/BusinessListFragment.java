@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.Interfaces.APICallback;
@@ -106,8 +107,8 @@ public class BusinessListFragment extends Fragment {
 
         mRvBusinessList.setLayoutManager(mVerticalLayoutManager);
         mRvBusinessSlider.setLayoutManager(mHorizontalLayoutManager);
-        mAdapter = new BusinessListAdapter(getContext(), mBusinessList);
-        mSliderAdapter = new BusinessListAdapter(getContext(), mBusinessSlider);
+        mAdapter = new BusinessListAdapter(getContext(), mBusinessList, Glide.with(getContext()));
+        mSliderAdapter = new BusinessListAdapter(getContext(), mBusinessSlider, Glide.with(getContext()));
 
         if (mAdapter != null) {
             mRvBusinessList.setAdapter(mAdapter);

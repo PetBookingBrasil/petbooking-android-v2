@@ -13,7 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.Request;
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.Interfaces.APICallback;
@@ -36,12 +38,14 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
     private ArrayList<Business> mBusinessList;
     private Context mContext;
     private String userId;
+    private RequestManager mGlide;
 
-    public BusinessListAdapter(Context context, ArrayList<Business> businessList) {
+    public BusinessListAdapter(Context context, ArrayList<Business> businessList, RequestManager glide) {
         this.mBusinessList = businessList;
         this.mContext = context;
         this.mBusinessService = new BusinessService();
         this.userId = SessionManager.getInstance().getUserLogged().id;
+        this.mGlide = glide;
     }
 
     public void updateList(ArrayList<Business> businessList) {
@@ -136,9 +140,8 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
                 }
             }
         });
-
-        Glide.with(mContext)
-                .load(business.image.url)
+        
+        mGlide.load(business.image.url)
                 .error(R.drawable.business_background)
                 .placeholder(R.drawable.business_background)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)

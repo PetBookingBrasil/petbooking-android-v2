@@ -37,6 +37,7 @@ import com.petbooking.UI.Login.LoginActivity;
 import com.petbooking.UI.Menu.Favorites.FavoritesActivity;
 import com.petbooking.UI.Menu.Pets.PetsActivity;
 import com.petbooking.UI.Menu.Profile.ProfileActivity;
+import com.petbooking.UI.Menu.Settings.SettingsActivity;
 import com.petbooking.Utils.APIUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -186,6 +187,9 @@ public class DashboardActivity extends AppCompatActivity implements
         } else if (id == R.id.favorites) {
             activity = new Intent(this, FavoritesActivity.class);
             startActivity(activity);
+        } else if (id == R.id.settings) {
+            activity = new Intent(this, SettingsActivity.class);
+            startActivity(activity);
         } else if (id == R.id.logout) {
             mSessionManager.logout();
             activity = new Intent(this, LoginActivity.class);
@@ -198,7 +202,8 @@ public class DashboardActivity extends AppCompatActivity implements
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         if (requestCode == RC_PERMISSION) {
             if (ContextCompat.checkSelfPermission(this, AppConstants.PERMISSION_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 mLocationManager.requestLocation();
@@ -219,6 +224,7 @@ public class DashboardActivity extends AppCompatActivity implements
     /**
      * Request Location Permission
      */
+
     private void checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, AppConstants.PERMISSION_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mLocationManager.requestLocation();

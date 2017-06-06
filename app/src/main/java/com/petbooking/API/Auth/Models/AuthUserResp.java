@@ -55,7 +55,7 @@ public class AuthUserResp {
         public String cpf;
 
         @SerializedName("search_range")
-        public String searchRange;
+        public int searchRange;
 
         @SerializedName("accepts_email")
         public boolean acceptsEmail;

@@ -123,6 +123,14 @@
     <string name="business_service_price">U$ %1$s</string>
     <string name="business_service_finish">Finish Schedule</string>
 
+    <!-- Settings -->
+    <string name="push">Push</string>
+    <string name="email">Email</string>
+    <string name="sms">SMS</string>
+    <string name="about">About</string>
+    <string name="support">Support</string>
+    <string name="terms">Terms</string>
+
     <!-- Dialog -->
     <string name="dialog_picture_title">Select Photo</string>
     <string name="dialog_picture_text">Select the image input method you want to use.</string>

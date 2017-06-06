@@ -65,4 +65,11 @@ public class StyledSwitch extends RelativeLayout {
         mTvTitle.setText(title);
     }
 
+    public void setChecked(boolean checked) {
+        mSwitch.setChecked(checked);
+    }
+
+    public boolean isChecked() {
+        return mSwitch.isChecked();
+    }
 }

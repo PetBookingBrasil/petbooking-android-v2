@@ -6,11 +6,15 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.petbooking.R;
+import com.petbooking.UI.Widget.StyledSwitch;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private TextView mTvMaxDistance;
     private SeekBar mSbDistance;
+    private StyledSwitch mSwPush;
+    private StyledSwitch mSwEmail;
+    private StyledSwitch mSwSms;
 
     SeekBar.OnSeekBarChangeListener distanceListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
@@ -36,6 +40,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         mTvMaxDistance = (TextView) findViewById(R.id.maxDistance);
         mSbDistance = (SeekBar) findViewById(R.id.distanceBar);
+        mSwPush = (StyledSwitch) findViewById(R.id.push);
+        mSwEmail = (StyledSwitch) findViewById(R.id.email);
+        mSwSms = (StyledSwitch) findViewById(R.id.sms);
         mSbDistance.setOnSeekBarChangeListener(distanceListener);
     }
 }

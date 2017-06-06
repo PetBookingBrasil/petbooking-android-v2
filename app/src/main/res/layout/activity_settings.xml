@@ -75,7 +75,6 @@
 
     </RelativeLayout>
 
-
     <View
         android:id="@+id/separatorLocation"
         android:layout_width="0dp"
@@ -92,56 +91,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/spacing_tiny"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="@string/notifications"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/separatorLocation" />
 
-    <Switch
+    <com.petbooking.UI.Widget.StyledSwitch
         android:id="@+id/push"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/spacing_tiny"
-        android:text="@string/push"
-        android:textColor="@color/text_color"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelNotification" />
 
-    <Switch
+    <com.petbooking.UI.Widget.StyledSwitch
         android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/spacing_tiny"
-        android:text="@string/email"
-        android:textColor="@color/text_color"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/push" />
 
-    <Switch
+    <com.petbooking.UI.Widget.StyledSwitch
         android:id="@+id/sms"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/spacing_tiny"
-        android:text="@string/sms"
-        android:textColor="@color/text_color"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
-    <View
+    <TextView
         android:id="@+id/separatorNotifications"
         android:layout_width="0dp"
         android:layout_height="1dp"
@@ -204,5 +197,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/terms" />
+
 
 </android.support.constraint.ConstraintLayout>

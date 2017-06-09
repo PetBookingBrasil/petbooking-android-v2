@@ -1,6 +1,7 @@
 package com.petbooking.API.Business.Models;
 
 import com.google.gson.annotations.SerializedName;
+import com.petbooking.API.Generic.AvatarResp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class BusinessesRspAttributes {
     public String website;
     public String instagram;
     public String snapchat;
+    public AvatarResp avatar;
     public ArrayList<BusinessesResp.Picture> pictures;
 
     @SerializedName("transportation_fee")

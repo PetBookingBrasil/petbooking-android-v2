@@ -6,6 +6,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.petbooking.API.User.UserService;
 import com.petbooking.BaseActivity;
 import com.petbooking.Events.HideLoadingEvt;
@@ -41,7 +42,7 @@ public class FavoritesActivity extends AppCompatActivity {
         mFavoriteList = new ArrayList<>();
         listFavorites();
         mRvFavorites = (RecyclerView) findViewById(R.id.favorites_list);
-        mAdapter = new FavoritesListAdapter(this, mFavoriteList);
+        mAdapter = new FavoritesListAdapter(this, mFavoriteList, Glide.with(this));
         mLayoutManager = new LinearLayoutManager(this);
 
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

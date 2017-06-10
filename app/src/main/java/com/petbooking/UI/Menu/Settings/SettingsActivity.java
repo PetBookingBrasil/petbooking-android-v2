@@ -1,8 +1,10 @@
 package com.petbooking.UI.Menu.Settings;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -14,6 +16,7 @@ import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Menu.Settings.Contact.ContactActivity;
 import com.petbooking.UI.Widget.StyledSwitch;
 import com.petbooking.Utils.APIUtils;
 
@@ -27,6 +30,8 @@ public class SettingsActivity extends AppCompatActivity {
     private StyledSwitch mSwPush;
     private StyledSwitch mSwEmail;
     private StyledSwitch mSwSms;
+
+    private TextView mTvContact;
 
     SeekBar.OnSeekBarChangeListener distanceListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
@@ -45,6 +50,17 @@ public class SettingsActivity extends AppCompatActivity {
         }
     };
 
+    View.OnClickListener aboutListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int id = v.getId();
+
+            if (id == mTvContact.getId()) {
+                goToContact();
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +75,9 @@ public class SettingsActivity extends AppCompatActivity {
         mSwEmail = (StyledSwitch) findViewById(R.id.email);
         mSwSms = (StyledSwitch) findViewById(R.id.sms);
         mSbDistance.setOnSeekBarChangeListener(distanceListener);
+
+        mTvContact = (TextView) findViewById(R.id.contact);
+        mTvContact.setOnClickListener(aboutListener);
 
         getUserInfo();
     }
@@ -120,5 +139,10 @@ public class SettingsActivity extends AppCompatActivity {
             public void onError(Object error) {
             }
         });
+    }
+
+    public void goToContact() {
+        Intent contactIntent = new Intent(this, ContactActivity.class);
+        startActivity(contactIntent);
     }
 }

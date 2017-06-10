@@ -81,6 +81,7 @@
     <string name="notifications">Notifications</string>
     <string name="schedules">Schedules</string>
     <string name="new_pet">New Pet</string>
+    <string name="contact_us">Contact Us</string>
 
     <!-- Profile -->
     <string name="profile_dialog_title">Update Profile</string>

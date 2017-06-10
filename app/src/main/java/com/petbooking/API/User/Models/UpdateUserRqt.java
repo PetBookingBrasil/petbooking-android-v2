@@ -1,5 +1,6 @@
 package com.petbooking.API.User.Models;
 
+import com.google.gson.annotations.SerializedName;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Models.User;
 
@@ -11,7 +12,8 @@ public class UpdateUserRqt {
     public UpdateUserRqt(String id, User user) {
         this.attributes = new Attributes(user.name, user.birthday, user.phone, user.cpf,
                 user.email, user.password, user.zipcode, user.street, user.neighborhood,
-                user.streetNumber, user.city, user.state);
+                user.streetNumber, user.city, user.state, user.searchRange, user.acceptsEmail,
+                user.acceptsNotifications, user.acceptsSms);
         this.data = new Data(id, attributes);
     }
 
@@ -41,10 +43,19 @@ public class UpdateUserRqt {
         public String street_number;
         public String city;
         public String state;
+        @SerializedName("search_range")
+        public int searchRange;
+        @SerializedName("accepts_email")
+        public boolean acceptsEmail;
+        @SerializedName("accepts_push")
+        public boolean acceptsNotifications;
+        @SerializedName("accepts_sms")
+        public boolean acceptsSms;
 
         public Attributes(String name, String birthday, String phone, String cpf, String email, String password,
                           String zipcode, String street, String neighborhood, String street_number,
-                          String city, String state) {
+                          String city, String state, int searchRange, boolean acceptsEmail,
+                          boolean acceptsNotifications, boolean acceptsSms) {
             this.name = name;
             this.birthday = birthday;
             this.phone = phone;
@@ -57,6 +68,10 @@ public class UpdateUserRqt {
             this.street_number = street_number;
             this.city = city;
             this.state = state;
+            this.searchRange = searchRange;
+            this.acceptsEmail = acceptsEmail;
+            this.acceptsNotifications = acceptsNotifications;
+            this.acceptsSms = acceptsSms;
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.petbooking.Models;
 
 import com.petbooking.API.Business.Models.BusinessesRspAttributes;
+import com.petbooking.API.Generic.AvatarResp;
 
 /**
  * Created by Luciano José on 07/05/2017.
@@ -30,6 +31,7 @@ public class Business {
     public String twitter;
     public String googlePlus;
     public BusinessesRspAttributes.CoverImage image;
+    public AvatarResp avatar;
     public BusinessesRspAttributes.UserFavorite userFavorite;
     public boolean favorited;
     public boolean imported;
@@ -40,7 +42,7 @@ public class Business {
                     String neighborhood, String streetNumber, String zipcode, float ratingAverage, int ratingCount,
                     float distance, String businesstype, Double latitude, Double longitude,
                     String website, String phone, String facebook, String instagram, String twitter,
-                    String googlePlus, BusinessesRspAttributes.CoverImage image,
+                    String googlePlus, BusinessesRspAttributes.CoverImage image, AvatarResp avatar,
                     BusinessesRspAttributes.UserFavorite userFavorite, boolean favorited, boolean imported, String favoritedId) {
         this.id = id;
         this.name = name;
@@ -64,6 +66,7 @@ public class Business {
         this.instagram = instagram;
         this.googlePlus = googlePlus;
         this.image = image;
+        this.avatar = avatar;
         this.userFavorite = userFavorite;
         this.favorited = favorited;
         this.imported = imported;
@@ -77,4 +80,6 @@ public class Business {
     public void setFavoritedId(String favoritedId) {
         this.favoritedId = favoritedId;
     }
+
 }
+

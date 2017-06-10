@@ -27,7 +27,7 @@ public class User {
     public String gender;
     public String cpf;
     public String password;
-    public String searchRange;
+    public int searchRange;
     public boolean phoneActivated;
     public boolean acceptsSms;
     public boolean acceptsEmail;
@@ -45,7 +45,7 @@ public class User {
     public User(String id, String authToken, String name, String birthday, String phone, boolean phoneActivated,
                 String phoneCodeCreatedAt, String email, String futureEventsCount, boolean acceptsSms, String zipcode,
                 String street, String neighborhood, String streetNumber, String city, String state, String nickname,
-                String gender, String cpf, String searchRange, boolean acceptsEmail, boolean acceptsNotifications,
+                String gender, String cpf, int searchRange, boolean acceptsEmail, boolean acceptsNotifications,
                 boolean acceptsTerms, boolean validForScheduling, AvatarResp avatar) {
         this.id = id;
         this.authToken = authToken;
@@ -73,4 +73,14 @@ public class User {
         this.validForScheduling = validForScheduling;
         this.avatar = avatar;
     }
+
+    public User(String id, int searchRange, boolean acceptsSms, boolean acceptsEmail, boolean acceptsNotifications) {
+        this.id = id;
+        this.searchRange = searchRange;
+        this.acceptsSms = acceptsSms;
+        this.acceptsEmail = acceptsEmail;
+        this.acceptsNotifications = acceptsNotifications;
+    }
 }
+
+

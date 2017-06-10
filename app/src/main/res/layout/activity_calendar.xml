@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.petbooking.UI.Menu.Calendar.CalendarActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/brand_primary"
+        android:paddingBottom="@dimen/spacing_small"
+        android:paddingTop="@dimen/spacing_small">
+
+        <ImageView
+            android:id="@+id/previous_date"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/spacing_xmicro"
+            android:layout_marginRight="@dimen/spacing_xmicro"
+            app:srcCompat="@drawable/ic_arrow_left" />
+
+        <include layout="@layout/item_list_calendar" />
+
+        <ImageView
+            android:id="@+id/next_date"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/spacing_xmicro"
+            android:layout_marginRight="@dimen/spacing_xmicro"
+            app:srcCompat="@drawable/ic_arrow_right" />
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/item_list_pet_calendar" />
+
+</LinearLayout>

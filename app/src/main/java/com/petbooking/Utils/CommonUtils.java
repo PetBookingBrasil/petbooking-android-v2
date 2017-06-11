@@ -10,11 +10,13 @@ import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 import com.petbooking.Constants.AppConstants;
+import com.petbooking.Models.CalendarItem;
 import com.petbooking.Models.UserAddress;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -212,4 +214,19 @@ public class CommonUtils {
 
     }
 
+    public static CalendarItem parseCalendarItem(Date date){
+        String dayName;
+        String monthName;
+
+        CalendarItem calendarItem;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        dayName = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+        monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+        calendarItem = new CalendarItem(calendar.get(calendar.DAY_OF_MONTH), calendar.get(calendar.MONTH) + 1, calendar.get(calendar.YEAR),
+                dayName,
+                monthName);
+        return calendarItem;
+    }
 }

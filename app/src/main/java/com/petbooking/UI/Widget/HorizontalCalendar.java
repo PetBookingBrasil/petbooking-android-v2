@@ -7,23 +7,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.text.format.DateFormat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.google.gson.Gson;
 import com.petbooking.Models.CalendarItem;
 import com.petbooking.R;
 import com.petbooking.UI.Widget.Adapters.HorizontalCalendarAdapter;
 import com.petbooking.Utils.CommonUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -58,17 +55,21 @@ public class HorizontalCalendar extends LinearLayout {
     private void initView(Context context, AttributeSet attrs) {
         View view = View.inflate(context, R.layout.widget_horizontal_calendar, this);
 
+        defaultDate = new Date();
+        CalendarItem item = CommonUtils.parseCalendarItem(defaultDate);
+
         mDateList = new ArrayList<>();
+        mDateList.add(item);
         currentPosition = 0;
 
         mRvCalendar = (RecyclerView) view.findViewById(R.id.date_list);
         mLayoutManager = new LinearLayoutManager(context);
-        mAdapter = new HorizontalCalendarAdapter(context, mDateList);
         mSnapHelper = new LinearSnapHelper();
 
         mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRvCalendar.setHasFixedSize(true);
         mRvCalendar.setLayoutManager(mLayoutManager);
+        mAdapter = new HorizontalCalendarAdapter(context, mDateList);
         mRvCalendar.setAdapter(mAdapter);
         mSnapHelper.attachToRecyclerView(mRvCalendar);
 
@@ -97,15 +98,6 @@ public class HorizontalCalendar extends LinearLayout {
     }
 
     /**
-     * Set default date
-     *
-     * @param defaultDate
-     */
-    public void setDefaultDate(Date defaultDate) {
-        this.defaultDate = defaultDate;
-    }
-
-    /**
      * Set Date Interval
      */
     public void setDateInterval(Date startDate, Date endDate) {
@@ -124,6 +116,7 @@ public class HorizontalCalendar extends LinearLayout {
 
         @Override
         protected Void doInBackground(Void... params) {
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             String dayName;
             String monthName;
 
@@ -140,11 +133,13 @@ public class HorizontalCalendar extends LinearLayout {
                         monthName);
 
                 mDateList.add(calendarItem);
+
+                if (df.format(calendar.getTime()).equals(df.format(defaultDate))) {
+                    defaultPosition = mDateList.size() - 1;
+                }
+
                 calendar.add(Calendar.DATE, 1);
             }
-
-            mAdapter.updateList(mDateList);
-            mAdapter.notifyDataSetChanged();
 
             return null;
         }
@@ -153,6 +148,9 @@ public class HorizontalCalendar extends LinearLayout {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
+            mAdapter.updateList(mDateList);
+            mAdapter.notifyDataSetChanged();
+            mRvCalendar.scrollToPosition(defaultPosition);
         }
     }
 }

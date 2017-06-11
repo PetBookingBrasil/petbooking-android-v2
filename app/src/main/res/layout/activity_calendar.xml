@@ -24,7 +24,17 @@
             android:layout_marginRight="@dimen/spacing_xmicro"
             app:srcCompat="@drawable/ic_arrow_left" />
 
-        <include layout="@layout/item_list_calendar" />
+        <com.petbooking.UI.Widget.HorizontalCalendar
+            android:id="@+id/horizontal_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/next_date"
+            android:layout_toRightOf="@+id/previous_date"
+            android:gravity="center" />
+
+        <!--<include layout="@layout/item_list_calendar" />-->
 
         <ImageView
             android:id="@+id/next_date"

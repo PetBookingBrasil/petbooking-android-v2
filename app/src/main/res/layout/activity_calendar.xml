@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context="com.petbooking.UI.Menu.Calendar.CalendarActivity">
 
@@ -34,8 +35,6 @@
             android:layout_toRightOf="@+id/previous_date"
             android:gravity="center" />
 
-        <!--<include layout="@layout/item_list_calendar" />-->
-
         <ImageView
             android:id="@+id/next_date"
             android:layout_width="30dp"
@@ -49,6 +48,9 @@
 
     </RelativeLayout>
 
-    <include layout="@layout/item_list_pet_calendar" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/pet_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

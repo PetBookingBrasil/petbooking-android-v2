@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.util.Base64;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 import com.petbooking.Constants.AppConstants;
@@ -159,6 +160,10 @@ public class CommonUtils {
         return date;
     }
 
+    public static String formatDay(int day) {
+        return day < 10 ? "0" + day : day + "";
+    }
+
     public static long getRefreshDate(long timestamp) {
         String epochAuth = String.valueOf(timestamp);
         Date expirationDate = CommonUtils.getUTCDate(epochAuth);
@@ -190,4 +195,21 @@ public class CommonUtils {
     public static String formatZipcode(String zipcode) {
         return zipcode.substring(0, 5) + '-' + zipcode.substring(5);
     }
+
+    public static String formatDayName(String name) {
+        if (name.contains("-")) {
+            String first = name.split("-")[0];
+            String last = name.split("-")[1];
+
+            first = first.substring(0, 1).toUpperCase() + first.substring(1).toLowerCase();
+            last = last.substring(0, 1).toUpperCase() + last.substring(1).toLowerCase();
+
+            return first + "-" + last;
+        }
+
+        name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+        return name;
+
+    }
+
 }

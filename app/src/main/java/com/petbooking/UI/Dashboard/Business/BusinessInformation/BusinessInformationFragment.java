@@ -36,6 +36,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.Interfaces.APICallback;
@@ -327,19 +328,11 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         mMapView.onCreate(mapViewBundle);
         mMapView.getMapAsync(this);
 
-        initReviews();
+        getBusinessReviews(businessId);
 
         return view;
     }
 
-
-    private void initReviews() {
-        for (int i = 0; i < 10; i++) {
-            mReviewList.add(new Review());
-        }
-        mAdapter.updateList(mReviewList);
-        mAdapter.notifyDataSetChanged();
-    }
 
     /**
      * Get Business Information
@@ -353,6 +346,22 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
             public void onSuccess(Object response) {
                 mBusiness = (Business) response;
                 updateBusinessInfo(mBusiness);
+            }
+
+            @Override
+            public void onError(Object error) {
+
+            }
+        });
+    }
+
+    public void getBusinessReviews(String id) {
+        mBusinessService.listBusinessReviews(id, 1, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                mReviewList = (ArrayList<Review>) response;
+                mAdapter.updateList(mReviewList);
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override

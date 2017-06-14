@@ -29,8 +29,8 @@ public class BusinessService {
         mBusinessInterface = APIClient.getClient().create(BusinessInterface.class);
     }
 
-    public void listBusiness(String coords, String userId, int page, final APICallback callback) {
-        Call<BusinessesResp> call = mBusinessInterface.listBusiness(coords, userId, page);
+    public void listBusiness(String coords, String userId, int page, int limit, final APICallback callback) {
+        Call<BusinessesResp> call = mBusinessInterface.listBusiness(coords, userId, page, limit);
         call.enqueue(new Callback<BusinessesResp>() {
             @Override
             public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {

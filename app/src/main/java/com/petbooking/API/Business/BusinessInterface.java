@@ -25,7 +25,8 @@ public interface BusinessInterface {
     @GET(APIBusinessConstants.BUSINESS_ENDPOINT)
     Call<BusinessesResp> listBusiness(@Query(APIConstants.QUERY_COORDS) String coords,
                                       @Query(APIConstants.QUERY_USER_ID) String userId,
-                                      @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex);
+                                      @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex,
+                                      @Query(APIConstants.QUERY_PAGE_LIMIT) int limit);
 
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})

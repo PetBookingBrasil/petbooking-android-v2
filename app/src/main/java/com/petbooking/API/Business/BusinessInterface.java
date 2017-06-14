@@ -4,6 +4,7 @@ import com.petbooking.API.Business.Models.BusinessResp;
 import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.API.Business.Models.FavoriteRqt;
+import com.petbooking.API.Business.Models.ReviewResp;
 import com.petbooking.Constants.APIConstants;
 
 import retrofit2.Call;
@@ -27,6 +28,11 @@ public interface BusinessInterface {
                                       @Query(APIConstants.QUERY_USER_ID) String userId,
                                       @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex,
                                       @Query(APIConstants.QUERY_PAGE_LIMIT) int limit);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
+    @GET(APIBusinessConstants.ENDPOINT_BUSINESS_REVIEWS)
+    Call<ReviewResp> listBusinessReviews(@Path(APIBusinessConstants.PATH_BUSINESS_ID) String businessID,
+                                         @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex);
 
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})

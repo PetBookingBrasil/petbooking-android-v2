@@ -17,7 +17,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1" />
-        <!-- <include android:visibility="gone" layout="@layout/item_list_business"></include>-->
+
+        <include
+            android:id="@+id/business_layout"
+            android:visibility="gone"
+            layout="@layout/item_list_business" />
 
     </LinearLayout>
 

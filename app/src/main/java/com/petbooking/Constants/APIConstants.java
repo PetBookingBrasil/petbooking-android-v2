@@ -59,5 +59,6 @@ public class APIConstants {
      * Query
      */
     public static final String QUERY_PAGE_INDEX = "page[number]";
+    public static final String QUERY_PAGE_LIMIT = "page[size]";
 
 }

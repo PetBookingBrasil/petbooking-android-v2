@@ -9,6 +9,8 @@ import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Pet;
 import com.petbooking.Utils.APIUtils;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -77,7 +79,20 @@ public class PetService {
         call.enqueue(new Callback<ListPetsResp>() {
             @Override
             public void onResponse(Call<ListPetsResp> call, Response<ListPetsResp> response) {
-                APIUtils.handleResponse(response, callback);
+                if (response.isSuccessful()) {
+                    ArrayList<Pet> petList = new ArrayList<Pet>();
+                    ListPetsResp pets = response.body();
+                    for (ListPetsResp.Item pet : pets.data) {
+                        petList.add(new Pet(pet.id, pet.attributes.name, pet.attributes.kind, pet.attributes.breedName,
+                                pet.attributes.size, pet.attributes.breedID, pet.attributes.userID, pet.attributes.gender,
+                                pet.attributes.mood, pet.attributes.description, pet.attributes.birth, pet.attributes.coatType,
+                                pet.attributes.photo));
+                    }
+
+                    callback.onSuccess(petList);
+                } else {
+                    callback.onError(APIUtils.handleError(response));
+                }
             }
 
             @Override

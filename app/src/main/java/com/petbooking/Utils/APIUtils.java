@@ -4,12 +4,14 @@ import com.google.gson.Gson;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.API.Business.Models.BusinessesRspAttributes;
+import com.petbooking.API.Business.Models.ReviewResp;
 import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.Generic.ErrorResp;
 import com.petbooking.BuildConfig;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Business;
+import com.petbooking.Models.Review;
 import com.petbooking.Models.User;
 
 import java.io.IOException;
@@ -72,6 +74,19 @@ public class APIUtils {
                 attr.imported, favoritedId);
 
         return business;
+    }
+    
+    /**
+     * Create Review from
+     * ReviewResp
+     * @param id
+     * @param attr
+     * @return
+     */
+    public static Review parseReview(String id, ReviewResp.Attributes attr) {
+        Review review = new Review(id, attr.userName, attr.comment, attr.rating);
+
+        return review;
     }
 
     /**

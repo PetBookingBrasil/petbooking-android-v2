@@ -1,5 +1,7 @@
 package com.petbooking.Models;
 
+import com.petbooking.API.Generic.AvatarResp;
+
 /**
  * Created by Luciano José on 23/05/2017.
  */
@@ -7,7 +9,16 @@ package com.petbooking.Models;
 public class Review {
 
     public String id;
-    public String name;
-    public String photo;
+    public String userName;
+    public String comment;
     public float rating;
+    public AvatarResp userAvatar;
+
+    public Review(String id, String userName, String comment, float rating) {
+        this.id = id;
+        this.userName = userName;
+        this.comment = comment;
+        this.rating = rating;
+    }
+
 }

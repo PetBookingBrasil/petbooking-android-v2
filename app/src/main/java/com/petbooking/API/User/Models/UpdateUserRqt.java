@@ -46,11 +46,11 @@ public class UpdateUserRqt {
         @SerializedName("search_range")
         public int searchRange;
         @SerializedName("accepts_email")
-        public boolean acceptsEmail;
+        public String acceptsEmail;
         @SerializedName("accepts_push")
-        public boolean acceptsNotifications;
+        public String acceptsNotifications;
         @SerializedName("accepts_sms")
-        public boolean acceptsSms;
+        public String acceptsSms;
 
         public Attributes(String name, String birthday, String phone, String cpf, String email, String password,
                           String zipcode, String street, String neighborhood, String street_number,
@@ -69,9 +69,9 @@ public class UpdateUserRqt {
             this.city = city;
             this.state = state;
             this.searchRange = searchRange;
-            this.acceptsEmail = acceptsEmail;
-            this.acceptsNotifications = acceptsNotifications;
-            this.acceptsSms = acceptsSms;
+            this.acceptsEmail = acceptsEmail ? "true" : "false";
+            this.acceptsNotifications = acceptsNotifications  ? "true" : "false";
+            this.acceptsSms = acceptsSms  ? "true" : "false";
         }
     }
 }

@@ -5,9 +5,11 @@ import com.petbooking.API.Business.Models.BusinessResp;
 import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.API.Business.Models.FavoriteRqt;
+import com.petbooking.API.Business.Models.ReviewResp;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Business;
+import com.petbooking.Models.Review;
 import com.petbooking.Utils.APIUtils;
 
 import java.util.ArrayList;
@@ -29,8 +31,8 @@ public class BusinessService {
         mBusinessInterface = APIClient.getClient().create(BusinessInterface.class);
     }
 
-    public void listBusiness(String coords, String userId, int page, final APICallback callback) {
-        Call<BusinessesResp> call = mBusinessInterface.listBusiness(coords, userId, page);
+    public void listBusiness(String coords, String userId, int page, int limit, final APICallback callback) {
+        Call<BusinessesResp> call = mBusinessInterface.listBusiness(coords, userId, page, limit);
         call.enqueue(new Callback<BusinessesResp>() {
             @Override
             public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {
@@ -53,6 +55,32 @@ public class BusinessService {
             }
         });
     }
+
+    public void listBusinessReviews(String businessId, int page, final APICallback callback) {
+        Call<ReviewResp> call = mBusinessInterface.listBusinessReviews(businessId, page);
+        call.enqueue(new Callback<ReviewResp>() {
+            @Override
+            public void onResponse(Call<ReviewResp> call, Response<ReviewResp> response) {
+                if (response.isSuccessful()) {
+                    ArrayList<Review> reviewList = new ArrayList<Review>();
+                    ReviewResp responseList = response.body();
+                    for (ReviewResp.Item item : responseList.data) {
+                        reviewList.add(APIUtils.parseReview(item.id, item.attributes));
+                    }
+
+                    callback.onSuccess(reviewList);
+                } else {
+                    callback.onError(APIUtils.handleError(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReviewResp> call, Throwable t) {
+
+            }
+        });
+    }
+
 
     public void getBusiness(String businessId, String userId, final APICallback callback) {
         Call<BusinessResp> call = mBusinessInterface.getBusiness(businessId, userId);

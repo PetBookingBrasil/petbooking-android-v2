@@ -138,7 +138,7 @@ public class BusinessListFragment extends Fragment {
      */
     public void listBusiness() {
         currentPage = 1;
-        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, new APICallback() {
+        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, 10, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 mBusinessList = (ArrayList<Business>) response;
@@ -159,7 +159,7 @@ public class BusinessListFragment extends Fragment {
      */
     public synchronized void loadMore() {
         isLoading = true;
-        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, new APICallback() {
+        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, 10,new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 ArrayList<Business> nextPage = (ArrayList<Business>) response;

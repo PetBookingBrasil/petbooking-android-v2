@@ -55,9 +55,9 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
 
         final Review review = mReviewList.get(position);
 
-        holder.mTvName.setText("Luciano José da Silva");
-        holder.mTvComment.setText("OKJDKASDJKASHDKQGDGQJHDGQJWDGHJQWGDJQWGDQWGD");
-        holder.mRbBusiness.setRating(4);
+        holder.mTvName.setText(review.userName);
+        holder.mTvComment.setText(review.comment);
+        holder.mRbBusiness.setRating(review.rating);
     }
 
     @Override

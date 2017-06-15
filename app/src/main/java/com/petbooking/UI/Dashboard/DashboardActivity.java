@@ -24,21 +24,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.Constants.AppConstants;
-import com.petbooking.Events.HideLoadingEvt;
 import com.petbooking.Events.LocationChangedEvt;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
-import com.petbooking.Models.UserAddress;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Content.ContentFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Login.LoginActivity;
+import com.petbooking.UI.Menu.Calendar.CalendarActivity;
 import com.petbooking.UI.Menu.Favorites.FavoritesActivity;
 import com.petbooking.UI.Menu.Pets.PetsActivity;
 import com.petbooking.UI.Menu.Profile.ProfileActivity;
 import com.petbooking.UI.Menu.Settings.SettingsActivity;
-import com.petbooking.Utils.APIUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -189,6 +187,9 @@ public class DashboardActivity extends AppCompatActivity implements
             startActivity(activity);
         } else if (id == R.id.settings) {
             activity = new Intent(this, SettingsActivity.class);
+            startActivity(activity);
+        } else if (id == R.id.calendar) {
+            activity = new Intent(this, CalendarActivity.class);
             startActivity(activity);
         } else if (id == R.id.logout) {
             mSessionManager.logout();

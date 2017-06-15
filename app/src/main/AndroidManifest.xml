@@ -101,6 +101,16 @@
                 android:value=".UI.Dashboard.DashboardActivity" />
         </activity>
         <activity
+            android:name=".UI.Menu.Calendar.CalendarActivity"
+            android:configChanges="orientation"
+            android:label="@string/calendar"
+            android:parentActivityName=".UI.Dashboard.DashboardActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Dashboard.DashboardActivity" />
+        </activity>
+        <activity
             android:name=".UI.Menu.Favorites.FavoritesActivity"
             android:configChanges="orientation"
             android:label="@string/favorites"
@@ -119,7 +129,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Dashboard.DashboardActivity" />
-
         </activity>
         <activity
             android:name=".UI.Menu.Settings.Contact.ContactActivity"
@@ -127,7 +136,6 @@
             android:label="@string/contact_us"
             android:parentActivityName=".UI.Menu.Settings.SettingsActivity"
             android:screenOrientation="portrait">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Menu.Settings.SettingsActivity" />

@@ -82,6 +82,10 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
     GoogleMap.OnMarkerClickListener markerListener = new GoogleMap.OnMarkerClickListener() {
         @Override
         public boolean onMarkerClick(Marker marker) {
+            if (marker.getSnippet().equals("CENTER")) {
+                return false;
+            }
+
             int index = Integer.parseInt(marker.getSnippet());
             selectedBusiness = mBusinessList.get(index);
 
@@ -136,6 +140,12 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
         mGMap = googleMap;
         mGMap.setOnMarkerClickListener(markerListener);
         mGMap.setOnMapClickListener(mapListener);
+
+        if (mLocationManager.getLastLatitude() != 0 && mLocationManager.getLastLongitude() != 0) {
+            LatLng position = new LatLng(mLocationManager.getLastLatitude(), mLocationManager.getLastLongitude());
+            mGMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 12));
+        }
+
     }
 
     @Override

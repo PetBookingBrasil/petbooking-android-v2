@@ -46,9 +46,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashboardActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
-        FeedbackDialogFragment.FinishDialogListener {
+        FeedbackDialogFragment.FinishDialogListener,
+        LocationManager.LocationReadyCallback {
 
-    protected final EventBus mEventBus = EventBus.getDefault();
     private boolean permissionDenied = false;
     private static final int RC_PERMISSION = 234;
 
@@ -89,6 +89,7 @@ public class DashboardActivity extends AppCompatActivity implements
 
         mSessionManager = SessionManager.getInstance();
         mLocationManager = LocationManager.getInstance();
+        mLocationManager.setCallback(this);
         mFragmentManager = getSupportFragmentManager();
 
         mFeedbackDialogFragment = FeedbackDialogFragment.newInstance();
@@ -277,20 +278,9 @@ public class DashboardActivity extends AppCompatActivity implements
         mFragmentManager.beginTransaction().replace(R.id.content_main, contentFragment).commit();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mEventBus.register(this);
-    }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        mEventBus.unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public synchronized void locationChanged(LocationChangedEvt locationChangedEvt) {
-        mTvSideMenuAddress.setText(locationChangedEvt.cityState);
+    public void onLocationReady(String locationCityState) {
+        mTvSideMenuAddress.setText(locationCityState);
     }
 }

@@ -45,7 +45,7 @@ public class LocationManager implements GoogleApiClient.ConnectionCallbacks,
     private double mLastLocationY;
     private GoogleApiClient mGoogleApiClient;
     private States states;
-    private WeakReference<LocationReadyCallback> mLocationReadyCallback;
+    private LocationReadyCallback mLocationReadyCallback;
 
     private LocationManager() {
     }
@@ -105,13 +105,14 @@ public class LocationManager implements GoogleApiClient.ConnectionCallbacks,
         }
 
         setLastLocation(location);
-        EventBus.getDefault().post(new LocationChangedEvt(getLocationCityState()));
+        mLocationReadyCallback.onLocationReady(getLocationCityState());
 
         if (mGoogleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
-        if (mLocationReadyCallback != null && mLocationReadyCallback.get() != null) {
-            mLocationReadyCallback.get().onLocationReady(getLocationCityState());
+
+        if (mLocationReadyCallback != null) {
+            mLocationReadyCallback.onLocationReady(getLocationCityState());
         }
     }
 
@@ -128,7 +129,6 @@ public class LocationManager implements GoogleApiClient.ConnectionCallbacks,
     }
 
     public void getLocationCityState(LocationReadyCallback locationReadyCallback) {
-        mLocationReadyCallback = new WeakReference<LocationReadyCallback>(locationReadyCallback);
         int locationPolicy = ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION);
         if (locationPolicy == PackageManager.PERMISSION_GRANTED && mGoogleApiClient.isConnected()) {
             requestLocation();
@@ -182,6 +182,18 @@ public class LocationManager implements GoogleApiClient.ConnectionCallbacks,
             return locationManager.getLastKnownLocation(android.location.LocationManager.NETWORK_PROVIDER);
         }
         return null;
+    }
+
+    public void setCallback(LocationReadyCallback locationReadyCallback) {
+        mLocationReadyCallback = locationReadyCallback;
+    }
+
+    public double getLastLatitude() {
+        return mLastLocationX;
+    }
+
+    public double getLastLongitude() {
+        return mLastLocationY;
     }
 
     public interface LocationReadyCallback {

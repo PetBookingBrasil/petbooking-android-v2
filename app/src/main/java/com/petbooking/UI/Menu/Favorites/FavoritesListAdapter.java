@@ -58,12 +58,9 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
         final Business business = mBusinessList.get(position);
         String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber);
         String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
-        String average = String.format("%.1f", business.ratingAverage);
-        average = average.replace(",", ".");
 
         holder.mTvName.setText(business.name);
         holder.mTvStreet.setText(street);
-        holder.mTvRate.setText(average);
         holder.mRbBusiness.setRating(business.ratingAverage);
         holder.mTvRatingCount.setText(ratingCount);
         holder.mClBusiness.setOnClickListener(new View.OnClickListener() {

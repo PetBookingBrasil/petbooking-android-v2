@@ -261,8 +261,8 @@ public class DashboardActivity extends AppCompatActivity implements
 
         Glide.with(this)
                 .load(currentUser.avatar.large.url)
-                .error(R.drawable.ic_menu_user)
-                .placeholder(R.drawable.ic_menu_user)
+                .error(R.drawable.ic_placeholder_user)
+                .placeholder(R.drawable.ic_placeholder_user)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .centerCrop()
                 .dontAnimate()

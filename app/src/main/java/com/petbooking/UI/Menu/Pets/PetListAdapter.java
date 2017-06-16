@@ -59,6 +59,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
     public void onBindViewHolder(PetViewHolder holder, int position) {
 
         final Pet pet = mPetList.get(position);
+        int petAvatar = pet.type.equals("dog") ? R.drawable.ic_placeholder_dog : R.drawable.ic_placeholder_cat;
 
         holder.mTvName.setText(pet.name);
         holder.mTvBreed.setText(pet.breedName);
@@ -79,8 +80,8 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
 
         Glide.with(mContext)
                 .load(pet.avatar.url)
-                .error(R.drawable.ic_menu_user)
-                .placeholder(R.drawable.ic_menu_user)
+                .error(petAvatar)
+                .placeholder(petAvatar)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .centerCrop()
                 .dontAnimate()

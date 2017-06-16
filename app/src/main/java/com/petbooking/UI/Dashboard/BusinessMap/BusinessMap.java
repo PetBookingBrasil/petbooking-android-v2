@@ -40,7 +40,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BusinessMap extends Fragment implements OnMapReadyCallback {
+public class BusinessMap extends Fragment implements OnMapReadyCallback, LocationManager.LocationReadyCallback {
 
     private static Context mContext;
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
@@ -109,6 +109,8 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
         mContext = getContext();
         mBusinessService = new BusinessService();
         mLocationManager = LocationManager.getInstance();
+        mLocationManager.setCallback(this);
+        mLocationManager.requestLocation();
         mBusinessList = new ArrayList<>();
         userId = SessionManager.getInstance().getUserLogged().id;
 
@@ -145,7 +147,6 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
             LatLng position = new LatLng(mLocationManager.getLastLatitude(), mLocationManager.getLastLongitude());
             mGMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 12));
         }
-
     }
 
     @Override
@@ -281,4 +282,11 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
         mContext.startActivity(businessIntent);
     }
 
+    @Override
+    public void onLocationReady(String locationCityState) {
+        if (mLocationManager.getLastLatitude() != 0 && mLocationManager.getLastLongitude() != 0) {
+            LatLng position = new LatLng(mLocationManager.getLastLatitude(), mLocationManager.getLastLongitude());
+            mGMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 12));
+        }
+    }
 }

@@ -284,7 +284,7 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback, Locatio
 
     @Override
     public void onLocationReady(String locationCityState) {
-        if (mLocationManager.getLastLatitude() != 0 && mLocationManager.getLastLongitude() != 0) {
+        if (mLocationManager.getLastLatitude() != 0 && mLocationManager.getLastLongitude() != 0 && mGMap != null) {
             LatLng position = new LatLng(mLocationManager.getLastLatitude(), mLocationManager.getLastLongitude());
             mGMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 12));
         }

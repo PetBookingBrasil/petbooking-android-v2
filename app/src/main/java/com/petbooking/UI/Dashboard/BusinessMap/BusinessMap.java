@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,8 +40,8 @@ import java.util.ArrayList;
  */
 public class BusinessMap extends Fragment implements OnMapReadyCallback, LocationManager.LocationReadyCallback {
 
-    private static Context mContext;
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
+    private static Context mContext;
     private BusinessService mBusinessService;
     private LocationManager mLocationManager;
     private String userId;
@@ -51,11 +49,22 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback, Locatio
     private GoogleMap mGMap = null;
     private ArrayList<Business> mBusinessList;
     private Business selectedBusiness;
-
+    View.OnClickListener businessListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            goToBusiness(selectedBusiness.id);
+        }
+    };
     /**
      * Business Elements
      */
     private View mBusinessLayout;
+    GoogleMap.OnMapClickListener mapListener = new GoogleMap.OnMapClickListener() {
+        @Override
+        public void onMapClick(LatLng latLng) {
+            mBusinessLayout.setVisibility(View.GONE);
+        }
+    };
     private ImageView mIvBusinessPhoto;
     private ImageButton mBtnFavorite;
     private TextView mTvName;
@@ -64,21 +73,6 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback, Locatio
     private TextView mTvRatingCount;
     private TextView mTvDistance;
     private StarsRating mRbBusiness;
-
-    View.OnClickListener businessListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            goToBusiness(selectedBusiness.id);
-        }
-    };
-
-    GoogleMap.OnMapClickListener mapListener = new GoogleMap.OnMapClickListener() {
-        @Override
-        public void onMapClick(LatLng latLng) {
-            mBusinessLayout.setVisibility(View.GONE);
-        }
-    };
-
     GoogleMap.OnMarkerClickListener markerListener = new GoogleMap.OnMarkerClickListener() {
         @Override
         public boolean onMarkerClick(Marker marker) {

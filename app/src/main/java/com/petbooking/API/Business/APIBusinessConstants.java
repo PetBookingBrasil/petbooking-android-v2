@@ -77,6 +77,5 @@ public class APIBusinessConstants {
     public static final String FAVORITES_DELETE_ENDPOINT = "favorites/{" + APIConstants.PATH_PARAM + "}" + FIELDS_FAVORITES;
 
     public static final String ENDPOINT_BUSINESS_REVIEWS = "businesses/{" + PATH_BUSINESS_ID + "}/reviews" + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
-    ;
 
 }

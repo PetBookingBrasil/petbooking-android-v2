@@ -125,7 +125,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="Cidade De Deus"
+            android:layout_marginRight="@dimen/spacing_xmicro"
+            android:layout_toLeftOf="@+id/business_distance"
+            android:text="Cidade De Deus Para testar com um nome super gigante inventado por mim"
             android:textSize="13sp" />
 
         <TextView
@@ -134,6 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/business_street"
+            android:layout_toLeftOf="@+id/business_distance"
             android:text="SP - Osasco"
             android:textSize="13sp" />
 

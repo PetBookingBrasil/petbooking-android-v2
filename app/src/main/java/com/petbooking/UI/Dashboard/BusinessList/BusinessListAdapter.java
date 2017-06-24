@@ -67,8 +67,8 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
 
         final Business business = mBusinessList.get(position);
 
-        String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber);
-        String city = business.city + " - " + business.state;
+        String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber, business.neighborhood);
+        String city = mContext.getResources().getString(R.string.business_city, business.city, business.state);
         String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", business.distance));
         String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
         String average = String.format("%.1f", business.ratingAverage);

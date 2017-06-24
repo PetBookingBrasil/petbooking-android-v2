@@ -60,8 +60,8 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         RecyclerView.ViewHolder holder = null;
 
         if (viewType == BUSINESS_ACTIVE) {
-            view = inflater.inflate(R.layout.item_list_business_imported, parent, false);
-            holder = new BusinessImportedViewHolder(view);
+            view = inflater.inflate(R.layout.item_list_business, parent, false);
+            holder = new BusinessViewHolder(view);
         } else if (viewType == BUSINESS_IMPORTED) {
             view = inflater.inflate(R.layout.item_list_business_imported, parent, false);
             holder = new BusinessImportedViewHolder(view);

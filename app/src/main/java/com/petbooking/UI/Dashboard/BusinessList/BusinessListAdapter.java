@@ -67,9 +67,8 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
 
         final Business business = mBusinessList.get(position);
 
-        int categoryColor = AppUtils.getCategoryColor(mContext, business.businesstype);
-        GradientDrawable mDistanceBackground = (GradientDrawable) holder.mTvDistance.getBackground();
         String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber);
+        String city = business.city + " - " + business.state;
         String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", business.distance));
         String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
         String average = String.format("%.1f", business.ratingAverage);
@@ -84,18 +83,16 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         if (business.ratingCount == 0) {
             holder.mTvRate.setVisibility(View.GONE);
             holder.mTvRatingCount.setVisibility(View.GONE);
-            holder.mRbBusiness.setVisibility(View.GONE);
+            holder.mIvRatingStar.setVisibility(View.GONE);
         } else {
             holder.mTvRate.setText(average);
-            holder.mRbBusiness.setRating(business.ratingAverage);
             holder.mTvRatingCount.setText(ratingCount);
         }
 
         holder.mTvName.setText(business.name);
         holder.mTvStreet.setText(street);
+        holder.mTvCity.setText(city);
         holder.mTvDistance.setText(distance);
-
-        mDistanceBackground.setColor(categoryColor);
 
         holder.mClBusiness.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,7 +137,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
                 }
             }
         });
-        
+
         mGlide.load(business.image.url)
                 .error(R.drawable.business_background)
                 .placeholder(R.drawable.business_background)
@@ -167,26 +164,28 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
 
         ConstraintLayout mClBusiness;
         ImageView mIvBusinessPhoto;
+        ImageView mIvRatingStar;
         ImageButton mBtnFavorite;
         TextView mTvName;
         TextView mTvStreet;
+        TextView mTvCity;
         TextView mTvRate;
         TextView mTvRatingCount;
         TextView mTvDistance;
-        StarsRating mRbBusiness;
 
         public BusinessViewHolder(View view) {
             super(view);
 
             mClBusiness = (ConstraintLayout) view.findViewById(R.id.business_item);
             mIvBusinessPhoto = (ImageView) view.findViewById(R.id.business_photo);
+            mIvRatingStar = (ImageView) view.findViewById(R.id.rating_star);
             mBtnFavorite = (ImageButton) view.findViewById(R.id.favorite_button);
             mTvName = (TextView) view.findViewById(R.id.business_name);
             mTvStreet = (TextView) view.findViewById(R.id.business_street);
+            mTvCity = (TextView) view.findViewById(R.id.business_city);
             mTvRatingCount = (TextView) view.findViewById(R.id.ratings);
             mTvRate = (TextView) view.findViewById(R.id.business_rate);
             mTvDistance = (TextView) view.findViewById(R.id.business_distance);
-            mRbBusiness = (StarsRating) view.findViewById(R.id.average_rate);
         }
     }
 

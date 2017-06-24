@@ -56,8 +56,8 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
     public void onBindViewHolder(final FavoriteViewHolder holder, final int position) {
 
         final Business business = mBusinessList.get(position);
-        String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber);
-        String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
+        String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber, business.neighborhood);
+        String ratingCount = mContext.getResources().getQuantityString(R.plurals.business_rating_count, business.ratingCount, business.ratingCount);
 
         holder.mTvName.setText(business.name);
         holder.mTvStreet.setText(street);

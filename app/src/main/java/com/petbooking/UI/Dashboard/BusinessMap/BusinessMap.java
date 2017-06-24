@@ -231,6 +231,7 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback, Locatio
         String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber);
         String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", business.distance));
         String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
+        String ratingCount = mContext.getResources().getQuantityString(R.plurals.business_rating_count, business.ratingCount, business.ratingCount);
         String average = String.format("%.1f", business.ratingAverage);
         average = average.replace(",", ".");
 

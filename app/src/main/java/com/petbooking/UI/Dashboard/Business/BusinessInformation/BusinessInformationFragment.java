@@ -380,11 +380,10 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         boolean hasIcon = false;
         int categoryColor = AppUtils.getCategoryColor(mContext, mBusiness.businesstype);
         GradientDrawable mDistanceBackground = (GradientDrawable) mTvDistance.getBackground();
-        String street = mContext.getResources().getString(R.string.business_street, mBusiness.street, mBusiness.streetNumber);
+        String street = mContext.getResources().getString(R.string.business_street, mBusiness.street, mBusiness.streetNumber, mBusiness.neighborhood);
         String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", mBusiness.distance));
-        String ratingCount = mContext.getResources().getString(R.string.business_rating_count, mBusiness.ratingCount);
+        String ratingCount = mContext.getResources().getQuantityString(R.plurals.business_rating_count, mBusiness.ratingCount, mBusiness.ratingCount);
         String average = String.format("%.1f", mBusiness.ratingAverage);
-        average = average.replace(",", ".");
 
         mTvName.setText(mBusiness.name);
         mTvDescription.setText(mBusiness.description);

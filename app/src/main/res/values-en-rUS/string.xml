@@ -111,7 +111,10 @@
     <string name="business_street">%1$s, %2$s - %3$s</string>
     <string name="business_city">%1$s - %2$s</string>
     <string name="business_address">%1$s, %2$s, %3$s, %4$s</string>
-    <string name="business_rating_count">%1$d Reviews</string>
+    <plurals name="business_rating_count">
+        <item quantity="one">%d Review</item>
+        <item quantity="other">%$d Reviews</item>
+    </plurals>
     <string name="business_distance">%1$s Km</string>
     <string name="business_phone">Phone: </string>
     <string name="business_tab_services">Services</string>
@@ -125,6 +128,8 @@
     <string name="business_label_additional">Additional</string>
     <string name="business_service_price">U$ %1$s</string>
     <string name="business_service_finish">Finish Schedule</string>
+    <string name="call_button">Call</string>
+
 
     <!-- Settings -->
     <string name="push">Push</string>

@@ -31,4 +31,24 @@ public class CircleIndicator extends LinearLayout {
         btnTwo = (ImageView) view.findViewById(R.id.btn_two);
         btnThree = (ImageView) view.findViewById(R.id.btn_three);
     }
+
+    public void setPageSelected(int position){
+        switch (position){
+            case 0:
+                btnOne.setImageResource(R.drawable.ic_indicator_active);
+                btnTwo.setImageResource(R.drawable.ic_indicator_inactive);
+                btnThree.setImageResource(R.drawable.ic_indicator_inactive);
+                break;
+            case 1:
+                btnOne.setImageResource(R.drawable.ic_indicator_inactive);
+                btnTwo.setImageResource(R.drawable.ic_indicator_active);
+                btnThree.setImageResource(R.drawable.ic_indicator_inactive);
+                break;
+            case 2:
+                btnOne.setImageResource(R.drawable.ic_indicator_inactive);
+                btnTwo.setImageResource(R.drawable.ic_indicator_inactive);
+                btnThree.setImageResource(R.drawable.ic_indicator_active);
+                break;
+        }
+    }
 }

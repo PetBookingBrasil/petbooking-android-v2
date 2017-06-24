@@ -87,11 +87,12 @@
     <string name="register">Salvar</string>
 
     <!-- Forgot Password -->
-    <string name="recover_password_text">Insira o seu email de cadastro \n associado à sua conta no petbooking.</string>
+    <string name="recover_password_text">Informe abaixo o email de cadastro \n associado à sua conta no Pet Booking.</string>
+    <string name="recover_password_result">Após a solicitação, você deverá receber em \n instantes um email com instruções para \n resetar sua senha.</string>
     <string name="email_empty">Informe o email.</string>
     <string name="recover_email_title">Recuperar Senha</string>
     <string name="recover_email_text">As instruções para recuperação foram enviadas para seu email.</string>
-    <string name="send_button">Enviar</string>
+    <string name="send_button">Redefinir minha senha</string>
 
     <!-- Sidemenu and Toolbar Options-->
     <string name="my_pets">Meus Pets</string>

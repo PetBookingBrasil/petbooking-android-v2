@@ -11,9 +11,9 @@
     <color name="yellow">#FFC600</color>
 
     <!-- Presentation -->
-    <color name="presentation_1">#FFC500</color>
-    <color name="presentation_2">#FF7F0B</color>
-    <color name="presentation_3">#FF4B39</color>
+    <color name="presentation_1">#009CDE</color>
+    <color name="presentation_2">#F68D2E</color>
+    <color name="presentation_3">#9F5CC0</color>
 
     <!-- Login -->
     <color name="facebook_btn_login">#2556A0</color>

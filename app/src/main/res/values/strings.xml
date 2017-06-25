@@ -154,6 +154,7 @@
     <string name="call_button">Ligar</string>
 
     <!-- Settings -->
+    <string name="kilometers">Quilômetro</string>
     <string name="push">Push</string>
     <string name="email">Email</string>
     <string name="sms">SMS</string>

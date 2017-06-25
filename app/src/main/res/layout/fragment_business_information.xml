@@ -399,7 +399,7 @@
                 android:background="@drawable/review_background"
                 android:paddingLeft="@dimen/spacing_tiny"
                 android:paddingRight="@dimen/spacing_tiny"
-                android:textColor="#CC515151"
+                android:textColor="#33515151"
                 android:textSize="12sp" />
 
             <com.petbooking.UI.Widget.StarsRating

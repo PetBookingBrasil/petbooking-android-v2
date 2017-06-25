@@ -132,6 +132,7 @@
 
 
     <!-- Settings -->
+    <string name="kilometers">Kilometers</string>
     <string name="push">Push</string>
     <string name="email">Email</string>
     <string name="sms">SMS</string>

@@ -62,11 +62,11 @@
 
     <!-- Login -->
     <string name="description">Encontre serviços para seu Pet \n mais póximos de você e agende online!</string>
-    <string name="sign_up">Cadastre-se</string>
+    <string name="sign_up">Cadastro</string>
     <string name="login">Entrar</string>
     <string name="login_facebook">Entrar com <b>Facebook</b></string>
-    <string name="app_terms_info"><i>Utilizando o app, você concorda com os <b><u>Termos de uso</u></b>
-        \n e com a <b><u>Política de Privacidade.</u></b></i></string>
+    <string name="app_terms_info">Utilizando o app, você concorda com os <b><u>Termos de uso</u></b>
+        \n e com a <u>Política de Privacidade.</u></string>
     <string name="forgot_password">Esqueceu a senha ?</string>
 
     <!-- Register -->

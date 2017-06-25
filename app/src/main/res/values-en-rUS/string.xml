@@ -59,8 +59,8 @@
     <string name="sign_up">Sign up</string>
     <string name="login">Sign in</string>
     <string name="login_facebook">Sign in with <b>Facebook</b></string>
-    <string name="app_terms_info"><i>Using the app, you agree with the <b><u>Terms of use</u></b>
-        \n and with  <b><u>Privacy policy.</u></b></i></string>
+    <string name="app_terms_info">Using the app, you agree with the <u>Terms of use</u>
+        \n and with  <u>Privacy policy.</u></string>
     <string name="forgot_password">Forgot password ?</string>
 
     <!-- Forgot Password -->

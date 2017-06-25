@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -109,6 +110,8 @@ public class LoginActivity extends BaseActivity {
         mTvForgotPassword.setOnClickListener(clickListener);
         mIvAppLogo.setOnClickListener(clickListener);
         mBtnFacebookLogin.setOnClickListener(clickListener);
+
+        mTvForgotPassword.setPaintFlags(mTvForgotPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         mFacebookAuthManager.init(fbRequestCallback);
         mTvAppSlogan.setTypeface(mCustomFont);

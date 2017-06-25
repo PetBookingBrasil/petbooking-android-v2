@@ -23,6 +23,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Events.LocationChangedEvt;
 import com.petbooking.Managers.LocationManager;
@@ -46,8 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashboardActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
-        FeedbackDialogFragment.FinishDialogListener,
-        LocationManager.LocationReadyCallback {
+        FeedbackDialogFragment.FinishDialogListener {
 
     private boolean permissionDenied = false;
     private static final int RC_PERMISSION = 234;
@@ -81,6 +82,12 @@ public class DashboardActivity extends AppCompatActivity implements
         }
     };
 
+    LocationManager.LocationReadyCallback locationCallback = new LocationManager.LocationReadyCallback() {
+        @Override
+        public void onLocationReady(String locationCityState) {
+            mTvSideMenuAddress.setText(locationCityState);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +96,7 @@ public class DashboardActivity extends AppCompatActivity implements
 
         mSessionManager = SessionManager.getInstance();
         mLocationManager = LocationManager.getInstance();
-        mLocationManager.setCallback(this);
+        mLocationManager.setCallback(locationCallback);
         mFragmentManager = getSupportFragmentManager();
 
         mFeedbackDialogFragment = FeedbackDialogFragment.newInstance();
@@ -278,9 +285,4 @@ public class DashboardActivity extends AppCompatActivity implements
         mFragmentManager.beginTransaction().replace(R.id.content_main, contentFragment).commit();
     }
 
-
-    @Override
-    public void onLocationReady(String locationCityState) {
-        mTvSideMenuAddress.setText(locationCityState);
-    }
 }

@@ -105,7 +105,9 @@ public class LocationManager implements GoogleApiClient.ConnectionCallbacks,
         }
 
         setLastLocation(location);
-        mLocationReadyCallback.onLocationReady(getLocationCityState());
+        if(mLocationReadyCallback != null){
+            mLocationReadyCallback.onLocationReady(getLocationCityState());
+        }
 
         if (mGoogleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);

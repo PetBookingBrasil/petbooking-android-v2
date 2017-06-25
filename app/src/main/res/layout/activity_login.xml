@@ -144,6 +144,7 @@
                     android:layout_marginStart="@dimen/spacing_xmicro"
                     android:layout_weight="1"
                     android:background="@drawable/secondary_button"
+                    android:stateListAnimator="@null"
                     android:text="@string/login"
                     android:theme="@style/AppTheme.SecondaryButton" />
 

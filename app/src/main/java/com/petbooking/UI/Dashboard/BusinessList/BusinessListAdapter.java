@@ -274,7 +274,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
      */
     public void callToBusiness(String number) {
         Uri data = Uri.parse("tel:" + number);
-        Intent intent = new Intent(Intent.ACTION_CALL);
+        Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(data);
         mContext.startActivity(intent);
     }

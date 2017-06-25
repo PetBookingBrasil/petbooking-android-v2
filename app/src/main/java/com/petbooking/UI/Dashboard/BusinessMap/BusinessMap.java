@@ -3,11 +3,13 @@ package com.petbooking.UI.Dashboard.BusinessMap;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -59,6 +61,7 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
     private ImageView mIvBusinessPhoto;
     private ImageView mIvRatingStar;
     private ImageButton mBtnFavorite;
+    private Button mBtnCallPhone;
     private TextView mTvName;
     private TextView mTvStreet;
     private TextView mTvCity;
@@ -93,7 +96,9 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
     GoogleMap.OnMapClickListener mapListener = new GoogleMap.OnMapClickListener() {
         @Override
         public void onMapClick(LatLng latLng) {
-            mBusinessLayout.setVisibility(View.GONE);
+            if (mBusinessLayout != null && mBusinessLayout.isShown()) {
+                mBusinessLayout.setVisibility(View.GONE);
+            }
         }
     };
 
@@ -377,6 +382,13 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        mBtnCallPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callToBusiness(business.phone);
+            }
+        });
+
         mBusinessLayout.setVisibility(View.VISIBLE);
         mBusinessActiveLayout.setVisibility(View.GONE);
         mBusinessImportedLayout.setVisibility(View.VISIBLE);
@@ -384,6 +396,7 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
 
     /**
      * Bind Active Business
+     *
      * @param view
      */
     public void bindActiveBusiness(View view) {
@@ -403,6 +416,7 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
 
     /**
      * Bind Imported Business Elements
+     *
      * @param view
      */
     public void bindImportedBusiness(View view) {
@@ -413,6 +427,7 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
         mTvName = (TextView) mBusinessImportedLayout.findViewById(R.id.business_name);
         mTvStreet = (TextView) mBusinessImportedLayout.findViewById(R.id.business_street);
         mTvDistance = (TextView) mBusinessImportedLayout.findViewById(R.id.business_distance);
+        mBtnCallPhone = (Button) mBusinessImportedLayout.findViewById(R.id.call_button);
     }
 
     /**
@@ -424,4 +439,15 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
         mContext.startActivity(businessIntent);
     }
 
+    /**
+     * Call to imported business
+     *
+     * @param number
+     */
+    public void callToBusiness(String number) {
+        Uri data = Uri.parse("tel:" + number);
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(data);
+        mContext.startActivity(intent);
+    }
 }

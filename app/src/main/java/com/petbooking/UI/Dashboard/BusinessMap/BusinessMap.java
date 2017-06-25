@@ -377,7 +377,6 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
             }
         });
 
-        mBusinessLayout.setOnClickListener(businessListener);
         mBusinessLayout.setVisibility(View.VISIBLE);
         mBusinessActiveLayout.setVisibility(View.GONE);
         mBusinessImportedLayout.setVisibility(View.VISIBLE);

@@ -212,13 +212,6 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.mBtnFavorite.setImageResource(R.drawable.ic_favorite_border_black);
         }
 
-        holder.mClBusiness.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToBusiness(business.id);
-            }
-        });
-
         holder.mBtnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

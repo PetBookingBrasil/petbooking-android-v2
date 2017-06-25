@@ -3,7 +3,6 @@ package com.petbooking.UI.Dashboard.BusinessMap;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -24,13 +23,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.petbooking.API.Business.BusinessService;
+import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.BusinessActivity;
-import com.petbooking.UI.Widget.StarsRating;
 import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BusinessMap extends Fragment implements OnMapReadyCallback, LocationManager.LocationReadyCallback {
+public class BusinessMap extends Fragment implements OnMapReadyCallback {
 
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static Context mContext;
@@ -49,30 +48,21 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback, Locatio
     private GoogleMap mGMap = null;
     private ArrayList<Business> mBusinessList;
     private Business selectedBusiness;
-    View.OnClickListener businessListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            goToBusiness(selectedBusiness.id);
-        }
-    };
+
     /**
      * Business Elements
      */
     private View mBusinessLayout;
-    GoogleMap.OnMapClickListener mapListener = new GoogleMap.OnMapClickListener() {
-        @Override
-        public void onMapClick(LatLng latLng) {
-            mBusinessLayout.setVisibility(View.GONE);
-        }
-    };
     private ImageView mIvBusinessPhoto;
+    private ImageView mIvRatingStar;
     private ImageButton mBtnFavorite;
     private TextView mTvName;
     private TextView mTvStreet;
+    private TextView mTvCity;
     private TextView mTvRate;
     private TextView mTvRatingCount;
     private TextView mTvDistance;
-    private StarsRating mRbBusiness;
+
     GoogleMap.OnMarkerClickListener markerListener = new GoogleMap.OnMarkerClickListener() {
         @Override
         public boolean onMarkerClick(Marker marker) {
@@ -83,11 +73,36 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback, Locatio
             int index = Integer.parseInt(marker.getSnippet());
             selectedBusiness = mBusinessList.get(index);
 
-            updateBusinessInfo(selectedBusiness);
+            updateBusinessInfo(selectedBusiness, index);
             mGMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 13));
 
 
             return true;
+        }
+    };
+
+    GoogleMap.OnMapClickListener mapListener = new GoogleMap.OnMapClickListener() {
+        @Override
+        public void onMapClick(LatLng latLng) {
+            mBusinessLayout.setVisibility(View.GONE);
+        }
+    };
+
+    View.OnClickListener businessListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            goToBusiness(selectedBusiness.id);
+        }
+    };
+
+
+    LocationManager.LocationReadyCallback locationCallback = new LocationManager.LocationReadyCallback() {
+        @Override
+        public void onLocationReady(String locationCityState) {
+            if (mLocationManager.getLastLatitude() != 0 && mLocationManager.getLastLongitude() != 0 && mGMap != null) {
+                LatLng position = new LatLng(mLocationManager.getLastLatitude(), mLocationManager.getLastLongitude());
+                mGMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 12));
+            }
         }
     };
 
@@ -103,20 +118,21 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback, Locatio
         mContext = getContext();
         mBusinessService = new BusinessService();
         mLocationManager = LocationManager.getInstance();
-        mLocationManager.setCallback(this);
+        mLocationManager.setCallback(locationCallback);
         mLocationManager.requestLocation();
         mBusinessList = new ArrayList<>();
         userId = SessionManager.getInstance().getUserLogged().id;
 
         mBusinessLayout = view.findViewById(R.id.business_layout);
         mIvBusinessPhoto = (ImageView) view.findViewById(R.id.business_photo);
+        mIvRatingStar = (ImageView) view.findViewById(R.id.rating_star);
         mBtnFavorite = (ImageButton) view.findViewById(R.id.favorite_button);
         mTvName = (TextView) view.findViewById(R.id.business_name);
         mTvStreet = (TextView) view.findViewById(R.id.business_street);
+        mTvCity = (TextView) view.findViewById(R.id.business_city);
         mTvRatingCount = (TextView) view.findViewById(R.id.ratings);
         mTvRate = (TextView) view.findViewById(R.id.business_rate);
         mTvDistance = (TextView) view.findViewById(R.id.business_distance);
-        mRbBusiness = (StarsRating) view.findViewById(R.id.average_rate);
 
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
@@ -207,12 +223,13 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback, Locatio
         int index = 0;
         for (Business business : businessList) {
             if (business.latitude != null && business.longitude != null) {
+                int icon = business.imported ? R.drawable.ic_marker_imported : R.drawable.ic_marker;
                 LatLng position = new LatLng(business.latitude, business.longitude);
                 Marker marker = mGMap.addMarker(new MarkerOptions()
                         .title(business.name)
                         .snippet(String.valueOf(index))
                         .position(position)
-                        .icon(BitmapDescriptorFactory.fromBitmap(AppUtils.getBitmap(getContext(), R.drawable.ic_marker))));
+                        .icon(BitmapDescriptorFactory.fromBitmap(AppUtils.getBitmap(getContext(), icon))));
 
             }
             index++;
@@ -225,15 +242,13 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback, Locatio
      *
      * @param business
      */
-    public void updateBusinessInfo(Business business) {
-        int categoryColor = AppUtils.getCategoryColor(mContext, business.businesstype);
-        GradientDrawable mDistanceBackground = (GradientDrawable) mTvDistance.getBackground();
-        String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber);
+    public void updateBusinessInfo(final Business business, final int position) {
+
+        String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber, business.city);
+        String city = mContext.getResources().getString(R.string.business_city, business.city, business.state);
         String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", business.distance));
-        String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
         String ratingCount = mContext.getResources().getQuantityString(R.plurals.business_rating_count, business.ratingCount, business.ratingCount);
         String average = String.format("%.1f", business.ratingAverage);
-        average = average.replace(",", ".");
 
         if (business.favorited) {
             mBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
@@ -244,18 +259,54 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback, Locatio
         if (business.ratingCount == 0) {
             mTvRate.setVisibility(View.GONE);
             mTvRatingCount.setVisibility(View.GONE);
-            mRbBusiness.setVisibility(View.GONE);
+            mIvRatingStar.setVisibility(View.GONE);
         } else {
             mTvRate.setText(average);
-            mRbBusiness.setRating(business.ratingAverage);
             mTvRatingCount.setText(ratingCount);
+            mIvRatingStar.setVisibility(View.GONE);
         }
 
         mTvName.setText(business.name);
         mTvStreet.setText(street);
+        mTvCity.setText(city);
         mTvDistance.setText(distance);
 
-        mDistanceBackground.setColor(categoryColor);
+        mBtnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (business.favorited) {
+                    mBusinessService.deleteFavorite(business.favoritedId, new APICallback() {
+                        @Override
+                        public void onSuccess(Object response) {
+                            mBusinessList.get(position).setFavorited(false);
+                            mBusinessList.get(position).setFavoritedId("");
+                            mBtnFavorite.setImageResource(R.drawable.ic_favorite_border);
+                        }
+
+                        @Override
+                        public void onError(Object error) {
+
+                        }
+                    });
+                } else {
+                    mBusinessService.createFavorite(userId, business.id, new APICallback() {
+                        @Override
+                        public void onSuccess(Object response) {
+                            FavoriteResp resp = (FavoriteResp) response;
+
+                            mBusinessList.get(position).setFavorited(true);
+                            mBusinessList.get(position).setFavoritedId(resp.data.id);
+                            mBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
+                        }
+
+                        @Override
+                        public void onError(Object error) {
+
+                        }
+                    });
+                }
+            }
+        });
 
         Glide.with(mContext).load(business.image.url)
                 .error(R.drawable.business_background)
@@ -277,11 +328,4 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback, Locatio
         mContext.startActivity(businessIntent);
     }
 
-    @Override
-    public void onLocationReady(String locationCityState) {
-        if (mLocationManager.getLastLatitude() != 0 && mLocationManager.getLastLongitude() != 0 && mGMap != null) {
-            LatLng position = new LatLng(mLocationManager.getLastLatitude(), mLocationManager.getLastLongitude());
-            mGMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 12));
-        }
-    }
 }

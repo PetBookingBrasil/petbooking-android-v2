@@ -41,6 +41,7 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
 
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static Context mContext;
+    private View fragmentView;
     private BusinessService mBusinessService;
     private LocationManager mLocationManager;
     private String userId;
@@ -53,6 +54,8 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
      * Business Elements
      */
     private View mBusinessLayout;
+    private View mBusinessActiveLayout;
+    private View mBusinessImportedLayout;
     private ImageView mIvBusinessPhoto;
     private ImageView mIvRatingStar;
     private ImageButton mBtnFavorite;
@@ -73,9 +76,15 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
             int index = Integer.parseInt(marker.getSnippet());
             selectedBusiness = mBusinessList.get(index);
 
-            updateBusinessInfo(selectedBusiness, index);
-            mGMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 13));
+            if (selectedBusiness.imported) {
+                bindImportedBusiness(fragmentView);
+                updateImportedBusinessInfo(selectedBusiness, index);
+            } else {
+                bindActiveBusiness(fragmentView);
+                updateActiveBusinessInfo(selectedBusiness, index);
+            }
 
+            mGMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 13));
 
             return true;
         }
@@ -112,7 +121,7 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_business_map, container, false);
+        fragmentView = inflater.inflate(R.layout.fragment_business_map, container, false);
         Bundle mapViewBundle = null;
 
         mContext = getContext();
@@ -123,28 +132,17 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
         mBusinessList = new ArrayList<>();
         userId = SessionManager.getInstance().getUserLogged().id;
 
-        mBusinessLayout = view.findViewById(R.id.business_layout);
-        mIvBusinessPhoto = (ImageView) view.findViewById(R.id.business_photo);
-        mIvRatingStar = (ImageView) view.findViewById(R.id.rating_star);
-        mBtnFavorite = (ImageButton) view.findViewById(R.id.favorite_button);
-        mTvName = (TextView) view.findViewById(R.id.business_name);
-        mTvStreet = (TextView) view.findViewById(R.id.business_street);
-        mTvCity = (TextView) view.findViewById(R.id.business_city);
-        mTvRatingCount = (TextView) view.findViewById(R.id.ratings);
-        mTvRate = (TextView) view.findViewById(R.id.business_rate);
-        mTvDistance = (TextView) view.findViewById(R.id.business_distance);
-
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
         }
 
-        mMapView = (MapView) view.findViewById(R.id.map);
+        mMapView = (MapView) fragmentView.findViewById(R.id.map);
         mMapView.onCreate(mapViewBundle);
 
         mMapView.getMapAsync(this);
         listBusiness();
 
-        return view;
+        return fragmentView;
     }
 
     @Override
@@ -237,12 +235,12 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
     }
 
     /**
-     * Update Business Info
+     * Update active Business Info
      * when Click on Mark
      *
      * @param business
      */
-    public void updateBusinessInfo(final Business business, final int position) {
+    public void updateActiveBusinessInfo(final Business business, final int position) {
 
         String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber, business.city);
         String city = mContext.getResources().getString(R.string.business_city, business.city, business.state);
@@ -317,6 +315,105 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
 
         mBusinessLayout.setOnClickListener(businessListener);
         mBusinessLayout.setVisibility(View.VISIBLE);
+        mBusinessActiveLayout.setVisibility(View.VISIBLE);
+        mBusinessImportedLayout.setVisibility(View.GONE);
+    }
+
+    /**
+     * Update imported Business Info
+     * when Click on Mark
+     *
+     * @param business
+     */
+    public void updateImportedBusinessInfo(final Business business, final int position) {
+
+        String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber, business.city);
+        String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", business.distance));
+
+        if (business.favorited) {
+            mBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
+        } else {
+            mBtnFavorite.setImageResource(R.drawable.ic_favorite_border_black);
+        }
+
+        mTvName.setText(business.name);
+        mTvStreet.setText(street);
+        mTvDistance.setText(distance);
+
+        mBtnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (business.favorited) {
+                    mBusinessService.deleteFavorite(business.favoritedId, new APICallback() {
+                        @Override
+                        public void onSuccess(Object response) {
+                            mBusinessList.get(position).setFavorited(false);
+                            mBusinessList.get(position).setFavoritedId("");
+                            mBtnFavorite.setImageResource(R.drawable.ic_favorite_border_black);
+                        }
+
+                        @Override
+                        public void onError(Object error) {
+
+                        }
+                    });
+                } else {
+                    mBusinessService.createFavorite(userId, business.id, new APICallback() {
+                        @Override
+                        public void onSuccess(Object response) {
+                            FavoriteResp resp = (FavoriteResp) response;
+
+                            mBusinessList.get(position).setFavorited(true);
+                            mBusinessList.get(position).setFavoritedId(resp.data.id);
+                            mBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
+                        }
+
+                        @Override
+                        public void onError(Object error) {
+
+                        }
+                    });
+                }
+            }
+        });
+
+        mBusinessLayout.setOnClickListener(businessListener);
+        mBusinessLayout.setVisibility(View.VISIBLE);
+        mBusinessActiveLayout.setVisibility(View.GONE);
+        mBusinessImportedLayout.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Bind Active Business
+     * @param view
+     */
+    public void bindActiveBusiness(View view) {
+        mBusinessLayout = view.findViewById(R.id.business_layout);
+        mBusinessActiveLayout = view.findViewById(R.id.business_active);
+        mBusinessImportedLayout = view.findViewById(R.id.business_imported);
+        mIvBusinessPhoto = (ImageView) view.findViewById(R.id.business_photo);
+        mIvRatingStar = (ImageView) view.findViewById(R.id.rating_star);
+        mBtnFavorite = (ImageButton) view.findViewById(R.id.favorite_button);
+        mTvName = (TextView) view.findViewById(R.id.business_name);
+        mTvStreet = (TextView) view.findViewById(R.id.business_street);
+        mTvCity = (TextView) view.findViewById(R.id.business_city);
+        mTvRatingCount = (TextView) view.findViewById(R.id.ratings);
+        mTvRate = (TextView) view.findViewById(R.id.business_rate);
+        mTvDistance = (TextView) view.findViewById(R.id.business_distance);
+    }
+
+    /**
+     * Bind Imported Business Elements
+     * @param view
+     */
+    public void bindImportedBusiness(View view) {
+        mBusinessLayout = view.findViewById(R.id.business_layout);
+        mBusinessActiveLayout = view.findViewById(R.id.business_active);
+        mBusinessImportedLayout = view.findViewById(R.id.business_imported);
+        mBtnFavorite = (ImageButton) mBusinessImportedLayout.findViewById(R.id.favorite_button);
+        mTvName = (TextView) mBusinessImportedLayout.findViewById(R.id.business_name);
+        mTvStreet = (TextView) mBusinessImportedLayout.findViewById(R.id.business_street);
+        mTvDistance = (TextView) mBusinessImportedLayout.findViewById(R.id.business_distance);
     }
 
     /**

@@ -27,7 +27,6 @@
             android:layout_marginTop="@dimen/spacing_xmicro"
             android:layout_toLeftOf="@+id/call_button"
             android:maxLines="2"
-            android:text="PetShop do Carlos"
             android:textColor="@color/text_color"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -72,7 +71,6 @@
             android:layout_marginLeft="@dimen/spacing_tiny"
             android:layout_marginRight="@dimen/spacing_xtiny"
             android:layout_toLeftOf="@+id/business_distance"
-            android:text="Cidade De Deus Para testar com um nome super gigante inventado por mim"
             android:textSize="13sp" />
 
         <TextView
@@ -87,7 +85,6 @@
             android:paddingLeft="@dimen/spacing_xmicro"
             android:paddingRight="@dimen/spacing_xmicro"
             android:paddingTop="@dimen/spacing_nano"
-            android:text="12 km"
             android:textColor="@color/brand_primary"
             android:textSize="12sp" />
 

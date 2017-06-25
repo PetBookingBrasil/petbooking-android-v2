@@ -19,7 +19,7 @@
 
     <include
         android:id="@+id/business_layout"
-        layout="@layout/item_list_business"
+        layout="@layout/map_business_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:visibility="gone"

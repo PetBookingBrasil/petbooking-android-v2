@@ -43,7 +43,6 @@
         android:layout_marginStart="@dimen/spacing_xtiny"
         android:layout_marginTop="@dimen/spacing_xmicro"
         android:maxLines="2"
-        android:text="PetShop do Carlos da Marisa e de José da Silva"
         android:textColor="@color/white"
         android:textSize="17sp"
         android:textStyle="bold"
@@ -89,7 +88,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_micro"
         android:layout_marginLeft="@dimen/spacing_micro"
-        android:text="4,5"
         android:textColor="#F2C94C"
         android:textSize="12sp"
         android:textStyle="bold"
@@ -102,7 +100,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_micro"
         android:layout_marginLeft="@dimen/spacing_tiny"
-        android:text="25 Avaliações"
         android:textColor="#B3FFFFFF"
         android:textSize="12sp"
         android:textStyle="bold"
@@ -128,7 +125,6 @@
             android:layout_alignParentTop="true"
             android:layout_marginRight="@dimen/spacing_xmicro"
             android:layout_toLeftOf="@+id/business_distance"
-            android:text="Cidade De Deus Para testar com um nome super gigante inventado por mim"
             android:textSize="13sp" />
 
         <TextView
@@ -138,7 +134,6 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/business_street"
             android:layout_toLeftOf="@+id/business_distance"
-            android:text="SP - Osasco"
             android:textSize="13sp" />
 
         <TextView
@@ -153,7 +148,6 @@
             android:paddingLeft="@dimen/spacing_xmicro"
             android:paddingRight="@dimen/spacing_xmicro"
             android:paddingTop="@dimen/spacing_nano"
-            android:text="12 km"
             android:textColor="@color/brand_primary"
             android:textSize="12sp" />
 

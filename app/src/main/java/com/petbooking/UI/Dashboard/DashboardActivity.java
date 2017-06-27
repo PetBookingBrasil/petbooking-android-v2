@@ -100,12 +100,12 @@ public class DashboardActivity extends AppCompatActivity implements
         mFragmentManager = getSupportFragmentManager();
 
         mFeedbackDialogFragment = FeedbackDialogFragment.newInstance();
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false); //optional
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

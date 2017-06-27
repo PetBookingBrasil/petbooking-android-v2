@@ -39,6 +39,8 @@ public class FavoritesActivity extends AppCompatActivity {
         mLocationManager = LocationManager.getInstance();
         userId = SessionManager.getInstance().getUserLogged().id;
 
+        getSupportActionBar().setElevation(0);
+
         mFavoriteList = new ArrayList<>();
         listFavorites();
         mRvFavorites = (RecyclerView) findViewById(R.id.favorites_list);

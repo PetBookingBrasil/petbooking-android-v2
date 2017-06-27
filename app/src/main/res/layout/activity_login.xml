@@ -31,25 +31,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_login" />
-
-            <TextView
-                android:id="@+id/appSlogan"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/spacing_xtiny"
-                android:layout_marginLeft="@dimen/spacing_xtiny"
-                android:layout_marginRight="@dimen/spacing_xtiny"
-                android:layout_marginStart="@dimen/spacing_xtiny"
-                android:layout_marginTop="@dimen/spacing_tiny"
-                android:text="@string/app_slogan"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                app:layout_constraintHorizontal_bias="0.150"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appLogo" />
+                app:srcCompat="@drawable/ic_login_text" />
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/emailTL"
@@ -63,7 +45,7 @@
                 app:layout_constraintHorizontal_bias="0.156"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appSlogan">
+                app:layout_constraintTop_toBottomOf="@+id/appLogo">
 
                 <EditText
                     android:id="@+id/email"

@@ -6,6 +6,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- Screen Title -->
+    <string name="dashboard_title">Businesses</string>
     <string name="recover_password_title">Forgot password</string>
     <string name="signup_title">Enter your info</string>
     <string name="profile_title">Profile</string>

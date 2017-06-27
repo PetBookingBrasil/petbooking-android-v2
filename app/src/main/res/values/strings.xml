@@ -12,6 +12,7 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb1799017433691061</string>
 
     <!-- Screen Title -->
+    <string name="dashboard_title">Estabelecimentos</string>
     <string name="recover_password_title">Esqueci a senha</string>
     <string name="signup_title">Preencha seus dados</string>
     <string name="profile_title">Perfil</string>

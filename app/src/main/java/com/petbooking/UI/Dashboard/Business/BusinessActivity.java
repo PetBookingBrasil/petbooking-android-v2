@@ -19,6 +19,7 @@ public class BusinessActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private BusinessTabsAdapter mAdapter;
     private String businessId;
+    private String businessName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +29,16 @@ public class BusinessActivity extends AppCompatActivity {
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mViewPager = (ViewPager) findViewById(R.id.pager);
 
+        businessId = getIntent().getStringExtra("businessId");
+        businessName = getIntent().getStringExtra("businessName");
+
+        getSupportActionBar().setElevation(0);
+        getSupportActionBar().setTitle(businessName);
+
         mAdapter = new BusinessTabsAdapter(getSupportFragmentManager(), this, businessId);
         mViewPager.setAdapter(mAdapter);
 
-        mTabLayout.setBackgroundColor(getResources().getColor(R.color.brand_primary));
+        mTabLayout.setBackgroundColor(getResources().getColor(R.color.secondary_red));
         mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
         mTabLayout.setupWithViewPager(mViewPager);
 

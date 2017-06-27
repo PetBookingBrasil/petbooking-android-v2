@@ -140,7 +140,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         holder.mClBusiness.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToBusiness(business.id);
+                goToBusiness(business.id, business.name);
             }
         });
 
@@ -261,9 +261,10 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     /**
      * Go to Business
      */
-    public void goToBusiness(String businessId) {
+    public void goToBusiness(String businessId, String businessName) {
         Intent businessIntent = new Intent(mContext, BusinessActivity.class);
         businessIntent.putExtra("businessId", businessId);
+        businessIntent.putExtra("businessName", businessName);
         mContext.startActivity(businessIntent);
     }
 

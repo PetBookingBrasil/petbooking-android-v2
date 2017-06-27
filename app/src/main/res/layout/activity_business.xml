@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.petbooking.UI.Dashboard.Business.BusinessActivity">
 
-    <include layout="@layout/include_logo_toolbar"></include>
-
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"

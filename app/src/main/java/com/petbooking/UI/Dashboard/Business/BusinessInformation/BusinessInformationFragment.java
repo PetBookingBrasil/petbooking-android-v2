@@ -14,6 +14,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
     private Context mContext;
     private BusinessService mBusinessService;
     private String businessId;
+    private float businessDistance;
     private Business mBusiness;
     private AlertDialog mLoadingDialog;
     private ScrollView mSvInfo;
@@ -179,10 +181,11 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         // Required empty public constructor
     }
 
-    public static BusinessInformationFragment newInstance(String id) {
+    public static BusinessInformationFragment newInstance(String id, float distance) {
         BusinessInformationFragment fragment = new BusinessInformationFragment();
         Bundle bundle = new Bundle();
         bundle.putString("businessId", id);
+        bundle.putFloat("businessDistance", distance);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -214,6 +217,7 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         mBusinessService = new BusinessService();
         this.mContext = getContext();
         this.businessId = getArguments().getString("businessId", "0");
+        this.businessDistance = getArguments().getFloat("businessDistance", 0);
         getBusinessInfo(businessId);
     }
 
@@ -369,7 +373,7 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         boolean hasIcon;
         String street = mContext.getResources().getString(R.string.business_street, mBusiness.street, mBusiness.streetNumber, mBusiness.neighborhood);
         String city = mContext.getResources().getString(R.string.business_city, mBusiness.city, mBusiness.state);
-        String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", mBusiness.distance));
+        String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", this.businessDistance));
         String average = String.format("%.1f", mBusiness.ratingAverage);
 
         mTvName.setText(mBusiness.name);

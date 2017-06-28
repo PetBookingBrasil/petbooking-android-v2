@@ -20,6 +20,7 @@ public class BusinessActivity extends AppCompatActivity {
     private BusinessTabsAdapter mAdapter;
     private String businessId;
     private String businessName;
+    private float businessDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +32,12 @@ public class BusinessActivity extends AppCompatActivity {
 
         businessId = getIntent().getStringExtra("businessId");
         businessName = getIntent().getStringExtra("businessName");
+        businessDistance = getIntent().getFloatExtra("businessDistance", 0);
 
         getSupportActionBar().setElevation(0);
         getSupportActionBar().setTitle(businessName);
 
-        mAdapter = new BusinessTabsAdapter(getSupportFragmentManager(), this, businessId);
+        mAdapter = new BusinessTabsAdapter(getSupportFragmentManager(), this, businessId, businessDistance);
         mViewPager.setAdapter(mAdapter);
 
         mTabLayout.setBackgroundColor(getResources().getColor(R.color.secondary_red));

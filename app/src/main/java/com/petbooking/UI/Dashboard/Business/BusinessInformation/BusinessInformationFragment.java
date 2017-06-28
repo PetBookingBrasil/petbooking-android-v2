@@ -103,6 +103,7 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
     private ImageView mIvTwitter;
     private ImageView mIvInstagram;
     private ImageView mIvGooglePlus;
+    private ImageView mIvSnapchat;
 
     /**
      * Business Rating and Review
@@ -170,6 +171,8 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
                 openPage(mBusiness.instagram);
             } else if (id == mIvGooglePlus.getId()) {
                 openPage(mBusiness.googlePlus);
+            }else if(id == mIvSnapchat.getId()){
+                openPage(mBusiness.snapchat);
             } else if (id == mTvWebsite.getId()) {
                 openPage(mBusiness.website);
             }
@@ -297,6 +300,7 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         mIvTwitter = (ImageView) view.findViewById(R.id.social_twitter);
         mIvGooglePlus = (ImageView) view.findViewById(R.id.social_googleplus);
         mIvInstagram = (ImageView) view.findViewById(R.id.social_instagram);
+        mIvSnapchat = (ImageView) view.findViewById(R.id.social_snapchat);
 
         mTvRatingAverage = (TextView) view.findViewById(R.id.business_rating_average);
         mTvRatingCount = (TextView) view.findViewById(R.id.business_rating_count);
@@ -386,7 +390,7 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         mTvDistance.setText(distance);
         mTvRatingAverage.setText(average);
         mTvRatingCount.setText(String.valueOf(mBusiness.ratingCount));
-        hasIcon = checkSocialIcon(mBusiness.facebook, mBusiness.twitter, mBusiness.instagram, mBusiness.googlePlus);
+        hasIcon = checkSocialIcon(mBusiness.facebook, mBusiness.twitter, mBusiness.instagram, mBusiness.googlePlus, mBusiness.snapchat);
 
         if (!hasIcon) {
             mSocialIconsLayout.setVisibility(View.GONE);
@@ -458,7 +462,9 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
      * @param googlePlus
      * @return
      */
-    public boolean checkSocialIcon(final String facebook, final String twitter, final String instagram, final String googlePlus) {
+    public boolean checkSocialIcon(final String facebook, final String twitter,
+                                   final String instagram, final String googlePlus,
+                                   final String snapchat) {
         boolean hasIcon = false;
 
         if (!TextUtils.isEmpty(facebook)) {
@@ -482,6 +488,12 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         if (!TextUtils.isEmpty(googlePlus)) {
             mIvGooglePlus.setVisibility(View.VISIBLE);
             mIvGooglePlus.setOnClickListener(socialListener);
+            hasIcon = true;
+        }
+
+        if (!TextUtils.isEmpty(snapchat)) {
+            mIvSnapchat.setVisibility(View.VISIBLE);
+            mIvSnapchat.setOnClickListener(socialListener);
             hasIcon = true;
         }
 

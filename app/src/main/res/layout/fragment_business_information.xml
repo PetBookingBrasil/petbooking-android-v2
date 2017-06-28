@@ -272,6 +272,14 @@
                         android:visibility="gone"
                         app:srcCompat="@drawable/ic_social_google" />
 
+                    <ImageView
+                        android:id="@+id/social_snapchat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/spacing_xmicro"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_social_snapchat" />
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -393,9 +401,9 @@
                 android:id="@+id/business_rating_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/reviewLabel"
                 android:layout_marginLeft="@dimen/spacing_xmicro"
                 android:layout_marginTop="6dp"
+                android:layout_toRightOf="@id/reviewLabel"
                 android:background="@drawable/review_background"
                 android:paddingLeft="@dimen/spacing_tiny"
                 android:paddingRight="@dimen/spacing_tiny"

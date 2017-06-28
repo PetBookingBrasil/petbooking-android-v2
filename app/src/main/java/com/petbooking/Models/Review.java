@@ -14,11 +14,12 @@ public class Review {
     public float rating;
     public AvatarResp userAvatar;
 
-    public Review(String id, String userName, String comment, float rating) {
+    public Review(String id, String userName, String comment, float rating, AvatarResp avatar) {
         this.id = id;
         this.userName = userName;
         this.comment = comment;
         this.rating = rating;
+        this.userAvatar = avatar;
     }
 
 }

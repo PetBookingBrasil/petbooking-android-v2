@@ -84,7 +84,7 @@ public class APIUtils {
      * @return
      */
     public static Review parseReview(String id, ReviewResp.Attributes attr) {
-        Review review = new Review(id, attr.userName, attr.comment, attr.rating);
+        Review review = new Review(id, attr.userName, attr.comment, attr.rating, attr.avatar);
 
         return review;
     }

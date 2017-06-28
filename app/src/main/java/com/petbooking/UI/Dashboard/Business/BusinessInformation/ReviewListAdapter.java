@@ -63,6 +63,11 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
         if (TextUtils.isEmpty(review.comment)) {
             holder.mTvComment.setVisibility(View.GONE);
         }
+
+        Glide.with(mContext)
+                .load(review.userAvatar.url)
+                .error(R.drawable.ic_placeholder_user)
+                .into(holder.mIvUserPhoto);
     }
 
     @Override
@@ -80,7 +85,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
         public ReviewViewHolder(View view) {
             super(view);
 
-            mIvUserPhoto = (ImageView) view.findViewById(R.id.user_photo);
+            mIvUserPhoto = (ImageView) view.findViewById(R.id.user_image);
             mTvName = (TextView) view.findViewById(R.id.user_name);
             mTvComment = (TextView) view.findViewById(R.id.comment);
             mRbBusiness = (StarsRating) view.findViewById(R.id.rating);

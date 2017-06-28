@@ -11,7 +11,6 @@ import java.util.List;
 public class ReviewResp {
 
     public List<Item> data;
-    public List<IncludedUser> included;
 
     public static class Item {
 
@@ -26,6 +25,7 @@ public class ReviewResp {
         public String comment;
         @SerializedName("user_name")
         public String userName;
+        public AvatarResp avatar;
         public float rating;
 
         @SerializedName("business_id")
@@ -34,19 +34,4 @@ public class ReviewResp {
         @SerializedName("user_id")
         public int userId;
     }
-
-    public static class IncludedUser {
-
-        public String id;
-        public String type;
-        public UserAttributes attributes;
-
-    }
-
-    public static class UserAttributes {
-
-        public String name;
-        public AvatarResp avatar;
-    }
-
 }

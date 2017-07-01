@@ -12,7 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ImageView;
+import android.view.WindowManager;
+import android.widget.Button;
 
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.R;
@@ -22,8 +23,9 @@ public class PictureSelectDialogFragment extends DialogFragment {
 
     private FinishDialogListener finishDialogListener;
     private Dialog mDialog;
-    private ImageView mIvGallery;
-    private ImageView mIvCamera;
+    private Button mBtnGallery;
+    private Button mBtnCamera;
+    private Button mBtnCancel;
 
     private Uri mImgUri;
 
@@ -51,6 +53,13 @@ public class PictureSelectDialogFragment extends DialogFragment {
         }
     };
 
+    View.OnClickListener mCancelListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            dismiss();
+        }
+    };
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,11 +74,13 @@ public class PictureSelectDialogFragment extends DialogFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mIvCamera = (ImageView) view.findViewById(R.id.camera);
-        mIvGallery = (ImageView) view.findViewById(R.id.gallery);
+        mBtnCamera = (Button) view.findViewById(R.id.camera);
+        mBtnGallery = (Button) view.findViewById(R.id.gallery);
+        mBtnCancel = (Button) view.findViewById(R.id.cancel_button);
 
-        mIvCamera.setOnClickListener(mCameraListener);
-        mIvGallery.setOnClickListener(mGaleryListener);
+        mBtnCamera.setOnClickListener(mCameraListener);
+        mBtnGallery.setOnClickListener(mGaleryListener);
+        mBtnCancel.setOnClickListener(mCancelListener);
     }
 
     @Override
@@ -79,6 +90,18 @@ public class PictureSelectDialogFragment extends DialogFragment {
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         return mDialog;
+    }
+
+    @Override
+    public void onResume() {
+        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.MATCH_PARENT;
+        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
+        super.onResume();
+
     }
 
     public interface FinishDialogListener {

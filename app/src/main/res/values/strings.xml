@@ -167,6 +167,9 @@
     <string name="dialog_picture_title">Selecionar foto de perfil</string>
     <string name="dialog_picture_text">Selecione o método de entrada de imagens que deseja usar.</string>
     <string name="dialog_button_ok">Ok</string>
+    <string name="dialog_button_add_pet">Adicionar outro pet</string>
+    <string name="dialog_button_start">Começar a usar</string>
+    <string name="dialog_button_check_info">Verificar informações</string>
     <string name="dialog_back_screen">Voltar à Tela</string>
     <string name="dialog_cancel">Cancelar</string>
 
@@ -177,18 +180,21 @@
     <string name="error_invalid_phone">Telefone Inválido.</string>
     <string name="error_invalid_password">A senha deve ter ao menos 6 caracteres.</string>
     <string name="error_different_password">As senhas não coincidem.</string>
-    <string name="error_create_user">Não foi possível cadastrar o usuário.</string>
-    <string name="error_update_user">Não foi possível atualizar o perfil.</string>
-    <string name="error_update_pet">Não foi possível atualizar o pet.</string>
+    <string name="error_create_user">Ocorreu um erro ao cadastrar o usuário</string>
+    <string name="error_update_user">Ocorreu um erro ao atualizar o usuário</string>
+    <string name="error_create_pet">Ocorreu um erro ao cadastrar o pet</string>
+    <string name="error_update_pet">Ocorreu um erro ao atualizar o pet</string>
+    <string name="error_create_text">Por favor, verifique os dados informados.</string>
     <string name="error_auth_invalid">Token de autenticação inválido. Requisite um novo token.</string>
     <string name="error_invalid_login">Email ou senha inválidos.</string>
 
     <string name="error_no_location">Localização não dísponível.</string>
 
     <!-- Success -->
-    <string name="success_create_user">Usuário cadastrado com sucesso.</string>
-    <string name="success_create_pet">Pet cadastrado com sucesso.</string>
-    <string name="success_update_pet">Pet atualizado com sucesso.</string>
+    <string name="success_create_user">Usuário cadastrado com sucesso!</string>
+    <string name="success_create_pet">Pet cadastrado com sucesso!</string>
+    <string name="success_update_pet">Pet atualizado com sucesso!</string>
+    <string name="success_create_pet_text">Pronto, você já pode começar a usar o Pet Booking pra facilitar</string>
 
     <!-- Prompt -->
     <string name="prompt_loading">Carregando…</string>

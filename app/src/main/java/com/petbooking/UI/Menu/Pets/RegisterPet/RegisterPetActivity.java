@@ -26,6 +26,7 @@ import com.petbooking.Models.Breed;
 import com.petbooking.Models.Pet;
 import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.Dialogs.DatePickerFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
@@ -94,6 +95,7 @@ public class RegisterPetActivity extends BaseActivity implements
     /**
      * Form Inputs
      */
+    private EditText mEdtName;
     private MaterialSpinner mSpGender;
     private MaterialSpinner mSpType;
     private MaterialSpinner mSpSize;
@@ -155,7 +157,6 @@ public class RegisterPetActivity extends BaseActivity implements
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,6 +175,7 @@ public class RegisterPetActivity extends BaseActivity implements
 
         mCiUserPhoto = (CircleImageView) findViewById(R.id.pet_photo);
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
+        mEdtName = (EditText) findViewById(R.id.pet_name);
         mEdtBirthday = (EditText) findViewById(R.id.pet_birthday);
         mSpGender = (MaterialSpinner) findViewById(R.id.pet_gender);
         mSpType = (MaterialSpinner) findViewById(R.id.pet_type);
@@ -298,14 +300,20 @@ public class RegisterPetActivity extends BaseActivity implements
         mPetService.createPet(mUser.id, pet, new APICallback() {
             @Override
             public void onSuccess(Object response) {
-                mDialogFragmentFeedback.setDialogInfo(R.string.register_pet_dialog_title, R.string.success_create_pet,
-                        R.string.dialog_button_ok, AppConstants.OK_ACTION);
+                resetForm();
+                mDialogFragmentFeedback.setDialogInfo(R.string.success_create_pet, R.string.success_create_pet_text,
+                        R.string.dialog_button_start, AppConstants.OK_ACTION);
+                mDialogFragmentFeedback.setSecondButton(R.string.dialog_button_add_pet, AppConstants.ADD_PET);
+                mDialogFragmentFeedback.showSecondButton(true);
                 mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
             }
 
             @Override
             public void onError(Object error) {
-
+                mDialogFragmentFeedback.setDialogInfo(R.string.error_create_pet, R.string.error_create_text,
+                        R.string.dialog_button_check_info, AppConstants.CANCEL_ACTION);
+                mDialogFragmentFeedback.showSecondButton(false);
+                mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
             }
         });
     }
@@ -345,8 +353,33 @@ public class RegisterPetActivity extends BaseActivity implements
         } else if (action == AppConstants.TAKE_PHOTO) {
             openCamera();
         } else if (action == AppConstants.OK_ACTION) {
-            onBackPressed();
+            goToDashboard();
+        } else if (action == AppConstants.ADD_PET) {
+            resetForm();
         }
+    }
+
+    /**
+     * Go To dashboard
+     */
+    private void goToDashboard() {
+        Intent dashboardIntent = new Intent(this, DashboardActivity.class);
+        startActivity(dashboardIntent);
+    }
+
+    /**
+     * Reset Form
+     */
+    private void resetForm() {
+        pet = new Pet();
+        mBinding.setPet(pet);
+        mSpGender.selectItem(0);
+        mSpType.selectItem(0);
+        mSpSize.selectItem(0);
+        mSpBreed.selectItem(0);
+        mSpCoat.selectItem(0);
+        mSpTemper.selectItem(0);
+        mEdtName.requestFocus();
     }
 
     @Override

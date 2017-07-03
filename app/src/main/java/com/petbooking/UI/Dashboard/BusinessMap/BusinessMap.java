@@ -142,7 +142,10 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
         }
 
         mMapView = (MapView) fragmentView.findViewById(R.id.map);
-        mMapView.onCreate(mapViewBundle);
+
+        if (mapViewBundle == null) {
+            mMapView.onCreate(savedInstanceState);
+        }
 
         mMapView.getMapAsync(this);
         listBusiness();

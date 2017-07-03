@@ -297,6 +297,7 @@ public class RegisterPetActivity extends BaseActivity implements
      * @param pet
      */
     public void createRequest(Pet pet) {
+        clearFocus();
         mPetService.createPet(mUser.id, pet, new APICallback() {
             @Override
             public void onSuccess(Object response) {
@@ -356,6 +357,7 @@ public class RegisterPetActivity extends BaseActivity implements
             goToDashboard();
         } else if (action == AppConstants.ADD_PET) {
             resetForm();
+            mEdtName.requestFocus();
         }
     }
 
@@ -379,7 +381,14 @@ public class RegisterPetActivity extends BaseActivity implements
         mSpBreed.selectItem(0);
         mSpCoat.selectItem(0);
         mSpTemper.selectItem(0);
-        mEdtName.requestFocus();
+    }
+
+    /**
+     * Clear input focus
+     */
+    private void clearFocus() {
+        View current = getCurrentFocus();
+        if (current != null) current.clearFocus();
     }
 
     @Override

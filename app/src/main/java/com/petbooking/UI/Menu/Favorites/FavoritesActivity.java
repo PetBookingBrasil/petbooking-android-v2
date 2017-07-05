@@ -14,6 +14,7 @@ import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.BusinessList.BusinessListAdapter;
 
 import java.util.ArrayList;
 
@@ -23,11 +24,11 @@ public class FavoritesActivity extends AppCompatActivity {
     private LocationManager mLocationManager;
     private String userId;
 
-    private View mFavoritesPlaceholcer;
+    private View mFavoritesPlaceholder;
 
     private ArrayList<Business> mFavoriteList;
     private LinearLayoutManager mLayoutManager;
-    private FavoritesListAdapter mAdapter;
+    private BusinessListAdapter mAdapter;
     private RecyclerView mRvFavorites;
 
     @Override
@@ -43,15 +44,14 @@ public class FavoritesActivity extends AppCompatActivity {
 
         mFavoriteList = new ArrayList<>();
         listFavorites();
-        mFavoritesPlaceholcer = findViewById(R.id.favorites_placeholder);
+        mFavoritesPlaceholder = findViewById(R.id.favorites_placeholder);
         mRvFavorites = (RecyclerView) findViewById(R.id.favorites_list);
-        mAdapter = new FavoritesListAdapter(this, mFavoriteList, Glide.with(this));
+        mAdapter = new BusinessListAdapter(this, mFavoriteList, Glide.with(this));
         mLayoutManager = new LinearLayoutManager(this);
 
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRvFavorites.setHasFixedSize(true);
         mRvFavorites.setLayoutManager(mLayoutManager);
-        mRvFavorites.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         if (mAdapter != null) {
             mRvFavorites.setAdapter(mAdapter);
@@ -71,7 +71,7 @@ public class FavoritesActivity extends AppCompatActivity {
                     mAdapter.updateList(mFavoriteList);
                     mAdapter.notifyDataSetChanged();
                 } else {
-                    mFavoritesPlaceholcer.setVisibility(View.VISIBLE);
+                    mFavoritesPlaceholder.setVisibility(View.VISIBLE);
                     mRvFavorites.setVisibility(View.GONE);
                 }
             }

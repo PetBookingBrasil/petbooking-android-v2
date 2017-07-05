@@ -9,12 +9,14 @@ import android.widget.Button;
 
 import com.petbooking.R;
 import com.petbooking.UI.Login.LoginActivity;
+import com.petbooking.UI.Widget.CircleIndicator;
 
 public class PresentationActivity extends AppCompatActivity {
 
     private final int[] colors = {R.color.presentation_1, R.color.presentation_2, R.color.presentation_3};
     private PagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
+    private CircleIndicator mCircleIndicator;
     private Button mBtnNextTour;
     private Button mBtnSkip;
 
@@ -45,6 +47,7 @@ public class PresentationActivity extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
             mBtnNextTour.setTextColor(getResources().getColor(colors[position]));
+            mCircleIndicator.setPageSelected(position);
         }
 
         @Override
@@ -58,6 +61,7 @@ public class PresentationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_presentation);
 
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
+        mCircleIndicator = (CircleIndicator) findViewById(R.id.circle_indicator);
 
         mViewPager = (ViewPager) findViewById(R.id.presentationPager);
         mViewPager.setAdapter(mPagerAdapter);
@@ -69,6 +73,7 @@ public class PresentationActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(pageChangeListener);
 
         mBtnNextTour.setTextColor(getResources().getColor(colors[0]));
+        mCircleIndicator.setPageSelected(0);
         mBtnSkip.setOnClickListener(mListener);
     }
 

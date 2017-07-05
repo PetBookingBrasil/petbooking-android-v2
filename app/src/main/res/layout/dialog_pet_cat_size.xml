@@ -1,136 +1,129 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dialog_background"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_vertical_margin">
+    android:background="@color/dialog_background">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_tiny"
-        android:text="@string/table_size"
-        android:textAlignment="center"
-        android:textColor="@color/text_color"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <android.support.percent.PercentRelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/spacing_tiny">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_vertical_margin">
 
         <TextView
-            android:id="@+id/pet_size_small"
-            android:layout_height="@dimen/spacing_xnormal"
-            android:gravity="center_vertical|end"
-            android:paddingEnd="@dimen/spacing_tiny"
-            android:paddingRight="@dimen/spacing_tiny"
-            android:text="@string/size_small"
-            android:textSize="14sp"
-            app:layout_widthPercent="30%" />
-
-        <TextView
-            android:layout_height="@dimen/spacing_xnormal"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:gravity="center_vertical|start"
-            android:paddingLeft="@dimen/spacing_tiny"
-            android:paddingStart="@dimen/spacing_tiny"
-            android:text="@string/size_small_ex_cat"
-            android:textSize="14sp"
-            app:layout_widthPercent="65%" />
-
-        <TextView
-            android:id="@+id/pet_size_medium"
-            android:layout_height="@dimen/spacing_xnormal"
-            android:layout_below="@id/pet_size_small"
-            android:gravity="center_vertical|end"
-            android:paddingEnd="@dimen/spacing_tiny"
-            android:paddingRight="@dimen/spacing_tiny"
-            android:text="@string/size_medium"
-            android:textSize="14sp"
-            app:layout_widthPercent="30%" />
-
-        <TextView
-            android:layout_height="@dimen/spacing_xnormal"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/pet_size_small"
-            android:gravity="center_vertical|start"
-            android:paddingLeft="@dimen/spacing_tiny"
-            android:paddingStart="@dimen/spacing_tiny"
-            android:text="@string/size_medium_ex_cat"
-            android:textSize="14sp"
-            app:layout_widthPercent="65%" />
-
-        <TextView
-            android:id="@+id/pet_size_big"
-            android:layout_height="@dimen/spacing_xmedium"
-            android:layout_below="@id/pet_size_medium"
-            android:gravity="center_vertical|end"
-            android:paddingEnd="@dimen/spacing_tiny"
-            android:paddingRight="@dimen/spacing_tiny"
-            android:text="@string/size_big"
-            android:textSize="14sp"
-            app:layout_widthPercent="30%" />
-
-        <TextView
-            android:layout_height="@dimen/spacing_xmedium"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/pet_size_medium"
-            android:gravity="center_vertical|start"
-            android:paddingLeft="@dimen/spacing_tiny"
-            android:paddingStart="@dimen/spacing_tiny"
-            android:text="@string/size_big_ex_cat"
-            android:textSize="14sp"
-            app:layout_widthPercent="65%" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="@dimen/spacing_xnormal"
-            android:layout_toEndOf="@id/pet_size_small"
-            android:layout_toRightOf="@id/pet_size_small"
-            android:background="@color/text_color" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="@dimen/spacing_xnormal"
-            android:layout_below="@id/pet_size_small"
-            android:layout_toEndOf="@id/pet_size_small"
-            android:layout_toRightOf="@id/pet_size_small"
-            android:background="@color/text_color" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="@dimen/spacing_xmedium"
-            android:layout_below="@id/pet_size_medium"
-            android:layout_toEndOf="@id/pet_size_small"
-            android:layout_toRightOf="@id/pet_size_small"
-            android:background="@color/text_color" />
-
-        <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/pet_size_small"
-            android:background="@color/text_color" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_tiny"
+            android:text="@string/table_size"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        <View
+        <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/pet_size_medium"
-            android:background="@color/text_color" />
-    </android.support.percent.PercentRelativeLayout>
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_tiny">
 
-    <Button
-        android:id="@+id/okButton"
-        style="@style/AppTheme.PrimaryButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_xmicro"
-        android:background="@drawable/primary_button"
-        android:text="@string/dialog_button_ok" />
+            <TextView
+                android:id="@+id/pet_size_small"
+                android:layout_height="@dimen/spacing_xnormal"
+                android:gravity="center_vertical|end"
+                android:paddingEnd="@dimen/spacing_tiny"
+                android:paddingRight="@dimen/spacing_tiny"
+                android:text="@string/size_small"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_widthPercent="30%" />
 
-</LinearLayout>
+            <TextView
+                android:layout_height="@dimen/spacing_xnormal"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/spacing_tiny"
+                android:paddingStart="@dimen/spacing_tiny"
+                android:text="@string/size_small_ex_cat"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_widthPercent="65%" />
+
+            <TextView
+                android:id="@+id/pet_size_medium"
+                android:layout_height="@dimen/spacing_xnormal"
+                android:layout_below="@id/pet_size_small"
+                android:gravity="center_vertical|end"
+                android:paddingEnd="@dimen/spacing_tiny"
+                android:paddingRight="@dimen/spacing_tiny"
+                android:text="@string/size_medium"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_widthPercent="30%" />
+
+            <TextView
+                android:layout_height="@dimen/spacing_xnormal"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/pet_size_small"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/spacing_tiny"
+                android:paddingStart="@dimen/spacing_tiny"
+                android:text="@string/size_medium_ex_cat"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_widthPercent="65%" />
+
+            <TextView
+                android:id="@+id/pet_size_big"
+                android:layout_height="@dimen/spacing_xmedium"
+                android:layout_below="@id/pet_size_medium"
+                android:gravity="center_vertical|end"
+                android:paddingEnd="@dimen/spacing_tiny"
+                android:paddingRight="@dimen/spacing_tiny"
+                android:text="@string/size_big"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_widthPercent="30%" />
+
+            <TextView
+                android:layout_height="@dimen/spacing_xmedium"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/pet_size_medium"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/spacing_tiny"
+                android:paddingStart="@dimen/spacing_tiny"
+                android:text="@string/size_big_ex_cat"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_widthPercent="65%" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/pet_size_small"
+                android:background="@color/white" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/pet_size_medium"
+                android:background="@color/white" />
+        </android.support.percent.PercentRelativeLayout>
+
+        <Button
+            android:id="@+id/closeButton"
+            style="@style/AppTheme.SecondaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:background="@drawable/secondary_button"
+            android:text="@string/dialog_button_close" />
+
+    </LinearLayout>
+</RelativeLayout>

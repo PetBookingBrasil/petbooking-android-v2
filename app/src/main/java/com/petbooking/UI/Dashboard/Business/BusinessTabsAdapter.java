@@ -16,12 +16,14 @@ public class BusinessTabsAdapter extends FragmentStatePagerAdapter {
 
     private Context mContext;
     private String businessId;
+    private float businessDistance;
     private final int PAGES_COUNT = 2;
 
-    public BusinessTabsAdapter(FragmentManager fm, Context context, String businessId) {
+    public BusinessTabsAdapter(FragmentManager fm, Context context, String businessId, float businessDistance) {
         super(fm);
         this.mContext = context;
         this.businessId = businessId;
+        this.businessDistance = businessDistance;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class BusinessTabsAdapter extends FragmentStatePagerAdapter {
         if (position == 0) {
             return BusinessServicesFragment.newInstance(this.businessId);
         } else if (position == 1) {
-            return BusinessInformationFragment.newInstance(this.businessId);
+            return BusinessInformationFragment.newInstance(this.businessId, this.businessDistance);
         }
 
         return null;

@@ -7,10 +7,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -24,10 +26,14 @@ public class FeedbackDialogFragment extends DialogFragment implements DialogInte
     private TextView mTvTitle;
     private TextView mTvText;
     private Button mBtnDialog;
+    private Button mBtnSecond;
 
     private int mAction;
+    private int mSecondAction;
+    boolean showSecond;
     private int mTitle;
     private int mText;
+    private int mSecondText;
     private int mButtonText;
 
     public FeedbackDialogFragment() {
@@ -46,6 +52,13 @@ public class FeedbackDialogFragment extends DialogFragment implements DialogInte
         }
     };
 
+    View.OnClickListener secondListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            finishDialogListener.onFinishDialog(mSecondAction);
+            dismiss();
+        }
+    };
 
     @Nullable
     @Override
@@ -61,6 +74,8 @@ public class FeedbackDialogFragment extends DialogFragment implements DialogInte
         mTvTitle = (TextView) view.findViewById(R.id.dialogTitle);
         mTvText = (TextView) view.findViewById(R.id.dialogText);
         mBtnDialog = (Button) view.findViewById(R.id.dialogButton);
+        mBtnSecond = (Button) view.findViewById(R.id.secondButton);
+
         mBtnDialog.setOnClickListener(buttonListener);
 
         finishDialogListener = (FinishDialogListener) getActivity();
@@ -78,6 +93,18 @@ public class FeedbackDialogFragment extends DialogFragment implements DialogInte
         return mDialog;
     }
 
+    @Override
+    public void onResume() {
+        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.MATCH_PARENT;
+        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
+        super.onResume();
+
+    }
+
     public void setDialogInfo(int title, int text, int buttonText, int action) {
         this.mTitle = title;
         this.mText = text;
@@ -89,6 +116,23 @@ public class FeedbackDialogFragment extends DialogFragment implements DialogInte
         mTvTitle.setText(mTitle);
         mTvText.setText(mText);
         mBtnDialog.setText(mButtonText);
+
+        if (showSecond) {
+            mBtnSecond.setText(mSecondText);
+            mBtnSecond.setOnClickListener(secondListener);
+            mBtnSecond.setVisibility(View.VISIBLE);
+        } else {
+            mBtnSecond.setVisibility(View.GONE);
+        }
+    }
+
+    public void setSecondButton(int text, int action) {
+        mSecondAction = action;
+        mSecondText = text;
+    }
+
+    public void showSecondButton(boolean show) {
+        showSecond = show;
     }
 
     public interface FinishDialogListener {

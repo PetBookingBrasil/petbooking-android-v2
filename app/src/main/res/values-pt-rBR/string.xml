@@ -5,6 +5,7 @@
     <string name="navigation_drawer_close">Fechar Menu Lateral</string>
 
     <!-- Screen Title -->
+    <string name="dashboard_title">Estabelecimentos</string>
     <string name="recover_password_title">Esqueci a senha</string>
     <string name="signup_title">Preencha seus dados</string>
     <string name="profile_title">Perfil</string>
@@ -55,11 +56,11 @@
 
     <!-- Login -->
     <string name="description">Encontre serviços para seu Pet \n mais póximos de você e agende online!</string>
-    <string name="sign_up">Cadastre-se</string>
+    <string name="sign_up">Cadastro</string>
     <string name="login">Entrar</string>
     <string name="login_facebook">Entrar com <b>Facebook</b></string>
-    <string name="app_terms_info"><i>Utilizando o app, você concorda com os <b><u>Termos de uso</u></b>
-        \n e com a <b><u>Política de Privacidade.</u></b></i></string>
+    <string name="app_terms_info">Utilizando o app, você concorda com os <u>Termos de uso</u>
+        \n e com a <u>Política de Privacidade.</u></string>
     <string name="forgot_password">Esqueceu a senha ?</string>
 
     <!-- Register -->
@@ -80,11 +81,12 @@
     <string name="register">Salvar</string>
 
     <!-- Forgot Password -->
-    <string name="recover_password_text">Insira o seu email de cadastro \n associado à sua conta no petbooking.</string>
+    <string name="recover_password_text">Informe abaixo o email de cadastro \n associado à sua conta no Pet Booking.</string>
+    <string name="recover_password_result">Após a solicitação, você deverá receber em \n instantes um email com instruções para \n resetar sua senha.</string>
     <string name="email_empty">Informe o email.</string>
     <string name="recover_email_title">Recuperar Senha</string>
     <string name="recover_email_text">As instruções para recuperação foram enviadas para seu email.</string>
-    <string name="send_button">Enviar</string>
+    <string name="send_button">Redefinir minha senha</string>
 
     <!-- Sidemenu and Toolbar Options-->
     <string name="my_pets">Meus Pets</string>
@@ -123,9 +125,13 @@
     <string name="hint_observation">Observação</string>
 
     <!-- Business -->
-    <string name="business_street">%1$s, %2$s</string>
+    <string name="business_street">%1$s, %2$s - %3$s</string>
+    <string name="business_city">%1$s - %2$s</string>
     <string name="business_address">%1$s, %2$s, %3$s, %4$s</string>
-    <string name="business_rating_count">(%1$d)</string>
+    <plurals name="business_rating_count">
+        <item quantity="one">%d Avaliação</item>
+        <item quantity="other">%d Avaliações</item>
+    </plurals>
     <string name="business_distance">%1$s Km</string>
     <string name="business_phone">Telefone:</string>
     <string name="business_tab_services">Serviços</string>
@@ -139,8 +145,10 @@
     <string name="business_label_additional">Adicionais</string>
     <string name="business_service_price">R$ %1$s</string>
     <string name="business_service_finish">Finalizar Agendamento</string>
+    <string name="call_button">Ligar</string>
 
     <!-- Settings -->
+    <string name="kilometers">Quilômetro</string>
     <string name="push">Push</string>
     <string name="email">Email</string>
     <string name="sms">SMS</string>
@@ -149,11 +157,19 @@
     <string name="terms">Legal</string>
 
     <!-- Dialog -->
-    <string name="dialog_picture_title">Selecionar Foto</string>
+    <string name="dialog_picture_title">Selecionar foto de perfil</string>
     <string name="dialog_picture_text">Selecione o método de entrada de imagens que deseja usar.</string>
     <string name="dialog_button_ok">Ok</string>
+    <string name="dialog_button_close">Fechar</string>
+    <string name="dialog_button_add_pet">Adicionar outro pet</string>
+    <string name="dialog_button_start">Começar a usar</string>
+    <string name="dialog_button_check_info">Verificar informações</string>
     <string name="dialog_back_screen">Voltar à Tela</string>
     <string name="dialog_cancel">Cancelar</string>
+
+    <!-- Info -->
+    <string name="favorites_empty_title">Você ainda não possui favoritos.</string>
+    <string name="favorites_empty_message">Marque seus estabelecimentos favoritos e acesse-os rapidamente nessa tela.</string>
 
     <!-- Errors -->
     <string name="error_fields_empty">Preencha todos os campos.</string>
@@ -162,21 +178,24 @@
     <string name="error_invalid_phone">Telefone Inválido.</string>
     <string name="error_invalid_password">A senha deve ter ao menos 6 caracteres.</string>
     <string name="error_different_password">As senhas não coincidem.</string>
-    <string name="error_create_user">Não foi possível cadastrar o usuário.</string>
-    <string name="error_update_user">Não foi possível atualizar o perfil.</string>
-    <string name="error_update_pet">Não foi possível atualizar o pet.</string>
+    <string name="error_create_user">Ocorreu um erro ao cadastrar o usuário</string>
+    <string name="error_update_user">Ocorreu um erro ao atualizar o usuário</string>
+    <string name="error_create_pet">Ocorreu um erro ao cadastrar o pet</string>
+    <string name="error_update_pet">Ocorreu um erro ao atualizar o pet</string>
+    <string name="error_create_text">Por favor, verifique os dados informados.</string>
     <string name="error_auth_invalid">Token de autenticação inválido. Requisite um novo token.</string>
     <string name="error_invalid_login">Email ou senha inválidos.</string>
 
     <string name="error_no_location">Localização não dísponível.</string>
 
     <!-- Success -->
-    <string name="success_create_user">Usuário cadastrado com sucesso.</string>
-    <string name="success_create_pet">Pet cadastrado com sucesso.</string>
-    <string name="success_update_pet">Pet atualizado com sucesso.</string>
+    <string name="success_create_user">Usuário cadastrado com sucesso!</string>
+    <string name="success_create_pet">Pet cadastrado com sucesso!</string>
+    <string name="success_update_pet">Pet atualizado com sucesso!</string>
+    <string name="success_create_pet_text">Pronto, você já pode começar a usar o Pet Booking pra facilitar</string>
 
     <!-- Prompt -->
-    <string name="prompt_loading">Loading…</string>
+    <string name="prompt_loading">Carregando…</string>
 
     <!-- Permissions -->
     <string name="permission_location_title">Ativar Localização</string>

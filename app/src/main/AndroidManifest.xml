@@ -4,8 +4,8 @@
     package="com.petbooking">
 
     <!-- Permissions -->
-    <!-- App -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -77,7 +77,7 @@
         <activity
             android:name=".UI.Dashboard.DashboardActivity"
             android:configChanges="orientation"
-            android:label="@string/app_name"
+            android:label="@string/dashboard_title"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

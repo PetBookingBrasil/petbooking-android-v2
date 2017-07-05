@@ -30,6 +30,7 @@ public class Business {
     public String instagram;
     public String twitter;
     public String googlePlus;
+    public String snapchat;
     public BusinessesRspAttributes.CoverImage image;
     public AvatarResp avatar;
     public BusinessesRspAttributes.UserFavorite userFavorite;
@@ -42,7 +43,7 @@ public class Business {
                     String neighborhood, String streetNumber, String zipcode, float ratingAverage, int ratingCount,
                     float distance, String businesstype, Double latitude, Double longitude,
                     String website, String phone, String facebook, String instagram, String twitter,
-                    String googlePlus, BusinessesRspAttributes.CoverImage image, AvatarResp avatar,
+                    String googlePlus, String snapchat, BusinessesRspAttributes.CoverImage image, AvatarResp avatar,
                     BusinessesRspAttributes.UserFavorite userFavorite, boolean favorited, boolean imported, String favoritedId) {
         this.id = id;
         this.name = name;
@@ -65,6 +66,7 @@ public class Business {
         this.twitter = twitter;
         this.instagram = instagram;
         this.googlePlus = googlePlus;
+        this.snapchat = snapchat;
         this.image = image;
         this.avatar = avatar;
         this.userFavorite = userFavorite;

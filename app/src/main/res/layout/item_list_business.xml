@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/business_item"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginBottom="@dimen/spacing_xmicro"
+    android:paddingBottom="@dimen/spacing_tiny">
 
     <FrameLayout
         android:id="@+id/business_cover"
@@ -26,24 +29,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/gradient_background" />
+
     </FrameLayout>
 
-
     <TextView
-        android:id="@+id/business_rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_nano"
-        android:layout_marginLeft="@dimen/spacing_xtiny"
-        android:layout_marginStart="@dimen/spacing_xtiny"
-        android:text="4.5"
-        android:textColor="@color/white"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/business_title"
-        app:layout_constraintLeft_toLeftOf="@+id/business_cover" />
-
-    <RelativeLayout
-        android:id="@+id/business_title"
+        android:id="@+id/business_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_xmicro"
@@ -52,99 +42,16 @@
         android:layout_marginRight="@dimen/spacing_xtiny"
         android:layout_marginStart="@dimen/spacing_xtiny"
         android:layout_marginTop="@dimen/spacing_xmicro"
+        android:maxLines="2"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/business_cover"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/business_cover"
-        app:layout_constraintVertical_bias="0.946">
-
-        <TextView
-            android:id="@+id/business_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginRight="@dimen/spacing_xmicro"
-            android:layout_toLeftOf="@+id/business_distance"
-            android:layout_toStartOf="@+id/business_distance"
-            android:maxLines="2"
-            android:text="PetShop do Carlos da Maria e de José da Silva"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/business_distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/spacing_xmicro"
-            android:background="@drawable/distance_background"
-            android:paddingBottom="@dimen/spacing_nano"
-            android:paddingLeft="@dimen/spacing_xmicro"
-            android:paddingRight="@dimen/spacing_xmicro"
-            android:paddingTop="@dimen/spacing_nano"
-            android:text="50 Km"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
-
-    <com.petbooking.UI.Widget.StarsRating
-        android:id="@+id/average_rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_micro"
-        android:layout_marginLeft="@dimen/spacing_xmicro"
-        android:layout_marginRight="@dimen/spacing_xmicro"
-        android:rating="4.5"
-        app:layout_constraintBottom_toTopOf="@+id/business_title"
-        app:layout_constraintLeft_toRightOf="@+id/business_rate" />
-
-    <TextView
-        android:id="@+id/ratings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_nano"
-        android:layout_marginLeft="@dimen/spacing_xmicro"
-        android:layout_marginStart="@dimen/spacing_micro"
-        android:text="(50)"
-        android:textColor="@color/white"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/business_title"
-        app:layout_constraintLeft_toRightOf="@+id/average_rate" />
-
-    <ImageView
-        android:id="@+id/icon_point"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/spacing_xtiny"
-        android:layout_marginStart="@dimen/spacing_xtiny"
-        android:layout_marginTop="@dimen/spacing_xmicro"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/business_cover"
-        app:srcCompat="@drawable/ic_point" />
-
-    <TextView
-        android:id="@+id/business_street"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_xmicro"
-        android:layout_marginEnd="@dimen/spacing_xmicro"
-        android:layout_marginLeft="@dimen/spacing_tiny"
-        android:layout_marginRight="@dimen/spacing_xmicro"
-        android:layout_marginStart="@dimen/spacing_tiny"
-        android:layout_marginTop="@dimen/spacing_xmicro"
-        android:text="Rua Manoel João, 42"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toRightOf="@+id/icon_point"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/business_cover" />
+        app:layout_constraintVertical_bias="0.959" />
 
     <ImageButton
         android:id="@+id/favorite_button"
@@ -158,11 +65,92 @@
         android:layout_marginTop="@dimen/spacing_xmicro"
         android:background="@null"
         app:layout_constraintBottom_toBottomOf="@+id/business_cover"
-        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintHorizontal_bias="0.97"
         app:layout_constraintLeft_toLeftOf="@+id/business_cover"
         app:layout_constraintRight_toRightOf="@+id/business_cover"
         app:layout_constraintTop_toTopOf="@+id/business_cover"
         app:layout_constraintVertical_bias="0.1"
         app:srcCompat="@drawable/ic_favorite_border" />
+
+    <ImageView
+        android:id="@+id/rating_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_micro"
+        android:layout_marginLeft="@dimen/spacing_xtiny"
+        app:layout_constraintBottom_toTopOf="@+id/business_name"
+        app:layout_constraintLeft_toLeftOf="@+id/business_cover"
+        app:srcCompat="@drawable/ic_star" />
+
+    <TextView
+        android:id="@+id/business_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_micro"
+        android:layout_marginLeft="@dimen/spacing_micro"
+        android:textColor="#F2C94C"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/business_name"
+        app:layout_constraintLeft_toRightOf="@+id/rating_star" />
+
+    <TextView
+        android:id="@+id/ratings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_micro"
+        android:layout_marginLeft="@dimen/spacing_tiny"
+        android:textColor="#B3FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/business_name"
+        app:layout_constraintLeft_toRightOf="@+id/business_rate" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_xtiny"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/business_cover">
+
+        <TextView
+            android:id="@+id/business_street"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/spacing_xmicro"
+            android:layout_toLeftOf="@+id/business_distance"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/business_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/business_street"
+            android:layout_toLeftOf="@+id/business_distance"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/business_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/spacing_xtiny"
+            android:background="@drawable/distance_background"
+            android:paddingBottom="@dimen/spacing_nano"
+            android:paddingLeft="@dimen/spacing_xmicro"
+            android:paddingRight="@dimen/spacing_xmicro"
+            android:paddingTop="@dimen/spacing_nano"
+            android:textColor="@color/brand_primary"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

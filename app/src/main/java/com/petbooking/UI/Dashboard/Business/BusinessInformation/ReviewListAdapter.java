@@ -3,6 +3,7 @@ package com.petbooking.UI.Dashboard.Business.BusinessInformation;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,15 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
         holder.mTvName.setText(review.userName);
         holder.mTvComment.setText(review.comment);
         holder.mRbBusiness.setRating(review.rating);
+
+        if (TextUtils.isEmpty(review.comment)) {
+            holder.mTvComment.setVisibility(View.GONE);
+        }
+
+        Glide.with(mContext)
+                .load(review.userAvatar.url)
+                .error(R.drawable.ic_placeholder_user)
+                .into(holder.mIvUserPhoto);
     }
 
     @Override
@@ -75,7 +85,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
         public ReviewViewHolder(View view) {
             super(view);
 
-            mIvUserPhoto = (ImageView) view.findViewById(R.id.user_photo);
+            mIvUserPhoto = (ImageView) view.findViewById(R.id.user_image);
             mTvName = (TextView) view.findViewById(R.id.user_name);
             mTvComment = (TextView) view.findViewById(R.id.comment);
             mRbBusiness = (StarsRating) view.findViewById(R.id.rating);

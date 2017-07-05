@@ -118,7 +118,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
             mTvServiceDescription = (TextView) view.findViewById(R.id.service_description);
             mTvAdditionalLabel = (TextView) view.findViewById(R.id.additional_label);
             mRvAdditionalServices = (RecyclerView) view.findViewById(R.id.additional_services);
-            mVAdditionalSeparator = (View) view.findViewById(R.id.additional_separator);
+            mVAdditionalSeparator = view.findViewById(R.id.additional_separator);
         }
     }
 

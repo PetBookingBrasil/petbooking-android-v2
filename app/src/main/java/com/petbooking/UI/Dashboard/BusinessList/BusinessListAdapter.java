@@ -2,20 +2,21 @@ package com.petbooking.UI.Dashboard.BusinessList;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.Request;
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.Interfaces.APICallback;
@@ -23,8 +24,6 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.BusinessActivity;
-import com.petbooking.UI.Widget.StarsRating;
-import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
 
@@ -32,7 +31,10 @@ import java.util.ArrayList;
  * Created by Luciano José on 29/01/2017.
  */
 
-public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapter.BusinessViewHolder> {
+public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final int BUSINESS_ACTIVE = 0;
+    private static final int BUSINESS_IMPORTED = 1;
 
     private BusinessService mBusinessService;
     private ArrayList<Business> mBusinessList;
@@ -53,27 +55,68 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
     }
 
     @Override
-    public BusinessViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_list_business, parent, false);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = null;
+        RecyclerView.ViewHolder holder = null;
 
-        BusinessViewHolder holder = new BusinessViewHolder(view);
+        if (viewType == BUSINESS_ACTIVE) {
+            view = inflater.inflate(R.layout.item_list_business, parent, false);
+            holder = new BusinessViewHolder(view);
+        } else if (viewType == BUSINESS_IMPORTED) {
+            view = inflater.inflate(R.layout.item_list_business_imported, parent, false);
+            holder = new BusinessImportedViewHolder(view);
+        }
+
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(final BusinessViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+
+        switch (holder.getItemViewType()) {
+            case BUSINESS_ACTIVE:
+                BusinessViewHolder businessViewHolder = (BusinessViewHolder) holder;
+                updateBusiness(businessViewHolder, position);
+                break;
+            case BUSINESS_IMPORTED:
+                BusinessImportedViewHolder importedViewHolder = (BusinessImportedViewHolder) holder;
+                updateBusinessImported(importedViewHolder, position);
+                break;
+        }
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return mBusinessList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (mBusinessList.get(position).imported) {
+            return BUSINESS_IMPORTED;
+        } else {
+            return BUSINESS_ACTIVE;
+        }
+    }
+
+    /**
+     * Update Business Information
+     *
+     * @param holder
+     * @param position
+     */
+    public void updateBusiness(final BusinessViewHolder holder, final int position) {
 
         final Business business = mBusinessList.get(position);
 
-        int categoryColor = AppUtils.getCategoryColor(mContext, business.businesstype);
-        GradientDrawable mDistanceBackground = (GradientDrawable) holder.mTvDistance.getBackground();
-        String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber);
+        String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber, business.neighborhood);
+        String city = mContext.getResources().getString(R.string.business_city, business.city, business.state);
         String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", business.distance));
-        String ratingCount = mContext.getResources().getString(R.string.business_rating_count, business.ratingCount);
+        String ratingCount = mContext.getResources().getQuantityString(R.plurals.business_rating_count, business.ratingCount, business.ratingCount);
         String average = String.format("%.1f", business.ratingAverage);
-        average = average.replace(",", ".");
 
         if (business.favorited) {
             holder.mBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
@@ -84,23 +127,21 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         if (business.ratingCount == 0) {
             holder.mTvRate.setVisibility(View.GONE);
             holder.mTvRatingCount.setVisibility(View.GONE);
-            holder.mRbBusiness.setVisibility(View.GONE);
+            holder.mIvRatingStar.setVisibility(View.GONE);
         } else {
             holder.mTvRate.setText(average);
-            holder.mRbBusiness.setRating(business.ratingAverage);
             holder.mTvRatingCount.setText(ratingCount);
         }
 
         holder.mTvName.setText(business.name);
         holder.mTvStreet.setText(street);
+        holder.mTvCity.setText(city);
         holder.mTvDistance.setText(distance);
-
-        mDistanceBackground.setColor(categoryColor);
 
         holder.mClBusiness.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToBusiness(business.id);
+                goToBusiness(business.id, business.name, business.distance);
             }
         });
 
@@ -140,7 +181,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
                 }
             }
         });
-        
+
         mGlide.load(business.image.url)
                 .error(R.drawable.business_background)
                 .placeholder(R.drawable.business_background)
@@ -149,45 +190,146 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
                 .into(holder.mIvBusinessPhoto);
     }
 
-    @Override
-    public int getItemCount() {
-        return mBusinessList.size();
+    /**
+     * Update Business Imported
+     *
+     * @param holder
+     * @param position
+     */
+    public void updateBusinessImported(final BusinessImportedViewHolder holder, final int position) {
+
+        final Business business = mBusinessList.get(position);
+
+        String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", business.distance));
+        String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber, business.neighborhood);
+
+        holder.mTvName.setText(business.name);
+        holder.mTvStreet.setText(street);
+        holder.mTvDistance.setText(distance);
+
+        if (business.favorited) {
+            holder.mBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
+        } else {
+            holder.mBtnFavorite.setImageResource(R.drawable.ic_favorite_border_black);
+        }
+
+        holder.mBtnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (business.favorited) {
+                    mBusinessService.deleteFavorite(business.favoritedId, new APICallback() {
+                        @Override
+                        public void onSuccess(Object response) {
+                            mBusinessList.get(position).setFavorited(false);
+                            mBusinessList.get(position).setFavoritedId("");
+                            holder.mBtnFavorite.setImageResource(R.drawable.ic_favorite_border_black);
+                        }
+
+                        @Override
+                        public void onError(Object error) {
+
+                        }
+                    });
+                } else {
+                    mBusinessService.createFavorite(userId, business.id, new APICallback() {
+                        @Override
+                        public void onSuccess(Object response) {
+                            FavoriteResp resp = (FavoriteResp) response;
+
+                            mBusinessList.get(position).setFavorited(true);
+                            mBusinessList.get(position).setFavoritedId(resp.data.id);
+                            holder.mBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
+                        }
+
+                        @Override
+                        public void onError(Object error) {
+
+                        }
+                    });
+                }
+            }
+        });
+
+        holder.mBtnCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callToBusiness(business.phone);
+            }
+        });
+
     }
 
     /**
      * Go to Business
      */
-    public void goToBusiness(String businessId) {
+    public void goToBusiness(String businessId, String businessName, float businessDistance) {
         Intent businessIntent = new Intent(mContext, BusinessActivity.class);
         businessIntent.putExtra("businessId", businessId);
+        businessIntent.putExtra("businessName", businessName);
+        businessIntent.putExtra("businessDistance", businessDistance);
+
         mContext.startActivity(businessIntent);
+    }
+
+    /**
+     * Call to imported business
+     *
+     * @param number
+     */
+    public void callToBusiness(String number) {
+        Uri data = Uri.parse("tel:" + number);
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(data);
+        mContext.startActivity(intent);
+    }
+
+    public class BusinessImportedViewHolder extends RecyclerView.ViewHolder {
+
+        LinearLayout mClBusiness;
+        ImageButton mBtnFavorite;
+        Button mBtnCall;
+        TextView mTvName;
+        TextView mTvStreet;
+        TextView mTvDistance;
+
+        public BusinessImportedViewHolder(View view) {
+            super(view);
+
+            mClBusiness = (LinearLayout) view.findViewById(R.id.business_item);
+            mBtnFavorite = (ImageButton) view.findViewById(R.id.favorite_button);
+            mTvName = (TextView) view.findViewById(R.id.business_name);
+            mTvStreet = (TextView) view.findViewById(R.id.business_street);
+            mTvDistance = (TextView) view.findViewById(R.id.business_distance);
+            mBtnCall = (Button) view.findViewById(R.id.call_button);
+        }
     }
 
     public class BusinessViewHolder extends RecyclerView.ViewHolder {
 
         ConstraintLayout mClBusiness;
         ImageView mIvBusinessPhoto;
+        ImageView mIvRatingStar;
         ImageButton mBtnFavorite;
         TextView mTvName;
         TextView mTvStreet;
+        TextView mTvCity;
         TextView mTvRate;
         TextView mTvRatingCount;
         TextView mTvDistance;
-        StarsRating mRbBusiness;
 
         public BusinessViewHolder(View view) {
             super(view);
 
             mClBusiness = (ConstraintLayout) view.findViewById(R.id.business_item);
             mIvBusinessPhoto = (ImageView) view.findViewById(R.id.business_photo);
+            mIvRatingStar = (ImageView) view.findViewById(R.id.rating_star);
             mBtnFavorite = (ImageButton) view.findViewById(R.id.favorite_button);
             mTvName = (TextView) view.findViewById(R.id.business_name);
             mTvStreet = (TextView) view.findViewById(R.id.business_street);
+            mTvCity = (TextView) view.findViewById(R.id.business_city);
             mTvRatingCount = (TextView) view.findViewById(R.id.ratings);
             mTvRate = (TextView) view.findViewById(R.id.business_rate);
             mTvDistance = (TextView) view.findViewById(R.id.business_distance);
-            mRbBusiness = (StarsRating) view.findViewById(R.id.average_rate);
         }
     }
-
 }

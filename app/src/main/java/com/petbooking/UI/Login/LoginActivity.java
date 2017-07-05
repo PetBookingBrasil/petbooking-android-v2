@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -47,9 +48,7 @@ public class LoginActivity extends BaseActivity {
     private FacebookAuthManager mFacebookAuthManager;
     private AlarmManager mAlarmManager;
 
-    private Typeface mCustomFont;
     private ImageView mIvAppLogo;
-    private TextView mTvAppSlogan;
     private EditText mEdtEmail;
     private EditText mEdtPassword;
     private Button mBtnLogin;
@@ -93,10 +92,7 @@ public class LoginActivity extends BaseActivity {
         mUserService = new UserService();
         mFacebookAuthManager = new FacebookAuthManager();
 
-        mCustomFont = Typeface.createFromAsset(getAssets(), "fonts/FFADMatro.ttf");
-
         mIvAppLogo = (ImageView) findViewById(R.id.appLogo);
-        mTvAppSlogan = (TextView) findViewById(R.id.appSlogan);
         mTvForgotPassword = (TextView) findViewById(R.id.forgotPassword);
         mEdtEmail = (EditText) findViewById(R.id.email);
         mEdtPassword = (EditText) findViewById(R.id.password);
@@ -110,8 +106,9 @@ public class LoginActivity extends BaseActivity {
         mIvAppLogo.setOnClickListener(clickListener);
         mBtnFacebookLogin.setOnClickListener(clickListener);
 
+        mTvForgotPassword.setPaintFlags(mTvForgotPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
         mFacebookAuthManager.init(fbRequestCallback);
-        mTvAppSlogan.setTypeface(mCustomFont);
     }
 
     @Override

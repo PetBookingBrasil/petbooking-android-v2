@@ -47,10 +47,12 @@ public class AppConstants {
     public static final int TAKE_PHOTO = 2;
     public static final int OK_ACTION = 9000;
     public static final int BACK_SCREEN_ACTION = 9001;
-    public static final int CONFIRM_ACTION = 9004;
-    public static final int CANCEL_ACTION = 9005;
     public static final int REFRESH_SESSION = 9002;
     public static final int REFRESH_CONSUMER = 9003;
+    public static final int CONFIRM_ACTION = 9004;
+    public static final int CANCEL_ACTION = 9005;
+    public static final int ADD_PET = 9006;
+
 
     /**
      * Permissions

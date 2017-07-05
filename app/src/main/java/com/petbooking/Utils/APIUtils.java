@@ -70,7 +70,7 @@ public class APIUtils {
                 attr.street, attr.neighborhood, attr.streetNumber, attr.zipcode,
                 attr.ratingAverage, attr.ratingCount, attr.distance, attr.businesstype,
                 latitude, longitude, attr.website, attr.phone, attr.facebook, attr.instagram,
-                attr.twitter, attr.googlePlus, attr.coverImage, attr.avatar, attr.userFavorite, attr.favorited,
+                attr.twitter, attr.googlePlus, attr.snapchat, attr.coverImage, attr.avatar, attr.userFavorite, attr.favorited,
                 attr.imported, favoritedId);
 
         return business;
@@ -84,7 +84,7 @@ public class APIUtils {
      * @return
      */
     public static Review parseReview(String id, ReviewResp.Attributes attr) {
-        Review review = new Review(id, attr.userName, attr.comment, attr.rating);
+        Review review = new Review(id, attr.userName, attr.comment, attr.rating, attr.avatar);
 
         return review;
     }

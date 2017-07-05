@@ -69,6 +69,8 @@ public class SettingsActivity extends AppCompatActivity {
         mUserService = new UserService();
         mSessionManager = SessionManager.getInstance();
 
+        getSupportActionBar().setElevation(0);
+
         mTvMaxDistance = (TextView) findViewById(R.id.maxDistance);
         mSbDistance = (SeekBar) findViewById(R.id.distanceBar);
         mSwPush = (StyledSwitch) findViewById(R.id.push);

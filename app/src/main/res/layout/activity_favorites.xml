@@ -7,6 +7,10 @@
     android:orientation="vertical"
     tools:context="com.petbooking.UI.Menu.Favorites.FavoritesActivity">
 
+    <include
+        android:id="@+id/favorites_placeholder"
+        android:visibility="gone"
+        layout="@layout/include_favorites_placeholder" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/favorites_list"

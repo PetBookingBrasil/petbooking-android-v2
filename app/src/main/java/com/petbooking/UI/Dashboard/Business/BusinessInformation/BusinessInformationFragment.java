@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,8 +18,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,7 +33,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.Interfaces.APICallback;
@@ -48,8 +44,6 @@ import com.petbooking.UI.Widget.StarsRating;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 /**
@@ -60,6 +54,7 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
     private Context mContext;
     private BusinessService mBusinessService;
     private String businessId;
+    private float businessDistance;
     private Business mBusiness;
     private AlertDialog mLoadingDialog;
     private ScrollView mSvInfo;
@@ -68,6 +63,8 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
     /**
      * Business Info
      */
+    private LinearLayout mWebsiteLayout;
+    private LinearLayout mSocialIconsLayout;
     private ImageView mIvBusinessPhoto;
     private ImageButton mIBtnFavorite;
     private TextView mTvName;
@@ -75,6 +72,7 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
     private TextView mTvPhone;
     private TextView mTvWebsite;
     private TextView mTvStreet;
+    private TextView mTvCity;
     private TextView mTvDistance;
 
     /**
@@ -89,12 +87,9 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
      */
     private TextView mTvDescriptionLabel;
     private TextView mTvContactLabel;
-    private TextView mTvWebsiteLabel;
-    private TextView mTvSocialNetworkLabel;
     private View mSeparatorDescription;
     private View mSeparatorContact;
     private View mSeparatorWebsite;
-    private View mSeparatorSocial;
     private View mSeparatorReview;
     private View mSeparatorLocation;
     private LinearLayout mContactLayout;
@@ -108,11 +103,11 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
     private ImageView mIvTwitter;
     private ImageView mIvInstagram;
     private ImageView mIvGooglePlus;
+    private ImageView mIvSnapchat;
 
     /**
      * Business Rating and Review
      */
-    private ImageButton mBtnShowReviews;
     private StarsRating mRbBusiness;
     private TextView mTvRatingAverage;
     private TextView mTvRatingCount;
@@ -176,6 +171,8 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
                 openPage(mBusiness.instagram);
             } else if (id == mIvGooglePlus.getId()) {
                 openPage(mBusiness.googlePlus);
+            }else if(id == mIvSnapchat.getId()){
+                openPage(mBusiness.snapchat);
             } else if (id == mTvWebsite.getId()) {
                 openPage(mBusiness.website);
             }
@@ -187,10 +184,11 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         // Required empty public constructor
     }
 
-    public static BusinessInformationFragment newInstance(String id) {
+    public static BusinessInformationFragment newInstance(String id, float distance) {
         BusinessInformationFragment fragment = new BusinessInformationFragment();
         Bundle bundle = new Bundle();
         bundle.putString("businessId", id);
+        bundle.putFloat("businessDistance", distance);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -200,10 +198,8 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         public void onClick(View v) {
             if (isShown) {
                 mRvReviews.setVisibility(View.GONE);
-                mBtnShowReviews.setImageResource(R.drawable.ic_arrow_down);
             } else {
                 mRvReviews.setVisibility(View.VISIBLE);
-                mBtnShowReviews.setImageResource(R.drawable.ic_arrow_up);
                 mSvInfo.post(new Runnable() {
 
                     @Override
@@ -224,6 +220,7 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         mBusinessService = new BusinessService();
         this.mContext = getContext();
         this.businessId = getArguments().getString("businessId", "0");
+        this.businessDistance = getArguments().getFloat("businessDistance", 0);
         getBusinessInfo(businessId);
     }
 
@@ -282,19 +279,19 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         mTvPhone = (TextView) view.findViewById(R.id.business_phone);
         mTvWebsite = (TextView) view.findViewById(R.id.business_website);
         mTvStreet = (TextView) view.findViewById(R.id.business_street);
+        mTvCity = (TextView) view.findViewById(R.id.business_city);
         mTvDistance = (TextView) view.findViewById(R.id.business_distance);
         mMapView = (MapView) view.findViewById(R.id.business_location);
 
         mTvDescriptionLabel = (TextView) view.findViewById(R.id.description_label);
         mTvContactLabel = (TextView) view.findViewById(R.id.contact_label);
-        mTvWebsiteLabel = (TextView) view.findViewById(R.id.website_label);
-        mTvSocialNetworkLabel = (TextView) view.findViewById(R.id.social_network_label);
         mSeparatorDescription = view.findViewById(R.id.separatorDescription);
         mSeparatorContact = view.findViewById(R.id.separatorContact);
         mSeparatorWebsite = view.findViewById(R.id.separatorWebsite);
-        mSeparatorSocial = view.findViewById(R.id.separatorSocialNetwork);
         mSeparatorReview = view.findViewById(R.id.separatorReview);
         mSeparatorLocation = view.findViewById(R.id.separatorLocation);
+        mWebsiteLayout = (LinearLayout) view.findViewById(R.id.websiteLayout);
+        mSocialIconsLayout = (LinearLayout) view.findViewById(R.id.socialIconsLayout);
         mContactLayout = (LinearLayout) view.findViewById(R.id.contactLayout);
         mReviewLayout = (RelativeLayout) view.findViewById(R.id.reviewLayout);
         mLocationLayout = (LinearLayout) view.findViewById(R.id.locationLayout);
@@ -303,8 +300,8 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         mIvTwitter = (ImageView) view.findViewById(R.id.social_twitter);
         mIvGooglePlus = (ImageView) view.findViewById(R.id.social_googleplus);
         mIvInstagram = (ImageView) view.findViewById(R.id.social_instagram);
+        mIvSnapchat = (ImageView) view.findViewById(R.id.social_snapchat);
 
-        mBtnShowReviews = (ImageButton) view.findViewById(R.id.reviewButton);
         mTvRatingAverage = (TextView) view.findViewById(R.id.business_rating_average);
         mTvRatingCount = (TextView) view.findViewById(R.id.business_rating_count);
         mRbBusiness = (StarsRating) view.findViewById(R.id.business_rating_stars);
@@ -324,7 +321,7 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
             mRvReviews.setAdapter(mAdapter);
         }
 
-        mBtnShowReviews.setOnClickListener(reviewButtonListener);
+        mReviewLayout.setOnClickListener(reviewButtonListener);
         mMapView.onCreate(mapViewBundle);
         mMapView.getMapAsync(this);
 
@@ -377,14 +374,11 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
      * @param mBusiness
      */
     public void updateBusinessInfo(final Business mBusiness) {
-        boolean hasIcon = false;
-        int categoryColor = AppUtils.getCategoryColor(mContext, mBusiness.businesstype);
-        GradientDrawable mDistanceBackground = (GradientDrawable) mTvDistance.getBackground();
-        String street = mContext.getResources().getString(R.string.business_street, mBusiness.street, mBusiness.streetNumber);
-        String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", mBusiness.distance));
-        String ratingCount = mContext.getResources().getString(R.string.business_rating_count, mBusiness.ratingCount);
+        boolean hasIcon;
+        String street = mContext.getResources().getString(R.string.business_street, mBusiness.street, mBusiness.streetNumber, mBusiness.neighborhood);
+        String city = mContext.getResources().getString(R.string.business_city, mBusiness.city, mBusiness.state);
+        String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", this.businessDistance));
         String average = String.format("%.1f", mBusiness.ratingAverage);
-        average = average.replace(",", ".");
 
         mTvName.setText(mBusiness.name);
         mTvDescription.setText(mBusiness.description);
@@ -392,11 +386,15 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         mTvWebsite.setText(mBusiness.website);
         mRbBusiness.setRating(mBusiness.ratingAverage);
         mTvStreet.setText(street);
+        mTvCity.setText(city);
         mTvDistance.setText(distance);
         mTvRatingAverage.setText(average);
-        mTvRatingCount.setText(ratingCount);
-        mDistanceBackground.setColor(categoryColor);
-        hasIcon = checkSocialIcon(mBusiness.facebook, mBusiness.twitter, mBusiness.instagram, mBusiness.googlePlus);
+        mTvRatingCount.setText(String.valueOf(mBusiness.ratingCount));
+        hasIcon = checkSocialIcon(mBusiness.facebook, mBusiness.twitter, mBusiness.instagram, mBusiness.googlePlus, mBusiness.snapchat);
+
+        if (!hasIcon) {
+            mSocialIconsLayout.setVisibility(View.GONE);
+        }
 
         if (mBusiness.favorited) {
             mIBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
@@ -417,9 +415,7 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         }
 
         if (TextUtils.isEmpty(mBusiness.website) || TextUtils.equals("http://", mBusiness.website)) {
-            mTvWebsiteLabel.setVisibility(View.GONE);
-            mTvWebsite.setVisibility(View.GONE);
-            mSeparatorWebsite.setVisibility(View.GONE);
+            mWebsiteLayout.setVisibility(View.GONE);
         }
 
         if (mBusiness.ratingCount == 0) {
@@ -427,16 +423,15 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
             mSeparatorReview.setVisibility(View.GONE);
         }
 
-        if (!hasIcon) {
-            mTvSocialNetworkLabel.setVisibility(View.GONE);
-            mSeparatorSocial.setVisibility(View.GONE);
-        }
-
         if (mBusiness.latitude != null && mBusiness.longitude != null) {
             updateLocation(mBusiness.latitude, mBusiness.longitude);
         } else {
             mLocationLayout.setVisibility(View.GONE);
             mSeparatorLocation.setVisibility(View.GONE);
+        }
+
+        if (!mWebsiteLayout.isShown() && !mSocialIconsLayout.isShown()) {
+            mSeparatorWebsite.setVisibility(View.GONE);
         }
 
         mIBtnFavorite.setOnClickListener(favoriteListener);
@@ -467,7 +462,9 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
      * @param googlePlus
      * @return
      */
-    public boolean checkSocialIcon(final String facebook, final String twitter, final String instagram, final String googlePlus) {
+    public boolean checkSocialIcon(final String facebook, final String twitter,
+                                   final String instagram, final String googlePlus,
+                                   final String snapchat) {
         boolean hasIcon = false;
 
         if (!TextUtils.isEmpty(facebook)) {
@@ -491,6 +488,12 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         if (!TextUtils.isEmpty(googlePlus)) {
             mIvGooglePlus.setVisibility(View.VISIBLE);
             mIvGooglePlus.setOnClickListener(socialListener);
+            hasIcon = true;
+        }
+
+        if (!TextUtils.isEmpty(snapchat)) {
+            mIvSnapchat.setVisibility(View.VISIBLE);
+            mIvSnapchat.setOnClickListener(socialListener);
             hasIcon = true;
         }
 

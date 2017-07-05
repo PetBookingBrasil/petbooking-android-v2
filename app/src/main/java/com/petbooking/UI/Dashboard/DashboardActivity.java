@@ -23,6 +23,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Events.LocationChangedEvt;
 import com.petbooking.Managers.LocationManager;
@@ -48,7 +50,6 @@ public class DashboardActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         FeedbackDialogFragment.FinishDialogListener {
 
-    protected final EventBus mEventBus = EventBus.getDefault();
     private boolean permissionDenied = false;
     private static final int RC_PERMISSION = 234;
 
@@ -81,6 +82,12 @@ public class DashboardActivity extends AppCompatActivity implements
         }
     };
 
+    LocationManager.LocationReadyCallback locationCallback = new LocationManager.LocationReadyCallback() {
+        @Override
+        public void onLocationReady(String locationCityState) {
+            mTvSideMenuAddress.setText(locationCityState);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,15 +96,16 @@ public class DashboardActivity extends AppCompatActivity implements
 
         mSessionManager = SessionManager.getInstance();
         mLocationManager = LocationManager.getInstance();
+        mLocationManager.setCallback(locationCallback);
         mFragmentManager = getSupportFragmentManager();
 
         mFeedbackDialogFragment = FeedbackDialogFragment.newInstance();
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false); //optional
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -261,8 +269,8 @@ public class DashboardActivity extends AppCompatActivity implements
 
         Glide.with(this)
                 .load(currentUser.avatar.large.url)
-                .error(R.drawable.ic_menu_user)
-                .placeholder(R.drawable.ic_menu_user)
+                .error(R.drawable.ic_placeholder_user)
+                .placeholder(R.drawable.ic_placeholder_user)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .centerCrop()
                 .dontAnimate()
@@ -277,20 +285,4 @@ public class DashboardActivity extends AppCompatActivity implements
         mFragmentManager.beginTransaction().replace(R.id.content_main, contentFragment).commit();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mEventBus.register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mEventBus.unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public synchronized void locationChanged(LocationChangedEvt locationChangedEvt) {
-        mTvSideMenuAddress.setText(locationChangedEvt.cityState);
-    }
 }

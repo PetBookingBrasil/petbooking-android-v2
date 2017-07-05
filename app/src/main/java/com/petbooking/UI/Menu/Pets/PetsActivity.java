@@ -49,6 +49,7 @@ public class PetsActivity extends BaseActivity implements
         currentUser = mSessionManager.getUserLogged();
 
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setElevation(0);
 
         mConfirmDialogFragment = ConfirmDialogFragment.newInstance();
         mFeedbackDialogFragment = FeedbackDialogFragment.newInstance();

@@ -160,6 +160,7 @@
     <string name="dialog_picture_title">Selecionar foto de perfil</string>
     <string name="dialog_picture_text">Selecione o método de entrada de imagens que deseja usar.</string>
     <string name="dialog_button_ok">Ok</string>
+    <string name="dialog_button_close">Fechar</string>
     <string name="dialog_button_add_pet">Adicionar outro pet</string>
     <string name="dialog_button_start">Começar a usar</string>
     <string name="dialog_button_check_info">Verificar informações</string>

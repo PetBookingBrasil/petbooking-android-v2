@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.petbooking.R;
@@ -19,7 +20,7 @@ import com.petbooking.R;
 public class TableDialogFragment extends DialogFragment implements DialogInterface.OnCancelListener {
 
     private Dialog mDialog;
-    private Button mBtnOk;
+    private Button mBtnClose;
     private int mLayout;
 
     public TableDialogFragment() {
@@ -49,8 +50,8 @@ public class TableDialogFragment extends DialogFragment implements DialogInterfa
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mBtnOk = (Button) view.findViewById(R.id.okButton);
-        mBtnOk.setOnClickListener(buttonListener);
+        mBtnClose = (Button) view.findViewById(R.id.closeButton);
+        mBtnClose.setOnClickListener(buttonListener);
     }
 
     @Override
@@ -61,6 +62,18 @@ public class TableDialogFragment extends DialogFragment implements DialogInterfa
         mDialog.setOnCancelListener(this);
 
         return mDialog;
+    }
+    
+    @Override
+    public void onResume() {
+        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.MATCH_PARENT;
+        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+
+        super.onResume();
+
     }
 
     public void setLayout(int layout) {

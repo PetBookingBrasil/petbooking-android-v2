@@ -145,6 +145,7 @@
     <string name="dialog_picture_title">Select profile photo</string>
     <string name="dialog_picture_text">Select the image input method you want to use.</string>
     <string name="dialog_button_ok">Ok</string>
+    <string name="dialog_button_close">Close</string>
     <string name="dialog_button_add_pet">Add another pet</string>
     <string name="dialog_button_start">Start to use</string>
     <string name="dialog_button_check_info">Check information</string>

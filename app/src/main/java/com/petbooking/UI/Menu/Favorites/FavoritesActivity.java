@@ -5,12 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.petbooking.API.User.UserService;
-import com.petbooking.BaseActivity;
-import com.petbooking.Events.HideLoadingEvt;
-import com.petbooking.Events.ShowLoadingEvt;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
@@ -24,6 +22,8 @@ public class FavoritesActivity extends AppCompatActivity {
     private UserService mUserService;
     private LocationManager mLocationManager;
     private String userId;
+
+    private View mFavoritesPlaceholcer;
 
     private ArrayList<Business> mFavoriteList;
     private LinearLayoutManager mLayoutManager;
@@ -43,6 +43,7 @@ public class FavoritesActivity extends AppCompatActivity {
 
         mFavoriteList = new ArrayList<>();
         listFavorites();
+        mFavoritesPlaceholcer = findViewById(R.id.favorites_placeholder);
         mRvFavorites = (RecyclerView) findViewById(R.id.favorites_list);
         mAdapter = new FavoritesListAdapter(this, mFavoriteList, Glide.with(this));
         mLayoutManager = new LinearLayoutManager(this);
@@ -65,8 +66,14 @@ public class FavoritesActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Object response) {
                 mFavoriteList = (ArrayList<Business>) response;
-                mAdapter.updateList(mFavoriteList);
-                mAdapter.notifyDataSetChanged();
+
+                if (mFavoriteList.size() > 0) {
+                    mAdapter.updateList(mFavoriteList);
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    mFavoritesPlaceholcer.setVisibility(View.VISIBLE);
+                    mRvFavorites.setVisibility(View.GONE);
+                }
             }
 
             @Override

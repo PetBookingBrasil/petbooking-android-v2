@@ -75,6 +75,7 @@
     <!-- Sidemenu and Toolbar Options-->
     <string name="my_pets">My Pets</string>
     <string name="search">Search</string>
+    <string name="search_title">Filtre your search</string>
     <string name="calendar">Calendar</string>
     <string name="payments">Payments</string>
     <string name="favorites">Favorites</string>

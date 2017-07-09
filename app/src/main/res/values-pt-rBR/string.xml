@@ -91,6 +91,7 @@
     <!-- Sidemenu and Toolbar Options-->
     <string name="my_pets">Meus Pets</string>
     <string name="search">Pesquisar</string>
+    <string name="search_title">Filtre sua busca</string>
     <string name="calendar">Agenda</string>
     <string name="payments">Pagamentos</string>
     <string name="favorites">Favoritos</string>

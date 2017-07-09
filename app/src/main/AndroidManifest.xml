@@ -101,6 +101,17 @@
                 android:value=".UI.Dashboard.DashboardActivity" />
         </activity>
         <activity
+            android:name=".UI.Menu.Search.SearchActivity"
+            android:configChanges="orientation"
+            android:label="@string/search_title"
+            android:parentActivityName=".UI.Dashboard.DashboardActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Dashboard.DashboardActivity" />
+        </activity>
+
+        <activity
             android:name=".UI.Menu.Calendar.CalendarActivity"
             android:configChanges="orientation"
             android:label="@string/calendar"

@@ -1,6 +1,7 @@
 package com.petbooking.UI.Dashboard.Business.BusinessServices;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Category;
 import com.petbooking.R;
+import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
 
@@ -54,8 +56,11 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     public void onBindViewHolder(final CategoryViewHolder holder, final int position) {
         Category category = mCategoryList.get(position % mCategoryList.size());
 
+        int color = AppUtils.getCategoryColor(mContext, category.categoryName);
+        GradientDrawable iconBackground = (GradientDrawable) holder.mIvCategoryIcon.getBackground();
+
         holder.mIvCategoryIcon.setImageResource(category.icon);
-        holder.mTvCategoryName.setText(category.name);
+        holder.mTvCategoryName.setText(category.categoryText);
 
         holder.mIvCategoryIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +68,8 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                 itemClick.onItemClick(position);
             }
         });
+
+        iconBackground.setColor(color);
     }
 
     @Override

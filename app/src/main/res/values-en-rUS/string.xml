@@ -132,6 +132,10 @@
     <string name="business_service_finish">Finish Schedule</string>
     <string name="call_button">Call</string>
 
+    <!-- Search -->
+    <string name="filter_hint">Filtrar by name, location&#8230;</string>
+    <string name="filter_label">Filter by category</string>
+    <string name="filter">Filter</string>
 
     <!-- Settings -->
     <string name="kilometers">Kilometers</string>

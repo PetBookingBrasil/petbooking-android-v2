@@ -18,6 +18,7 @@
     <string name="profile_title">Perfil</string>
     <string name="pets_title">Meus Pets</string>
     <string name="new_pet_title">Preencha os dados do pet</string>
+    <string name="search_title">Filtre sua busca</string>
 
     <!-- Pet -->
     <string name="gender_male">Macho</string>
@@ -98,7 +99,6 @@
     <!-- Sidemenu and Toolbar Options-->
     <string name="my_pets">Meus Pets</string>
     <string name="search">Pesquisar</string>
-    <string name="search_title">Filtre sua busca</string>
     <string name="calendar">Agenda</string>
     <string name="payments">Pagamentos</string>
     <string name="favorites">Favoritos</string>
@@ -154,6 +154,11 @@
     <string name="business_service_price">R$ %1$s</string>
     <string name="business_service_finish">Finalizar Agendamento</string>
     <string name="call_button">Ligar</string>
+
+    <!-- Search -->
+    <string name="filter_hint">Filtrar por nome, local&#8230;</string>
+    <string name="filter_label">Filtre por categoria</string>
+    <string name="filter">Filtrar</string>
 
     <!-- Settings -->
     <string name="kilometers">Quilômetro</string>

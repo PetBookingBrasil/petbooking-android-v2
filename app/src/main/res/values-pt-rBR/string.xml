@@ -177,6 +177,20 @@
     <string name="favorites_empty_title">Você ainda não possui favoritos.</string>
     <string name="favorites_empty_message">Marque seus estabelecimentos favoritos e acesse-os rapidamente nessa tela.</string>
 
+    <!-- Categories -->
+    <string name="cartegory_clinic">Clínicas</string>
+    <string name="cartegory_training">Adestramento</string>
+    <string name="cartegory_bath">Banho e Tosa</string>
+    <string name="cartegory_transport">Transporte</string>
+    <string name="cartegory_walker">Passeadores</string>
+    <string name="cartegory_daycare">Creche</string>
+    <string name="cartegory_hotel">Hotel</string>
+    <string name="cartegory_emergency">Emergência\n e 24h</string>
+    <string name="cartegory_exams">Exames</string>
+    <string name="cartegory_hospital">Hospitais</string>
+    <string name="cartegory_diagnosis">Diagnóstico</string>
+    <string name="cartegory_consultations">Consultas</string>
+
     <!-- Errors -->
     <string name="error_fields_empty">Preencha todos os campos.</string>
     <string name="error_invalid_email">Email inválido.</string>

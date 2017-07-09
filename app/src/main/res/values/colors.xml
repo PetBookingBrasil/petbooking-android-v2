@@ -27,19 +27,17 @@
 
 
     <!-- Category Colors -->
-    <color name="category_other">#545454</color>
-    <color name="category_diagnosis">#5CBBFA</color>
-    <color name="category_hospital">#2D9782</color>
-    <color name="category_exam">#1ABC9C</color>
-    <color name="category_emergency">#E74C3C</color>
-    <color name="category_hotel">#D35400</color>
-    <color name="category_daycare">#E67E22</color>
-    <color name="category_walker">#8E44AD</color>
-    <color name="category_transport">#F1C40F</color>
-    <color name="category_bath">#2ECC71</color>
-    <color name="category_trainer">#9B59B6</color>
-    <color name="category_clinic">#156BA5</color>
-    <color name="category_petshop_delivery">#543B32</color>
-    <color name="category_petshop">#72554A</color>
+    <color name="category_diagnosis">#00BCFC</color>
+    <color name="category_hospital">#009882</color>
+    <color name="category_exam">#00BD9C</color>
+    <color name="category_emergency">#FF4B39</color>
+    <color name="category_hotel">#F25300</color>
+    <color name="category_daycare">#FF7F0B</color>
+    <color name="category_walker">#A342B1</color>
+    <color name="category_transport">#FFC500</color>
+    <color name="category_bath">#00CD6B</color>
+    <color name="category_trainer">#AF59BA</color>
+    <color name="category_clinic">#006BA8</color>
+    <color name="category_consultations">#0099DE</color>
 
 </resources>

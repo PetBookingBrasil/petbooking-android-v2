@@ -38,6 +38,7 @@ import com.petbooking.UI.Menu.Calendar.CalendarActivity;
 import com.petbooking.UI.Menu.Favorites.FavoritesActivity;
 import com.petbooking.UI.Menu.Pets.PetsActivity;
 import com.petbooking.UI.Menu.Profile.ProfileActivity;
+import com.petbooking.UI.Menu.Search.SearchActivity;
 import com.petbooking.UI.Menu.Settings.SettingsActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -187,6 +188,9 @@ public class DashboardActivity extends AppCompatActivity implements
 
         if (id == R.id.my_pets) {
             activity = new Intent(this, PetsActivity.class);
+            startActivity(activity);
+        } else if (id == R.id.search) {
+            activity = new Intent(this, SearchActivity.class);
             startActivity(activity);
         } else if (id == R.id.payments) {
             Log.d("PAYMENTS", "PAYMENTS");

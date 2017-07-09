@@ -7,12 +7,14 @@ package com.petbooking.Models;
 public class Category {
 
     public String id;
-    public String name;
+    public int categoryText;
+    public String categoryName;
     public Integer icon;
 
-    public Category(String id, String name, Integer icon) {
+    public Category(String id, int categoryText, String categoryName, Integer icon) {
         this.id = id;
-        this.name = name;
+        this.categoryText = categoryText;
+        this.categoryName = categoryName;
         this.icon = icon;
     }
 

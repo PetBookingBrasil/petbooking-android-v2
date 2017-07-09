@@ -18,6 +18,7 @@ import com.petbooking.Models.Business;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Category;
 import com.petbooking.R;
+import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
 
@@ -72,8 +73,8 @@ public class BusinessServicesFragment extends Fragment implements CategoryListAd
 
         mServiceList = new ArrayList<>();
         mCategoryList = new ArrayList<>();
+        mCategoryList = AppUtils.getCategoryList();
         prepareListData();
-        initCategoryList();
 
         mRvCategory = (RecyclerView) view.findViewById(R.id.category_list);
         mRvServices = (RecyclerView) view.findViewById(R.id.service_list);
@@ -116,23 +117,6 @@ public class BusinessServicesFragment extends Fragment implements CategoryListAd
             service.setAdditionalServices(sub);
             mServiceList.add(service);
         }
-    }
-
-    private void initCategoryList() {
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_CLINIC, R.drawable.ic_category_clinic));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_TRAINING, R.drawable.ic_category_trainer));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_BATH, R.drawable.ic_category_bath));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_TRANSPORT, R.drawable.ic_category_transport));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_WALKER, R.drawable.ic_category_walker));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_DAYCARE, R.drawable.ic_category_daycare));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_HOTEL, R.drawable.ic_category_hotel));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_EMERGENCY, R.drawable.ic_category_emergency));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_EXAMS, R.drawable.ic_category_exam));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_HOSPITAL, R.drawable.ic_category_hospital));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_DIAGNOSIS, R.drawable.ic_category_diagnosis));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_PETSHOP, R.drawable.ic_category_petshop));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_PETSHOP_MOVEL, R.drawable.ic_category_petshop_delivery));
-        mCategoryList.add(new Category("1", "Outros", R.drawable.ic_category_other));
     }
 
     @Override

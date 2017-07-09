@@ -13,17 +13,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/search_name"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/light_gray"
-            android:drawableLeft="@drawable/ic_search"
-            android:drawablePadding="@dimen/spacing_xmicro"
-            android:hint="@string/filter_hint"
-            android:inputType="text"
-            android:padding="@dimen/spacing_tiny"
-            android:textSize="14sp" />
+            app:hintEnabled="false">
+
+            <EditText
+                android:id="@+id/search_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_xmicro"
+                android:layout_marginRight="@dimen/spacing_xmicro"
+                android:drawableLeft="@drawable/ic_search"
+                android:drawablePadding="@dimen/spacing_xmicro"
+                android:hint="@string/filter_hint"
+                android:inputType="text"
+                android:padding="@dimen/spacing_tiny"
+                android:textSize="14sp" />
+        </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:layout_width="match_parent"

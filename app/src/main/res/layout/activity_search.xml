@@ -1,48 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:orientation="vertical"
     tools:context="com.petbooking.UI.Menu.Search.SearchActivity">
 
-    <EditText
-        android:id="@+id/search_name"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_gray"
-        android:drawableLeft="@drawable/ic_search"
-        android:drawablePadding="@dimen/spacing_xmicro"
-        android:hint="@string/filter_hint"
-        android:inputType="text"
-        android:padding="@dimen/spacing_tiny"
-        android:textSize="14sp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_tiny"
-        android:layout_marginLeft="@dimen/spacing_tiny"
-        android:layout_marginTop="@dimen/spacing_tiny"
-        android:text="@string/filter_label"
-        android:textColor="@color/text_color"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        <EditText
+            android:id="@+id/search_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_gray"
+            android:drawableLeft="@drawable/ic_search"
+            android:drawablePadding="@dimen/spacing_xmicro"
+            android:hint="@string/filter_hint"
+            android:inputType="text"
+            android:padding="@dimen/spacing_tiny"
+            android:textSize="14sp" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@id/category_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_xtiny" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_tiny"
+            android:layout_marginLeft="@dimen/spacing_tiny"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:text="@string/filter_label"
+            android:textColor="@color/text_color"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/filter_button"
-        style="@style/AppTheme.PrimaryButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/spacing_tiny"
-        android:layout_marginRight="@dimen/spacing_tiny"
-        android:background="@drawable/primary_button"
-        android:text="@string/filter" />
-</LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/category_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_xtiny"
+            android:layout_marginLeft="@dimen/spacing_tiny"
+            android:layout_marginRight="@dimen/spacing_tiny" />
+
+        <Button
+            android:id="@+id/filter_button"
+            style="@style/AppTheme.PrimaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_tiny"
+            android:layout_marginLeft="@dimen/spacing_tiny"
+            android:layout_marginRight="@dimen/spacing_tiny"
+            android:background="@drawable/primary_button"
+            android:text="@string/filter" />
+    </LinearLayout>
+</ScrollView>

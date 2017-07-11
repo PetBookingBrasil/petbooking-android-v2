@@ -1,6 +1,7 @@
 package com.petbooking.UI.Menu.Search;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.petbooking.Models.Category;
@@ -25,6 +27,8 @@ public class FilterCategoryListAdapter extends RecyclerView.Adapter<FilterCatego
 
     private Context mContext;
     private ArrayList<Category> mCategoryList;
+    private int selectedPosition = -1;
+
 
     public FilterCategoryListAdapter(Context context, ArrayList<Category> mCategoryList) {
         this.mContext = context;
@@ -55,6 +59,23 @@ public class FilterCategoryListAdapter extends RecyclerView.Adapter<FilterCatego
         holder.mIvCategoryIcon.setImageResource(category.icon);
         holder.mTvCategoryName.setText(category.categoryText);
 
+        if (position == selectedPosition) {
+            holder.mTvCategoryName.setTextColor(color);
+            holder.mTvCategoryName.setTypeface(Typeface.DEFAULT_BOLD);
+        } else {
+            holder.mTvCategoryName.setTextColor(mContext.getResources().getColor(R.color.text_color));
+            holder.mTvCategoryName.setTypeface(Typeface.DEFAULT);
+        }
+
+        holder.mCategoryItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                notifyItemChanged(selectedPosition);
+                selectedPosition = position;
+                notifyItemChanged(selectedPosition);
+            }
+        });
+
         iconBackground.setColor(color);
     }
 
@@ -65,15 +86,16 @@ public class FilterCategoryListAdapter extends RecyclerView.Adapter<FilterCatego
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder {
 
+        public LinearLayout mCategoryItem;
         public ImageView mIvCategoryIcon;
         public TextView mTvCategoryName;
 
         public CategoryViewHolder(View view) {
             super(view);
 
+            mCategoryItem = (LinearLayout) view.findViewById(R.id.category_item);
             mIvCategoryIcon = (ImageView) view.findViewById(R.id.category_icon);
             mTvCategoryName = (TextView) view.findViewById(R.id.category_name);
-
         }
     }
 

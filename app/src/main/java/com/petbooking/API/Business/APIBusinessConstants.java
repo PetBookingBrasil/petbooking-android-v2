@@ -24,7 +24,7 @@ public class APIBusinessConstants {
     public static final String DATA_EXAMS = "Exames";
     public static final String DATA_HOSPITAL = "Hospitais veterinários";
     public static final String DATA_DIAGNOSIS = "Centro de Diagnóstico";
-    public static final String DATA_CONSULTATIONS = "Consultas veterinária";
+    public static final String DATA_CONSULTATIONS = "Consulta veterinária";
 
     public static final String PATH_CATEGORY_ID = "categoryID";
     public static final String PATH_BUSINESS_ID = "businessID";
@@ -68,8 +68,7 @@ public class APIBusinessConstants {
     public static final String BUSINESS_SEARCH_ENDPOINT = "businesses/search" + QUERY_INCLUDE_SEARCH +
             APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 
-    public static final String SERVICES_CATEGORIES_ENDPOINT = "category-templates" +
-            APIConstants.QUERY_PAGE_SIZE_DEAFULT + FIELDS_CATEGORIES;
+    public static final String SERVICES_CATEGORIES_ENDPOINT = "category-templates" + FIELDS_CATEGORIES;
 
     public static final String BUSINESS_INFO_ENDPOINT = "businesses/{" + PATH_BUSINESS_ID + "}";
 

@@ -2,6 +2,7 @@ package com.petbooking.API.Business;
 
 import com.petbooking.API.Business.Models.BusinessResp;
 import com.petbooking.API.Business.Models.BusinessesResp;
+import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.API.Business.Models.FavoriteRqt;
 import com.petbooking.API.Business.Models.ReviewResp;
@@ -40,17 +41,10 @@ public interface BusinessInterface {
     Call<BusinessResp> getBusiness(@Path(APIBusinessConstants.PATH_BUSINESS_ID) String businessId,
                                    @Query(APIConstants.QUERY_USER_ID) String userId);
 
-    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
-    @GET(APIBusinessConstants.BUSINESS_HIGHLIGHT_ENDPOINT)
-    Call<BusinessesResp> listHighlightBusiness(@Query(APIConstants.QUERY_USER_ID) String userId);
-
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
-    @GET(APIBusinessConstants.BUSINESS_BY_CATEGORY_ENDPOINT)
-    Call<BusinessesResp> listByCategory(@Path(APIBusinessConstants.PATH_CATEGORY_ID) String categoryID,
-                                        @Query(APIBusinessConstants.QUERY_USER_ID) String userID,
-                                        @Query(APIConstants.QUERY_COORDS) String coords,
-                                        @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex);
+    @GET(APIBusinessConstants.SERVICES_CATEGORIES_ENDPOINT)
+    Call<CategoryResp> listCategories();
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
     @POST(APIBusinessConstants.FAVORITES_CREATE_ENDPOINT)

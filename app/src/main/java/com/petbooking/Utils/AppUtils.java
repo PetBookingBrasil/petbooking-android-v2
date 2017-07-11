@@ -14,11 +14,9 @@ import android.text.TextUtils;
 
 import com.petbooking.API.Business.APIBusinessConstants;
 import com.petbooking.API.Pet.APIPetConstants;
-import com.petbooking.Constants.AppConstants;
 import com.petbooking.Models.Category;
 import com.petbooking.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -253,6 +251,37 @@ public abstract class AppUtils {
         return -1;
     }
 
+    public static int getCategoryText(String businesstype) {
+        if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CLINIC)) {
+            return R.string.category_clinic;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_TRAINING)) {
+            return R.string.category_training;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_BATH)) {
+            return R.string.category_bath;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_TRANSPORT)) {
+            return R.string.category_transport;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_WALKER)) {
+            return R.string.category_walker;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_DAYCARE)) {
+            return R.string.category_daycare;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_HOTEL)) {
+            return R.string.category_hotel;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_EMERGENCY)) {
+            return R.string.category_emergency;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_EXAMS)) {
+            return R.string.category_exams;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_HOSPITAL)) {
+            return R.string.category_hospital;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_DIAGNOSIS)) {
+            return R.string.category_diagnosis;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CONSULTATIONS)) {
+            return R.string.category_consultations;
+        }
+
+        return -1;
+    }
+
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static Bitmap getBitmap(VectorDrawable vectorDrawable) {
         Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(),
@@ -272,29 +301,5 @@ public abstract class AppUtils {
         } else {
             throw new IllegalArgumentException("unsupported drawable type");
         }
-    }
-
-    public static ArrayList<Category> getCategoryList() {
-        if (mCategoryList == null || mCategoryList.size() == 0) {
-            initCategoryList();
-        }
-
-        return mCategoryList;
-    }
-
-    private static void initCategoryList() {
-        mCategoryList = new ArrayList<>();
-        mCategoryList.add(new Category("1", R.string.cartegory_clinic, APIBusinessConstants.DATA_CLINIC, R.drawable.ic_category_clinic));
-        mCategoryList.add(new Category("1", R.string.cartegory_training, APIBusinessConstants.DATA_TRAINING, R.drawable.ic_category_trainer));
-        mCategoryList.add(new Category("1", R.string.cartegory_bath, APIBusinessConstants.DATA_BATH, R.drawable.ic_category_bath));
-        mCategoryList.add(new Category("1", R.string.cartegory_transport, APIBusinessConstants.DATA_TRANSPORT, R.drawable.ic_category_transport));
-        mCategoryList.add(new Category("1", R.string.cartegory_walker, APIBusinessConstants.DATA_WALKER, R.drawable.ic_category_walker));
-        mCategoryList.add(new Category("1", R.string.cartegory_daycare, APIBusinessConstants.DATA_DAYCARE, R.drawable.ic_category_daycare));
-        mCategoryList.add(new Category("1", R.string.cartegory_hotel, APIBusinessConstants.DATA_HOTEL, R.drawable.ic_category_hotel));
-        mCategoryList.add(new Category("1", R.string.cartegory_emergency, APIBusinessConstants.DATA_EMERGENCY, R.drawable.ic_category_emergency));
-        mCategoryList.add(new Category("1", R.string.cartegory_exams, APIBusinessConstants.DATA_EXAMS, R.drawable.ic_category_exam));
-        mCategoryList.add(new Category("1", R.string.cartegory_hospital, APIBusinessConstants.DATA_HOSPITAL, R.drawable.ic_category_hospital));
-        mCategoryList.add(new Category("1", R.string.cartegory_diagnosis, APIBusinessConstants.DATA_DIAGNOSIS, R.drawable.ic_category_diagnosis));
-        mCategoryList.add(new Category("1", R.string.cartegory_consultations, APIBusinessConstants.DATA_CONSULTATIONS, R.drawable.ic_category_consultations));
     }
 }

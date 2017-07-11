@@ -1,16 +1,18 @@
 package com.petbooking.Utils;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.petbooking.API.Auth.Models.AuthUserResp;
-import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.API.Business.Models.BusinessesRspAttributes;
+import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Business.Models.ReviewResp;
 import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.Generic.ErrorResp;
 import com.petbooking.BuildConfig;
-import com.petbooking.Constants.APIConstants;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Business;
+import com.petbooking.Models.Category;
 import com.petbooking.Models.Review;
 import com.petbooking.Models.User;
 
@@ -75,10 +77,11 @@ public class APIUtils {
 
         return business;
     }
-    
+
     /**
      * Create Review from
      * ReviewResp
+     *
      * @param id
      * @param attr
      * @return
@@ -87,6 +90,21 @@ public class APIUtils {
         Review review = new Review(id, attr.userName, attr.comment, attr.rating, attr.avatar);
 
         return review;
+    }
+
+
+    /**
+     * Parse category
+     *
+     * @param context
+     * @param item
+     * @return
+     */
+    public static Category parseCategory(Context context, CategoryResp.Item item) {
+        Category category = new Category(item.id, AppUtils.getCategoryText(item.attributes.name),
+                item.attributes.name, AppUtils.getBusinessIcon(context, item.attributes.name));
+
+        return category;
     }
 
     /**

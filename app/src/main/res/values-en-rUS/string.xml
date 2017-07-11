@@ -162,18 +162,18 @@
     <string name="favorites_empty_message">Mark your favorite business and quickly access them on here.</string>
 
     <!-- Categories -->
-    <string name="cartegory_clinic">Clinics</string>
-    <string name="cartegory_training">Training</string>
-    <string name="cartegory_bath">Bath and Cough</string>
-    <string name="cartegory_transport">Transport</string>
-    <string name="cartegory_walker">Walkers</string>
-    <string name="cartegory_daycare">Daycare</string>
-    <string name="cartegory_hotel">Hotel</string>
-    <string name="cartegory_emergency">Emergency\n e 24h</string>
-    <string name="cartegory_exams">Exams</string>
-    <string name="cartegory_hospital">Hospitals</string>
-    <string name="cartegory_diagnosis">Diagnosis</string>
-    <string name="cartegory_consultations">Veterinary Consulting</string>
+    <string name="category_clinic">Clinics</string>
+    <string name="category_training">Training</string>
+    <string name="category_bath">Bath and Cough</string>
+    <string name="category_transport">Transport</string>
+    <string name="category_walker">Walkers</string>
+    <string name="category_daycare">Daycare</string>
+    <string name="category_hotel">Hotel</string>
+    <string name="category_emergency">Emergency\n e 24h</string>
+    <string name="category_exams">Exams</string>
+    <string name="category_hospital">Hospitals</string>
+    <string name="category_diagnosis">Diagnosis</string>
+    <string name="category_consultations">Veterinary Consulting</string>
 
     <!-- Errors -->
     <string name="error_fields_empty">Complete all fields.</string>

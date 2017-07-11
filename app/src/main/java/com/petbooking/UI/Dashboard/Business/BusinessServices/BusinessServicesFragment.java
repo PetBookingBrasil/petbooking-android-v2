@@ -14,10 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.petbooking.API.Business.APIBusinessConstants;
+import com.petbooking.API.Business.Models.CategoryResp;
+import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Business;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Category;
 import com.petbooking.R;
+import com.petbooking.UI.Menu.Search.SearchActivity;
+import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
@@ -73,7 +77,7 @@ public class BusinessServicesFragment extends Fragment implements CategoryListAd
 
         mServiceList = new ArrayList<>();
         mCategoryList = new ArrayList<>();
-        mCategoryList = AppUtils.getCategoryList();
+        getCategories();
         prepareListData();
 
         mRvCategory = (RecyclerView) view.findViewById(R.id.category_list);
@@ -122,5 +126,28 @@ public class BusinessServicesFragment extends Fragment implements CategoryListAd
     @Override
     public void onItemClick(int position) {
         mCategoryLayout.scrollToPositionWithOffset(position, 10);
+    }
+
+    /**
+     * Get Categories
+     */
+    public void getCategories() {
+        mBusinessService.listCategories(new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                CategoryResp resp = (CategoryResp) response;
+                for (CategoryResp.Item item : resp.data) {
+                    mCategoryList.add(APIUtils.parseCategory(getContext(), item));
+                }
+
+                mCategoryAdapter.updateList(mCategoryList);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(Object error) {
+
+            }
+        });
     }
 }

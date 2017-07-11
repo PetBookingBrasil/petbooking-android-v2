@@ -3,7 +3,6 @@ package com.petbooking.UI.Menu.Search;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +35,7 @@ public class FilterCategoryListAdapter extends RecyclerView.Adapter<FilterCatego
     }
 
     public void updateList(ArrayList<Category> categoryList) {
+        selectedPosition = -1;
         this.mCategoryList = categoryList;
     }
 
@@ -56,7 +56,7 @@ public class FilterCategoryListAdapter extends RecyclerView.Adapter<FilterCatego
         int color = AppUtils.getCategoryColor(mContext, category.categoryName);
         GradientDrawable iconBackground = (GradientDrawable) holder.mIvCategoryIcon.getBackground();
 
-        holder.mIvCategoryIcon.setImageResource(category.icon);
+        holder.mIvCategoryIcon.setImageDrawable(category.icon);
         holder.mTvCategoryName.setText(category.categoryText);
 
         if (position == selectedPosition) {

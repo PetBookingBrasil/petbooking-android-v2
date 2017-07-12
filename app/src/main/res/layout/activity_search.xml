@@ -61,6 +61,7 @@
             android:layout_marginLeft="@dimen/spacing_tiny"
             android:layout_marginRight="@dimen/spacing_tiny"
             android:background="@drawable/primary_button"
+            android:enabled="false"
             android:text="@string/filter" />
     </LinearLayout>
 </ScrollView>

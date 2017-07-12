@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +37,26 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
     private FilterCategoryListAdapter mAdapter;
     private int currentCategory = -1;
 
+    TextWatcher mFilterWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (currentCategory == -1 && s.length() == 0) {
+                mBtnFilter.setEnabled(false);
+            } else {
+                mBtnFilter.setEnabled(true);
+            }
+        }
+    };
 
     View.OnClickListener filterListener = new View.OnClickListener() {
         @Override
@@ -64,6 +86,7 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
         getCategories();
 
         mEdtSearchName = (EditText) findViewById(R.id.search_name);
+        mEdtSearchName.addTextChangedListener(mFilterWatcher);
         mBtnFilter = (Button) findViewById(R.id.filter_button);
 
         mRvCategories = (RecyclerView) findViewById(R.id.category_list);
@@ -108,5 +131,6 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
     @Override
     public void onSelect(int position) {
         currentCategory = position;
+        mBtnFilter.setEnabled(true);
     }
 }

@@ -67,16 +67,24 @@ public class FilterCategoryListAdapter extends RecyclerView.Adapter<FilterCatego
         if (position == selectedPosition) {
             holder.mTvCategoryName.setTextColor(color);
             holder.mTvCategoryName.setTypeface(Typeface.DEFAULT_BOLD);
+            holder.mIvCategoryIcon.setAlpha((float) 1);
         } else {
             holder.mTvCategoryName.setTextColor(mContext.getResources().getColor(R.color.text_color));
             holder.mTvCategoryName.setTypeface(Typeface.DEFAULT);
+            holder.mIvCategoryIcon.setAlpha((float) 0.4);
         }
 
         holder.mCategoryItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 notifyItemChanged(selectedPosition);
-                selectedPosition = position;
+
+                if (position == selectedPosition) {
+                    selectedPosition = -1;
+                } else {
+                    selectedPosition = position;
+                }
+
                 notifyItemChanged(selectedPosition);
                 onSelectCategoryListener.onSelect(position);
             }

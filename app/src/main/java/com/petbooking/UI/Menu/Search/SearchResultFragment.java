@@ -7,11 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,7 +22,6 @@ import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
-import com.petbooking.UI.Dashboard.Business.BusinessInformation.BusinessInformationFragment;
 import com.petbooking.UI.Dashboard.BusinessList.BusinessListAdapter;
 import com.petbooking.Utils.AppUtils;
 
@@ -97,7 +96,6 @@ public class SearchResultFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_result, container, false);
 
-        int categoryColor = AppUtils.getCategoryColor(mContext, categoryName);
 
         mBusinessService = new BusinessService();
         mLocationManager = LocationManager.getInstance();
@@ -108,8 +106,13 @@ public class SearchResultFragment extends Fragment {
         mBtnReset = (ImageButton) view.findViewById(R.id.reset_button);
         mBtnNewSearch = (ImageButton) view.findViewById(R.id.new_search_button);
 
-        mInfoBar.setBackgroundColor(categoryColor);
-        mInfoBarTitle.setText(AppUtils.getCategoryText(categoryName));
+        if (categoryName != null && !TextUtils.isEmpty(categoryName)) {
+            int categoryColor = AppUtils.getCategoryColor(mContext, categoryName);
+            mInfoBar.setBackgroundColor(categoryColor);
+            mInfoBarTitle.setText(AppUtils.getCategoryText(categoryName));
+        } else {
+            mInfoBarTitle.setText(filterText);
+        }
 
         mBusinessList = new ArrayList<>();
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -155,7 +158,7 @@ public class SearchResultFragment extends Fragment {
      */
     public void listBusiness() {
         currentPage = 1;
-        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, 10, new APICallback() {
+        mBusinessService.searchBusiness(mLocationManager.getLocationCoords(), userId, currentPage, 10, categoryId, filterText, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 mBusinessList = (ArrayList<Business>) response;

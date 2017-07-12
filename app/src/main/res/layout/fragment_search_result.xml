@@ -10,7 +10,7 @@
         android:id="@+id/info_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/category_bath"
+        android:background="@color/secondary_red"
         android:paddingBottom="@dimen/spacing_tiny"
         android:paddingTop="@dimen/spacing_tiny">
 
@@ -28,7 +28,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Consulta Veterinária"
             android:textColor="@color/white"
             android:textSize="17sp" />
 

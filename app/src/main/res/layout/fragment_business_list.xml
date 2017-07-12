@@ -22,5 +22,5 @@
         android:layout_marginLeft="@dimen/spacing_xtiny"
         app:layout_anchor="@id/businessList"
         app:layout_anchorGravity="bottom|left|end"
-        app:srcCompat="@drawable/ic_menu_search" />
+        app:srcCompat="@drawable/ic_filter" />
 </android.support.design.widget.CoordinatorLayout>

@@ -36,5 +36,5 @@
         app:layout_anchorGravity="bottom|right"
         app:layout_constraintBottom_toTopOf="@+id/business_layout"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/ic_menu_search" />
+        app:srcCompat="@drawable/ic_filter" />
 </android.support.constraint.ConstraintLayout>

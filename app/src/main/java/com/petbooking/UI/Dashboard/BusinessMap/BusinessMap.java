@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.BusinessActivity;
+import com.petbooking.UI.Menu.Search.SearchActivity;
 import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
@@ -42,6 +44,8 @@ import java.util.ArrayList;
 public class BusinessMap extends Fragment implements OnMapReadyCallback {
 
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
+    private static final int SEARCH_REQUEST = 235;
+
     private static Context mContext;
     private View fragmentView;
     private BusinessService mBusinessService;
@@ -51,6 +55,8 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
     private GoogleMap mGMap = null;
     private ArrayList<Business> mBusinessList;
     private Business selectedBusiness;
+
+    private FloatingActionButton mFBSearch;
 
     /**
      * Business Elements
@@ -68,6 +74,13 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
     private TextView mTvRate;
     private TextView mTvRatingCount;
     private TextView mTvDistance;
+
+    View.OnClickListener filterButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startFilterActivity();
+        }
+    };
 
     GoogleMap.OnMarkerClickListener markerListener = new GoogleMap.OnMarkerClickListener() {
         @Override
@@ -136,6 +149,9 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
         mLocationManager.requestLocation();
         mBusinessList = new ArrayList<>();
         userId = SessionManager.getInstance().getUserLogged().id;
+
+        mFBSearch = (FloatingActionButton) fragmentView.findViewById(R.id.float_filter_button);
+        mFBSearch.setOnClickListener(filterButtonListener);
 
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
@@ -452,5 +468,13 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(data);
         mContext.startActivity(intent);
+    }
+
+    /**
+     * Start Activity for filter
+     */
+    public void startFilterActivity() {
+        Intent activity = new Intent(getActivity(), SearchActivity.class);
+        getActivity().startActivityForResult(activity, SEARCH_REQUEST);
     }
 }

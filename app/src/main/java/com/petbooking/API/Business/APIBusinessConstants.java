@@ -56,17 +56,13 @@ public class APIBusinessConstants {
     /**
      * APIs
      */
-    public static final String BUSINESS_FEATURED_ENDPOINT = "businesses/search" +
-            APIConstants.QUERY_PAGE_SIZE_DEAFULT + FILTER_FEATURED;
+    public static final String BUSINESS_SEARCH_ENDPOINT = "businesses/search" + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 
     public static final String BUSINESS_ENDPOINT = "businesses" + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 
     public static final String BUSINESS_HIGHLIGHT_ENDPOINT = "businesses/highlights";
 
     public static final String BUSINESS_BY_CATEGORY_ENDPOINT = "category-templates/{" + PATH_CATEGORY_ID + "}/businesses" + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
-
-    public static final String BUSINESS_SEARCH_ENDPOINT = "businesses/search" + QUERY_INCLUDE_SEARCH +
-            APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 
     public static final String SERVICES_CATEGORIES_ENDPOINT = "category-templates" + FIELDS_CATEGORIES;
 

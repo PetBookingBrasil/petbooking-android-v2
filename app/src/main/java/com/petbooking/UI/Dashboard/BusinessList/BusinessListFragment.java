@@ -1,8 +1,10 @@
 package com.petbooking.UI.Dashboard.BusinessList;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +21,7 @@ import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
+import com.petbooking.UI.Menu.Search.SearchActivity;
 
 import java.util.ArrayList;
 
@@ -27,9 +30,13 @@ import java.util.ArrayList;
  */
 public class BusinessListFragment extends Fragment {
 
+    private static final int SEARCH_REQUEST = 235;
+
     private BusinessService mBusinessService;
     private LocationManager mLocationManager;
     private String userId;
+
+    private FloatingActionButton mFBSearch;
 
     /**
      * Business List
@@ -45,6 +52,13 @@ public class BusinessListFragment extends Fragment {
     private boolean isLoading = false;
     private boolean isLastPage = false;
     private int currentPage = 1;
+
+    View.OnClickListener filterButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startFilterActivity();
+        }
+    };
 
     RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -77,6 +91,9 @@ public class BusinessListFragment extends Fragment {
         mLocationManager = LocationManager.getInstance();
         userId = SessionManager.getInstance().getUserLogged().id;
 
+        mFBSearch = (FloatingActionButton) view.findViewById(R.id.float_filter_button);
+        mFBSearch.setOnClickListener(filterButtonListener);
+
         mBusinessList = new ArrayList<>();
         mRvBusinessList = (RecyclerView) view.findViewById(R.id.businessList);
         mRvBusinessList.setHasFixedSize(true);
@@ -91,9 +108,7 @@ public class BusinessListFragment extends Fragment {
             mRvBusinessList.setAdapter(mAdapter);
         }
 
-
         mRvBusinessList.addOnScrollListener(scrollListener);
-
         listBusiness();
 
         return view;
@@ -131,7 +146,7 @@ public class BusinessListFragment extends Fragment {
      */
     public synchronized void loadMore() {
         isLoading = true;
-        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, 10,new APICallback() {
+        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, 10, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 ArrayList<Business> nextPage = (ArrayList<Business>) response;
@@ -149,5 +164,13 @@ public class BusinessListFragment extends Fragment {
 
             }
         });
+    }
+
+    /**
+     * Start Activity for filter
+     */
+    public void startFilterActivity() {
+        Intent activity = new Intent(getActivity(), SearchActivity.class);
+        getActivity().startActivityForResult(activity, SEARCH_REQUEST);
     }
 }

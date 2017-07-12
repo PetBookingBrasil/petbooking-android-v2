@@ -3,6 +3,7 @@ package com.petbooking.UI.Menu.Search;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +22,9 @@ import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.BusinessInformation.BusinessInformationFragment;
 import com.petbooking.UI.Dashboard.BusinessList.BusinessListAdapter;
+import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
 
@@ -30,11 +33,16 @@ import java.util.ArrayList;
  */
 public class SearchResultFragment extends Fragment {
 
+    private Context mContext;
     private OnBarClick mCallback;
     private BusinessService mBusinessService;
     private LocationManager mLocationManager;
     private String userId;
     private int currentPage = 1;
+
+    private String filterText;
+    private String categoryId;
+    private String categoryName;
 
     private RelativeLayout mInfoBar;
     private TextView mInfoBarTitle;
@@ -51,15 +59,45 @@ public class SearchResultFragment extends Fragment {
             mCallback.onReset();
         }
     };
+    View.OnClickListener mBtnNewSearchListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mCallback.onNewSearch();
+        }
+    };
 
     public SearchResultFragment() {
         // Required empty public constructor
     }
 
+    public static SearchResultFragment newInstance(String filterText, String categoryId, String categoryName) {
+        SearchResultFragment fragment = new SearchResultFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("filterText", filterText);
+        bundle.putString("categoryId", categoryId);
+        bundle.putString("categoryName", categoryName);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mBusinessService = new BusinessService();
+        this.mContext = getContext();
+        this.filterText = getArguments().getString("filterText");
+        this.categoryId = getArguments().getString("categoryId");
+        this.categoryName = getArguments().getString("categoryName");
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_result, container, false);
+
+        int categoryColor = AppUtils.getCategoryColor(mContext, categoryName);
 
         mBusinessService = new BusinessService();
         mLocationManager = LocationManager.getInstance();
@@ -69,6 +107,9 @@ public class SearchResultFragment extends Fragment {
         mInfoBarTitle = (TextView) view.findViewById(R.id.info_bar_title);
         mBtnReset = (ImageButton) view.findViewById(R.id.reset_button);
         mBtnNewSearch = (ImageButton) view.findViewById(R.id.new_search_button);
+
+        mInfoBar.setBackgroundColor(categoryColor);
+        mInfoBarTitle.setText(AppUtils.getCategoryText(categoryName));
 
         mBusinessList = new ArrayList<>();
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -85,6 +126,7 @@ public class SearchResultFragment extends Fragment {
         }
 
         mBtnReset.setOnClickListener(mBtnResetListener);
+        mBtnNewSearch.setOnClickListener(mBtnNewSearchListener);
 
         listBusiness();
 
@@ -128,7 +170,6 @@ public class SearchResultFragment extends Fragment {
             }
         });
     }
-
 
     public interface OnBarClick {
 

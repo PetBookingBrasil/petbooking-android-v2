@@ -25,6 +25,7 @@ import java.util.ArrayList;
 public class FilterCategoryListAdapter extends RecyclerView.Adapter<FilterCategoryListAdapter.CategoryViewHolder> {
 
     private Context mContext;
+    private OnSelectCategoryListener onSelectCategoryListener;
     private ArrayList<Category> mCategoryList;
     private int selectedPosition = -1;
 
@@ -37,6 +38,10 @@ public class FilterCategoryListAdapter extends RecyclerView.Adapter<FilterCatego
     public void updateList(ArrayList<Category> categoryList) {
         selectedPosition = -1;
         this.mCategoryList = categoryList;
+    }
+
+    public void setOnSelectCategoryListener(OnSelectCategoryListener onSelectCategoryListener) {
+        this.onSelectCategoryListener = onSelectCategoryListener;
     }
 
     @Override
@@ -73,6 +78,7 @@ public class FilterCategoryListAdapter extends RecyclerView.Adapter<FilterCatego
                 notifyItemChanged(selectedPosition);
                 selectedPosition = position;
                 notifyItemChanged(selectedPosition);
+                onSelectCategoryListener.onSelect(position);
             }
         });
 
@@ -97,6 +103,10 @@ public class FilterCategoryListAdapter extends RecyclerView.Adapter<FilterCatego
             mIvCategoryIcon = (ImageView) view.findViewById(R.id.category_icon);
             mTvCategoryName = (TextView) view.findViewById(R.id.category_name);
         }
+    }
+
+    public interface OnSelectCategoryListener {
+        void onSelect(int position);
     }
 
 }

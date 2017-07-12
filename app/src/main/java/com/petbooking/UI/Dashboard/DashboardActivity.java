@@ -229,7 +229,7 @@ public class DashboardActivity extends AppCompatActivity implements
             String categoryName = "";
             String filterText = "";
 
-            categoryName = data.getStringExtra("FILTER_TEXT");
+            filterText = data.getStringExtra("FILTER_TEXT");
             if (categoryPosition != -1) {
                 categoryName = data.getStringExtra("CATEGORY_NAME");
                 categoryId = data.getStringExtra("CATEGORY_ID");

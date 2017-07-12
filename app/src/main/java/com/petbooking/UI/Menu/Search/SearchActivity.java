@@ -2,26 +2,23 @@ package com.petbooking.UI.Menu.Search;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.petbooking.API.Business.APIBusinessConstants;
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Category;
 import com.petbooking.R;
 import com.petbooking.Utils.APIUtils;
-import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
 
@@ -130,7 +127,15 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
 
     @Override
     public void onSelect(int position) {
-        currentCategory = position;
-        mBtnFilter.setEnabled(true);
+        if (position == currentCategory) {
+            currentCategory = -1;
+        } else {
+            currentCategory = position;
+            mBtnFilter.setEnabled(true);
+        }
+
+        if (currentCategory == -1 && TextUtils.isEmpty(mEdtSearchName.getText().toString())) {
+            mBtnFilter.setEnabled(false);
+        }
     }
 }

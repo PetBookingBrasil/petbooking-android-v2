@@ -5,11 +5,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 
 import com.petbooking.API.Business.APIBusinessConstants;
@@ -25,7 +28,8 @@ import java.util.ArrayList;
 
 public abstract class AppUtils {
 
-    private static ArrayList<Category> mCategoryList;
+    private static AlertDialog mDialog;
+    private static AlertDialog.Builder mBuilder;
 
     public static String getGender(Context context, String gender) {
         if (TextUtils.equals(gender, context.getString(R.string.gender_male))) {
@@ -302,4 +306,25 @@ public abstract class AppUtils {
             throw new IllegalArgumentException("unsupported drawable type");
         }
     }
+
+    public static void showLoadingDialog(Context context) {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
+
+        mBuilder = new AlertDialog.Builder(context);
+        mBuilder.setView(R.layout.dialog_loading);
+        mDialog = mBuilder.create();
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mDialog.show();
+    }
+
+
+    public static void hideDialog() {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+            mDialog = null;
+        }
+    }
+
 }

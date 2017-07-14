@@ -19,6 +19,7 @@ import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Category;
 import com.petbooking.R;
 import com.petbooking.Utils.APIUtils;
+import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
 
@@ -106,6 +107,7 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
      * Get Categories
      */
     public void getCategories() {
+        AppUtils.showLoadingDialog(this);
         mBusinessService.listCategories(new APICallback() {
             @Override
             public void onSuccess(Object response) {
@@ -116,11 +118,12 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
 
                 mAdapter.updateList(mCategoryList);
                 mAdapter.notifyDataSetChanged();
+                AppUtils.hideDialog();
             }
 
             @Override
             public void onError(Object error) {
-
+                AppUtils.hideDialog();
             }
         });
     }

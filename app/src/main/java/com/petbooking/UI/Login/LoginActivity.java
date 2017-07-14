@@ -21,6 +21,7 @@ import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Auth.Models.SessionResp;
 import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.User.UserService;
+import com.petbooking.App;
 import com.petbooking.BaseActivity;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
@@ -36,6 +37,7 @@ import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.RecoverPassword.RecoverPasswordActivity;
 import com.petbooking.UI.SignUp.SignUpActivity;
 import com.petbooking.Utils.APIUtils;
+import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -136,6 +138,7 @@ public class LoginActivity extends BaseActivity {
         }
 
         CommonUtils.hideKeyboard(LoginActivity.this);
+        AppUtils.showLoadingDialog(this);
         mAuthService.authUser(email, password, new APICallback() {
             @Override
             public void onSuccess(Object response) {
@@ -152,6 +155,7 @@ public class LoginActivity extends BaseActivity {
                 APIError apiError = (APIError) error;
                 if (apiError.code == APIConstants.ERROR_CODE_INVALID_LOGIN) {
                     EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_invalid_login, Snackbar.LENGTH_SHORT));
+                    AppUtils.hideDialog();
                 }
             }
         });
@@ -192,6 +196,7 @@ public class LoginActivity extends BaseActivity {
                 AuthUserResp authUserResp = (AuthUserResp) response;
                 User user = APIUtils.parseUser(authUserResp);
                 mSessionManager.setUserLogged(user);
+                AppUtils.hideDialog();
                 goToDashboard();
             }
 

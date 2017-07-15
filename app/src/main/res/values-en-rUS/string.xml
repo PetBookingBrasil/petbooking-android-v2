@@ -169,7 +169,7 @@
     <string name="category_walker">Walkers</string>
     <string name="category_daycare">Daycare</string>
     <string name="category_hotel">Hotel</string>
-    <string name="category_emergency">Emergency\n e 24h</string>
+    <string name="category_emergency">Emergency</string>
     <string name="category_exams">Exams</string>
     <string name="category_hospital">Hospitals</string>
     <string name="category_diagnosis">Diagnosis</string>

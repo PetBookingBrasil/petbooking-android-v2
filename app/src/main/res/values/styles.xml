@@ -103,4 +103,8 @@
         <item name="colorControlNormal">@color/white</item>
     </style>
 
+    <style name="AppTheme.BrandAccent">
+        <item name="colorAccent">@color/brand_primary</item>
+    </style>
+
 </resources>

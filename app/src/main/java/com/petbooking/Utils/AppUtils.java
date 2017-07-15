@@ -316,6 +316,7 @@ public abstract class AppUtils {
         mBuilder.setView(R.layout.dialog_loading);
         mDialog = mBuilder.create();
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mDialog.setCancelable(false);
         mDialog.show();
     }
 

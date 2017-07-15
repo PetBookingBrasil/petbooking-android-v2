@@ -196,8 +196,8 @@ public class LoginActivity extends BaseActivity {
                 AuthUserResp authUserResp = (AuthUserResp) response;
                 User user = APIUtils.parseUser(authUserResp);
                 mSessionManager.setUserLogged(user);
-                AppUtils.hideDialog();
                 goToDashboard();
+                AppUtils.hideDialog();
             }
 
             @Override

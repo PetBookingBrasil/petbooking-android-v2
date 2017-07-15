@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.petbooking.API.Business.BusinessService;
+import com.petbooking.App;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
@@ -32,12 +33,13 @@ import java.util.ArrayList;
  */
 public class SearchResultFragment extends Fragment {
 
+    private static final int PAGE_SIZE = 10;
+
     private Context mContext;
     private OnBarClick mCallback;
     private BusinessService mBusinessService;
     private LocationManager mLocationManager;
     private String userId;
-    private int currentPage = 1;
 
     private String filterText;
     private String categoryId;
@@ -49,8 +51,13 @@ public class SearchResultFragment extends Fragment {
     private ImageButton mBtnNewSearch;
 
     private ArrayList<Business> mBusinessList;
+    private LinearLayoutManager mLayoutManager;
     private RecyclerView mRvBusiness;
     private BusinessListAdapter mAdapter;
+
+    private int currentPage = 1;
+    private boolean isLoading = false;
+    private boolean isLastPage = false;
 
     View.OnClickListener mBtnResetListener = new View.OnClickListener() {
         @Override
@@ -62,6 +69,28 @@ public class SearchResultFragment extends Fragment {
         @Override
         public void onClick(View v) {
             mCallback.onNewSearch();
+        }
+    };
+
+    RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            int visibleItemCount = mLayoutManager.getChildCount();
+            int totalItemCount = mLayoutManager.getItemCount();
+            int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
+
+            if (!isLoading && !isLastPage) {
+                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                        && firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE) {
+                    loadMore();
+                }
+            }
         }
     };
 
@@ -115,7 +144,7 @@ public class SearchResultFragment extends Fragment {
         }
 
         mBusinessList = new ArrayList<>();
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager = new LinearLayoutManager(getContext());
         mAdapter = new BusinessListAdapter(getContext(), mBusinessList, Glide.with(getContext()));
 
         mRvBusiness = (RecyclerView) view.findViewById(R.id.result_list);
@@ -128,6 +157,7 @@ public class SearchResultFragment extends Fragment {
             mRvBusiness.setAdapter(mAdapter);
         }
 
+        mRvBusiness.addOnScrollListener(scrollListener);
         mBtnReset.setOnClickListener(mBtnResetListener);
         mBtnNewSearch.setOnClickListener(mBtnNewSearchListener);
 
@@ -157,19 +187,58 @@ public class SearchResultFragment extends Fragment {
      * List Business
      */
     public void listBusiness() {
+        AppUtils.showLoadingDialog(getContext());
+        isLoading = true;
         currentPage = 1;
-        mBusinessService.searchBusiness(mLocationManager.getLocationCoords(), userId, currentPage, 10, categoryId, filterText, new APICallback() {
+        mBusinessService.searchBusiness(mLocationManager.getLocationCoords(), userId, currentPage, PAGE_SIZE, categoryId, filterText, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 mBusinessList = (ArrayList<Business>) response;
 
                 mAdapter.updateList(mBusinessList);
                 mAdapter.notifyDataSetChanged();
+
+                isLoading = false;
+                AppUtils.hideDialog();
             }
 
             @Override
             public void onError(Object error) {
+                isLoading = false;
+                AppUtils.hideDialog();
+            }
+        });
+    }
 
+    /**
+     * List Business
+     */
+    public void loadMore() {
+        AppUtils.showLoadingDialog(getContext());
+        currentPage++;
+        isLoading = true;
+        mBusinessService.searchBusiness(mLocationManager.getLocationCoords(), userId, currentPage, PAGE_SIZE, categoryId, filterText, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                ArrayList<Business> nextPage = (ArrayList<Business>) response;
+                mBusinessList.addAll(nextPage);
+
+                mAdapter.updateList(mBusinessList);
+                mAdapter.notifyDataSetChanged();
+
+                if (nextPage.size() == 0) {
+                    isLastPage = true;
+                }
+
+                isLoading = false;
+                AppUtils.hideDialog();
+            }
+
+            @Override
+            public void onError(Object error) {
+                currentPage--;
+                isLoading = false;
+                AppUtils.hideDialog();
             }
         });
     }

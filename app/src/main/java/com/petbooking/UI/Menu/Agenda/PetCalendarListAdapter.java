@@ -1,13 +1,11 @@
-package com.petbooking.UI.Menu.Calendar;
+package com.petbooking.UI.Menu.Agenda;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -54,16 +52,22 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
     public void onBindViewHolder(final PetViewHolder holder, int position) {
 
         Pet pet = mPetList.get(position);
+        float percentSize = 
         int deviceWidth = CommonUtils.getDeviceWidth(mContext);
-        int width = deviceWidth - (deviceWidth / 100 * 50);
+        int offset = (int) (deviceWidth * 0.20);
+        int width = deviceWidth - ((deviceWidth * (100 ()) / 100));
+        //width += offset;
         ViewGroup.LayoutParams params = holder.mItemLayout.getLayoutParams();
+
+        Log.d("WID", width + "");
+        Log.d("OFF", offset + "");
 
         params.width = width;
         holder.mItemLayout.setLayoutParams(params);
         holder.mTvName.setText(pet.name);
 
         Glide.with(mContext)
-                .load(pet.avatar.thumb.url)
+                .load(pet.avatar.url)
                 .centerCrop()
                 .error(R.drawable.ic_menu_user)
                 .dontAnimate()

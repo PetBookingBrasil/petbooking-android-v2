@@ -8,9 +8,9 @@
     android:padding="@dimen/activity_horizontal_margin">
 
     <TextView
+        android:id="@+id/business_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Petland Batel"
         android:textColor="@color/brand_primary"
         android:textSize="18sp" />
 
@@ -20,10 +20,10 @@
         android:layout_marginTop="@dimen/spacing_tiny">
 
         <TextView
+            android:id="@+id/service_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="10:30 - 12:30"
             android:textColor="@color/green"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -46,7 +46,7 @@
             android:layout_centerInParent="true"
             android:background="@drawable/call_button"
             android:stateListAnimator="@null"
-            android:text="Reagendar" />
+            android:text="@string/reschedule" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -55,111 +55,50 @@
         android:layout_marginTop="@dimen/spacing_tiny">
 
         <TextView
-            android:id="@+id/service_title"
+            android:id="@+id/service_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/spacing_xtiny"
-            android:text="Banho e Tosa"
             android:textColor="@color/text_color"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/service_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/spacing_xtiny"
-            android:text="R$ 50,00"
             android:textColor="@color/text_color"
             android:textSize="16sp" />
-
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/service_title"
+            android:layout_below="@+id/service_name"
             android:background="@color/gray" />
     </RelativeLayout>
 
 
     <TextView
+        android:id="@+id/additional_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_tiny"
-        android:text="Adicionais" />
+        android:text="@string/business_label_additional"
+        android:visibility="gone" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/additional_services"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_micro">
-
-        <TextView
-            android:id="@+id/aditional_service_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/spacing_xtiny"
-            android:text="Banho e Tosa"
-            android:textColor="@color/text_color"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/spacing_xtiny"
-            android:text="R$ 50,00"
-            android:textColor="@color/text_color"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/aditional_service_title"
-            android:background="@color/gray" />
-    </RelativeLayout>
+        android:visibility="gone" />
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_micro">
-
-        <TextView
-            android:id="@+id/aditional2_service_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/spacing_xtiny"
-            android:text="Banho e Tosa"
-            android:textColor="@color/text_color"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/spacing_xtiny"
-            android:text="R$ 50,00"
-            android:textColor="@color/text_color"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/aditional2_service_title"
-            android:background="@color/gray" />
-    </RelativeLayout>
-
-    <RelativeLayout
+        android:id="@+id/professional_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_tiny">
@@ -170,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:text="Profissional" />
+            android:text="@string/professional_label" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/professional_picture"
@@ -188,14 +127,13 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/spacing_xmicro"
             android:layout_toRightOf="@id/professional_picture"
-            android:text="Maria Joana"
             android:textColor="@color/text_color" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="12dp"
-        android:layout_below="@+id/aditional2_service_title"
+        android:layout_below="@+id/professional_info"
         android:layout_marginTop="@dimen/spacing_xtiny"
         android:background="@color/light_gray" />
 

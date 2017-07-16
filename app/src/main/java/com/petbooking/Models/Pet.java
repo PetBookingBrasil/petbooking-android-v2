@@ -53,4 +53,9 @@ public class Pet {
         this.avatar = avatar;
     }
 
+    public Pet(String id, String name, AvatarResp avatar) {
+        this.id = id;
+        this.name = name;
+        this.avatar = avatar;
+    }
 }

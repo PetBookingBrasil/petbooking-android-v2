@@ -112,7 +112,7 @@
         </activity>
 
         <activity
-            android:name=".UI.Menu.Calendar.CalendarActivity"
+            android:name=".UI.Menu.Agenda.AgendaActivity"
             android:configChanges="orientation"
             android:label="@string/calendar"
             android:parentActivityName=".UI.Dashboard.DashboardActivity"

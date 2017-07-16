@@ -8,9 +8,12 @@ import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.petbooking.Components.GravitySnapHelper.GravitySnapHelper;
+import com.petbooking.Models.Appointment;
 import com.petbooking.Models.CalendarItem;
 import com.petbooking.R;
 import com.petbooking.UI.Widget.Adapters.HorizontalCalendarAdapter;
@@ -36,6 +39,7 @@ public class HorizontalCalendar extends LinearLayout {
     private LinearLayoutManager mLayoutManager;
     private HorizontalCalendarAdapter mAdapter;
     private SnapHelper mSnapHelper;
+    SnapHelper startSnapHelper;
     private ArrayList<CalendarItem> mDateList;
 
     /**
@@ -44,8 +48,7 @@ public class HorizontalCalendar extends LinearLayout {
     private int currentPosition;
     private int defaultPosition;
     private Date defaultDate;
-    private Date startDate;
-    private Date endDate;
+    private ArrayList<Appointment> appointments;
 
     public HorizontalCalendar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -65,6 +68,7 @@ public class HorizontalCalendar extends LinearLayout {
         mRvCalendar = (RecyclerView) view.findViewById(R.id.date_list);
         mLayoutManager = new LinearLayoutManager(context);
         mSnapHelper = new LinearSnapHelper();
+        startSnapHelper = new GravitySnapHelper(Gravity.START);
 
         mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRvCalendar.setHasFixedSize(true);
@@ -98,12 +102,17 @@ public class HorizontalCalendar extends LinearLayout {
     }
 
     /**
+     * Get Current date index
+     */
+    public int getCurrentDateIndex() {
+        return this.currentPosition != mDateList.size() ? this.currentPosition : (currentPosition - 1);
+    }
+
+    /**
      * Set Date Interval
      */
-    public void setDateInterval(Date startDate, Date endDate) {
-        this.startDate = startDate;
-        this.endDate = endDate;
-
+    public void setAppointments(ArrayList<Appointment> appointments) {
+        this.appointments = appointments;
         new InitializeDatesList().execute();
     }
 
@@ -120,12 +129,17 @@ public class HorizontalCalendar extends LinearLayout {
             String dayName;
             String monthName;
 
-            mDateList = new ArrayList<CalendarItem>();
+            mDateList = new ArrayList<>();
             CalendarItem calendarItem;
             Calendar calendar = new GregorianCalendar();
-            calendar.setTime(startDate);
 
-            while (calendar.getTime().before(endDate)) {
+            /**
+             * Create Dates for Calendar
+             * based on Appointments
+             */
+            for (Appointment appointment : appointments) {
+                calendar.setTime(appointment.date);
+
                 dayName = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
                 monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
                 calendarItem = new CalendarItem(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR),
@@ -137,8 +151,6 @@ public class HorizontalCalendar extends LinearLayout {
                 if (df.format(calendar.getTime()).equals(df.format(defaultDate))) {
                     defaultPosition = mDateList.size() - 1;
                 }
-
-                calendar.add(Calendar.DATE, 1);
             }
 
             return null;

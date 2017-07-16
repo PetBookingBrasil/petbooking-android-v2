@@ -3,7 +3,7 @@
     android:id="@+id/item_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/light_gray"
+    android:minWidth="70dp"
     android:orientation="vertical"
     android:paddingBottom="@dimen/spacing_tiny"
     android:paddingLeft="@dimen/spacing_smallest"
@@ -12,18 +12,22 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/pet_photo"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_gravity="center"
         android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/pet_name"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/spacing_xmicro"
+        android:ellipsize="end"
+        android:maxLength="15"
+        android:maxLines="1"
         android:text="Frida Maria"
+        android:textAlignment="center"
         android:textColor="@color/text_color"
         android:textSize="12sp"
         android:textStyle="bold" />

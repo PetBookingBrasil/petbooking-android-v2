@@ -1,6 +1,7 @@
 package com.petbooking.UI.Menu.Agenda;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,11 +28,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarListAdapter.PetViewHolder> {
 
     private Context mContext;
+    private OnSelectPetListener onSelectPetListener;
     private ArrayList<Pet> mPetList;
+    private int selectedPosition = -1;
 
-    public PetCalendarListAdapter(Context context, ArrayList<Pet> petList) {
+    public PetCalendarListAdapter(Context context, ArrayList<Pet> petList, OnSelectPetListener onSelectPetListener) {
         this.mPetList = petList;
         this.mContext = context;
+        this.onSelectPetListener = onSelectPetListener;
     }
 
     public void updateList(ArrayList<Pet> petList) {
@@ -49,22 +53,37 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
     }
 
     @Override
-    public void onBindViewHolder(final PetViewHolder holder, int position) {
+    public void onBindViewHolder(final PetViewHolder holder, final int position) {
 
         Pet pet = mPetList.get(position);
-        float percentSize = 
-        int deviceWidth = CommonUtils.getDeviceWidth(mContext);
-        int offset = (int) (deviceWidth * 0.20);
-        int width = deviceWidth - ((deviceWidth * (100 ()) / 100));
-        //width += offset;
-        ViewGroup.LayoutParams params = holder.mItemLayout.getLayoutParams();
+        int redColor = mContext.getResources().getColor(R.color.brand_primary);
+        int textColor = mContext.getResources().getColor(R.color.text_color);
 
-        Log.d("WID", width + "");
-        Log.d("OFF", offset + "");
+        if (selectedPosition == position) {
+            holder.mIvPhoto.setBorderColor(redColor);
+            holder.mIvPhoto.setBorderWidth(4);
+            holder.mIvPhoto.setColorFilter(mContext.getResources().getColor(R.color.picture_filter_color));
 
-        params.width = width;
-        holder.mItemLayout.setLayoutParams(params);
+            holder.mTvName.setTextColor(redColor);
+            holder.mTvName.setTypeface(Typeface.DEFAULT_BOLD);
+        } else {
+            holder.mIvPhoto.setBorderWidth(0);
+            holder.mIvPhoto.setColorFilter(null);
+
+            holder.mTvName.setTextColor(textColor);
+            holder.mTvName.setTypeface(Typeface.DEFAULT);
+        }
+
         holder.mTvName.setText(pet.name);
+        holder.mItemLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                notifyItemChanged(selectedPosition);
+                selectedPosition = position;
+                notifyItemChanged(selectedPosition);
+                onSelectPetListener.onSelect(position);
+            }
+        });
 
         Glide.with(mContext)
                 .load(pet.avatar.url)
@@ -78,6 +97,11 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
     @Override
     public int getItemCount() {
         return mPetList.size();
+    }
+
+    private void resetSelectedPosition() {
+        selectedPosition = -1;
+        notifyDataSetChanged();
     }
 
     public class PetViewHolder extends RecyclerView.ViewHolder {
@@ -96,4 +120,7 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
     }
 
 
+    public interface OnSelectPetListener {
+        void onSelect(int position);
+    }
 }

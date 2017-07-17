@@ -31,6 +31,8 @@ public class ConfirmDialogFragment extends DialogFragment implements DialogInter
     private int mTitle;
     private int mText;
     private int mButtonConfirmText;
+    private int mButtonCancelText;
+    private int mAction = -1;
 
     public ConfirmDialogFragment() {
         super();
@@ -44,7 +46,8 @@ public class ConfirmDialogFragment extends DialogFragment implements DialogInter
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.confirm_button) {
-                finishDialogListener.onFinishDialog(AppConstants.CONFIRM_ACTION);
+                int action = mAction == -1 ? AppConstants.CONFIRM_ACTION : mAction;
+                finishDialogListener.onFinishDialog(action);
             } else {
                 finishDialogListener.onFinishDialog(AppConstants.CANCEL_ACTION);
             }
@@ -103,6 +106,15 @@ public class ConfirmDialogFragment extends DialogFragment implements DialogInter
         this.mTitle = title;
         this.mText = text;
         this.mButtonConfirmText = confirmText;
+        this.mButtonCancelText = R.string.dialog_cancel;
+    }
+
+    public void setAction(int action) {
+        this.mAction = action;
+    }
+
+    public void setCancelText(int text){
+        this.mButtonCancelText = text;
     }
 
     public void updateInfo() {

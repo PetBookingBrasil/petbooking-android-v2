@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -32,6 +33,8 @@ import java.util.Locale;
 
 public class HorizontalCalendar extends LinearLayout {
 
+    private OnDateScrollListener onDateScrollListener;
+
     /**
      * Components
      */
@@ -39,7 +42,6 @@ public class HorizontalCalendar extends LinearLayout {
     private LinearLayoutManager mLayoutManager;
     private HorizontalCalendarAdapter mAdapter;
     private SnapHelper mSnapHelper;
-    SnapHelper startSnapHelper;
     private ArrayList<CalendarItem> mDateList;
 
     /**
@@ -49,6 +51,23 @@ public class HorizontalCalendar extends LinearLayout {
     private int defaultPosition;
     private Date defaultDate;
     private ArrayList<Appointment> appointments;
+
+    private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (newState == RecyclerView.SCROLL_STATE_IDLE && mLayoutManager.findFirstCompletelyVisibleItemPosition() != -1) {
+                int itemPosition = mLayoutManager.findFirstCompletelyVisibleItemPosition();
+                currentPosition = itemPosition;
+                onDateScrollListener.onScroll(itemPosition);
+            }
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+        }
+    };
 
     public HorizontalCalendar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -68,13 +87,13 @@ public class HorizontalCalendar extends LinearLayout {
         mRvCalendar = (RecyclerView) view.findViewById(R.id.date_list);
         mLayoutManager = new LinearLayoutManager(context);
         mSnapHelper = new LinearSnapHelper();
-        startSnapHelper = new GravitySnapHelper(Gravity.START);
 
         mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRvCalendar.setHasFixedSize(true);
         mRvCalendar.setLayoutManager(mLayoutManager);
         mAdapter = new HorizontalCalendarAdapter(context, mDateList);
         mRvCalendar.setAdapter(mAdapter);
+        mRvCalendar.addOnScrollListener(scrollListener);
         mSnapHelper.attachToRecyclerView(mRvCalendar);
 
     }
@@ -114,6 +133,15 @@ public class HorizontalCalendar extends LinearLayout {
     public void setAppointments(ArrayList<Appointment> appointments) {
         this.appointments = appointments;
         new InitializeDatesList().execute();
+    }
+
+    /**
+     * Set OnScrollListener
+     *
+     * @param onDateScrollListener
+     */
+    public void setOnDateScrollListener(OnDateScrollListener onDateScrollListener) {
+        this.onDateScrollListener = onDateScrollListener;
     }
 
     private class InitializeDatesList extends AsyncTask<Void, Void, Void> {
@@ -164,5 +192,9 @@ public class HorizontalCalendar extends LinearLayout {
             mAdapter.notifyDataSetChanged();
             mRvCalendar.scrollToPosition(defaultPosition);
         }
+    }
+
+    public interface OnDateScrollListener {
+        void onScroll(int position);
     }
 }

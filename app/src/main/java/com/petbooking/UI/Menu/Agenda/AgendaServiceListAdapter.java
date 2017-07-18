@@ -6,14 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.petbooking.Constants.AppConstants;
 import com.petbooking.Models.BusinessServices;
-import com.petbooking.Models.Category;
 import com.petbooking.R;
-import com.petbooking.UI.Dashboard.Business.BusinessServices.AdditionalServiceListAdapter;
-import com.petbooking.UI.Dashboard.Business.BusinessServices.CategoryListAdapter;
-import com.petbooking.UI.Dashboard.Business.BusinessServices.ServiceListAdapter;
 
 import java.util.ArrayList;
 
@@ -25,12 +24,13 @@ public class AgendaServiceListAdapter extends RecyclerView.Adapter<AgendaService
 
     private ArrayList<BusinessServices> mServicesList;
     private Context mContext;
-
+    private OnServiceActionListener onServiceActionListener;
     private LinearLayoutManager mAdditionalLayoutManager;
 
-    public AgendaServiceListAdapter(Context context, ArrayList<BusinessServices> servicesList) {
+    public AgendaServiceListAdapter(Context context, ArrayList<BusinessServices> servicesList, OnServiceActionListener onServiceActionListener) {
         this.mServicesList = servicesList;
         this.mContext = context;
+        this.onServiceActionListener = onServiceActionListener;
     }
 
     public void updateList(ArrayList<BusinessServices> servicesList) {
@@ -48,7 +48,7 @@ public class AgendaServiceListAdapter extends RecyclerView.Adapter<AgendaService
     }
 
     @Override
-    public void onBindViewHolder(AgendaViewHolder holder, int position) {
+    public void onBindViewHolder(AgendaViewHolder holder, final int position) {
         BusinessServices service = mServicesList.get(position);
 
         AgendaAdditionalServiceListAdapter mAdapter;
@@ -79,6 +79,20 @@ public class AgendaServiceListAdapter extends RecyclerView.Adapter<AgendaService
             holder.mRvAdditionalServices.setVisibility(View.GONE);
             holder.mTvAdditionalLabel.setVisibility(View.GONE);
         }
+
+        holder.mIBtnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onServiceActionListener.onAction(position, AppConstants.CANCEL_SERVICE);
+            }
+        });
+
+        holder.mBtnReschedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onServiceActionListener.onAction(position, AppConstants.RESCHEDULE_SERVICE);
+            }
+        });
     }
 
     @Override
@@ -95,6 +109,9 @@ public class AgendaServiceListAdapter extends RecyclerView.Adapter<AgendaService
         TextView mTvProfessionalName;
         TextView mTvAdditionalLabel;
         RecyclerView mRvAdditionalServices;
+        ImageButton mIBtnCancel;
+        Button mBtnReschedule;
+
 
         public AgendaViewHolder(View view) {
             super(view);
@@ -106,7 +123,13 @@ public class AgendaServiceListAdapter extends RecyclerView.Adapter<AgendaService
             mTvProfessionalName = (TextView) view.findViewById(R.id.professional_name);
             mTvAdditionalLabel = (TextView) view.findViewById(R.id.additional_label);
             mRvAdditionalServices = (RecyclerView) view.findViewById(R.id.additional_services);
+            mIBtnCancel = (ImageButton) view.findViewById(R.id.cancel_button);
+            mBtnReschedule = (Button) view.findViewById(R.id.reschedule_button);
         }
+    }
+
+    public interface OnServiceActionListener {
+        void onAction(int position, int action);
     }
 
 }

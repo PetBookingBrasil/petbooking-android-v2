@@ -52,7 +52,8 @@ public class AppConstants {
     public static final int CONFIRM_ACTION = 9004;
     public static final int CANCEL_ACTION = 9005;
     public static final int ADD_PET = 9006;
-
+    public static final int CANCEL_SERVICE = 9007;
+    public static final int RESCHEDULE_SERVICE = 9008;
 
     /**
      * Permissions

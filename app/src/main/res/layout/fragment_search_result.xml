@@ -42,6 +42,11 @@
 
     </RelativeLayout>
 
+    <include
+        android:id="@+id/business_placeholder"
+        layout="@layout/include_business_placeholder"
+        android:visibility="gone" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/result_list"
         android:layout_width="match_parent"

@@ -35,6 +35,8 @@ public class SearchResultFragment extends Fragment {
 
     private static final int PAGE_SIZE = 10;
 
+    private View mBusinessPlaceholder;
+
     private Context mContext;
     private OnBarClick mCallback;
     private BusinessService mBusinessService;
@@ -134,6 +136,7 @@ public class SearchResultFragment extends Fragment {
         mInfoBarTitle = (TextView) view.findViewById(R.id.info_bar_title);
         mBtnReset = (ImageButton) view.findViewById(R.id.reset_button);
         mBtnNewSearch = (ImageButton) view.findViewById(R.id.new_search_button);
+        mBusinessPlaceholder = view.findViewById(R.id.business_placeholder);
 
         if (categoryName != null && !TextUtils.isEmpty(categoryName)) {
             int categoryColor = AppUtils.getCategoryColor(mContext, categoryName);
@@ -194,6 +197,14 @@ public class SearchResultFragment extends Fragment {
             @Override
             public void onSuccess(Object response) {
                 mBusinessList = (ArrayList<Business>) response;
+
+                if (mBusinessList.size() != 0) {
+                    mBusinessPlaceholder.setVisibility(View.GONE);
+                    mRvBusiness.setVisibility(View.VISIBLE);
+                } else {
+                    mBusinessPlaceholder.setVisibility(View.VISIBLE);
+                    mRvBusiness.setVisibility(View.GONE);
+                }
 
                 mAdapter.updateList(mBusinessList);
                 mAdapter.notifyDataSetChanged();

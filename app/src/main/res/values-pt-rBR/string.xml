@@ -185,6 +185,8 @@
     <!-- Info -->
     <string name="favorites_empty_title">Você ainda não possui favoritos.</string>
     <string name="favorites_empty_message">Marque seus estabelecimentos favoritos e acesse-os rapidamente nessa tela.</string>
+    <string name="business_empty_title">Ops! Infelizmente não encontramos nenhum estabelecimento.</string>
+    <string name="business_empty_message">Para facilitar o processo de pagamento, cadastre uma ou mais formas de pagamento.</string>
 
     <!-- Categories -->
     <string name="category_clinic">Clínicas</string>

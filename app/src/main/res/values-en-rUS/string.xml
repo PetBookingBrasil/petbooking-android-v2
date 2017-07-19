@@ -169,6 +169,8 @@
     <!-- Info -->
     <string name="favorites_empty_title">You do not have any favorites yet.</string>
     <string name="favorites_empty_message">Mark your favorite business and quickly access them on here.</string>
+    <string name="business_empty_title">Oops! Unfortunately we did not find any business.</string>
+    <string name="business_empty_message">To facilitate the payment process, register one or more payment methods.</string>
 
     <!-- Categories -->
     <string name="category_clinic">Clinics</string>

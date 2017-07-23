@@ -36,6 +36,7 @@
             android:layout_toLeftOf="@+id/reschedule_button"
             android:background="@drawable/category_icon_background"
             android:padding="@dimen/spacing_xtiny"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_negative" />
 
         <Button
@@ -47,7 +48,8 @@
             android:layout_centerInParent="true"
             android:background="@drawable/call_button"
             android:stateListAnimator="@null"
-            android:text="@string/reschedule" />
+            android:text="@string/reschedule"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <RelativeLayout

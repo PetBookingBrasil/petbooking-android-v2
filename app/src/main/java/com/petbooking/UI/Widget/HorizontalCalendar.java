@@ -99,6 +99,35 @@ public class HorizontalCalendar extends LinearLayout {
     }
 
     /**
+     * Select Default date
+     */
+    public void selectDefaultDate() {
+        int i = 0;
+        int nextDate = -1;
+        int beforeDate = -1;
+
+        for (CalendarItem item : mDateList) {
+            if ((nextDate == -1 && item.date.after(defaultDate)) ||
+                    (nextDate != -1 && item.date.before(mDateList.get(nextDate).date))) {
+                nextDate = i;
+            }
+
+            if ((beforeDate == -1 && item.date.before(defaultDate)) ||
+                    (beforeDate != -1 && item.date.before(mDateList.get(beforeDate).date))) {
+                beforeDate = i;
+            }
+
+            i++;
+        }
+
+        if (nextDate != -1) {
+            defaultPosition = nextDate;
+        } else if (beforeDate != -1) {
+            defaultPosition = beforeDate;
+        }
+    }
+
+    /**
      * Select the previous day
      */
     public void previousDay() {
@@ -170,15 +199,11 @@ public class HorizontalCalendar extends LinearLayout {
 
                 dayName = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
                 monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
-                calendarItem = new CalendarItem(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR),
+                calendarItem = new CalendarItem(calendar.getTime(), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR),
                         dayName,
                         monthName);
 
                 mDateList.add(calendarItem);
-
-                if (df.format(calendar.getTime()).equals(df.format(defaultDate))) {
-                    defaultPosition = mDateList.size() - 1;
-                }
             }
 
             return null;
@@ -188,9 +213,14 @@ public class HorizontalCalendar extends LinearLayout {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            mAdapter.updateList(mDateList);
-            mAdapter.notifyDataSetChanged();
-            mRvCalendar.scrollToPosition(defaultPosition);
+            if (mDateList.size() != 0) {
+                selectDefaultDate();
+
+                mAdapter.updateList(mDateList);
+                mAdapter.notifyDataSetChanged();
+                mRvCalendar.scrollToPosition(defaultPosition);
+                onDateScrollListener.onScroll(defaultPosition);
+            }
         }
     }
 

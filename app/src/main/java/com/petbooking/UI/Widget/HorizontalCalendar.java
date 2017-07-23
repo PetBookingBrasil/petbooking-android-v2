@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.petbooking.API.User.Models.ScheduleResp;
 import com.petbooking.Components.GravitySnapHelper.GravitySnapHelper;
 import com.petbooking.Models.Appointment;
 import com.petbooking.Models.CalendarItem;
@@ -50,7 +51,7 @@ public class HorizontalCalendar extends LinearLayout {
     private int currentPosition;
     private int defaultPosition;
     private Date defaultDate;
-    private ArrayList<Appointment> appointments;
+    private ArrayList<ScheduleResp.Schedule> schedules;
 
     private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -159,9 +160,9 @@ public class HorizontalCalendar extends LinearLayout {
     /**
      * Set Date Interval
      */
-    public void setAppointments(ArrayList<Appointment> appointments) {
-        this.appointments = appointments;
-        new InitializeDatesList().execute();
+    public void setSchedules(ArrayList<ScheduleResp.Schedule> schedules) {
+        this.schedules = schedules;
+        initDateList();
     }
 
     /**
@@ -173,54 +174,42 @@ public class HorizontalCalendar extends LinearLayout {
         this.onDateScrollListener = onDateScrollListener;
     }
 
-    private class InitializeDatesList extends AsyncTask<Void, Void, Void> {
+    /**
+     * Init Date List
+     */
+    public void initDateList() {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String dayName;
+        String monthName;
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
+        mDateList = new ArrayList<>();
+        CalendarItem calendarItem;
+        Calendar calendar = new GregorianCalendar();
+
+        /**
+         * Create Dates for Calendar
+         * based on Appointments
+         */
+        for (ScheduleResp.Schedule schedule : schedules) {
+            calendar.setTime(schedule.date);
+
+            dayName = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+            monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+            calendarItem = new CalendarItem(calendar.getTime(), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR),
+                    dayName,
+                    monthName);
+
+            mDateList.add(calendarItem);
         }
 
-        @Override
-        protected Void doInBackground(Void... params) {
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            String dayName;
-            String monthName;
 
-            mDateList = new ArrayList<>();
-            CalendarItem calendarItem;
-            Calendar calendar = new GregorianCalendar();
+        if (mDateList.size() != 0) {
+            selectDefaultDate();
 
-            /**
-             * Create Dates for Calendar
-             * based on Appointments
-             */
-            for (Appointment appointment : appointments) {
-                calendar.setTime(appointment.date);
-
-                dayName = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
-                monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
-                calendarItem = new CalendarItem(calendar.getTime(), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR),
-                        dayName,
-                        monthName);
-
-                mDateList.add(calendarItem);
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            if (mDateList.size() != 0) {
-                selectDefaultDate();
-
-                mAdapter.updateList(mDateList);
-                mAdapter.notifyDataSetChanged();
-                mRvCalendar.scrollToPosition(defaultPosition);
-                onDateScrollListener.onScroll(defaultPosition);
-            }
+            mAdapter.updateList(mDateList);
+            mAdapter.notifyDataSetChanged();
+            mRvCalendar.scrollToPosition(defaultPosition);
+            onDateScrollListener.onScroll(defaultPosition);
         }
     }
 

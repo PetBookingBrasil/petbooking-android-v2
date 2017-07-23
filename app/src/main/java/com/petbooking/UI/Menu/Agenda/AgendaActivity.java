@@ -9,19 +9,25 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.petbooking.API.Generic.AvatarResp;
+import com.petbooking.API.User.Models.ScheduleResp;
+import com.petbooking.API.User.UserService;
 import com.petbooking.Constants.AppConstants;
-import com.petbooking.Models.Appointment;
-import com.petbooking.Models.AppointmentInfo;
+import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
 import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
 import com.petbooking.UI.Widget.HorizontalCalendar;
+import com.petbooking.Utils.APIUtils;
+import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFragment.FinishDialogListener {
+
+    private UserService mUserService;
+    private String userId;
 
     private ConfirmDialogFragment mConfirmDialogFragment;
     private int serviceAction = -1;
@@ -30,7 +36,7 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
      * Calendar
      */
     private HorizontalCalendar mHCCalendar;
-    private ArrayList<Appointment> mAppointmentsList;
+    private ArrayList<ScheduleResp.Schedule> mScheduleList;
     private ImageView mBtnPreviousDate;
     private ImageView mBtnNextDate;
 
@@ -53,10 +59,10 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
     /**
      * Controll
      */
-    private int currentAppointmentIndex = -1;
+    private int currentScheduleIndex = -1;
     private int currentPetIndex = -1;
-    private Appointment currentAppointment;
-    private AppointmentInfo currentInfo;
+    private ScheduleResp.Schedule currentSchedule;
+    private ScheduleResp.PetSchedule currentPet;
 
     AgendaServiceListAdapter.OnServiceActionListener onServiceActionListener = new AgendaServiceListAdapter.OnServiceActionListener() {
         @Override
@@ -70,9 +76,9 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
     HorizontalCalendar.OnDateScrollListener onDateScrollListener = new HorizontalCalendar.OnDateScrollListener() {
         @Override
         public void onScroll(int position) {
-            if (position != currentAppointmentIndex) {
-                currentAppointmentIndex = position;
-                currentAppointment = mAppointmentsList.get(currentAppointmentIndex);
+            if (position != currentScheduleIndex) {
+                currentScheduleIndex = position;
+                currentSchedule = mScheduleList.get(currentScheduleIndex);
 
                 handleSelectedDate();
             }
@@ -82,10 +88,16 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
     PetCalendarListAdapter.OnSelectPetListener selectPetListener = new PetCalendarListAdapter.OnSelectPetListener() {
         @Override
         public void onSelect(int position) {
-            currentPetIndex = position;
-            currentInfo = currentAppointment.appointmentsInfo.get(currentPetIndex);
+            if (position != -1) {
+                currentPetIndex = position;
+                currentPet = currentSchedule.pets.get(currentPetIndex);
 
-            handleSelectedPet();
+                handleSelectedPet();
+            } else {
+                currentPetIndex = -1;
+                currentPet = null;
+            }
+
         }
     };
 
@@ -99,8 +111,8 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
                 mHCCalendar.nextDay();
             }
 
-            currentAppointmentIndex = mHCCalendar.getCurrentDateIndex();
-            currentAppointment = mAppointmentsList.get(currentAppointmentIndex);
+            currentScheduleIndex = mHCCalendar.getCurrentDateIndex();
+            currentSchedule = mScheduleList.get(currentScheduleIndex);
 
             handleSelectedDate();
         }
@@ -111,11 +123,13 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agenda);
 
+        mUserService = new UserService();
+        userId = SessionManager.getInstance().getUserLogged().id;
+
         getSupportActionBar().setElevation(0);
 
         mPetList = new ArrayList<>();
-        mAppointmentsList = new ArrayList<>();
-        createData();
+        mScheduleList = new ArrayList<>();
 
         mConfirmDialogFragment = ConfirmDialogFragment.newInstance();
 
@@ -147,7 +161,6 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
          * Create Calendar Widget
          */
         mHCCalendar = (HorizontalCalendar) findViewById(R.id.horizontal_calendar);
-        mHCCalendar.setAppointments(mAppointmentsList);
         mHCCalendar.setOnDateScrollListener(onDateScrollListener);
 
         mBtnPreviousDate = (ImageView) findViewById(R.id.previous_date);
@@ -155,23 +168,31 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
 
         mBtnPreviousDate.setOnClickListener(btnDateListener);
         mBtnNextDate.setOnClickListener(btnDateListener);
+
+        listSchedules();
     }
 
     /**
      * Handle selected date
      */
     public void handleSelectedDate() {
-        Log.i("CDATE", currentAppointment.date.toString());
+        mPetAdapter.resetSelectedPosition();
+        mRvServices.setVisibility(View.GONE);
 
-        showPets(currentAppointment.appointmentsInfo);
+        showPets(currentSchedule.pets);
     }
 
     /**
      * Handle Selected Pet
      */
     private void handleSelectedPet() {
-        Log.i("CPET", currentInfo.petName);
-        mServicesAdapter.updateList(currentInfo.services);
+        ArrayList<BusinessServices> services = new ArrayList<>();
+
+        for (ScheduleResp.Event event : currentPet.events) {
+            services.add(APIUtils.parseService(event));
+        }
+
+        mServicesAdapter.updateList(services);
         mServicesAdapter.notifyDataSetChanged();
         mRvServices.setVisibility(View.VISIBLE);
     }
@@ -179,53 +200,19 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
     /**
      * Show pets
      *
-     * @param appointmentsInfo
+     * @param petsSchedule
      */
-    public void showPets(ArrayList<AppointmentInfo> appointmentsInfo) {
+    public void showPets(ArrayList<ScheduleResp.PetSchedule> petsSchedule) {
         ArrayList<Pet> pets = new ArrayList<>();
 
-        for (AppointmentInfo info : appointmentsInfo) {
+        for (ScheduleResp.PetSchedule petSchedule : petsSchedule) {
             AvatarResp avatar = new AvatarResp();
             avatar.url = "http://www.gaf.com.as";
-            pets.add(new Pet(info.petId, info.petName, avatar));
+            pets.add(new Pet(petSchedule.id, petSchedule.name, avatar));
         }
 
         mPetAdapter.updateList(pets);
         mPetAdapter.notifyDataSetChanged();
-    }
-
-    public void createData() {
-        BusinessServices service;
-        BusinessServices service1;
-        Appointment appointment;
-        AppointmentInfo info;
-        ArrayList<BusinessServices> sub = new ArrayList<>();
-        ArrayList<BusinessServices> mServiceList = null;
-        ArrayList<AppointmentInfo> infoList = null;
-        for (int i = 1; i < 4; i++) {
-            mServiceList = new ArrayList<>();
-            sub = new ArrayList<>();
-            infoList = new ArrayList<>();
-            service = new BusinessServices(i + "", "Serviço 1", "10:30", "12:00", i + "", "Serviço Número " + i, i * 20.33, "Petland", "Profissional " + i);
-            service1 = new BusinessServices(i + "", "Serviço 2", "10:30", "12:00", i + "", "Serviço Número " + i, i * 20.33, "Petland", "Profissional " + i);
-            sub.add(new BusinessServices(i + "", "SB " + i, i + "", "SB Número " + i, i * 20.33));
-            sub.add(new BusinessServices(i + "", "SB " + i, i + "", "SB Número " + i, i * 20.33));
-            sub.add(new BusinessServices(i + "", "SB " + i, i + "", "SB Número " + i, i * 20.33));
-            service.setAdditionalServices(sub);
-
-
-            mServiceList.add(service);
-            mServiceList.add(service1);
-
-            info = new AppointmentInfo(i + "", "Pet 1", mServiceList);
-            infoList.add(info);
-            info = new AppointmentInfo(i + "", "Pet 2", mServiceList);
-            infoList.add(info);
-            info = new AppointmentInfo(i + "", "Nome gigante do pet", mServiceList);
-            infoList.add(info);
-            appointment = new Appointment(new Date("05/0" + i + "/2017"), infoList);
-            mAppointmentsList.add(appointment);
-        }
     }
 
     public void showConfirmDialog() {
@@ -237,6 +224,26 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
         mConfirmDialogFragment.setAction(serviceAction);
         mConfirmDialogFragment.setCancelText(R.string.dialog_back);
         mConfirmDialogFragment.show(getSupportFragmentManager(), "CONFIRM_DIALOG");
+    }
+
+    /**
+     * List Schedules
+     */
+    public void listSchedules() {
+        AppUtils.showLoadingDialog(this);
+        mUserService.listSchedules(userId, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                mScheduleList = (ArrayList<ScheduleResp.Schedule>) response;
+                mHCCalendar.setSchedules(mScheduleList);
+                AppUtils.hideDialog();
+            }
+
+            @Override
+            public void onError(Object error) {
+                AppUtils.hideDialog();
+            }
+        });
     }
 
     @Override

@@ -99,8 +99,12 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
         return mPetList.size();
     }
 
-    private void resetSelectedPosition() {
+    /**
+     * Reset Selected Position
+     */
+    public void resetSelectedPosition() {
         selectedPosition = -1;
+        onSelectPetListener.onSelect(selectedPosition);
         notifyDataSetChanged();
     }
 

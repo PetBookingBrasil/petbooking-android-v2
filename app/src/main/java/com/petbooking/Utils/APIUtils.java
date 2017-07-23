@@ -9,9 +9,11 @@ import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Business.Models.ReviewResp;
 import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.Generic.ErrorResp;
+import com.petbooking.API.User.Models.ScheduleResp;
 import com.petbooking.BuildConfig;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Business;
+import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Category;
 import com.petbooking.Models.Review;
 import com.petbooking.Models.User;
@@ -92,6 +94,22 @@ public class APIUtils {
         return review;
     }
 
+    /**
+     * Parse a business service
+     *
+     * @param event
+     * @return
+     */
+    public static BusinessServices parseService(ScheduleResp.Event event) {
+        BusinessServices businessServices = new BusinessServices(event.id, event.service.name, event.startTime,
+                event.endTime, event.duration, "", event.service.price, event.businessName, event.professionalName);
+
+        if (event.service.additionalServices.size() != 0) {
+            businessServices.setAdditionalServices(event.service.additionalServices);
+        }
+
+        return businessServices;
+    }
 
     /**
      * Parse category

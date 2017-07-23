@@ -18,4 +18,6 @@ public class APIUserConstants {
 
     public static final String FAVORITES_ENDPOINT = "users/{" + APIConstants.PATH_PARAM + "}/favorites" + APIConstants.QUERY_PAGE_SIZE_DEAFULT
             + FILTER_TYPE_BUSINESS;
+
+    public static final String SCHEDULES_ENDPOINT = "users/{" + APIConstants.PATH_PARAM + "}/schedules";
 }

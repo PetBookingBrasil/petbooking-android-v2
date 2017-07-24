@@ -176,4 +176,46 @@ public class UserService {
         });
     }
 
+    public void listPastSchedules(String userId, String date, boolean onlyPast, final APICallback callback) {
+        Call<ScheduleResp> call = mUserInterface.listPastSchedules(userId, date, onlyPast);
+        call.enqueue(new Callback<ScheduleResp>() {
+            @Override
+            public void onResponse(Call<ScheduleResp> call, Response<ScheduleResp> response) {
+                if (response.isSuccessful()) {
+                    ScheduleResp responseData = response.body();
+
+                    callback.onSuccess(responseData.data);
+                } else {
+                    callback.onError(APIUtils.handleError(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ScheduleResp> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void listFutureSchedules(String userId, String date, boolean onlyFuture, final APICallback callback) {
+        Call<ScheduleResp> call = mUserInterface.listFutureSchedules(userId, date, onlyFuture);
+        call.enqueue(new Callback<ScheduleResp>() {
+            @Override
+            public void onResponse(Call<ScheduleResp> call, Response<ScheduleResp> response) {
+                if (response.isSuccessful()) {
+                    ScheduleResp responseData = response.body();
+
+                    callback.onSuccess(responseData.data);
+                } else {
+                    callback.onError(APIUtils.handleError(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ScheduleResp> call, Throwable t) {
+
+            }
+        });
+    }
+
 }

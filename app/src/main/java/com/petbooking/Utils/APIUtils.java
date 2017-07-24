@@ -102,7 +102,8 @@ public class APIUtils {
      */
     public static BusinessServices parseService(ScheduleResp.Event event) {
         BusinessServices businessServices = new BusinessServices(event.id, event.service.name, event.startTime,
-                event.endTime, event.duration, "", event.service.price, event.businessName, event.professionalName);
+                event.endTime, event.duration, event.service.description, event.service.price, event.businessName,
+                event.professionalName, event.professionalAvatar);
 
         if (event.service.additionalServices.size() != 0) {
             businessServices.setAdditionalServices(event.service.additionalServices);

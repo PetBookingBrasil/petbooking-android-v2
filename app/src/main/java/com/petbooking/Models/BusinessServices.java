@@ -1,5 +1,7 @@
 package com.petbooking.Models;
 
+import com.petbooking.API.Generic.AvatarResp;
+
 import java.util.ArrayList;
 
 /**
@@ -17,6 +19,7 @@ public class BusinessServices {
     public double price;
     public String businessName;
     public String professionalName;
+    public AvatarResp professionalAvatar;
     public ArrayList<BusinessServices> additionalServices;
 
     public BusinessServices(String id, String name, String duration, String description, double price) {
@@ -29,7 +32,7 @@ public class BusinessServices {
     }
 
     public BusinessServices(String id, String name, String startTime, String endTime, String duration, String description,
-                            double price, String businessName, String professionalName) {
+                            double price, String businessName, String professionalName, AvatarResp professionalAvatar) {
         this.id = id;
         this.name = name;
         this.startTime = startTime;
@@ -39,6 +42,7 @@ public class BusinessServices {
         this.price = price;
         this.businessName = businessName;
         this.professionalName = professionalName;
+        this.professionalAvatar = professionalAvatar;
         this.additionalServices = new ArrayList<>();
     }
 

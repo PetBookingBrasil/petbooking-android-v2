@@ -1,6 +1,7 @@
 package com.petbooking.API.User.Models;
 
 import com.google.gson.annotations.SerializedName;
+import com.petbooking.API.Generic.AvatarResp;
 import com.petbooking.Models.BusinessServices;
 
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ public class ScheduleResp {
     public static class PetSchedule {
         public String id;
         public String name;
+        @SerializedName("photo")
+        public AvatarResp photo;
         public ArrayList<Event> events;
     }
 
@@ -36,6 +39,8 @@ public class ScheduleResp {
         public String businessName;
         @SerializedName("employment_name")
         public String professionalName;
+        @SerializedName("employment_avatar")
+        public AvatarResp professionalAvatar;
         public Service service;
     }
 
@@ -43,6 +48,7 @@ public class ScheduleResp {
         public String id;
         public String name;
         public double price;
+        public String description;
         @SerializedName("additional_services")
         public ArrayList<BusinessServices> additionalServices;
     }

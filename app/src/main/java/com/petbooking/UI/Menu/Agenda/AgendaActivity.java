@@ -206,9 +206,7 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
         ArrayList<Pet> pets = new ArrayList<>();
 
         for (ScheduleResp.PetSchedule petSchedule : petsSchedule) {
-            AvatarResp avatar = new AvatarResp();
-            avatar.url = "http://www.gaf.com.as";
-            pets.add(new Pet(petSchedule.id, petSchedule.name, avatar));
+            pets.add(new Pet(petSchedule.id, petSchedule.name, petSchedule.photo));
         }
 
         mPetAdapter.updateList(pets);

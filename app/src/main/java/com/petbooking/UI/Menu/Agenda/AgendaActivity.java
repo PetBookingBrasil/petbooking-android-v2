@@ -22,15 +22,20 @@ import com.petbooking.UI.Widget.HorizontalCalendar;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFragment.FinishDialogListener {
 
+    private static final SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private UserService mUserService;
     private String userId;
 
     private ConfirmDialogFragment mConfirmDialogFragment;
     private int serviceAction = -1;
+    private boolean hasMorePast = true;
+    private boolean hasMoreFuture = true;
 
     /**
      * Calendar
@@ -81,6 +86,12 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
                 currentSchedule = mScheduleList.get(currentScheduleIndex);
 
                 handleSelectedDate();
+
+                if (mHCCalendar.isFirstDate() && hasMorePast) {
+                    listPastSchedules(currentSchedule.date);
+                } else if (mHCCalendar.isLastDate() && hasMoreFuture) {
+                    listFutureSchedules(currentSchedule.date);
+                }
             }
         }
     };
@@ -113,6 +124,12 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
 
             currentScheduleIndex = mHCCalendar.getCurrentDateIndex();
             currentSchedule = mScheduleList.get(currentScheduleIndex);
+
+            if (mHCCalendar.isFirstDate() && hasMorePast) {
+                listPastSchedules(currentSchedule.date);
+            } else if (mHCCalendar.isLastDate() && hasMoreFuture) {
+                listFutureSchedules(currentSchedule.date);
+            }
 
             handleSelectedDate();
         }
@@ -234,6 +251,67 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
             public void onSuccess(Object response) {
                 mScheduleList = (ArrayList<ScheduleResp.Schedule>) response;
                 mHCCalendar.setSchedules(mScheduleList);
+
+                AppUtils.hideDialog();
+            }
+
+            @Override
+            public void onError(Object error) {
+                AppUtils.hideDialog();
+            }
+        });
+    }
+
+    /**
+     * List Past Schedules
+     *
+     * @param date
+     */
+    public void listPastSchedules(Date date) {
+        AppUtils.showLoadingDialog(this);
+        mUserService.listPastSchedules(userId, mDateFormat.format(date), true, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                ArrayList<ScheduleResp.Schedule> scheduleList = (ArrayList<ScheduleResp.Schedule>) response;
+
+                if (scheduleList.size() == 0) {
+                    hasMorePast = false;
+                } else {
+                    scheduleList.addAll(mScheduleList);
+                    mScheduleList = scheduleList;
+                    mHCCalendar.addPastDate(scheduleList);
+                }
+
+                AppUtils.hideDialog();
+            }
+
+            @Override
+            public void onError(Object error) {
+                AppUtils.hideDialog();
+            }
+        });
+    }
+
+    /**
+     * List Future Schedules
+     *
+     * @param date
+     */
+    public void listFutureSchedules(Date date) {
+        AppUtils.showLoadingDialog(this);
+        mUserService.listFutureSchedules(userId, mDateFormat.format(date), true, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                ArrayList<ScheduleResp.Schedule> scheduleList = (ArrayList<ScheduleResp.Schedule>) response;
+
+
+                if (scheduleList.size() == 0) {
+                    hasMoreFuture = false;
+                } else {
+                    mScheduleList.addAll(scheduleList);
+                    mHCCalendar.addFutureDate(scheduleList);
+                }
+
                 AppUtils.hideDialog();
             }
 

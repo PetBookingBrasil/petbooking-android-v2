@@ -14,8 +14,7 @@
         android:id="@+id/pet_photo"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_gravity="center" />
 
     <TextView
         android:id="@+id/pet_name"

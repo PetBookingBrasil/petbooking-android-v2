@@ -116,13 +116,12 @@
             android:text="@string/professional_label" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/professional_picture"
+            android:id="@+id/professional_photo"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/spacing_xmicro"
-            android:layout_toRightOf="@id/professional_label"
-            android:src="@mipmap/ic_launcher_round" />
+            android:layout_toRightOf="@id/professional_label" />
 
         <TextView
             android:id="@+id/professional_name"
@@ -130,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/spacing_xmicro"
-            android:layout_toRightOf="@id/professional_picture"
+            android:layout_toRightOf="@id/professional_photo"
             android:textColor="@color/text_color" />
     </RelativeLayout>
 

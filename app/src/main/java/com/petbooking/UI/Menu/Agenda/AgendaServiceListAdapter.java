@@ -10,11 +10,15 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.R;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Luciano José on 29/01/2017.
@@ -93,6 +97,14 @@ public class AgendaServiceListAdapter extends RecyclerView.Adapter<AgendaService
                 onServiceActionListener.onAction(position, AppConstants.RESCHEDULE_SERVICE);
             }
         });
+
+        Glide.with(mContext)
+                .load(service.professionalAvatar.url)
+                .centerCrop()
+                .error(R.drawable.ic_menu_user)
+                .dontAnimate()
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .into(holder.mCivProfessionalPhoto);
     }
 
     @Override
@@ -107,6 +119,7 @@ public class AgendaServiceListAdapter extends RecyclerView.Adapter<AgendaService
         TextView mTvServiceTime;
         TextView mTvServicePrice;
         TextView mTvProfessionalName;
+        CircleImageView mCivProfessionalPhoto;
         TextView mTvAdditionalLabel;
         RecyclerView mRvAdditionalServices;
         ImageButton mIBtnCancel;
@@ -121,6 +134,7 @@ public class AgendaServiceListAdapter extends RecyclerView.Adapter<AgendaService
             mTvServiceTime = (TextView) view.findViewById(R.id.service_time);
             mTvServicePrice = (TextView) view.findViewById(R.id.service_price);
             mTvProfessionalName = (TextView) view.findViewById(R.id.professional_name);
+            mCivProfessionalPhoto = (CircleImageView) view.findViewById(R.id.professional_photo);
             mTvAdditionalLabel = (TextView) view.findViewById(R.id.additional_label);
             mRvAdditionalServices = (RecyclerView) view.findViewById(R.id.additional_services);
             mIBtnCancel = (ImageButton) view.findViewById(R.id.cancel_button);

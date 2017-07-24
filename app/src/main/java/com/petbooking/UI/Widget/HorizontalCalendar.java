@@ -166,6 +166,58 @@ public class HorizontalCalendar extends LinearLayout {
     }
 
     /**
+     * Check if is the first date
+     *
+     * @return
+     */
+    public boolean isFirstDate() {
+        if (this.currentPosition == 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if is the last date
+     *
+     * @return
+     */
+    public boolean isLastDate() {
+        if (this.currentPosition == mDateList.size()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
+     * Add Future Date
+     *
+     * @param schedules
+     */
+    public void addPastDate(ArrayList<ScheduleResp.Schedule> schedules) {
+        ArrayList<CalendarItem> pastDates = createDateList(schedules);
+        pastDates.addAll(mDateList);
+        mDateList = pastDates;
+        mAdapter.updateList(pastDates);
+        mAdapter.notifyDataSetChanged();
+    }
+
+
+    /**
+     * Add Future Date
+     *
+     * @param schedules
+     */
+    public void addFutureDate(ArrayList<ScheduleResp.Schedule> schedules) {
+        mDateList.addAll(createDateList(schedules));
+        mAdapter.updateList(mDateList);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
      * Set OnScrollListener
      *
      * @param onDateScrollListener
@@ -211,6 +263,40 @@ public class HorizontalCalendar extends LinearLayout {
             mRvCalendar.scrollToPosition(defaultPosition);
             onDateScrollListener.onScroll(defaultPosition);
         }
+    }
+
+    /**
+     * Create Date list from schedules
+     *
+     * @param schedules
+     * @return
+     */
+    public ArrayList<CalendarItem> createDateList(ArrayList<ScheduleResp.Schedule> schedules) {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String dayName;
+        String monthName;
+
+        ArrayList<CalendarItem> dateList = new ArrayList<>();
+        CalendarItem calendarItem;
+        Calendar calendar = new GregorianCalendar();
+
+        /**
+         * Create Dates for Calendar
+         * based on Appointments
+         */
+        for (ScheduleResp.Schedule schedule : schedules) {
+            calendar.setTime(schedule.date);
+
+            dayName = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+            monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+            calendarItem = new CalendarItem(calendar.getTime(), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR),
+                    dayName,
+                    monthName);
+
+            dateList.add(calendarItem);
+        }
+
+        return dateList;
     }
 
     public interface OnDateScrollListener {

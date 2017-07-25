@@ -36,6 +36,7 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
     private int serviceAction = -1;
     private boolean hasMorePast = true;
     private boolean hasMoreFuture = true;
+    private boolean isFirstScroll = true;
 
     /**
      * Calendar
@@ -87,11 +88,15 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
 
                 handleSelectedDate();
 
-                if (mHCCalendar.isFirstDate() && hasMorePast) {
-                    listPastSchedules(currentSchedule.date);
-                } else if (mHCCalendar.isLastDate() && hasMoreFuture) {
-                    listFutureSchedules(currentSchedule.date);
+                if (!isFirstScroll) {
+                    if (mHCCalendar.isFirstDate() && hasMorePast) {
+                        listPastSchedules(currentSchedule.date);
+                    } else if (mHCCalendar.isLastDate() && hasMoreFuture) {
+                        listFutureSchedules(currentSchedule.date);
+                    }
                 }
+
+                isFirstScroll = false;
             }
         }
     };
@@ -122,6 +127,10 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
                 mHCCalendar.nextDay();
             }
 
+            if (currentScheduleIndex != mHCCalendar.getCurrentDateIndex()) {
+                handleSelectedDate();
+            }
+
             currentScheduleIndex = mHCCalendar.getCurrentDateIndex();
             currentSchedule = mScheduleList.get(currentScheduleIndex);
 
@@ -131,7 +140,6 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
                 listFutureSchedules(currentSchedule.date);
             }
 
-            handleSelectedDate();
         }
     };
 

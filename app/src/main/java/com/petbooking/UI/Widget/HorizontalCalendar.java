@@ -79,11 +79,9 @@ public class HorizontalCalendar extends LinearLayout {
         View view = View.inflate(context, R.layout.widget_horizontal_calendar, this);
 
         defaultDate = new Date();
-        CalendarItem item = CommonUtils.parseCalendarItem(defaultDate);
 
         mDateList = new ArrayList<>();
-        mDateList.add(item);
-        currentPosition = 0;
+        currentPosition = -1;
 
         mRvCalendar = (RecyclerView) view.findViewById(R.id.date_list);
         mLayoutManager = new LinearLayoutManager(context);

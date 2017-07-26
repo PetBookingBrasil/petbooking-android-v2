@@ -87,7 +87,6 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
 
 
     HorizontalCalendar.OnDateScrollListener onDateScrollListener = new HorizontalCalendar.OnDateScrollListener() {
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onScroll(int position) {
             if (position != currentScheduleIndex) {
@@ -356,7 +355,6 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
     /**
      * Update Style Based on Date
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void updateStyle(Date date) {
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -364,15 +362,20 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
 
         int pastColor = getResources().getColor(R.color.past_date_color);
         int futureColor = getResources().getColor(R.color.brand_primary);
+        int statusColor = 0;
 
         if (date.before(today)) {
             mRlCalendar.setBackgroundColor(pastColor);
-            window.setStatusBarColor(pastColor);
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(pastColor));
+            statusColor = pastColor;
         } else if (date.after(today)) {
             mRlCalendar.setBackgroundColor(futureColor);
-            window.setStatusBarColor(futureColor);
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(futureColor));
+            statusColor = futureColor;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(statusColor);
         }
     }
 

@@ -87,6 +87,7 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
                 currentSchedule = mScheduleList.get(currentScheduleIndex);
 
                 handleSelectedDate();
+                selectFirstPet();
 
                 if (!isFirstScroll) {
                     if (mHCCalendar.isFirstDate() && hasMorePast) {
@@ -133,13 +134,13 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
 
             currentScheduleIndex = mHCCalendar.getCurrentDateIndex();
             currentSchedule = mScheduleList.get(currentScheduleIndex);
+            selectFirstPet();
 
             if (mHCCalendar.isFirstDate() && hasMorePast) {
                 listPastSchedules(currentSchedule.date);
             } else if (mHCCalendar.isLastDate() && hasMoreFuture) {
                 listFutureSchedules(currentSchedule.date);
             }
-
         }
     };
 
@@ -328,6 +329,17 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
                 AppUtils.hideDialog();
             }
         });
+    }
+
+    /**
+     * Select first pet
+     */
+    public void selectFirstPet() {
+        currentPetIndex = 0;
+        currentPet = currentSchedule.pets.get(currentPetIndex);
+        mPetAdapter.selectPet(currentPetIndex);
+
+        handleSelectedPet();
     }
 
     @Override

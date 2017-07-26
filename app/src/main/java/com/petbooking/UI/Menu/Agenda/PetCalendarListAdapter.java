@@ -78,10 +78,7 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
         holder.mItemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notifyItemChanged(selectedPosition);
-                selectedPosition = position;
-                notifyItemChanged(selectedPosition);
-                onSelectPetListener.onSelect(position);
+                selectPet(position);
             }
         });
 
@@ -92,6 +89,18 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
                 .dontAnimate()
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(holder.mIvPhoto);
+    }
+
+    /**
+     * Select pet
+     *
+     * @param position
+     */
+    public void selectPet(int position) {
+        notifyItemChanged(selectedPosition);
+        selectedPosition = position;
+        notifyItemChanged(selectedPosition);
+        onSelectPetListener.onSelect(position);
     }
 
     @Override

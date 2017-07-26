@@ -1,14 +1,19 @@
 package com.petbooking.UI.Menu.Agenda;
 
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
-import com.petbooking.API.Generic.AvatarResp;
 import com.petbooking.API.User.Models.ScheduleResp;
 import com.petbooking.API.User.UserService;
 import com.petbooking.Constants.AppConstants;
@@ -29,6 +34,7 @@ import java.util.Date;
 public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFragment.FinishDialogListener {
 
     private static final SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static final Date today = new Date();
     private UserService mUserService;
     private String userId;
 
@@ -41,6 +47,7 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
     /**
      * Calendar
      */
+    private RelativeLayout mRlCalendar;
     private HorizontalCalendar mHCCalendar;
     private ArrayList<ScheduleResp.Schedule> mScheduleList;
     private ImageView mBtnPreviousDate;
@@ -80,12 +87,14 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
 
 
     HorizontalCalendar.OnDateScrollListener onDateScrollListener = new HorizontalCalendar.OnDateScrollListener() {
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onScroll(int position) {
             if (position != currentScheduleIndex) {
                 currentScheduleIndex = position;
                 currentSchedule = mScheduleList.get(currentScheduleIndex);
 
+                updateStyle(currentSchedule.date);
                 handleSelectedDate();
                 selectFirstPet();
 
@@ -134,6 +143,7 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
 
             currentScheduleIndex = mHCCalendar.getCurrentDateIndex();
             currentSchedule = mScheduleList.get(currentScheduleIndex);
+            updateStyle(currentSchedule.date);
             selectFirstPet();
 
             if (mHCCalendar.isFirstDate() && hasMorePast) {
@@ -186,6 +196,7 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
         /**
          * Create Calendar Widget
          */
+        mRlCalendar = (RelativeLayout) findViewById(R.id.calendar_layout);
         mHCCalendar = (HorizontalCalendar) findViewById(R.id.horizontal_calendar);
         mHCCalendar.setOnDateScrollListener(onDateScrollListener);
 
@@ -340,6 +351,29 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
         mPetAdapter.selectPet(currentPetIndex);
 
         handleSelectedPet();
+    }
+
+    /**
+     * Update Style Based on Date
+     */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void updateStyle(Date date) {
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        int pastColor = getResources().getColor(R.color.past_date_color);
+        int futureColor = getResources().getColor(R.color.brand_primary);
+
+        if (date.before(today)) {
+            mRlCalendar.setBackgroundColor(pastColor);
+            window.setStatusBarColor(pastColor);
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(pastColor));
+        } else if (date.after(today)) {
+            mRlCalendar.setBackgroundColor(futureColor);
+            window.setStatusBarColor(futureColor);
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(futureColor));
+        }
     }
 
     @Override

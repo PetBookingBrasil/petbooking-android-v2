@@ -9,6 +9,7 @@
     tools:context="com.petbooking.UI.Menu.Agenda.AgendaActivity">
 
     <RelativeLayout
+        android:id="@+id/calendar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/brand_primary"

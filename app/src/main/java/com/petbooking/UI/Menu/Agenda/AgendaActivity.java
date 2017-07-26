@@ -296,9 +296,9 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
                 if (scheduleList.size() == 0) {
                     hasMorePast = false;
                 } else {
+                    mHCCalendar.addPastDate(scheduleList);
                     scheduleList.addAll(mScheduleList);
                     mScheduleList = scheduleList;
-                    mHCCalendar.addPastDate(scheduleList);
                 }
 
                 AppUtils.hideDialog();
@@ -327,8 +327,8 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
                 if (scheduleList.size() == 0) {
                     hasMoreFuture = false;
                 } else {
-                    mScheduleList.addAll(scheduleList);
                     mHCCalendar.addFutureDate(scheduleList);
+                    mScheduleList.addAll(scheduleList);
                 }
 
                 AppUtils.hideDialog();

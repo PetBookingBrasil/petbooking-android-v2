@@ -197,10 +197,12 @@ public class HorizontalCalendar extends LinearLayout {
      */
     public void addPastDate(ArrayList<ScheduleResp.Schedule> schedules) {
         ArrayList<CalendarItem> pastDates = createDateList(schedules);
+        currentPosition = schedules.size() - 1;
         pastDates.addAll(mDateList);
         mDateList = pastDates;
         mAdapter.updateList(pastDates);
         mAdapter.notifyDataSetChanged();
+        mRvCalendar.scrollToPosition(currentPosition);
     }
 
 
@@ -210,9 +212,11 @@ public class HorizontalCalendar extends LinearLayout {
      * @param schedules
      */
     public void addFutureDate(ArrayList<ScheduleResp.Schedule> schedules) {
+        currentPosition = mDateList.size();
         mDateList.addAll(createDateList(schedules));
         mAdapter.updateList(mDateList);
         mAdapter.notifyDataSetChanged();
+        mRvCalendar.scrollToPosition(currentPosition);
     }
 
     /**

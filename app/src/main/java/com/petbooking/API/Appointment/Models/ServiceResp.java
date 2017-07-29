@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by ediposilva on 9/29/15.
  */
-public class ServiceRsp {
+public class ServiceResp {
 
     public List<Item> data;
 
@@ -29,7 +29,6 @@ public class ServiceRsp {
 
         @SerializedName("price_range")
         public Price priceRange;
-
 
         public Attributes() {
         }

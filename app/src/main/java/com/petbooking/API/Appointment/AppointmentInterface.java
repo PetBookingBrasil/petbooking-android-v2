@@ -1,7 +1,7 @@
-package com.petbooking.API.AppointmentService;
+package com.petbooking.API.Appointment;
 
 
-import com.petbooking.API.Business.APIBusinessConstants;
+import com.petbooking.API.Appointment.Models.ServiceResp;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.Constants.APIConstants;
 
@@ -19,6 +19,6 @@ public interface AppointmentInterface {
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
     @GET(APIAppointmentConstants.CATEGORY_SERVICES_ENDPOINT)
-    Call<CategoryResp> listCategoryServices(@Path(APIConstants.PATH_PARAM) String categoryId,
-                                            @Query(APIAppointmentConstants.PET_QUERY) String petId);
+    Call<ServiceResp> listCategoryServices(@Path(APIConstants.PATH_PARAM) String categoryId,
+                                           @Query(APIAppointmentConstants.PET_QUERY) String petId);
 }

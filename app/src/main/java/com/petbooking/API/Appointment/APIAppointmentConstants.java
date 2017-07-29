@@ -1,4 +1,4 @@
-package com.petbooking.API.AppointmentService;
+package com.petbooking.API.Appointment;
 
 import com.petbooking.Constants.APIConstants;
 

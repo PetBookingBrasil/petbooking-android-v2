@@ -14,7 +14,7 @@ public class BusinessServices {
     public String name;
     public String startTime;
     public String endTime;
-    public String duration;
+    public int duration;
     public String description;
     public double price;
     public String businessName;
@@ -22,7 +22,7 @@ public class BusinessServices {
     public AvatarResp professionalAvatar;
     public ArrayList<BusinessServices> additionalServices;
 
-    public BusinessServices(String id, String name, String duration, String description, double price) {
+    public BusinessServices(String id, String name, int duration, String description, double price) {
         this.id = id;
         this.name = name;
         this.duration = duration;
@@ -31,7 +31,7 @@ public class BusinessServices {
         this.additionalServices = new ArrayList<>();
     }
 
-    public BusinessServices(String id, String name, String startTime, String endTime, String duration, String description,
+    public BusinessServices(String id, String name, String startTime, String endTime, int duration, String description,
                             double price, String businessName, String professionalName, AvatarResp professionalAvatar) {
         this.id = id;
         this.name = name;

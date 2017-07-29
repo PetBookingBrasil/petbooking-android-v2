@@ -34,7 +34,7 @@ public class ScheduleResp {
         public String startTime;
         @SerializedName("ends_at")
         public String endTime;
-        public String duration;
+        public int duration;
         @SerializedName("business_name")
         public String businessName;
         @SerializedName("employment_name")

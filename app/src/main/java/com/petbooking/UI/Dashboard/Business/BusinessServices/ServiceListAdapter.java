@@ -54,7 +54,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
 
         holder.mTvServiceName.setText(service.name);
         holder.mTvServicePrice.setText(price);
-        holder.mTvServiceDuration.setText(service.duration);
+        holder.mTvServiceDuration.setText(String.valueOf(service.duration));
         holder.mTvServiceDescription.setText(service.description);
 
         if (service.additionalServices.size() != 0) {

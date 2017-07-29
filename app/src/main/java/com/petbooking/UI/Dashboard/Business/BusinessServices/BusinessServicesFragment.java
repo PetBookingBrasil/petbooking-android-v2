@@ -1,7 +1,6 @@
 package com.petbooking.UI.Dashboard.Business.BusinessServices;
 
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,18 +8,23 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.petbooking.API.Business.APIBusinessConstants;
+import com.google.gson.Gson;
+import com.petbooking.API.Appointment.AppointmentService;
 import com.petbooking.API.Business.Models.CategoryResp;
+import com.petbooking.API.Pet.PetService;
 import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Category;
+import com.petbooking.Models.Pet;
 import com.petbooking.R;
-import com.petbooking.UI.Menu.Search.SearchActivity;
+import com.petbooking.UI.Menu.Agenda.PetCalendarListAdapter;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 
@@ -29,25 +33,69 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BusinessServicesFragment extends Fragment implements CategoryListAdapter.OnItemClick {
+public class BusinessServicesFragment extends Fragment {
 
     private Context mContext;
     private com.petbooking.API.Business.BusinessService mBusinessService;
-    private String businessId;
+    private PetService mPetService;
+    private AppointmentService mAppointmentService;
+    private String userId;
     private Business mBusiness;
     private AlertDialog mLoadingDialog;
 
     /**
-     * BusinessServices Components
+     * Flow Control
      */
-    private ArrayList<Category> mCategoryList;
-    private ArrayList<BusinessServices> mServiceList;
-    private LinearLayoutManager mLayoutManager;
-    private LinearLayoutManager mCategoryLayout;
-    private RecyclerView mRvCategory;
+    private String businessId = null;
+    private int selectedPet = -1;
+    private int selectedCategory = -1;
+
+
+    /**
+     * Pet List
+     */
+    private RecyclerView mRvPets;
+    private LinearLayoutManager mPetLayoutManager;
+    private PetCalendarListAdapter mPetAdapter;
+    private ArrayList<Pet> mPetList;
+
+    /**
+     * Services Components
+     */
     private RecyclerView mRvServices;
+    private ArrayList<BusinessServices> mServiceList;
+    private LinearLayoutManager mServicesLayoutManager;
+    private ServiceListAdapter mServiceAdapter;
+
+    /**
+     * Categories Components
+     */
+    private RecyclerView mRvCategory;
+    private ArrayList<Category> mCategoryList;
+    private LinearLayoutManager mCategoryLayout;
     private CategoryListAdapter mCategoryAdapter;
-    private ServiceListAdapter mAdapter;
+
+
+    CategoryListAdapter.OnSelectCategoryListener categoryListener = new CategoryListAdapter.OnSelectCategoryListener() {
+        @Override
+        public void onSelect(int position) {
+            if (position != -1 && position != selectedCategory) {
+                selectedCategory = position;
+                listServices(mCategoryList.get(selectedCategory).id, mPetList.get(selectedPet).id);
+            }
+        }
+    };
+
+    PetCalendarListAdapter.OnSelectPetListener selectPetListener = new PetCalendarListAdapter.OnSelectPetListener() {
+        @Override
+        public void onSelect(int position) {
+            if (position != -1) {
+                selectedPet = position;
+                mRvCategory.setVisibility(View.VISIBLE);
+            }
+        }
+    };
+
 
     public BusinessServicesFragment() {
         // Required empty public constructor
@@ -66,8 +114,11 @@ public class BusinessServicesFragment extends Fragment implements CategoryListAd
         super.onCreate(savedInstanceState);
 
         mBusinessService = new com.petbooking.API.Business.BusinessService();
+        mPetService = new PetService();
+        mAppointmentService = new AppointmentService();
         this.mContext = getContext();
         this.businessId = getArguments().getString("businessId", "0");
+        this.userId = SessionManager.getInstance().getUserLogged().id;
     }
 
     @Override
@@ -75,29 +126,45 @@ public class BusinessServicesFragment extends Fragment implements CategoryListAd
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_business_services, container, false);
 
+        mPetList = new ArrayList<>();
         mServiceList = new ArrayList<>();
         mCategoryList = new ArrayList<>();
         getCategories();
-        prepareListData();
+
+        /**
+         * Create Pet RecyclerView
+         */
+        mRvPets = (RecyclerView) view.findViewById(R.id.pet_list);
+        mPetLayoutManager = new LinearLayoutManager(mContext);
+        mPetAdapter = new PetCalendarListAdapter(mContext, mPetList, selectPetListener);
+
+        mPetLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRvPets.setLayoutManager(mPetLayoutManager);
+        mRvPets.setHasFixedSize(true);
+        mRvPets.setAdapter(mPetAdapter);
+
+        /**
+         * Create Categories Recyclerview
+         */
+        mRvServices = (RecyclerView) view.findViewById(R.id.service_list);
+        mServiceAdapter = new ServiceListAdapter(mContext, mServiceList);
+        mServicesLayoutManager = new LinearLayoutManager(mContext);
+        mServicesLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         mRvCategory = (RecyclerView) view.findViewById(R.id.category_list);
-        mRvServices = (RecyclerView) view.findViewById(R.id.service_list);
-
-        mCategoryAdapter = new CategoryListAdapter(mContext, mCategoryList, this);
-        mAdapter = new ServiceListAdapter(mContext, mServiceList);
-
-        mLayoutManager = new LinearLayoutManager(mContext);
+        mCategoryAdapter = new CategoryListAdapter(mContext, mCategoryList);
+        mCategoryAdapter.setOnSelectCategoryListener(categoryListener);
         mCategoryLayout = new LinearLayoutManager(mContext);
-        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mCategoryLayout.setOrientation(LinearLayoutManager.HORIZONTAL);
 
         mRvServices.setHasFixedSize(true);
-        mRvServices.setLayoutManager(mLayoutManager);
+        mRvServices.setLayoutManager(mServicesLayoutManager);
+
         mRvCategory.setHasFixedSize(true);
         mRvCategory.setLayoutManager(mCategoryLayout);
 
-        if (mAdapter != null) {
-            mRvServices.setAdapter(mAdapter);
+        if (mServiceAdapter != null) {
+            mRvServices.setAdapter(mServiceAdapter);
         }
 
         if (mCategoryAdapter != null) {
@@ -106,33 +173,16 @@ public class BusinessServicesFragment extends Fragment implements CategoryListAd
 
         mRvCategory.getLayoutManager().scrollToPosition(Integer.MAX_VALUE / 2);
 
+        getPets();
+
         return view;
-    }
-
-    private void prepareListData() {
-        BusinessServices service;
-        ArrayList<BusinessServices> sub = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            sub = new ArrayList<>();
-            service = new BusinessServices(i + "", "Serviço " + i, i + "", "Serviço Número " + i, i * 20.33);
-            sub.add(new BusinessServices(i + "", "SB " + i, i + "", "SB Número " + i, i * 20.33));
-            sub.add(new BusinessServices(i + "", "SB " + i, i + "", "SB Número " + i, i * 20.33));
-            sub.add(new BusinessServices(i + "", "SB " + i, i + "", "SB Número " + i, i * 20.33));
-            service.setAdditionalServices(sub);
-            mServiceList.add(service);
-        }
-    }
-
-    @Override
-    public void onItemClick(int position) {
-        mCategoryLayout.scrollToPositionWithOffset(position, 10);
     }
 
     /**
      * Get Categories
      */
     public void getCategories() {
-        mBusinessService.listCategories(new APICallback() {
+        mBusinessService.listBusinessCategories(businessId, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 CategoryResp resp = (CategoryResp) response;
@@ -141,13 +191,63 @@ public class BusinessServicesFragment extends Fragment implements CategoryListAd
                 }
 
                 mCategoryAdapter.updateList(mCategoryList);
-                mAdapter.notifyDataSetChanged();
+                mServiceAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onError(Object error) {
-
+                AppUtils.hideDialog();
             }
         });
     }
+
+    /**
+     * Get User Pets
+     */
+    public void getPets() {
+        AppUtils.showLoadingDialog(mContext);
+        mPetService.listPets(userId, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                mPetList = (ArrayList<Pet>) response;
+
+                mPetAdapter.updateList(mPetList);
+                mPetAdapter.notifyDataSetChanged();
+
+                AppUtils.hideDialog();
+            }
+
+            @Override
+            public void onError(Object error) {
+                AppUtils.hideDialog();
+            }
+        });
+    }
+
+    /**
+     * List Services
+     */
+    public void listServices(String categoryId, String petId) {
+        AppUtils.showLoadingDialog(mContext);
+        mAppointmentService.listServices(categoryId, petId, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                mServiceList = (ArrayList<BusinessServices>) response;
+
+                Log.d("SERVICES", new Gson().toJson(mServiceList));
+
+                mServiceAdapter.updateList(mServiceList);
+                mServiceAdapter.notifyDataSetChanged();
+                mRvServices.setVisibility(View.VISIBLE);
+
+                AppUtils.hideDialog();
+            }
+
+            @Override
+            public void onError(Object error) {
+                AppUtils.hideDialog();
+            }
+        });
+    }
+
 }

@@ -66,6 +66,9 @@ public class APIBusinessConstants {
 
     public static final String SERVICES_CATEGORIES_ENDPOINT = "category-templates" + FIELDS_CATEGORIES;
 
+    public static final String BUSINESS_CATEGORIES_ENDPOINT = "businesses/{" + PATH_BUSINESS_ID + "}/service-categories" + FIELDS_CATEGORIES;
+
+
     public static final String BUSINESS_INFO_ENDPOINT = "businesses/{" + PATH_BUSINESS_ID + "}";
 
     public static final String FAVORITES_CREATE_ENDPOINT = "users/{" + APIConstants.PATH_PARAM + "}/favorites" + FIELDS_FAVORITES;

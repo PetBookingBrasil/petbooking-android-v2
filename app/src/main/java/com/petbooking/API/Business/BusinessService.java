@@ -148,6 +148,21 @@ public class BusinessService {
         });
     }
 
+    public void listBusinessCategories(String businessId, final APICallback callback) {
+        Call<CategoryResp> call = mBusinessInterface.listBusinessCategories(businessId);
+        call.enqueue(new Callback<CategoryResp>() {
+            @Override
+            public void onResponse(Call<CategoryResp> call, Response<CategoryResp> response) {
+                APIUtils.handleResponse(response, callback);
+            }
+
+            @Override
+            public void onFailure(Call<CategoryResp> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
 
     public void createFavorite(String userId, String businessId, final APICallback callback) {
         FavoriteRqt favoriteRqt = new FavoriteRqt(APIConstants.DATA_FAVORITES_TYPE_BUSINESS, businessId);

@@ -55,6 +55,10 @@ public interface BusinessInterface {
     @GET(APIBusinessConstants.SERVICES_CATEGORIES_ENDPOINT)
     Call<CategoryResp> listCategories();
 
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
+    @GET(APIBusinessConstants.BUSINESS_CATEGORIES_ENDPOINT)
+    Call<CategoryResp> listBusinessCategories(@Path(APIBusinessConstants.PATH_BUSINESS_ID) String businessId);
+
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
     @POST(APIBusinessConstants.FAVORITES_CREATE_ENDPOINT)
     Call<FavoriteResp> createFavorite(@Path(APIConstants.PATH_PARAM) String userId, @Body FavoriteRqt favoriteRqt);

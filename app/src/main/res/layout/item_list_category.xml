@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/category_item"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/spacing_micro"
-    android:paddingRight="@dimen/spacing_micro">
+    android:layout_marginBottom="@dimen/spacing_xmicro"
+    android:layout_marginLeft="@dimen/spacing_xmicro"
+    android:layout_marginRight="@dimen/spacing_xmicro"
+    android:layout_marginTop="@dimen/spacing_xmicro"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/category_icon"
@@ -13,16 +16,19 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:background="@drawable/category_icon_background"
-        android:padding="@dimen/spacing_xmicro" />
+        android:padding="@dimen/spacing_xmicro"
+        app:srcCompat="@drawable/ic_category_transport" />
 
     <TextView
         android:id="@+id/category_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_micro"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/spacing_xmicro"
         android:maxEms="6"
-        android:maxLines="3"
+        android:maxLines="2"
+        android:text="Banho e Tosa"
         android:textAlignment="center"
-        android:visibility="gone" />
+        android:textColor="@color/text_color" />
 
 </LinearLayout>

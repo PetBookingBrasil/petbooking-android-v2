@@ -3,7 +3,9 @@ package com.petbooking.Utils;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.petbooking.API.Appointment.Models.ServiceResp;
 import com.petbooking.API.Auth.Models.AuthUserResp;
+import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.BusinessesRspAttributes;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Business.Models.ReviewResp;
@@ -113,6 +115,22 @@ public class APIUtils {
     }
 
     /**
+     * Parse a Business Services
+     *
+     * @param service
+     * @return
+     */
+    public static BusinessServices parseBusinessService(ServiceResp.Item service) {
+        BusinessServices businessService = new BusinessServices(service.id,
+                service.attributes.name,
+                service.attributes.duration,
+                service.attributes.description,
+                service.attributes.price);
+        return businessService;
+    }
+
+
+    /**
      * Parse category
      *
      * @param context
@@ -172,7 +190,6 @@ public class APIUtils {
 
         return null;
     }
-
 
     /**
      * Get Asset Endpoint

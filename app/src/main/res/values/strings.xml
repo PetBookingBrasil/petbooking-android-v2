@@ -150,7 +150,7 @@
     <string name="business_label_social_network">Redes Sociais</string>
     <string name="business_label_location">Localização</string>
     <string name="business_label_reviews">Reviews</string>
-    <string name="business_label_additional">Adicionais</string>
+    <string name="business_label_additional">Serviços Adicionais</string>
     <string name="business_service_price">R$ %1$s</string>
     <string name="business_service_finish">Finalizar Agendamento</string>
     <string name="call_button">Ligar</string>

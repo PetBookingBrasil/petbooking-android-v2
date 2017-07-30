@@ -127,7 +127,7 @@
     <string name="business_label_social_network">Social Network</string>
     <string name="business_label_location">Location</string>
     <string name="business_label_reviews">Reviews</string>
-    <string name="business_label_additional">Additional</string>
+    <string name="business_label_additional">Additional Services</string>
     <string name="business_service_price">U$ %1$s</string>
     <string name="business_service_finish">Finish Schedule</string>
     <string name="call_button">Call</string>

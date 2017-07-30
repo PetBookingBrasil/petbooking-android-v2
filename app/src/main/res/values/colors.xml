@@ -26,6 +26,7 @@
     <color name="default_gray">#F6F6F6</color>
     <color name="timeline_color">#FFDD68</color>
     <color name="text_color">#545454</color>
+    <color name="text_gray">#858585</color>
 
 
     <!-- Category Colors -->

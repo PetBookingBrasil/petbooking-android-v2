@@ -4,11 +4,15 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.R;
 
@@ -54,8 +58,13 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
 
         holder.mTvServiceName.setText(service.name);
         holder.mTvServicePrice.setText(price);
-        holder.mTvServiceDuration.setText(String.valueOf(service.duration));
-        holder.mTvServiceDescription.setText(service.description);
+
+        if (TextUtils.isEmpty(service.description)) {
+            holder.mTvServiceDescription.setVisibility(View.GONE);
+        } else {
+            holder.mTvServiceDescription.setText(service.description);
+            holder.mTvServiceDescription.setVisibility(View.VISIBLE);
+        }
 
         if (service.additionalServices.size() != 0) {
             mAdapter = new AdditionalServiceListAdapter(mContext, service.additionalServices);
@@ -71,7 +80,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
             }
         }
 
-        holder.mClItem.setOnClickListener(new View.OnClickListener() {
+        holder.mServiceItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (service.additionalServices.size() == 0) {
@@ -99,10 +108,9 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
 
     public class ServiceViewHolder extends RecyclerView.ViewHolder {
 
-        public ConstraintLayout mClItem;
+        public LinearLayout mServiceItem;
         public TextView mTvServiceName;
         public TextView mTvServicePrice;
-        public TextView mTvServiceDuration;
         public TextView mTvServiceDescription;
         public TextView mTvAdditionalLabel;
         public RecyclerView mRvAdditionalServices;
@@ -111,10 +119,9 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
         public ServiceViewHolder(View view) {
             super(view);
 
-            mClItem = (ConstraintLayout) view.findViewById(R.id.item_layout);
+            mServiceItem = (LinearLayout) view.findViewById(R.id.item_layout);
             mTvServiceName = (TextView) view.findViewById(R.id.service_name);
             mTvServicePrice = (TextView) view.findViewById(R.id.service_price);
-            mTvServiceDuration = (TextView) view.findViewById(R.id.service_duration);
             mTvServiceDescription = (TextView) view.findViewById(R.id.service_description);
             mTvAdditionalLabel = (TextView) view.findViewById(R.id.additional_label);
             mRvAdditionalServices = (RecyclerView) view.findViewById(R.id.additional_services);

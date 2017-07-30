@@ -3,12 +3,14 @@ package com.petbooking.UI.Dashboard.Business.BusinessServices;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.R;
 
@@ -49,7 +51,8 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
 
         String price = mContext.getResources().getString(R.string.business_service_price, String.format("%.2f", service.price));
 
-        holder.mTvAdditionalName.setText(service.name);
+        holder.mCbServiceCheck.setText(service.name);
+        //holder.mTvAdditionalName.setText(service.name);
         holder.mTvAdditionalPrice.setText(price);
     }
 
@@ -61,14 +64,12 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
     public class AdditionalViewHolder extends RecyclerView.ViewHolder {
 
         public CheckBox mCbServiceCheck;
-        public TextView mTvAdditionalName;
         public TextView mTvAdditionalPrice;
 
         public AdditionalViewHolder(View view) {
             super(view);
 
-            mCbServiceCheck = (CheckBox) view.findViewById(R.id.additional_check);
-            mTvAdditionalName = (TextView) view.findViewById(R.id.additional_name);
+            mCbServiceCheck = (CheckBox) view.findViewById(R.id.additional_checkbox);
             mTvAdditionalPrice = (TextView) view.findViewById(R.id.additional_price);
         }
     }

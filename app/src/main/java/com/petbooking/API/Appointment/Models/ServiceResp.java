@@ -2,6 +2,7 @@ package com.petbooking.API.Appointment.Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,16 @@ public class ServiceResp {
 
     }
 
+    public static class Additional {
+
+        public String id;
+        public String name;
+        public String slug;
+        public String description;
+        public int duration;
+        public float price;
+    }
+
     public static class Attributes {
 
         public String name;
@@ -29,6 +40,9 @@ public class ServiceResp {
 
         @SerializedName("price_range")
         public Price priceRange;
+
+        @SerializedName("childs")
+        public List<Additional> additionalServices;
 
         public Attributes() {
         }

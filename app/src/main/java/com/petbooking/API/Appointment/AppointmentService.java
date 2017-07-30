@@ -1,7 +1,11 @@
 package com.petbooking.API.Appointment;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
 import com.petbooking.API.APIClient;
 import com.petbooking.API.Appointment.Models.ServiceResp;
+import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.BusinessServices;
@@ -35,7 +39,16 @@ public class AppointmentService {
                     ServiceResp serviceResp = response.body();
 
                     for (ServiceResp.Item item : serviceResp.data) {
-                        services.add(APIUtils.parseBusinessService(item));
+                        BusinessServices service = APIUtils.parseBusinessService(item);
+
+                        if (item.attributes.additionalServices != null) {
+                            for (ServiceResp.Additional additional : item.attributes.additionalServices) {
+                                service.additionalServices.add(new BusinessServices(additional.id, additional.name,
+                                        additional.duration, additional.description, additional.price));
+                            }
+                        }
+
+                        services.add(service);
                     }
 
                     callback.onSuccess(services);

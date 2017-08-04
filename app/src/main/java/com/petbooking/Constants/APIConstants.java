@@ -6,9 +6,9 @@ package com.petbooking.Constants;
 
 public class APIConstants {
 
-    public static final String BASE_URL_BETA = "https://staging.petbooking.com.br/api/v2/";
+    public static final String BASE_URL_BETA = "https://beta.petbooking.com.br/api/v2/";
     public static final String BASE_URL_PRODUCTION = "https://petbooking.com.br/api/v2/";
-    public static final String ASSET_ENDPOINT_BETA = "https://staging.petbooking.com.br/%s";
+    public static final String ASSET_ENDPOINT_BETA = "https://beta.petbooking.com.br/%s";
     public static final String ASSET_ENDPOINT_PRODUCTION = "https://petbooking.com.br/%s";
 
     /**

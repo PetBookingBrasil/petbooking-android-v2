@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_xtiny"
-        android:text="@string/favorites_empty_title"
+        android:text="@string/pets_empty_title"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -26,7 +26,7 @@
         android:layout_marginLeft="@dimen/spacing_small"
         android:layout_marginRight="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_xtiny"
-        android:text="@string/favorites_empty_message"
+        android:text="@string/pets_empty_message"
         android:textAlignment="center"
         android:textSize="14sp" />
 

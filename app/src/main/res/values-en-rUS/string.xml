@@ -171,6 +171,8 @@
     <string name="favorites_empty_message">Mark your favorite business and quickly access them on here.</string>
     <string name="business_empty_title">Oops! Unfortunately we did not find any business.</string>
     <string name="business_empty_message">To facilitate the payment process, register one or more payment methods.</string>
+    <string name="pets_empty_title">You have not added your pets yet.</string>
+    <string name="pets_empty_message">Click the + button above to add them.</string>
 
     <!-- Categories -->
     <string name="category_clinic">Clinics</string>

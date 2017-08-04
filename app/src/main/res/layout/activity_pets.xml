@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.petbooking.UI.Menu.Pets.PetsActivity">
 
+    <include
+        android:id="@+id/pets_placeholder"
+        layout="@layout/include_pets_placeholder"
+        android:visibility="gone" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/pet_list"
         android:layout_width="match_parent"

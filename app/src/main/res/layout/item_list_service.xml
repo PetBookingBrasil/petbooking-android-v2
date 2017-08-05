@@ -56,7 +56,7 @@
             android:layout_marginTop="8dp"
             android:maxLines="3"
             android:text="lraoie hjadsgjadsg fjadsgfhqg fwehjghqjwe gdhqewjgdhjqewdg qewhjqgwed hqjwedg jqewhdgqwe jhqewg dhqwejg qwedjhqedg jqhewdg " />
-
+<!--
         <TextView
             android:id="@+id/additional_label"
             android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
             android:layout_marginTop="@dimen/spacing_xtiny"
             android:background="@color/default_gray"
             android:paddingRight="@dimen/spacing_xtiny"
-            android:visibility="gone" />
+            android:visibility="gone" />-->
     </LinearLayout>
 
     <View

@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,13 +28,13 @@ import java.util.ArrayList;
 public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.ServiceViewHolder> {
 
     private ArrayList<BusinessServices> mServiceList;
+    private OnServiceListener serviceListener;
     private Context mContext;
 
-    private LinearLayoutManager mLayoutManager;
-
-    public ServiceListAdapter(Context context, ArrayList<BusinessServices> serviceList) {
+    public ServiceListAdapter(Context context, ArrayList<BusinessServices> serviceList, OnServiceListener serviceListener) {
         this.mServiceList = serviceList;
         this.mContext = context;
+        this.serviceListener = serviceListener;
     }
 
     public void updateList(ArrayList<BusinessServices> serviceList) {
@@ -50,10 +52,9 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final ServiceViewHolder holder, int position) {
+    public void onBindViewHolder(final ServiceViewHolder holder, final int position) {
         final BusinessServices service = mServiceList.get(position);
 
-        AdditionalServiceListAdapter mAdapter;
         String price = mContext.getResources().getString(R.string.business_service_price, String.format("%.2f", service.price));
 
         holder.mTvServiceName.setText(service.name);
@@ -66,39 +67,14 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
             holder.mTvServiceDescription.setVisibility(View.VISIBLE);
         }
 
-        if (service.additionalServices.size() != 0) {
-            mAdapter = new AdditionalServiceListAdapter(mContext, service.additionalServices);
-
-            mLayoutManager = new LinearLayoutManager(mContext);
-            mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-            holder.mRvAdditionalServices.setHasFixedSize(true);
-            holder.mRvAdditionalServices.setLayoutManager(mLayoutManager);
-
-            if (mAdapter != null) {
-                holder.mRvAdditionalServices.setAdapter(mAdapter);
-            }
-        }
-
-        holder.mServiceItem.setOnClickListener(new View.OnClickListener() {
+        holder.mCbService.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                if (service.additionalServices.size() == 0) {
-                    return;
-                }
-
-                if (holder.mTvAdditionalLabel.isShown()) {
-                    holder.mTvAdditionalLabel.setVisibility(View.GONE);
-                    holder.mRvAdditionalServices.setVisibility(View.GONE);
-                    holder.mVAdditionalSeparator.setVisibility(View.GONE);
-                } else {
-                    holder.mTvAdditionalLabel.setVisibility(View.VISIBLE);
-                    holder.mRvAdditionalServices.setVisibility(View.VISIBLE);
-                    holder.mVAdditionalSeparator.setVisibility(View.VISIBLE);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    serviceListener.onSelect(position);
                 }
             }
         });
-
     }
 
     @Override
@@ -109,24 +85,24 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
     public class ServiceViewHolder extends RecyclerView.ViewHolder {
 
         public LinearLayout mServiceItem;
+        public CheckBox mCbService;
         public TextView mTvServiceName;
         public TextView mTvServicePrice;
         public TextView mTvServiceDescription;
-        public TextView mTvAdditionalLabel;
-        public RecyclerView mRvAdditionalServices;
-        public View mVAdditionalSeparator;
 
         public ServiceViewHolder(View view) {
             super(view);
 
+            mCbService = (CheckBox) view.findViewById(R.id.service_checkbox);
             mServiceItem = (LinearLayout) view.findViewById(R.id.item_layout);
             mTvServiceName = (TextView) view.findViewById(R.id.service_name);
             mTvServicePrice = (TextView) view.findViewById(R.id.service_price);
             mTvServiceDescription = (TextView) view.findViewById(R.id.service_description);
-            mTvAdditionalLabel = (TextView) view.findViewById(R.id.additional_label);
-            mRvAdditionalServices = (RecyclerView) view.findViewById(R.id.additional_services);
-            mVAdditionalSeparator = view.findViewById(R.id.additional_separator);
         }
+    }
+
+    public interface OnServiceListener {
+        void onSelect(int position);
     }
 
 }

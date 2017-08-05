@@ -64,10 +64,14 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
             holder.mTvComment.setVisibility(View.GONE);
         }
 
-        Glide.with(mContext)
-                .load(review.userAvatar.url)
-                .error(R.drawable.ic_placeholder_user)
-                .into(holder.mIvUserPhoto);
+        if (review.userAvatar != null) {
+            Glide.with(mContext)
+                    .load(review.userAvatar.url)
+                    .error(R.drawable.ic_placeholder_user)
+                    .into(holder.mIvUserPhoto);
+        } else {
+            holder.mIvUserPhoto.setImageResource(R.drawable.ic_placeholder_user);
+        }
     }
 
     @Override

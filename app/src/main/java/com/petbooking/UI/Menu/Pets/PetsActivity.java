@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.petbooking.API.Pet.Models.ListPetsResp;
 import com.petbooking.API.Pet.PetService;
+import com.petbooking.App;
 import com.petbooking.BaseActivity;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Interfaces.APICallback;
@@ -141,9 +142,11 @@ public class PetsActivity extends BaseActivity implements
      * @param petId
      */
     public void removePet(String userId, String petId) {
+        AppUtils.showLoadingDialog(this);
         mPetService.removePet(userId, petId, new APICallback() {
             @Override
             public void onSuccess(Object response) {
+                AppUtils.hideDialog();
                 mFeedbackDialogFragment.setDialogInfo(R.string.remove_pet_title, R.string.success_remove_pet,
                         R.string.dialog_button_ok, AppConstants.OK_ACTION);
                 mFeedbackDialogFragment.show(getSupportFragmentManager(), "FEEDBACK");
@@ -151,7 +154,7 @@ public class PetsActivity extends BaseActivity implements
 
             @Override
             public void onError(Object error) {
-
+                AppUtils.hideDialog();
             }
         });
     }

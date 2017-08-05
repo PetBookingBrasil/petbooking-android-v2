@@ -298,10 +298,12 @@ public class RegisterPetActivity extends BaseActivity implements
      */
     public void createRequest(Pet pet) {
         clearFocus();
+        AppUtils.showLoadingDialog(this);
         mPetService.createPet(mUser.id, pet, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 resetForm();
+                AppUtils.hideDialog();
                 mDialogFragmentFeedback.setDialogInfo(R.string.success_create_pet, R.string.success_create_pet_text,
                         R.string.dialog_button_start, AppConstants.OK_ACTION);
                 mDialogFragmentFeedback.setSecondButton(R.string.dialog_button_add_pet, AppConstants.ADD_PET);
@@ -311,6 +313,7 @@ public class RegisterPetActivity extends BaseActivity implements
 
             @Override
             public void onError(Object error) {
+                AppUtils.hideDialog();
                 mDialogFragmentFeedback.setDialogInfo(R.string.error_create_pet, R.string.error_create_text,
                         R.string.dialog_button_check_info, AppConstants.CANCEL_ACTION);
                 mDialogFragmentFeedback.showSecondButton(false);

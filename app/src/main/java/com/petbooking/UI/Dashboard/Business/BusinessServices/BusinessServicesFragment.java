@@ -2,6 +2,7 @@ package com.petbooking.UI.Dashboard.Business.BusinessServices;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,12 +19,14 @@ import com.petbooking.API.Appointment.AppointmentService;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Managers.PreferenceManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Category;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.ServiceDetail.ServiceDetailActivity;
 import com.petbooking.UI.Menu.Agenda.PetCalendarListAdapter;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
@@ -35,13 +38,12 @@ import java.util.ArrayList;
  */
 public class BusinessServicesFragment extends Fragment {
 
-    private Context mContext;
-    private com.petbooking.API.Business.BusinessService mBusinessService;
-    private PetService mPetService;
-    private AppointmentService mAppointmentService;
     private String userId;
-    private Business mBusiness;
-    private AlertDialog mLoadingDialog;
+    private Context mContext;
+    private PetService mPetService;
+    private PreferenceManager mPreferenceManager;
+    private AppointmentService mAppointmentService;
+    private com.petbooking.API.Business.BusinessService mBusinessService;
 
     /**
      * Flow Control
@@ -96,6 +98,14 @@ public class BusinessServicesFragment extends Fragment {
         }
     };
 
+    ServiceListAdapter.OnServiceListener mServiceListener = new ServiceListAdapter.OnServiceListener() {
+        @Override
+        public void onSelect(int position) {
+            //TODO: Abrir modal com detalhamento
+            showDetail();
+        }
+    };
+
 
     public BusinessServicesFragment() {
         // Required empty public constructor
@@ -116,9 +126,15 @@ public class BusinessServicesFragment extends Fragment {
         mBusinessService = new com.petbooking.API.Business.BusinessService();
         mPetService = new PetService();
         mAppointmentService = new AppointmentService();
+        mPreferenceManager = PreferenceManager.getInstance();
         this.mContext = getContext();
         this.businessId = getArguments().getString("businessId", "0");
         this.userId = SessionManager.getInstance().getUserLogged().id;
+
+        if (businessId.equals("0") && mPreferenceManager.getString("businessId") != null) {
+            this.businessId = mPreferenceManager.getString("businessId");
+            mPreferenceManager.removeKey("businessId");
+        }
     }
 
     @Override
@@ -147,7 +163,7 @@ public class BusinessServicesFragment extends Fragment {
          * Create Categories Recyclerview
          */
         mRvServices = (RecyclerView) view.findViewById(R.id.service_list);
-        mServiceAdapter = new ServiceListAdapter(mContext, mServiceList);
+        mServiceAdapter = new ServiceListAdapter(mContext, mServiceList, mServiceListener);
         mServicesLayoutManager = new LinearLayoutManager(mContext);
         mServicesLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -234,8 +250,6 @@ public class BusinessServicesFragment extends Fragment {
             public void onSuccess(Object response) {
                 mServiceList = (ArrayList<BusinessServices>) response;
 
-                Log.d("SERVICES", new Gson().toJson(mServiceList));
-
                 mServiceAdapter.updateList(mServiceList);
                 mServiceAdapter.notifyDataSetChanged();
                 mRvServices.setVisibility(View.VISIBLE);
@@ -248,6 +262,15 @@ public class BusinessServicesFragment extends Fragment {
                 AppUtils.hideDialog();
             }
         });
+    }
+
+    /**
+     * Show Service Detail
+     */
+    public void showDetail() {
+        mPreferenceManager.putString("businessId", this.businessId);
+        Intent detailItent = new Intent(mContext, ServiceDetailActivity.class);
+        mContext.startActivity(detailItent);
     }
 
 }

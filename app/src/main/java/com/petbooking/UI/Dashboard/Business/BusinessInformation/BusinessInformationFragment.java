@@ -171,7 +171,7 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
                 openPage(mBusiness.instagram);
             } else if (id == mIvGooglePlus.getId()) {
                 openPage(mBusiness.googlePlus);
-            }else if(id == mIvSnapchat.getId()){
+            } else if (id == mIvSnapchat.getId()) {
                 openPage(mBusiness.snapchat);
             } else if (id == mTvWebsite.getId()) {
                 openPage(mBusiness.website);
@@ -337,33 +337,36 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
      * @param id
      */
     public void getBusinessInfo(String id) {
-        showLoading();
+        AppUtils.showLoadingDialog(mContext);
         mBusinessService.getBusiness(id, SessionManager.getInstance().getUserLogged().id, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 mBusiness = (Business) response;
                 updateBusinessInfo(mBusiness);
+                AppUtils.hideDialog();
             }
 
             @Override
             public void onError(Object error) {
-
+                AppUtils.hideDialog();
             }
         });
     }
 
     public void getBusinessReviews(String id) {
+        AppUtils.showLoadingDialog(mContext);
         mBusinessService.listBusinessReviews(id, 1, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 mReviewList = (ArrayList<Review>) response;
                 mAdapter.updateList(mReviewList);
                 mAdapter.notifyDataSetChanged();
+                AppUtils.hideDialog();
             }
 
             @Override
             public void onError(Object error) {
-
+                AppUtils.hideDialog();
             }
         });
     }
@@ -437,7 +440,6 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         mIBtnFavorite.setOnClickListener(favoriteListener);
         mTvWebsite.setOnClickListener(socialListener);
         Glide.with(mContext).load(mBusiness.image.url).error(R.drawable.business_background).into(mIvBusinessPhoto);
-        hideLoading();
     }
 
 
@@ -509,31 +511,6 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(browserIntent);
     }
-
-    /**
-     * Show Request Loading
-     */
-    public void showLoading() {
-        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
-            mLoadingDialog.dismiss();
-        }
-        mLoadingDialog = new AlertDialog.Builder(mContext)
-                .setView(View.inflate(mContext, R.layout.dialog_loading, null), 0, 0, 0, 0)
-                .create();
-        mLoadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        mLoadingDialog.show();
-    }
-
-    /**
-     * Hide Request Loading
-     */
-    public void hideLoading() {
-        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
-            mLoadingDialog.dismiss();
-            mLoadingDialog = null;
-        }
-    }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

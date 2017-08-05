@@ -20,7 +20,7 @@ public class APIBusinessConstants {
     public static final String DATA_WALKER = "Passeadores";
     public static final String DATA_DAYCARE = "Creche";
     public static final String DATA_HOTEL = "Hotelzinho";
-    public static final String DATA_EMERGENCY = "Emergências e Serviços 24 horas";
+    public static final String DATA_EMERGENCY = "Serviços 24 Horas";
     public static final String DATA_EXAMS = "Exames";
     public static final String DATA_HOSPITAL = "Hospitais veterinários";
     public static final String DATA_DIAGNOSIS = "Centro de Diagnóstico";

@@ -101,8 +101,7 @@ public class BusinessServicesFragment extends Fragment {
     ServiceListAdapter.OnServiceListener mServiceListener = new ServiceListAdapter.OnServiceListener() {
         @Override
         public void onSelect(int position) {
-            //TODO: Abrir modal com detalhamento
-            showDetail();
+            showDetail(position);
         }
     };
 
@@ -267,9 +266,11 @@ public class BusinessServicesFragment extends Fragment {
     /**
      * Show Service Detail
      */
-    public void showDetail() {
-        mPreferenceManager.putString("businessId", this.businessId);
+    public void showDetail(int position) {
         Intent detailItent = new Intent(mContext, ServiceDetailActivity.class);
+        mPreferenceManager.putString("businessId", this.businessId);
+        detailItent.putExtra("selected_pet", new Gson().toJson(mPetList.get(selectedPet)));
+        detailItent.putExtra("selected_service", new Gson().toJson(mServiceList.get(position)));
         mContext.startActivity(detailItent);
     }
 

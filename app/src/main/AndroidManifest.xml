@@ -91,6 +91,16 @@
                 android:value=".UI.Dashboard.DashboardActivity" />
         </activity>
         <activity
+            android:name=".UI.Dashboard.Business.ServiceDetail.ServiceDetailActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:value=".UI.Dashboard.Business.BusinessActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Dashboard.Business.BusinessActivity" />
+        </activity>
+
+        <activity
             android:name=".UI.Menu.Pets.PetsActivity"
             android:configChanges="orientation"
             android:label="@string/my_pets"
@@ -110,7 +120,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Dashboard.DashboardActivity" />
         </activity>
-
         <activity
             android:name=".UI.Menu.Agenda.AgendaActivity"
             android:configChanges="orientation"

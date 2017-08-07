@@ -19,4 +19,8 @@ public class AvatarResp {
         public String url;
     }
 
+    public static class Avatar_ {
+        public AvatarResp avatar;
+    }
+
 }

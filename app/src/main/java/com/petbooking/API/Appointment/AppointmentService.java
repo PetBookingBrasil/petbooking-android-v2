@@ -76,7 +76,8 @@ public class AppointmentService {
                     ProfessionalResp resp = response.body();
 
                     for (ProfessionalResp.Item professional : resp.data) {
-                        professionalList.add(new Professional(professional.id, professional.attributes.name, professional.attributes.avatar));
+                        professionalList.add(new Professional(professional.id, professional.attributes.name,
+                                professional.attributes.avatar.avatar.url, professional.attributes.availableSlots));
                     }
 
                     callback.onSuccess(professionalList);

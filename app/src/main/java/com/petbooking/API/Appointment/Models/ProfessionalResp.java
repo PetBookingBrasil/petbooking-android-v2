@@ -3,6 +3,7 @@ package com.petbooking.API.Appointment.Models;
 import com.google.gson.annotations.SerializedName;
 import com.petbooking.API.Generic.AvatarResp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProfessionalResp {
@@ -22,10 +23,10 @@ public class ProfessionalResp {
         public String name;
         public String nickname;
         public String slug;
-        public AvatarResp avatar;
+        public AvatarResp.Avatar_ avatar;
 
         @SerializedName("available_slots")
-        public List<Slot> availableSlots;
+        public ArrayList<Slot> availableSlots;
     }
 
     public static class Slot {

@@ -99,22 +99,12 @@
                 android:visibility="gone"
                 android:textSize="14sp" />
 
-            <!-- <android.support.v7.widget.RecyclerView
+            <android.support.v7.widget.RecyclerView
                  android:id="@+id/additional_services"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:visibility="gone" />
 
-             <View
-                 android:id="@+id/additional_separator"
-                 android:layout_width="0dp"
-                 android:layout_height="@dimen/spacing_nano"
-                 android:layout_marginLeft="@dimen/spacing_xmicro"
-                 android:layout_marginRight="@dimen/spacing_xmicro"
-                 android:layout_marginTop="@dimen/spacing_xtiny"
-                 android:background="@color/default_gray"
-                 android:paddingRight="@dimen/spacing_xtiny"
-                 android:visibility="gone" />-->
         </LinearLayout>
     </RelativeLayout>
 

@@ -2,6 +2,8 @@ package com.petbooking.UI.Dashboard.Business.ServiceDetail;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,7 @@ import com.petbooking.Managers.PreferenceManager;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.BusinessServices.AdditionalServiceListAdapter;
 
 public class ServiceDetailActivity extends AppCompatActivity {
 
@@ -31,6 +34,9 @@ public class ServiceDetailActivity extends AppCompatActivity {
     private TextView mTvServiceDescription;
     private TextView mTvAdditionalLabel;
 
+    private RecyclerView mRvAdditionalServices;
+    private AdditionalServiceListAdapter mAdditionalAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +53,8 @@ public class ServiceDetailActivity extends AppCompatActivity {
         selectedService = mGson.fromJson(serviceData, BusinessServices.class);
         selectedPet = mGson.fromJson(petData, Pet.class);
 
+        mRvAdditionalServices = (RecyclerView) findViewById(R.id.additional_services);
+
         mCbPet = (CheckBox) findViewById(R.id.pet_checkbox);
         mTvServiceName = (TextView) findViewById(R.id.service_name);
         mTvServicePrice = (TextView) findViewById(R.id.service_price);
@@ -60,7 +68,17 @@ public class ServiceDetailActivity extends AppCompatActivity {
         mTvServiceDescription.setText(selectedService.description);
 
         if (selectedService.additionalServices.size() != 0) {
+            LinearLayoutManager mAdditionalLayout = new LinearLayoutManager(this);
+            mAdditionalLayout.setOrientation(LinearLayoutManager.VERTICAL);
+
+            mAdditionalAdapter = new AdditionalServiceListAdapter(this, selectedService.additionalServices);
+
+            mRvAdditionalServices.setHasFixedSize(true);
+            mRvAdditionalServices.setLayoutManager(mAdditionalLayout);
+            mRvAdditionalServices.setAdapter(mAdditionalAdapter);
+
             mTvAdditionalLabel.setVisibility(View.VISIBLE);
+            mRvAdditionalServices.setVisibility(View.VISIBLE);
         }
 
         if (TextUtils.isEmpty(selectedService.description)) {

@@ -24,7 +24,6 @@
     <color name="brand_primary">#E4002B</color>
     <color name="secondary_red">#B00021</color>
     <color name="default_gray">#F6F6F6</color>
-    <color name="timeline_color">#FFDD68</color>
     <color name="text_color">#545454</color>
     <color name="text_gray">#858585</color>
 
@@ -45,5 +44,6 @@
 
     <!-- Components Colors -->
     <color name="past_date_color">#9A9A9A</color>
+    <color name="professional_list_background">#BABABA</color>
 
 </resources>

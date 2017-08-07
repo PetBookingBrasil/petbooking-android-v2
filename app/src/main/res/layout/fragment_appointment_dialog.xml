@@ -1,10 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="gone">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Bottom Sheet" />
+        android:layout_height="wrap_content"
+        android:background="@color/professional_list_background"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/spacing_xmicro"
+        android:paddingLeft="@dimen/spacing_tiny"
+        android:paddingRight="@dimen/spacing_tiny"
+        android:paddingTop="@dimen/spacing_xmicro">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_xmicro"
+            android:text="@string/choose_professional"
+            android:textColor="@color/text_color" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/professional_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/confirm_appointment"
+        style="@style/AppTheme.PrimaryButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_tiny"
+        android:layout_marginLeft="@dimen/spacing_xtiny"
+        android:layout_marginRight="@dimen/spacing_xtiny"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:background="@drawable/primary_button"
+        android:enabled="false"
+        android:text="@string/continue_scheduling" />
+
 </LinearLayout>

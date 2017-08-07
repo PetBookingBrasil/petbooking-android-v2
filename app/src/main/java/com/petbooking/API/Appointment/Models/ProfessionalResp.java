@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import com.petbooking.API.Generic.AvatarResp;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ProfessionalResp {
@@ -30,7 +31,7 @@ public class ProfessionalResp {
     }
 
     public static class Slot {
-        public String date;
+        public Date date;
         public List<String> times;
     }
 

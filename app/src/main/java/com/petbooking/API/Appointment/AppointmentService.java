@@ -2,18 +2,20 @@ package com.petbooking.API.Appointment;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.petbooking.API.APIClient;
 import com.petbooking.API.Appointment.Models.ProfessionalResp;
 import com.petbooking.API.Appointment.Models.ServiceResp;
-import com.petbooking.API.Business.BusinessService;
-import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Models.AppointmentDate;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Professional;
 import com.petbooking.Utils.APIUtils;
+import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,11 +75,41 @@ public class AppointmentService {
             public void onResponse(Call<ProfessionalResp> call, Response<ProfessionalResp> response) {
                 if (response.isSuccessful()) {
                     ArrayList<Professional> professionalList = new ArrayList<>();
+                    ArrayList<AppointmentDate> dates;
                     ProfessionalResp resp = response.body();
 
-                    for (ProfessionalResp.Item professional : resp.data) {
-                        professionalList.add(new Professional(professional.id, professional.attributes.name,
-                                professional.attributes.avatar.avatar.url, professional.attributes.availableSlots));
+                    for (ProfessionalResp.Item item : resp.data) {
+                        Professional professional = new Professional(item.id, item.attributes.name,
+                                item.attributes.avatar.avatar.url);
+
+                        if (item.attributes.availableSlots.size() != 0) {
+                            int dateIndex = -1;
+                            String monthName;
+                            dates = new ArrayList<>();
+
+                            Calendar calendar = new GregorianCalendar();
+
+                            for (ProfessionalResp.Slot slot : item.attributes.availableSlots) {
+                                AppointmentDate date;
+                                calendar.setTime(slot.date);
+                                monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+                                dateIndex = AppUtils.containsMonth(dates, monthName);
+
+
+                                if (dateIndex == -1) {
+                                    date = new AppointmentDate(monthName);
+                                    date.days.add(slot);
+                                    dates.add(date);
+                                } else {
+                                    date = dates.get(dateIndex);
+                                    date.days.add(slot);
+                                }
+                            }
+
+                            professional.setAvailableDates(dates);
+                        }
+
+                        professionalList.add(professional);
                     }
 
                     callback.onSuccess(professionalList);

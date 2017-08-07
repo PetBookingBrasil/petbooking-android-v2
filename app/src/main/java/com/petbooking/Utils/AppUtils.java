@@ -14,10 +14,11 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.petbooking.API.Business.APIBusinessConstants;
 import com.petbooking.API.Pet.APIPetConstants;
-import com.petbooking.Models.Category;
+import com.petbooking.Models.AppointmentDate;
 import com.petbooking.R;
 
 import java.util.ArrayList;
@@ -285,7 +286,6 @@ public abstract class AppUtils {
         return -1;
     }
 
-
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static Bitmap getBitmap(VectorDrawable vectorDrawable) {
         Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(),
@@ -320,12 +320,29 @@ public abstract class AppUtils {
         mDialog.show();
     }
 
-
     public static void hideDialog() {
         if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
             mDialog = null;
         }
+    }
+
+    public static int containsMonth(ArrayList<AppointmentDate> dates, String monthName) {
+        int index = 0;
+
+        if (dates.size() == 0) {
+            return -1;
+        } else {
+            for (AppointmentDate date : dates) {
+                if (date.monthName.equals(monthName)) {
+                    return index;
+                }
+
+                index++;
+            }
+        }
+
+        return -1;
     }
 
 }

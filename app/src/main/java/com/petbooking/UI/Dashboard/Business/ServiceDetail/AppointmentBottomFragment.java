@@ -5,11 +5,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
 import com.petbooking.API.Appointment.AppointmentService;
 import com.petbooking.API.Generic.AvatarResp;
 import com.petbooking.Interfaces.APICallback;
@@ -25,9 +27,24 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
     private AppointmentService mAppointmentService;
     private LinearLayout mFragmentLayout;
 
+    /**
+     * Professional Components
+     */
+    private int selectedProfessional = -1;
     private ArrayList<Professional> mProfessionalList;
     private ProfessionalListAdapter mProfessionalAdapter;
     private RecyclerView mRvProfessional;
+
+    ProfessionalListAdapter.OnSelectProfessionaListener professionaListener = new ProfessionalListAdapter.OnSelectProfessionaListener() {
+        @Override
+        public void onSelect(int position) {
+            if (position != -1 && position != selectedProfessional) {
+                selectedProfessional = position;
+                handleSelectProfessional();
+            }
+        }
+    };
+
 
     @Nullable
     @Override
@@ -42,7 +59,7 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
         LinearLayoutManager mProfessionalLayout = new LinearLayoutManager(getContext());
         mProfessionalLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        mProfessionalAdapter = new ProfessionalListAdapter(getContext(), mProfessionalList);
+        mProfessionalAdapter = new ProfessionalListAdapter(getContext(), mProfessionalList, professionaListener);
 
         mFragmentLayout = (LinearLayout) view.findViewById(R.id.fragment_layout);
         mRvProfessional = (RecyclerView) view.findViewById(R.id.professional_list);
@@ -86,4 +103,11 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
         });
     }
 
+    /**
+     * Show days on select professional
+     */
+    private void handleSelectProfessional() {
+        Professional professional = mProfessionalList.get(selectedProfessional);
+        Log.i("SLOTS", new Gson().toJson(professional.availableSlots));
+    }
 }

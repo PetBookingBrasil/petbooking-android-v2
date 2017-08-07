@@ -3,12 +3,9 @@ package com.petbooking.UI.Dashboard.Business.ServiceDetail;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,11 +26,13 @@ public class ProfessionalListAdapter extends RecyclerView.Adapter<ProfessionalLi
 
     private ArrayList<Professional> mProfessionalList;
     private int selectedPosition = -1;
+    private OnSelectProfessionaListener onSelectProfessionaListener;
     private Context mContext;
 
-    public ProfessionalListAdapter(Context context, ArrayList<Professional> professionalList) {
+    public ProfessionalListAdapter(Context context, ArrayList<Professional> professionalList, OnSelectProfessionaListener onSelectProfessionaListener) {
         this.mContext = context;
         this.mProfessionalList = professionalList;
+        this.onSelectProfessionaListener = onSelectProfessionaListener;
     }
 
     public void updateList(ArrayList<Professional> professionalList) {
@@ -72,11 +71,11 @@ public class ProfessionalListAdapter extends RecyclerView.Adapter<ProfessionalLi
             holder.mTvProfessionalName.setTypeface(Typeface.DEFAULT);
         }
 
-        if (professional.avatar == null) {
+        if (professional.imageUrl == null) {
             holder.mIvPhoto.setImageResource(R.drawable.ic_placeholder_user);
         } else {
             Glide.with(mContext)
-                    .load(professional.avatar.url)
+                    .load(professional.imageUrl)
                     .error(R.drawable.ic_placeholder_user)
                     .into(holder.mIvPhoto);
         }
@@ -103,6 +102,7 @@ public class ProfessionalListAdapter extends RecyclerView.Adapter<ProfessionalLi
         notifyItemChanged(selectedPosition);
         selectedPosition = position;
         notifyItemChanged(selectedPosition);
+        onSelectProfessionaListener.onSelect(position);
     }
 
     public class ServiceViewHolder extends RecyclerView.ViewHolder {
@@ -118,6 +118,10 @@ public class ProfessionalListAdapter extends RecyclerView.Adapter<ProfessionalLi
             mIvPhoto = (CircleImageView) view.findViewById(R.id.professional_photo);
             mTvProfessionalName = (TextView) view.findViewById(R.id.professional_name);
         }
+    }
+
+    public interface OnSelectProfessionaListener {
+        void onSelect(int position);
     }
 
 }

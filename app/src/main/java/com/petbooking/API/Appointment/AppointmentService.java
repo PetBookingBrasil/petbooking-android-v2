@@ -4,11 +4,13 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.petbooking.API.APIClient;
+import com.petbooking.API.Appointment.Models.ProfessionalResp;
 import com.petbooking.API.Appointment.Models.ServiceResp;
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.BusinessServices;
+import com.petbooking.Models.Professional;
 import com.petbooking.Utils.APIUtils;
 
 import java.util.ArrayList;
@@ -59,6 +61,32 @@ public class AppointmentService {
 
             @Override
             public void onFailure(Call<ServiceResp> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void listProfessional(String serviceId, final APICallback callback) {
+        Call<ProfessionalResp> call = mAppointmentInterface.listProfessional(serviceId);
+        call.enqueue(new Callback<ProfessionalResp>() {
+            @Override
+            public void onResponse(Call<ProfessionalResp> call, Response<ProfessionalResp> response) {
+                if (response.isSuccessful()) {
+                    ArrayList<Professional> professionalList = new ArrayList<>();
+                    ProfessionalResp resp = response.body();
+
+                    for (ProfessionalResp.Item professional : resp.data) {
+                        professionalList.add(new Professional(professional.id, professional.attributes.name, professional.attributes.avatar));
+                    }
+
+                    callback.onSuccess(professionalList);
+                } else {
+                    callback.onError(APIUtils.handleError(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfessionalResp> call, Throwable t) {
                 t.printStackTrace();
             }
         });

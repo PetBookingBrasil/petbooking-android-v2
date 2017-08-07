@@ -1,8 +1,8 @@
 package com.petbooking.API.Appointment;
 
 
+import com.petbooking.API.Appointment.Models.ProfessionalResp;
 import com.petbooking.API.Appointment.Models.ServiceResp;
-import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.Constants.APIConstants;
 
 import retrofit2.Call;
@@ -21,4 +21,8 @@ public interface AppointmentInterface {
     @GET(APIAppointmentConstants.CATEGORY_SERVICES_ENDPOINT)
     Call<ServiceResp> listCategoryServices(@Path(APIConstants.PATH_PARAM) String categoryId,
                                            @Query(APIAppointmentConstants.PET_QUERY) String petId);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
+    @GET(APIAppointmentConstants.PROFESSIONAL_LIST_ENDPOINT)
+    Call<ProfessionalResp> listProfessional(@Path(APIConstants.PATH_PARAM) String serviceId);
 }

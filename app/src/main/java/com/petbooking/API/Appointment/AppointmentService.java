@@ -85,6 +85,7 @@ public class AppointmentService {
                         if (item.attributes.availableSlots.size() != 0) {
                             int dateIndex = -1;
                             String monthName;
+                            int year;
                             dates = new ArrayList<>();
 
                             Calendar calendar = new GregorianCalendar();
@@ -93,11 +94,11 @@ public class AppointmentService {
                                 AppointmentDate date;
                                 calendar.setTime(slot.date);
                                 monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
-                                dateIndex = AppUtils.containsMonth(dates, monthName);
-
+                                year = calendar.get(Calendar.YEAR);
+                                dateIndex = AppUtils.containsMonth(dates, monthName, year);
 
                                 if (dateIndex == -1) {
-                                    date = new AppointmentDate(monthName);
+                                    date = new AppointmentDate(monthName, year);
                                     date.days.add(slot);
                                     dates.add(date);
                                 } else {

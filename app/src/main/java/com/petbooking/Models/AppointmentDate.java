@@ -11,10 +11,12 @@ import java.util.ArrayList;
 public class AppointmentDate {
 
     public String monthName;
+    public int year;
     public ArrayList<ProfessionalResp.Slot> days;
 
-    public AppointmentDate(String monthName) {
+    public AppointmentDate(String monthName, int year) {
         this.monthName = monthName;
+        this.year = year;
         this.days = new ArrayList<>();
     }
 }

@@ -327,14 +327,14 @@ public abstract class AppUtils {
         }
     }
 
-    public static int containsMonth(ArrayList<AppointmentDate> dates, String monthName) {
+    public static int containsMonth(ArrayList<AppointmentDate> dates, String monthName, int year) {
         int index = 0;
 
         if (dates.size() == 0) {
             return -1;
         } else {
             for (AppointmentDate date : dates) {
-                if (date.monthName.equals(monthName)) {
+                if (date.monthName.equals(monthName) && date.year == year) {
                     return index;
                 }
 

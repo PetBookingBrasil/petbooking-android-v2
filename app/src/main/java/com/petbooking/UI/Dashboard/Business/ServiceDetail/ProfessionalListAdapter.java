@@ -22,7 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 
-public class ProfessionalListAdapter extends RecyclerView.Adapter<ProfessionalListAdapter.ServiceViewHolder> {
+public class ProfessionalListAdapter extends RecyclerView.Adapter<ProfessionalListAdapter.ProfessionalViewHolder> {
 
     private ArrayList<Professional> mProfessionalList;
     private int selectedPosition = -1;
@@ -40,17 +40,17 @@ public class ProfessionalListAdapter extends RecyclerView.Adapter<ProfessionalLi
     }
 
     @Override
-    public ServiceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProfessionalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_list_professional, parent, false);
 
-        ServiceViewHolder holder = new ServiceViewHolder(view);
+        ProfessionalViewHolder holder = new ProfessionalViewHolder(view);
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(final ServiceViewHolder holder, final int position) {
+    public void onBindViewHolder(final ProfessionalViewHolder holder, final int position) {
         final Professional professional = mProfessionalList.get(position);
 
         int redColor = mContext.getResources().getColor(R.color.brand_primary);
@@ -105,13 +105,13 @@ public class ProfessionalListAdapter extends RecyclerView.Adapter<ProfessionalLi
         onSelectProfessionaListener.onSelect(position);
     }
 
-    public class ServiceViewHolder extends RecyclerView.ViewHolder {
+    public class ProfessionalViewHolder extends RecyclerView.ViewHolder {
 
         public LinearLayout mItemLayout;
         public CircleImageView mIvPhoto;
         public TextView mTvProfessionalName;
 
-        public ServiceViewHolder(View view) {
+        public ProfessionalViewHolder(View view) {
             super(view);
 
             mItemLayout = (LinearLayout) view.findViewById(R.id.item_layout);

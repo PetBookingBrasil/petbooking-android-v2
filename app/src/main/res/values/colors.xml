@@ -45,5 +45,6 @@
     <!-- Components Colors -->
     <color name="past_date_color">#9A9A9A</color>
     <color name="professional_list_background">#BABABA</color>
+    <color name="date_list_background">#747474</color>
 
 </resources>

@@ -4,17 +4,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
-import com.google.gson.Gson;
 import com.petbooking.API.Appointment.AppointmentService;
-import com.petbooking.API.Generic.AvatarResp;
+import com.petbooking.API.Appointment.Models.ProfessionalResp;
 import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Models.AppointmentDate;
 import com.petbooking.Models.Professional;
 import com.petbooking.R;
 import com.petbooking.Utils.AppUtils;
@@ -34,6 +36,21 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
     private ArrayList<Professional> mProfessionalList;
     private ProfessionalListAdapter mProfessionalAdapter;
     private RecyclerView mRvProfessional;
+
+    /**
+     * Dates Components
+     */
+    private int selectedMonth = -1;
+    private RelativeLayout mDateListLayout;
+    private DateListAdapter mDateListAdapter;
+    private RecyclerView mRvAppointmentDate;
+    private SnapHelper mDateSnapHelper;
+
+    /**
+     * Dates Components
+     */
+    private DaysListAdapter mDaysListAdapter;
+    private RecyclerView mRvDays;
 
     ProfessionalListAdapter.OnSelectProfessionaListener professionaListener = new ProfessionalListAdapter.OnSelectProfessionaListener() {
         @Override
@@ -59,14 +76,43 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
         LinearLayoutManager mProfessionalLayout = new LinearLayoutManager(getContext());
         mProfessionalLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        mProfessionalAdapter = new ProfessionalListAdapter(getContext(), mProfessionalList, professionaListener);
+        LinearLayoutManager mDateLayout = new LinearLayoutManager(getContext());
+        mDateLayout.setOrientation(LinearLayout.HORIZONTAL);
 
+        LinearLayoutManager mDaysLayout = new LinearLayoutManager(getContext());
+        mDaysLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+        mProfessionalAdapter = new ProfessionalListAdapter(getContext(), mProfessionalList, professionaListener);
+        mDateListAdapter = new DateListAdapter(getContext(), new ArrayList<AppointmentDate>());
+        mDaysListAdapter = new DaysListAdapter(getContext(), new ArrayList<ProfessionalResp.Slot>());
+
+        /**
+         * Professional Recyclerview
+         */
         mFragmentLayout = (LinearLayout) view.findViewById(R.id.fragment_layout);
         mRvProfessional = (RecyclerView) view.findViewById(R.id.professional_list);
         mRvProfessional.setHasFixedSize(true);
         mRvProfessional.setLayoutManager(mProfessionalLayout);
 
+        /**
+         * Recycler Date
+         */
+        mDateSnapHelper = new LinearSnapHelper();
+        mDateListLayout = (RelativeLayout) view.findViewById(R.id.date_layout);
+        mRvAppointmentDate = (RecyclerView) view.findViewById(R.id.date_list);
+        mRvAppointmentDate.setHasFixedSize(true);
+        mRvAppointmentDate.setLayoutManager(mDateLayout);
+        mDateSnapHelper.attachToRecyclerView(mRvAppointmentDate);
+
+ /*       *//**
+         * RecyclerView Days
+         *//*
+        mRvDays = (RecyclerView) view.findViewById(R.id.day_list);
+        mRvDays.setHasFixedSize(true);
+        mRvDays.setLayoutManager(mDaysLayout);*/
+
         mRvProfessional.setAdapter(mProfessionalAdapter);
+        mRvAppointmentDate.setAdapter(mDateListAdapter);
 
         return view;
     }
@@ -108,6 +154,10 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
      */
     private void handleSelectProfessional() {
         Professional professional = mProfessionalList.get(selectedProfessional);
-        Log.i("SLOTS", new Gson().toJson(professional.availableSlots));
+
+        mDateListAdapter.updateList(professional.availableDates);
+        mDateListAdapter.notifyDataSetChanged();
+
+        mDateListLayout.setVisibility(View.VISIBLE);
     }
 }

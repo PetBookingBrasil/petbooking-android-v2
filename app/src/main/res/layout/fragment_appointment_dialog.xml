@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,7 +28,44 @@
             android:id="@+id/professional_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/date_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/date_list_background"
+        android:paddingBottom="@dimen/spacing_tiny"
+        android:paddingLeft="@dimen/spacing_xmicro"
+        android:paddingRight="@dimen/spacing_xmicro"
+        android:paddingTop="@dimen/spacing_tiny"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/previous_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            app:srcCompat="@drawable/ic_arrow_left" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/date_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/next_date"
+            android:layout_toRightOf="@+id/previous_date"
+            android:gravity="center" />
+
+        <ImageView
+            android:id="@+id/next_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@drawable/ic_arrow_right" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/confirm_appointment"

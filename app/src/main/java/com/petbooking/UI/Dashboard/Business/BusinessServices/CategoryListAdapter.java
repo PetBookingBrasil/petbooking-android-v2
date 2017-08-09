@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.Category;
 import com.petbooking.R;
 import com.petbooking.Utils.AppUtils;
@@ -26,6 +27,8 @@ import java.util.ArrayList;
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder> {
 
     private Context mContext;
+    private String petId;
+    private AppointmentManager mAppointmentManager;
     private OnSelectCategoryListener onSelectCategoryListener;
     private ArrayList<Category> mCategoryList;
     private int selectedPosition = -1;
@@ -33,6 +36,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     public CategoryListAdapter(Context context, ArrayList<Category> mCategoryList) {
         this.mContext = context;
         this.mCategoryList = mCategoryList;
+        this.mAppointmentManager = AppointmentManager.getInstance();
     }
 
     public void updateList(ArrayList<Category> categoryList) {
@@ -58,6 +62,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     public void onBindViewHolder(final CategoryViewHolder holder, final int position) {
         Category category = mCategoryList.get(position);
 
+        int totalAppointment = 0;
         int color = AppUtils.getCategoryColor(mContext, category.categoryName);
         String formatedText = mContext.getResources().getString(category.categoryText);
         GradientDrawable iconBackground = (GradientDrawable) holder.mIvCategoryIcon.getBackground();
@@ -66,6 +71,18 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
         holder.mIvCategoryIcon.setImageDrawable(category.icon);
         holder.mTvCategoryName.setText(formatedText);
+
+        if (petId != null) {
+            Log.d("PETID", petId);
+            totalAppointment = mAppointmentManager.getTotalCategoryAppointments(category.id, petId);
+        }
+
+        if (totalAppointment == 0) {
+            holder.mTvTotalAppointment.setVisibility(View.GONE);
+        } else {
+            holder.mTvTotalAppointment.setVisibility(View.VISIBLE);
+            holder.mTvTotalAppointment.setText(String.valueOf(totalAppointment));
+        }
 
         if (position == selectedPosition) {
             holder.mTvCategoryName.setTextColor(color);
@@ -106,6 +123,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         public LinearLayout mCategoryItem;
         public ImageView mIvCategoryIcon;
         public TextView mTvCategoryName;
+        public TextView mTvTotalAppointment;
 
         public CategoryViewHolder(View view) {
             super(view);
@@ -113,7 +131,17 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             mCategoryItem = (LinearLayout) view.findViewById(R.id.category_item);
             mIvCategoryIcon = (ImageView) view.findViewById(R.id.category_icon);
             mTvCategoryName = (TextView) view.findViewById(R.id.category_name);
+            mTvTotalAppointment = (TextView) view.findViewById(R.id.total_appointments);
         }
+    }
+
+    public void setPetId(String petId) {
+        this.petId = petId;
+    }
+
+    public void resetCategorySelected() {
+        selectedPosition = -1;
+        notifyItemChanged(selectedPosition);
     }
 
     public interface OnSelectCategoryListener {

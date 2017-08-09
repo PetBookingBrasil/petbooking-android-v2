@@ -19,6 +19,7 @@ import com.petbooking.API.Appointment.AppointmentService;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Managers.PreferenceManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
@@ -41,7 +42,7 @@ public class BusinessServicesFragment extends Fragment {
     private String userId;
     private Context mContext;
     private PetService mPetService;
-    private PreferenceManager mPreferenceManager;
+    private AppointmentManager mAppointmentManager;
     private AppointmentService mAppointmentService;
     private com.petbooking.API.Business.BusinessService mBusinessService;
 
@@ -125,14 +126,14 @@ public class BusinessServicesFragment extends Fragment {
         mBusinessService = new com.petbooking.API.Business.BusinessService();
         mPetService = new PetService();
         mAppointmentService = new AppointmentService();
-        mPreferenceManager = PreferenceManager.getInstance();
+        mAppointmentManager = AppointmentManager.getInstance();
         this.mContext = getContext();
         this.businessId = getArguments().getString("businessId", "0");
         this.userId = SessionManager.getInstance().getUserLogged().id;
 
-        if (businessId.equals("0") && mPreferenceManager.getString("businessId") != null) {
-            this.businessId = mPreferenceManager.getString("businessId");
-            mPreferenceManager.removeKey("businessId");
+        if (businessId.equals("0") && mAppointmentManager.getCurrentBusinessId() != null) {
+            this.businessId = mAppointmentManager.getCurrentBusinessId();
+            mAppointmentManager.removeKey("businessId");
         }
     }
 
@@ -268,7 +269,7 @@ public class BusinessServicesFragment extends Fragment {
      */
     public void showDetail(int position) {
         Intent detailItent = new Intent(mContext, ServiceDetailActivity.class);
-        mPreferenceManager.putString("businessId", this.businessId);
+        mAppointmentManager.setCurrentBusinessId(this.businessId);
         detailItent.putExtra("selected_pet", new Gson().toJson(mPetList.get(selectedPet)));
         detailItent.putExtra("selected_service", new Gson().toJson(mServiceList.get(position)));
         mContext.startActivity(detailItent);

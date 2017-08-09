@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 
+import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Managers.PreferenceManager;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Content.ContentTabsAdapter;
@@ -15,7 +16,7 @@ import com.petbooking.UI.Dashboard.Content.ContentTabsAdapter;
 public class BusinessActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
-    private PreferenceManager mPreferenceManager;
+    private AppointmentManager mAppointmentManager;
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -29,7 +30,7 @@ public class BusinessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business);
 
-        mPreferenceManager = PreferenceManager.getInstance();
+        mAppointmentManager = AppointmentManager.getInstance();
 
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -39,12 +40,12 @@ public class BusinessActivity extends AppCompatActivity {
         businessDistance = getIntent().getFloatExtra("businessDistance", 0);
 
         if (!getIntent().hasExtra("businessId")) {
-            businessId = mPreferenceManager.getString("businessId");
-            businessName = mPreferenceManager.getString("businessName");
-            businessDistance = mPreferenceManager.getFloat("businessDistance");
-            mPreferenceManager.removeKey("businessId");
-            mPreferenceManager.removeKey("businessName");
-            mPreferenceManager.removeKey("businessDistance");
+            businessId = mAppointmentManager.getCurrentBusinessId();
+            businessName = mAppointmentManager.getCurrentBusinessName();
+            businessDistance = mAppointmentManager.getCurrentBusinessDistance();
+            mAppointmentManager.removeKey("businessId");
+            mAppointmentManager.removeKey("businessName");
+            mAppointmentManager.removeKey("businessDistance");
         }
 
         getSupportActionBar().setElevation(0);
@@ -87,9 +88,9 @@ public class BusinessActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        mPreferenceManager.putString("businessId", this.businessId);
-        mPreferenceManager.putString("businessName", this.businessName);
-        mPreferenceManager.putFloat("businessDistance", this.businessDistance);
+        mAppointmentManager.setCurrentBusinessId(this.businessId);
+        mAppointmentManager.setCurrentBusinessName(this.businessName);
+        mAppointmentManager.setCurrentBusinessDistance(this.businessDistance);
         super.onPause();
     }
 }

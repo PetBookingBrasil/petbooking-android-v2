@@ -8,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
+import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarListAdapter.PetViewHolder> {
 
     private Context mContext;
+    private AppointmentManager mAppointmentManager;
     private OnSelectPetListener onSelectPetListener;
     private ArrayList<Pet> mPetList;
     private int selectedPosition = -1;
@@ -35,6 +39,7 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
     public PetCalendarListAdapter(Context context, ArrayList<Pet> petList, OnSelectPetListener onSelectPetListener) {
         this.mPetList = petList;
         this.mContext = context;
+        this.mAppointmentManager = AppointmentManager.getInstance();
         this.onSelectPetListener = onSelectPetListener;
     }
 
@@ -58,6 +63,14 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
         Pet pet = mPetList.get(position);
         int redColor = mContext.getResources().getColor(R.color.brand_primary);
         int textColor = mContext.getResources().getColor(R.color.text_color);
+        int totalAppointments = mAppointmentManager.getTotalAppointments(pet.id);
+
+        if (totalAppointments == 0) {
+            holder.mTvTotalAppointments.setVisibility(View.GONE);
+        } else {
+            holder.mTvTotalAppointments.setVisibility(View.VISIBLE);
+            holder.mTvTotalAppointments.setText(String.valueOf(totalAppointments));
+        }
 
         if (selectedPosition == position) {
             holder.mIvPhoto.setBorderColor(redColor);
@@ -122,6 +135,7 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
         public LinearLayout mItemLayout;
         public CircleImageView mIvPhoto;
         public TextView mTvName;
+        public TextView mTvTotalAppointments;
 
         public PetViewHolder(View view) {
             super(view);
@@ -129,6 +143,7 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
             mItemLayout = (LinearLayout) view.findViewById(R.id.item_layout);
             mIvPhoto = (CircleImageView) view.findViewById(R.id.pet_photo);
             mTvName = (TextView) view.findViewById(R.id.pet_name);
+            mTvTotalAppointments = (TextView) view.findViewById(R.id.total_appointments);
         }
     }
 

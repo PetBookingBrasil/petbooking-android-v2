@@ -11,6 +11,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.petbooking.Constants.AppConstants;
+import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Managers.PreferenceManager;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Pet;
@@ -20,6 +22,7 @@ import com.petbooking.UI.Dashboard.Business.BusinessServices.AdditionalServiceLi
 public class ServiceDetailActivity extends AppCompatActivity {
 
     private String businessName;
+    private String categoryId;
     private BusinessServices selectedService;
     private Pet selectedPet;
 
@@ -37,6 +40,14 @@ public class ServiceDetailActivity extends AppCompatActivity {
     private RecyclerView mRvAdditionalServices;
     private AdditionalServiceListAdapter mAdditionalAdapter;
 
+
+    AppointmentBottomFragment.OnAppointmentListener onAppointmentListener = new AppointmentBottomFragment.OnAppointmentListener() {
+        @Override
+        public void onAction(int code) {
+            finish();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +55,12 @@ public class ServiceDetailActivity extends AppCompatActivity {
 
         Gson mGson = new Gson();
         mAppointmentFragment = new AppointmentBottomFragment();
-        businessName = PreferenceManager.getInstance().getString("businessName");
+        businessName = AppointmentManager.getInstance().getCurrentBusinessName();
         getSupportActionBar().setTitle(businessName);
 
         String serviceData = getIntent().getStringExtra("selected_service");
         String petData = getIntent().getStringExtra("selected_pet");
+        categoryId = getIntent().getStringExtra("category_id");
 
         selectedService = mGson.fromJson(serviceData, BusinessServices.class);
         selectedPet = mGson.fromJson(petData, Pet.class);
@@ -87,6 +99,14 @@ public class ServiceDetailActivity extends AppCompatActivity {
 
         mCbPet.setText(selectedPet.name);
         mAppointmentFragment.setServiceId(selectedService.id);
+        mAppointmentFragment.setPetId(selectedPet.id);
+        mAppointmentFragment.setCategoryId(categoryId);
+        mAppointmentFragment.setOnAppointmentListener(onAppointmentListener);
         mAppointmentFragment.show(getSupportFragmentManager(), mAppointmentFragment.getTag());
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

@@ -19,18 +19,27 @@ import android.widget.RelativeLayout;
 import com.google.gson.Gson;
 import com.petbooking.API.Appointment.AppointmentService;
 import com.petbooking.API.Appointment.Models.ProfessionalResp;
+import com.petbooking.Constants.AppConstants;
 import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.AppointmentDate;
+import com.petbooking.Models.CartItem;
 import com.petbooking.Models.Professional;
 import com.petbooking.R;
 import com.petbooking.Utils.AppUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class AppointmentBottomFragment extends BottomSheetDialogFragment {
 
     private String serviceId;
+    private String petId;
+    private String categoryId;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private AppointmentService mAppointmentService;
+    private AppointmentManager mAppointmentManager;
+    private OnAppointmentListener onAppointmentListener;
     private LinearLayout mFragmentLayout;
 
     /**
@@ -76,6 +85,13 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
     private RecyclerView mRvTime;
     private TimeListAdapter mTimeAdapter;
 
+    View.OnClickListener confirmListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            confirmAppointment();
+        }
+    };
+
     ProfessionalListAdapter.OnSelectProfessionaListener professionaListener = new ProfessionalListAdapter.OnSelectProfessionaListener() {
         @Override
         public void onSelect(int position) {
@@ -116,6 +132,7 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
         @Override
         public void onSelect(int position) {
             if (position != -1) {
+                selectedTime = position;
                 mBtnConfirmAppointment.setEnabled(true);
             } else {
                 mBtnConfirmAppointment.setEnabled(false);
@@ -152,6 +169,7 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
         View view = inflater.inflate(R.layout.fragment_appointment_dialog, container, false);
 
         mAppointmentService = new AppointmentService();
+        mAppointmentManager = AppointmentManager.getInstance();
         mProfessionalList = new ArrayList<>();
         mDateList = new ArrayList<>();
         listProfessional();
@@ -182,6 +200,7 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
 
         mIvPreviousDate.setOnClickListener(btnDateListener);
         mIvNextDate.setOnClickListener(btnDateListener);
+        mBtnConfirmAppointment.setOnClickListener(confirmListener);
 
         /**
          * Professional Recyclerview
@@ -231,10 +250,6 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     }
 
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
-    }
-
     /**
      * List Professional
      */
@@ -258,6 +273,24 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
             }
         });
     }
+
+    /**
+     * Confirm Appointment
+     */
+    public void confirmAppointment() {
+        String businessId = mAppointmentManager.getCurrentBusinessId();
+        String startDate = dateFormat.format(mDateList.get(selectedMonth).days.get(selectedDay).date);
+        String startTime = mDateList.get(selectedMonth).days.get(selectedDay).times.get(selectedTime);
+
+        CartItem item = new CartItem(startDate, startTime, businessId, serviceId,
+                mProfessionalList.get(selectedProfessional).id, this.petId);
+
+        mAppointmentManager.incrementPetAppointment(petId);
+        mAppointmentManager.incrementCategoryAppointment(categoryId, petId);
+        onAppointmentListener.onAction(AppConstants.OK_ACTION);
+        Log.d("CARTITEM", new Gson().toJson(item));
+    }
+
 
     /**
      * Show days on select professional
@@ -309,4 +342,25 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
             mRvAppointmentDate.smoothScrollToPosition(selectedMonth);
         }
     }
+
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    public void setPetId(String petId) {
+        this.petId = petId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public void setOnAppointmentListener(OnAppointmentListener onAppointmentListener) {
+        this.onAppointmentListener = onAppointmentListener;
+    }
+
+    public interface OnAppointmentListener {
+        void onAction(int code);
+    }
+
 }

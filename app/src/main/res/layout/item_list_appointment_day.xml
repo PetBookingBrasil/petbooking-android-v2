@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/spacing_xmicro"
+    android:layout_marginRight="@dimen/spacing_xmicro"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/day_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:maxLength="3"
+        android:text="Qua"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="13sp" />
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/day"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/spacing_xmicro"
+        android:background="@drawable/selected_day_background"
+        android:gravity="center"
+        android:text="23"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+</LinearLayout>

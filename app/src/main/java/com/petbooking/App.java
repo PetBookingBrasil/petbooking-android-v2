@@ -31,7 +31,7 @@ public class App extends Application {
     public void initManagers() {
         PreferenceManager.getInstance().initialize(this);
         SessionManager.initialize(this);
-        AppointmentManager.initialize(this);
+        AppointmentManager.getInstance().initialize(this);
         LocationManager.getInstance().initialize(this);
     }
 

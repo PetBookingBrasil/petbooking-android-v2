@@ -12,6 +12,7 @@ public class AppConstants {
     public static final int SDK_VERSION = Build.VERSION.SDK_INT;
     public static final int PREF_PRIVATE_MODE = 0;
     public static final String PREF_NAME = "PBPref";
+    public static final String PREF_APPOINTMENT_NAME = "PBPrefAppointment";
 
     /**
      * Prefs

@@ -67,6 +67,27 @@
             app:srcCompat="@drawable/ic_arrow_right" />
     </RelativeLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/day_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/date_list_background"
+        android:paddingBottom="@dimen/spacing_tiny"
+        android:paddingLeft="@dimen/spacing_xmicro"
+        android:paddingRight="@dimen/spacing_xmicro"
+        android:paddingTop="@dimen/spacing_tiny"
+        android:visibility="gone" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/time_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/spacing_tiny"
+        android:paddingLeft="@dimen/spacing_xmicro"
+        android:paddingRight="@dimen/spacing_xmicro"
+        android:paddingTop="@dimen/spacing_tiny"
+        android:visibility="gone" />
+
     <Button
         android:id="@+id/confirm_appointment"
         style="@style/AppTheme.PrimaryButton"

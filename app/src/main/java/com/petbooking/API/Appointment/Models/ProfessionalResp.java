@@ -32,7 +32,7 @@ public class ProfessionalResp {
 
     public static class Slot {
         public Date date;
-        public List<String> times;
+        public ArrayList<String> times;
     }
 
 }

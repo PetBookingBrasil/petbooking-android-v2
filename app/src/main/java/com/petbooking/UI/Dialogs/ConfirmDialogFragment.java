@@ -121,7 +121,7 @@ public class ConfirmDialogFragment extends DialogFragment implements DialogInter
         mTvTitle.setText(mTitle);
         mTvText.setText(mText);
         mBtnConfirm.setText(mButtonConfirmText);
-        mBtnCancel.setText(R.string.dialog_cancel);
+        mBtnCancel.setText(mButtonCancelText);
     }
 
     public interface FinishDialogListener {

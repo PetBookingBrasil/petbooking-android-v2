@@ -94,6 +94,8 @@ public class BusinessServicesFragment extends Fragment {
         public void onSelect(int position) {
             if (position != -1) {
                 selectedPet = position;
+                mCategoryAdapter.setPetId(mPetList.get(selectedPet).id);
+                mCategoryAdapter.notifyDataSetChanged();
                 mRvCategory.setVisibility(View.VISIBLE);
             }
         }
@@ -194,6 +196,18 @@ public class BusinessServicesFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPets();
+        mPetAdapter.resetSelectedPosition();
+        mCategoryAdapter.resetCategorySelected();
+        selectedCategory = -1;
+        selectedPet = -1;
+        mRvCategory.setVisibility(View.GONE);
+        mRvServices.setVisibility(View.GONE);
+    }
+
     /**
      * Get Categories
      */
@@ -272,6 +286,7 @@ public class BusinessServicesFragment extends Fragment {
         mAppointmentManager.setCurrentBusinessId(this.businessId);
         detailItent.putExtra("selected_pet", new Gson().toJson(mPetList.get(selectedPet)));
         detailItent.putExtra("selected_service", new Gson().toJson(mServiceList.get(position)));
+        detailItent.putExtra("category_id", mCategoryList.get(selectedCategory).id);
         mContext.startActivity(detailItent);
     }
 

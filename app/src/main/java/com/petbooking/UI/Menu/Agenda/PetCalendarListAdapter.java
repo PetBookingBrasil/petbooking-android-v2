@@ -3,12 +3,10 @@ package com.petbooking.UI.Menu.Agenda;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -16,8 +14,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
-import com.petbooking.Utils.AppUtils;
-import com.petbooking.Utils.CommonUtils;
 
 import java.util.ArrayList;
 
@@ -63,7 +59,7 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
         Pet pet = mPetList.get(position);
         int redColor = mContext.getResources().getColor(R.color.brand_primary);
         int textColor = mContext.getResources().getColor(R.color.text_color);
-        int totalAppointments = mAppointmentManager.getTotalAppointments(pet.id);
+        int totalAppointments = mAppointmentManager.getTotalPetAppointments(pet.id);
 
         if (totalAppointments == 0) {
             holder.mTvTotalAppointments.setVisibility(View.GONE);

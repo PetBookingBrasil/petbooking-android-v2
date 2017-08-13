@@ -282,11 +282,10 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
         String startDate = dateFormat.format(mDateList.get(selectedMonth).days.get(selectedDay).date);
         String startTime = mDateList.get(selectedMonth).days.get(selectedDay).times.get(selectedTime);
 
-        CartItem item = new CartItem(startDate, startTime, businessId, serviceId,
-                mProfessionalList.get(selectedProfessional).id, this.petId);
+        CartItem item = new CartItem(startDate, startTime, businessId, serviceId, categoryId,
+                mProfessionalList.get(selectedProfessional), this.petId);
 
-        mAppointmentManager.incrementPetAppointment(petId);
-        mAppointmentManager.incrementCategoryAppointment(categoryId, petId);
+        mAppointmentManager.addItem(item);
         onAppointmentListener.onAction(AppConstants.OK_ACTION);
         Log.d("CARTITEM", new Gson().toJson(item));
     }

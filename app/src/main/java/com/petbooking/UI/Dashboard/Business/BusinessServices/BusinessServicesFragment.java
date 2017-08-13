@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.gson.Gson;
 import com.petbooking.API.Appointment.AppointmentService;
@@ -49,10 +50,11 @@ public class BusinessServicesFragment extends Fragment {
     /**
      * Flow Control
      */
+    private Button mBtnFinishScheduling;
     private String businessId = null;
     private int selectedPet = -1;
     private int selectedCategory = -1;
-
+    private int totalAppointments = 0;
 
     /**
      * Pet List
@@ -132,6 +134,7 @@ public class BusinessServicesFragment extends Fragment {
         this.mContext = getContext();
         this.businessId = getArguments().getString("businessId", "0");
         this.userId = SessionManager.getInstance().getUserLogged().id;
+        this.totalAppointments = mAppointmentManager.getTotalAppointments();
 
         if (businessId.equals("0") && mAppointmentManager.getCurrentBusinessId() != null) {
             this.businessId = mAppointmentManager.getCurrentBusinessId();
@@ -148,6 +151,12 @@ public class BusinessServicesFragment extends Fragment {
         mServiceList = new ArrayList<>();
         mCategoryList = new ArrayList<>();
         getCategories();
+
+        mBtnFinishScheduling = (Button) view.findViewById(R.id.btnFinishSchedule);
+
+        if (totalAppointments > 0) {
+            mBtnFinishScheduling.setEnabled(true);
+        }
 
         /**
          * Create Pet RecyclerView
@@ -206,6 +215,11 @@ public class BusinessServicesFragment extends Fragment {
         selectedPet = -1;
         mRvCategory.setVisibility(View.GONE);
         mRvServices.setVisibility(View.GONE);
+
+        totalAppointments = mAppointmentManager.getTotalAppointments();
+        if (totalAppointments > 0) {
+            mBtnFinishScheduling.setEnabled(true);
+        }
     }
 
     /**

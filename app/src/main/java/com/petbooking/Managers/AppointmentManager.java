@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.petbooking.Constants.AppConstants;
+import com.petbooking.Models.CartItem;
+
+import java.util.ArrayList;
 
 /**
  * Created by Luciano José on 08/08/2017.
@@ -13,6 +16,7 @@ import com.petbooking.Constants.AppConstants;
 public class AppointmentManager {
 
     private static Gson mJsonManager;
+    private ArrayList<CartItem> cart;
     private static AppointmentManager mInstance;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
@@ -29,6 +33,15 @@ public class AppointmentManager {
         pref = context.getSharedPreferences(AppConstants.PREF_APPOINTMENT_NAME, AppConstants.PREF_PRIVATE_MODE);
         editor = pref.edit();
         mJsonManager = new Gson();
+        cart = new ArrayList<>();
+    }
+
+    public void addItem(CartItem item) {
+        this.cart.add(item);
+        setServiceSelected(item.serviceId, item.petId);
+        incrementPetAppointment(item.petId);
+        incrementCategoryAppointment(item.categoryId, item.petId);
+        incrementTotalAppointments();
     }
 
     public void setCurrentBusinessId(String businessId) {
@@ -58,26 +71,44 @@ public class AppointmentManager {
         return pref.getFloat("businessDistance", 0);
     }
 
-    public void incrementPetAppointment(String petId) {
-        int totalAppointments = pref.getInt(petId + "_SERVICE", 0);
-        totalAppointments++;
-        editor.putInt(petId + "_SERVICE", totalAppointments);
+    private void incrementTotalAppointments() {
+        incrementKey("TOTAL_APPOINTMENTS");
+    }
+
+    private void incrementPetAppointment(String petId) {
+        incrementKey(petId + "_SERVICE");
+    }
+
+    private void incrementCategoryAppointment(String categoryId, String petId) {
+        incrementKey(categoryId + "_" + petId + "_TOTAL");
+    }
+
+    private void setServiceSelected(String serviceId, String petId) {
+        editor.putBoolean(serviceId + "_" + petId, true);
         editor.apply();
     }
 
-    public void incrementCategoryAppointment(String categoryId, String petId) {
-        int totalAppointments = pref.getInt(categoryId + "_" + petId + "_TOTAL", 0);
-        totalAppointments++;
-        editor.putInt(categoryId + "_" + petId + "_TOTAL", totalAppointments);
+    private void incrementKey(String key) {
+        int total = pref.getInt(key, 0);
+        total++;
+        editor.putInt(key, total);
         editor.apply();
     }
 
-    public int getTotalAppointments(String petId) {
+    public int getTotalAppointments() {
+        return pref.getInt("TOTAL_APPOINTMENTS", 0);
+    }
+
+    public int getTotalPetAppointments(String petId) {
         return pref.getInt(petId + "_SERVICE", 0);
     }
 
     public int getTotalCategoryAppointments(String categoryId, String petId) {
         return pref.getInt(categoryId + "_" + petId + "_TOTAL", 0);
+    }
+
+    public boolean isServiceSelected(String serviceId, String petId) {
+        return pref.getBoolean(serviceId + "_" + petId, false);
     }
 
     public AppointmentManager removeKey(String key) {

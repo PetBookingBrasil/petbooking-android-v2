@@ -98,6 +98,8 @@ public class BusinessServicesFragment extends Fragment {
                 selectedPet = position;
                 mCategoryAdapter.setPetId(mPetList.get(selectedPet).id);
                 mCategoryAdapter.notifyDataSetChanged();
+                mServiceAdapter.setPetId(mPetList.get(selectedPet).id);
+                mServiceAdapter.notifyDataSetChanged();
                 mRvCategory.setVisibility(View.VISIBLE);
             }
         }

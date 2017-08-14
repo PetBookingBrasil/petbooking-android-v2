@@ -1,8 +1,6 @@
 package com.petbooking.UI.Dashboard.Business.BusinessServices;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,7 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
+import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.R;
 
@@ -27,6 +25,8 @@ import java.util.ArrayList;
 
 public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.ServiceViewHolder> {
 
+    private String petId;
+    private AppointmentManager mAppointmentManager;
     private ArrayList<BusinessServices> mServiceList;
     private OnServiceListener serviceListener;
     private Context mContext;
@@ -35,10 +35,15 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
         this.mServiceList = serviceList;
         this.mContext = context;
         this.serviceListener = serviceListener;
+        this.mAppointmentManager = AppointmentManager.getInstance();
     }
 
     public void updateList(ArrayList<BusinessServices> serviceList) {
         this.mServiceList = serviceList;
+    }
+
+    public void setPetId(String petId) {
+        this.petId = petId;
     }
 
     @Override
@@ -56,9 +61,17 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
         final BusinessServices service = mServiceList.get(position);
 
         String price = mContext.getResources().getString(R.string.business_service_price, String.format("%.2f", service.price));
+        boolean isServiceChecked = false;
 
         holder.mTvServiceName.setText(service.name);
         holder.mTvServicePrice.setText(price);
+
+        if (petId != null) {
+            isServiceChecked = mAppointmentManager.isServiceSelected(service.id, petId);
+        }
+
+        holder.mCbService.setOnCheckedChangeListener(null);
+        holder.mCbService.setChecked(isServiceChecked);
 
         if (TextUtils.isEmpty(service.description)) {
             holder.mTvServiceDescription.setVisibility(View.GONE);

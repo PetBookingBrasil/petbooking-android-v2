@@ -76,6 +76,7 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
     private int currentPetIndex = -1;
     private ScheduleResp.Schedule currentSchedule;
     private ScheduleResp.PetSchedule currentPet;
+    private View mAgendaPlaceholder;
 
     AgendaServiceListAdapter.OnServiceActionListener onServiceActionListener = new AgendaServiceListAdapter.OnServiceActionListener() {
         @Override
@@ -167,6 +168,7 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
         mScheduleList = new ArrayList<>();
 
         mConfirmDialogFragment = ConfirmDialogFragment.newInstance();
+        mAgendaPlaceholder = findViewById(R.id.agenda_placeholder);
 
         /**
          * Create Pet RecyclerView
@@ -269,7 +271,15 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
             @Override
             public void onSuccess(Object response) {
                 mScheduleList = (ArrayList<ScheduleResp.Schedule>) response;
-                mHCCalendar.setSchedules(mScheduleList);
+
+                if(mScheduleList.size() == 0){
+                    mAgendaPlaceholder.setVisibility(View.VISIBLE);
+                    mRlCalendar.setVisibility(View.GONE);
+                }else{
+                    mAgendaPlaceholder.setVisibility(View.GONE);
+                    mRlCalendar.setVisibility(View.VISIBLE);
+                    mHCCalendar.setSchedules(mScheduleList);
+                }
 
                 AppUtils.hideDialog();
             }

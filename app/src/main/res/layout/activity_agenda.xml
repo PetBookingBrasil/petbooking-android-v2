@@ -8,13 +8,19 @@
     android:orientation="vertical"
     tools:context="com.petbooking.UI.Menu.Agenda.AgendaActivity">
 
+    <include
+        android:id="@+id/agenda_placeholder"
+        layout="@layout/include_agenda_placeholder"
+        android:visibility="visible" />
+
     <RelativeLayout
         android:id="@+id/calendar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/brand_primary"
         android:paddingBottom="@dimen/spacing_small"
-        android:paddingTop="@dimen/spacing_small">
+        android:paddingTop="@dimen/spacing_small"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/previous_date"

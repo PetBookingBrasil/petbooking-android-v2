@@ -176,6 +176,8 @@
     <string name="cancel_service_button">Sim, cancelar agendamento</string>
     <string name="cancel_service_message">Olá, você está prestes a cancelar um
         agendamento já configurado. Quando cancelar não será possível reagendar o mesmo serviço.\n \n Deseja realmente cancelar?</string>
+    <string name="agenda_empty_title">Ops, sua agenda encontra-se vazia.</string>
+    <string name="agenda_empty_text">O que você esta esperando para agendar os mais variados serviços para seus pets no Pet Booking?</string>
 
     <!-- Appointment -->
     <string name="choose_professional">Escolha o profissional</string>

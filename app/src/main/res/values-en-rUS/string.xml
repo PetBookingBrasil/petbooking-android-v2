@@ -153,6 +153,8 @@
     <string name="cancel_service_button">Yes, cancel schedule</string>
     <string name="cancel_service_message">Hello, you are about to cancel an already configured schedule. When canceling,
         you will not be able to reschedule the same service. \n \n Do you really want to cancel?</string>
+    <string name="agenda_empty_title">Oops, your schedule is empty.</string>
+    <string name="agenda_empty_text">What are you waiting for to schedule the most varied services for your pets at Pet Booking?</string>
 
     <!-- Appointment -->
     <string name="choose_professional">Choose the professional</string>

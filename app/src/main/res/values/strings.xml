@@ -185,6 +185,7 @@
     <string name="cancel_appointment_title">Atenção!</string>
     <string name="cancel_appointment_text">Todos os serviços agendados serão perdidos ao voltar. Deseja cancelar?</string>
     <string name="confirm_cancel_appointment">Quero cancelar</string>
+    <string name="appointment_date_info">%1$s de %2$s, %3$s - %4$s</string>
 
     <!-- Dialog -->
     <string name="dialog_picture_title">Selecionar foto de perfil</string>

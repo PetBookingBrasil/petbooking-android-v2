@@ -232,6 +232,10 @@ public class CommonUtils {
         return calendarItem;
     }
 
+    public static String uppercaseFirstLetter(String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
     public static int getDeviceWidth(Context context) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager windowmanager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);

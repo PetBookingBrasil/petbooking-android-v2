@@ -8,19 +8,28 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.petbooking.API.Appointment.AppointmentService;
 import com.petbooking.Constants.AppConstants;
+import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Managers.PreferenceManager;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Pet;
+import com.petbooking.Models.Professional;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.BusinessServices.AdditionalServiceListAdapter;
+import com.petbooking.Utils.AppUtils;
+
+import java.util.ArrayList;
 
 public class ServiceDetailActivity extends AppCompatActivity {
 
+    private AppointmentService mAppointmentService;
     private String businessName;
     private String categoryId;
     private BusinessServices selectedService;
@@ -40,6 +49,28 @@ public class ServiceDetailActivity extends AppCompatActivity {
     private RecyclerView mRvAdditionalServices;
     private AdditionalServiceListAdapter mAdditionalAdapter;
 
+    /**
+     * Professional Components
+     */
+    private int selectedProfessional = -1;
+    private LinearLayoutManager mProfessionalLayout;
+    private RelativeLayout mProfessionalContainer;
+    private ArrayList<Professional> mProfessionalList;
+    private ProfessionalListAdapter mProfessionalAdapter;
+    private RecyclerView mRvProfessional;
+
+    ProfessionalListAdapter.OnSelectProfessionaListener professionaListener = new ProfessionalListAdapter.OnSelectProfessionaListener() {
+        @Override
+        public void onSelect(int position) {
+            if (position != -1 && position != selectedProfessional) {
+                selectedProfessional = position;
+                mProfessionalContainer.setVisibility(View.GONE);
+                mAppointmentFragment.show(getSupportFragmentManager(), mAppointmentFragment.getTag());
+                //handleSelectProfessional();
+            }
+        }
+    };
+
 
     AppointmentBottomFragment.OnAppointmentListener onAppointmentListener = new AppointmentBottomFragment.OnAppointmentListener() {
         @Override
@@ -55,6 +86,8 @@ public class ServiceDetailActivity extends AppCompatActivity {
 
         Gson mGson = new Gson();
         mAppointmentFragment = new AppointmentBottomFragment();
+        mAppointmentService = new AppointmentService();
+        mProfessionalList = new ArrayList<>();
         businessName = AppointmentManager.getInstance().getCurrentBusinessName();
         getSupportActionBar().setTitle(businessName);
 
@@ -62,8 +95,21 @@ public class ServiceDetailActivity extends AppCompatActivity {
         String petData = getIntent().getStringExtra("selected_pet");
         categoryId = getIntent().getStringExtra("category_id");
 
+        mProfessionalLayout = new LinearLayoutManager(this);
+        mProfessionalLayout.setOrientation(LinearLayout.HORIZONTAL);
+
         selectedService = mGson.fromJson(serviceData, BusinessServices.class);
         selectedPet = mGson.fromJson(petData, Pet.class);
+
+        /**
+         * Professional Recyclerview
+         */
+        mProfessionalAdapter = new ProfessionalListAdapter(this, mProfessionalList, professionaListener);
+        mProfessionalContainer = (RelativeLayout) findViewById(R.id.professional_container);
+        mRvProfessional = (RecyclerView) findViewById(R.id.professional_list);
+        mRvProfessional.setHasFixedSize(true);
+        mRvProfessional.setLayoutManager(mProfessionalLayout);
+        listProfessional();
 
         mRvAdditionalServices = (RecyclerView) findViewById(R.id.additional_services);
 
@@ -98,11 +144,34 @@ public class ServiceDetailActivity extends AppCompatActivity {
         }
 
         mCbPet.setText(selectedPet.name);
+        mRvProfessional.setAdapter(mProfessionalAdapter);
         mAppointmentFragment.setService(selectedService);
         mAppointmentFragment.setPet(selectedPet);
         mAppointmentFragment.setCategoryId(categoryId);
         mAppointmentFragment.setOnAppointmentListener(onAppointmentListener);
-        mAppointmentFragment.show(getSupportFragmentManager(), mAppointmentFragment.getTag());
+    }
+
+    /**
+     * List Professional
+     */
+    public void listProfessional() {
+        AppUtils.showLoadingDialog(this);
+        mAppointmentService.listProfessional(this.selectedService.id, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                mProfessionalList = (ArrayList<Professional>) response;
+
+                mProfessionalAdapter.updateList(mProfessionalList);
+                mProfessionalAdapter.notifyDataSetChanged();
+
+                AppUtils.hideDialog();
+            }
+
+            @Override
+            public void onError(Object error) {
+                AppUtils.hideDialog();
+            }
+        });
     }
 
     @Override

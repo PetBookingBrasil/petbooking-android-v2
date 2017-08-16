@@ -11,23 +11,24 @@ public class CartItem {
     public String startDate;
     public String startTime;
     public String businessId;
-    public String serviceId;
+    public BusinessServices service;
     public String categoryId;
     public Professional professional;
-    public String petId;
+    public Pet pet;
     public String notes;
+    public double totalPrice;
     public boolean withTransportation;
     public ArrayList<String> additionalServiceIds;
 
-    public CartItem(String startDate, String startTime, String businessId, String serviceId,
-                    String categoryId, Professional professional, String petId) {
+    public CartItem(String startDate, String startTime, String businessId, BusinessServices service,
+                    String categoryId, Professional professional, Pet pet) {
         this.startDate = startDate;
         this.startTime = startTime;
         this.businessId = businessId;
-        this.serviceId = serviceId;
+        this.service = service;
         this.categoryId = categoryId;
         this.professional = professional;
-        this.petId = petId;
+        this.pet = pet;
         this.withTransportation = false;
         this.additionalServiceIds = new ArrayList<>();
     }

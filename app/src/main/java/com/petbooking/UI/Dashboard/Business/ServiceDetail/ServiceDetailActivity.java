@@ -98,8 +98,8 @@ public class ServiceDetailActivity extends AppCompatActivity {
         }
 
         mCbPet.setText(selectedPet.name);
-        mAppointmentFragment.setServiceId(selectedService.id);
-        mAppointmentFragment.setPetId(selectedPet.id);
+        mAppointmentFragment.setService(selectedService);
+        mAppointmentFragment.setPet(selectedPet);
         mAppointmentFragment.setCategoryId(categoryId);
         mAppointmentFragment.setOnAppointmentListener(onAppointmentListener);
         mAppointmentFragment.show(getSupportFragmentManager(), mAppointmentFragment.getTag());

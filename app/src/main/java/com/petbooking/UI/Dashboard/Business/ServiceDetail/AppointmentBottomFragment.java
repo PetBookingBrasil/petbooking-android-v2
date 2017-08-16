@@ -23,7 +23,9 @@ import com.petbooking.Constants.AppConstants;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.AppointmentDate;
+import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.CartItem;
+import com.petbooking.Models.Pet;
 import com.petbooking.Models.Professional;
 import com.petbooking.R;
 import com.petbooking.Utils.AppUtils;
@@ -33,8 +35,8 @@ import java.util.ArrayList;
 
 public class AppointmentBottomFragment extends BottomSheetDialogFragment {
 
-    private String serviceId;
-    private String petId;
+    private BusinessServices service;
+    private Pet pet;
     private String categoryId;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private AppointmentService mAppointmentService;
@@ -255,7 +257,7 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
      */
     public void listProfessional() {
         AppUtils.showLoadingDialog(getContext());
-        mAppointmentService.listProfessional(this.serviceId, new APICallback() {
+        mAppointmentService.listProfessional(this.service.id, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 mProfessionalList = (ArrayList<Professional>) response;
@@ -282,8 +284,10 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
         String startDate = dateFormat.format(mDateList.get(selectedMonth).days.get(selectedDay).date);
         String startTime = mDateList.get(selectedMonth).days.get(selectedDay).times.get(selectedTime);
 
-        CartItem item = new CartItem(startDate, startTime, businessId, serviceId, categoryId,
-                mProfessionalList.get(selectedProfessional), this.petId);
+        CartItem item = new CartItem(startDate, startTime, businessId, service, categoryId,
+                mProfessionalList.get(selectedProfessional), pet);
+
+        item.totalPrice += service.price;
 
         mAppointmentManager.addItem(item);
         onAppointmentListener.onAction(AppConstants.OK_ACTION);
@@ -342,12 +346,12 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
         }
     }
 
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
+    public void setService(BusinessServices service) {
+        this.service = service;
     }
 
-    public void setPetId(String petId) {
-        this.petId = petId;
+    public void setPet(Pet pet) {
+        this.pet = pet;
     }
 
     public void setCategoryId(String categoryId) {

@@ -38,10 +38,24 @@ public class AppointmentManager {
 
     public void addItem(CartItem item) {
         this.cart.add(item);
-        setServiceSelected(item.serviceId, item.petId);
-        incrementPetAppointment(item.petId);
-        incrementCategoryAppointment(item.categoryId, item.petId);
+        setServiceSelected(item.service.id, item.pet.id);
+        saveItem(item);
+        incrementPetAppointment(item.pet.id);
+        incrementCategoryAppointment(item.categoryId, item.pet.id);
         incrementTotalAppointments();
+    }
+
+    private void saveItem(CartItem item) {
+        editor.putString(item.service.id + "_" + item.pet.id + "_ITEM", mJsonManager.toJson(item));
+        editor.apply();
+    }
+
+    public CartItem getItem(String serviceId, String petId) {
+        if (pref.getString(serviceId + "_" + petId + "_ITEM", "").equals("")) {
+            return null;
+        }
+
+        return mJsonManager.fromJson(pref.getString(serviceId + "_" + petId + "_ITEM", ""), CartItem.class);
     }
 
     public void setCurrentBusinessId(String businessId) {

@@ -22,8 +22,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_marginBottom="@dimen/spacing_xmicro"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_xmicro">
 
         <CheckBox
             android:id="@+id/service_checkbox"
@@ -38,8 +38,8 @@
             android:id="@+id/item_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_micro"
             android:layout_marginLeft="@dimen/spacing_xmicro"
+            android:layout_marginTop="@dimen/spacing_micro"
             android:layout_toRightOf="@+id/service_checkbox"
             android:orientation="vertical">
 
@@ -77,35 +77,25 @@
                 android:layout_marginTop="8dp"
                 android:maxLines="3"
                 android:text="lraoie hjadsgjadsg fjadsgfhqg fwehjghqjwe gdhqewjgdhjqewdg qewhjqgwed hqjwedg jqewhdgqwe jhqewg dhqwejg qwedjhqedg jqhewdg " />
-            <!--
-                    <TextView
-                        android:id="@+id/additional_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/spacing_micro"
-                        android:layout_marginLeft="@dimen/spacing_xmicro"
-                        android:layout_marginRight="@dimen/spacing_xmicro"
-                        android:layout_marginTop="@dimen/spacing_xmicro"
-                        android:text="@string/business_label_additional"
-                        android:textSize="14sp"
-                        android:visibility="gone" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/additional_services"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
+            <TextView
+                android:id="@+id/additional_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_micro"
+                android:layout_marginLeft="@dimen/spacing_xmicro"
+                android:layout_marginRight="@dimen/spacing_xmicro"
+                android:layout_marginTop="@dimen/spacing_xmicro"
+                android:text="@string/business_label_additional"
+                android:textSize="14sp"
+                android:visibility="gone" />
 
-                    <View
-                        android:id="@+id/additional_separator"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/spacing_nano"
-                        android:layout_marginLeft="@dimen/spacing_xmicro"
-                        android:layout_marginRight="@dimen/spacing_xmicro"
-                        android:layout_marginTop="@dimen/spacing_xtiny"
-                        android:background="@color/default_gray"
-                        android:paddingRight="@dimen/spacing_xtiny"
-                        android:visibility="gone" />-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/additional_services"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
         </LinearLayout>
 
     </RelativeLayout>
@@ -131,7 +121,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/spacing_micro"/>
+            android:layout_marginLeft="@dimen/spacing_micro" />
 
         <TextView
             android:id="@+id/professional_name"

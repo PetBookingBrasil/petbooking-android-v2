@@ -1,6 +1,7 @@
 package com.petbooking.UI.Dashboard.Business.BusinessServices;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -76,6 +77,9 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
     public void onBindViewHolder(final ServiceViewHolder holder, final int position) {
         final BusinessServices service = mServiceList.get(position);
 
+        LinearLayoutManager mAdditionalLayout;
+        AdditionalServiceListAdapter mAdditionalAdapter;
+
         Calendar calendar = new GregorianCalendar();
         Calendar timeCalendar = Calendar.getInstance();
         boolean isServiceChecked = false;
@@ -136,11 +140,32 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
             holder.mTvServiceDescription.setVisibility(View.VISIBLE);
         }
 
+        if (service.additionalServices.size() != 0 && isServiceChecked) {
+            mAdditionalLayout = new LinearLayoutManager(mContext);
+            mAdditionalLayout.setOrientation(LinearLayoutManager.VERTICAL);
+
+            mAdditionalAdapter = new AdditionalServiceListAdapter(mContext, service.additionalServices, null);
+            mAdditionalAdapter.setPetId(petId);
+            mAdditionalAdapter.setFromDetail(false);
+
+            holder.mRvAdditionalServices.setHasFixedSize(true);
+            holder.mRvAdditionalServices.setLayoutManager(mAdditionalLayout);
+            holder.mRvAdditionalServices.setAdapter(mAdditionalAdapter);
+
+            holder.mTvAdditionalLabel.setVisibility(View.VISIBLE);
+            holder.mRvAdditionalServices.setVisibility(View.VISIBLE);
+        } else {
+            holder.mTvAdditionalLabel.setVisibility(View.GONE);
+            holder.mRvAdditionalServices.setVisibility(View.GONE);
+        }
+
         holder.mCbService.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     serviceListener.onSelect(position);
+                } else {
+                    serviceListener.onRemove(position);
                 }
             }
         });
@@ -164,6 +189,8 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
         public CircleImageView mIvProfessionalPhoto;
         public TextView mTvProfessionalName;
         public View mSeparatorLine;
+        public RecyclerView mRvAdditionalServices;
+        public TextView mTvAdditionalLabel;
 
         public ServiceViewHolder(View view) {
             super(view);
@@ -179,11 +206,15 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
             mTvServiceDescription = (TextView) view.findViewById(R.id.service_description);
             mIvProfessionalPhoto = (CircleImageView) view.findViewById(R.id.professional_photo);
             mTvProfessionalName = (TextView) view.findViewById(R.id.professional_name);
+            mTvAdditionalLabel = (TextView) view.findViewById(R.id.additional_label);
+            mRvAdditionalServices = (RecyclerView) view.findViewById(R.id.additional_services);
         }
     }
 
     public interface OnServiceListener {
         void onSelect(int position);
+
+        void onRemove(int position);
     }
 
 }

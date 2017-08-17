@@ -2,6 +2,7 @@ package com.petbooking.API.Business;
 
 import com.petbooking.API.Business.Models.BusinessResp;
 import com.petbooking.API.Business.Models.BusinessesResp;
+import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.API.Business.Models.FavoriteRqt;
 import com.petbooking.API.Business.Models.ReviewResp;
@@ -30,6 +31,15 @@ public interface BusinessInterface {
                                       @Query(APIConstants.QUERY_PAGE_LIMIT) int limit);
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
+    @GET(APIBusinessConstants.BUSINESS_SEARCH_ENDPOINT)
+    Call<BusinessesResp> searchBusiness(@Query(APIConstants.QUERY_COORDS) String coords,
+                                        @Query(APIConstants.QUERY_USER_ID) String userId,
+                                        @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex,
+                                        @Query(APIConstants.QUERY_PAGE_LIMIT) int limit,
+                                        @Query(APIConstants.QUERY_CATEGORY_TEMPLATE) String categoryID,
+                                        @Query(APIConstants.QUERY_TEXT) String text);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @GET(APIBusinessConstants.ENDPOINT_BUSINESS_REVIEWS)
     Call<ReviewResp> listBusinessReviews(@Path(APIBusinessConstants.PATH_BUSINESS_ID) String businessID,
                                          @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex);
@@ -40,17 +50,14 @@ public interface BusinessInterface {
     Call<BusinessResp> getBusiness(@Path(APIBusinessConstants.PATH_BUSINESS_ID) String businessId,
                                    @Query(APIConstants.QUERY_USER_ID) String userId);
 
-    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
-    @GET(APIBusinessConstants.BUSINESS_HIGHLIGHT_ENDPOINT)
-    Call<BusinessesResp> listHighlightBusiness(@Query(APIConstants.QUERY_USER_ID) String userId);
-
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
-    @GET(APIBusinessConstants.BUSINESS_BY_CATEGORY_ENDPOINT)
-    Call<BusinessesResp> listByCategory(@Path(APIBusinessConstants.PATH_CATEGORY_ID) String categoryID,
-                                        @Query(APIBusinessConstants.QUERY_USER_ID) String userID,
-                                        @Query(APIConstants.QUERY_COORDS) String coords,
-                                        @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex);
+    @GET(APIBusinessConstants.SERVICES_CATEGORIES_ENDPOINT)
+    Call<CategoryResp> listCategories();
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
+    @GET(APIBusinessConstants.BUSINESS_CATEGORIES_ENDPOINT)
+    Call<CategoryResp> listBusinessCategories(@Path(APIBusinessConstants.PATH_BUSINESS_ID) String businessId);
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
     @POST(APIBusinessConstants.FAVORITES_CREATE_ENDPOINT)

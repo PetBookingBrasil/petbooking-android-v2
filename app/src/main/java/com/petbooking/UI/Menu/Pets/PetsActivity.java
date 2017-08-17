@@ -6,9 +6,11 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
+import android.view.View;
 
 import com.petbooking.API.Pet.Models.ListPetsResp;
 import com.petbooking.API.Pet.PetService;
+import com.petbooking.App;
 import com.petbooking.BaseActivity;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Interfaces.APICallback;
@@ -19,6 +21,7 @@ import com.petbooking.R;
 import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Menu.Pets.RegisterPet.RegisterPetActivity;
+import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
 
@@ -32,6 +35,7 @@ public class PetsActivity extends BaseActivity implements
     private User currentUser;
     private String petId;
 
+    private View mPetsPlaceholder;
     private RecyclerView mRvPets;
     private PetListAdapter mAdapter;
     private ArrayList<Pet> mPets;
@@ -54,6 +58,7 @@ public class PetsActivity extends BaseActivity implements
         mConfirmDialogFragment = ConfirmDialogFragment.newInstance();
         mFeedbackDialogFragment = FeedbackDialogFragment.newInstance();
 
+        mPetsPlaceholder = findViewById(R.id.pets_placeholder);
         mRvPets = (RecyclerView) findViewById(R.id.pet_list);
         mRvPets.setHasFixedSize(true);
 
@@ -105,17 +110,27 @@ public class PetsActivity extends BaseActivity implements
      * @param userId
      */
     private void listPets(String userId) {
+        AppUtils.showLoadingDialog(this);
         mPetService.listPets(userId, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 mPets = (ArrayList<Pet>) response;
-                mAdapter.updateList(mPets);
-                mAdapter.notifyDataSetChanged();
+                if (mPets.size() == 0) {
+                    mPetsPlaceholder.setVisibility(View.VISIBLE);
+                    mRvPets.setVisibility(View.GONE);
+                } else {
+                    mPetsPlaceholder.setVisibility(View.GONE);
+                    mRvPets.setVisibility(View.VISIBLE);
+                    mAdapter.updateList(mPets);
+                    mAdapter.notifyDataSetChanged();
+                }
+
+                AppUtils.hideDialog();
             }
 
             @Override
             public void onError(Object error) {
-
+                AppUtils.hideDialog();
             }
         });
     }
@@ -127,9 +142,11 @@ public class PetsActivity extends BaseActivity implements
      * @param petId
      */
     public void removePet(String userId, String petId) {
+        AppUtils.showLoadingDialog(this);
         mPetService.removePet(userId, petId, new APICallback() {
             @Override
             public void onSuccess(Object response) {
+                AppUtils.hideDialog();
                 mFeedbackDialogFragment.setDialogInfo(R.string.remove_pet_title, R.string.success_remove_pet,
                         R.string.dialog_button_ok, AppConstants.OK_ACTION);
                 mFeedbackDialogFragment.show(getSupportFragmentManager(), "FEEDBACK");
@@ -137,7 +154,7 @@ public class PetsActivity extends BaseActivity implements
 
             @Override
             public void onError(Object error) {
-
+                AppUtils.hideDialog();
             }
         });
     }

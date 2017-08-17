@@ -2,8 +2,6 @@ package com.petbooking.UI.Widget.Adapters;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +13,7 @@ import com.petbooking.R;
 import com.petbooking.Utils.CommonUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Luciano José on 23/05/2017.
@@ -24,11 +23,13 @@ import java.util.ArrayList;
 public class HorizontalCalendarAdapter extends RecyclerView.Adapter<HorizontalCalendarAdapter.HorizontalCalendarHolder> {
 
     private Context mContext;
+    private Date today;
     private ArrayList<CalendarItem> mDaysList;
 
     public HorizontalCalendarAdapter(Context context, ArrayList<CalendarItem> daysList) {
         this.mDaysList = daysList;
         this.mContext = context;
+        this.today = new Date();
     }
 
     public void updateList(ArrayList<CalendarItem> daysList) {
@@ -53,6 +54,14 @@ public class HorizontalCalendarAdapter extends RecyclerView.Adapter<HorizontalCa
         holder.mTvDay.setText(CommonUtils.formatDay(date.day));
         holder.mTvDayName.setText(CommonUtils.formatDayName(date.dayName));
         holder.mTvMonth.setText(date.monthName + ", " + date.year);
+
+        if (date.date.before(today)) {
+            holder.mTvDay.setTextColor(Color.WHITE);
+            holder.mTvDay.setBackground(mContext.getResources().getDrawable(R.drawable.past_day_background));
+        } else if (date.date.after(today)) {
+            holder.mTvDay.setTextColor(mContext.getResources().getColor(R.color.brand_primary));
+            holder.mTvDay.setBackground(mContext.getResources().getDrawable(R.drawable.selected_day_background));
+        }
     }
 
     @Override

@@ -29,7 +29,7 @@ public class SessionManager {
     }
 
     public static void initialize(Context context) {
-        mPreferenceManager = new PreferenceManager(context);
+        mPreferenceManager = PreferenceManager.getInstance();
         mJsonManager = new Gson();
     }
 

@@ -8,9 +8,14 @@ import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.petbooking.API.User.Models.ScheduleResp;
+import com.petbooking.Components.GravitySnapHelper.GravitySnapHelper;
+import com.petbooking.Models.Appointment;
 import com.petbooking.Models.CalendarItem;
 import com.petbooking.R;
 import com.petbooking.UI.Widget.Adapters.HorizontalCalendarAdapter;
@@ -29,6 +34,8 @@ import java.util.Locale;
 
 public class HorizontalCalendar extends LinearLayout {
 
+    private OnDateScrollListener onDateScrollListener;
+
     /**
      * Components
      */
@@ -44,8 +51,24 @@ public class HorizontalCalendar extends LinearLayout {
     private int currentPosition;
     private int defaultPosition;
     private Date defaultDate;
-    private Date startDate;
-    private Date endDate;
+    private ArrayList<ScheduleResp.Schedule> schedules;
+
+    private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (newState == RecyclerView.SCROLL_STATE_IDLE && mLayoutManager.findFirstCompletelyVisibleItemPosition() != -1) {
+                int itemPosition = mLayoutManager.findFirstCompletelyVisibleItemPosition();
+                currentPosition = itemPosition;
+                onDateScrollListener.onScroll(itemPosition);
+            }
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+        }
+    };
 
     public HorizontalCalendar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -56,11 +79,9 @@ public class HorizontalCalendar extends LinearLayout {
         View view = View.inflate(context, R.layout.widget_horizontal_calendar, this);
 
         defaultDate = new Date();
-        CalendarItem item = CommonUtils.parseCalendarItem(defaultDate);
 
         mDateList = new ArrayList<>();
-        mDateList.add(item);
-        currentPosition = 0;
+        currentPosition = -1;
 
         mRvCalendar = (RecyclerView) view.findViewById(R.id.date_list);
         mLayoutManager = new LinearLayoutManager(context);
@@ -71,8 +92,38 @@ public class HorizontalCalendar extends LinearLayout {
         mRvCalendar.setLayoutManager(mLayoutManager);
         mAdapter = new HorizontalCalendarAdapter(context, mDateList);
         mRvCalendar.setAdapter(mAdapter);
+        mRvCalendar.addOnScrollListener(scrollListener);
         mSnapHelper.attachToRecyclerView(mRvCalendar);
 
+    }
+
+    /**
+     * Select Default date
+     */
+    public void selectDefaultDate() {
+        int i = 0;
+        int nextDate = -1;
+        int beforeDate = -1;
+
+        for (CalendarItem item : mDateList) {
+            if ((nextDate == -1 && item.date.after(defaultDate)) ||
+                    (nextDate != -1 && item.date.before(mDateList.get(nextDate).date))) {
+                nextDate = i;
+            }
+
+            if ((beforeDate == -1 && item.date.before(defaultDate)) ||
+                    (beforeDate != -1 && item.date.before(mDateList.get(beforeDate).date))) {
+                beforeDate = i;
+            }
+
+            i++;
+        }
+
+        if (nextDate != -1) {
+            defaultPosition = nextDate;
+        } else if (beforeDate != -1) {
+            defaultPosition = beforeDate;
+        }
     }
 
     /**
@@ -98,59 +149,159 @@ public class HorizontalCalendar extends LinearLayout {
     }
 
     /**
-     * Set Date Interval
+     * Get Current date index
      */
-    public void setDateInterval(Date startDate, Date endDate) {
-        this.startDate = startDate;
-        this.endDate = endDate;
-
-        new InitializeDatesList().execute();
+    public int getCurrentDateIndex() {
+        return this.currentPosition != mDateList.size() ? this.currentPosition : (currentPosition - 1);
     }
 
-    private class InitializeDatesList extends AsyncTask<Void, Void, Void> {
+    /**
+     * Set Date Interval
+     */
+    public void setSchedules(ArrayList<ScheduleResp.Schedule> schedules) {
+        this.schedules = schedules;
+        initDateList();
+    }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
+    /**
+     * Check if is the first date
+     *
+     * @return
+     */
+    public boolean isFirstDate() {
+        if (this.currentPosition == 0) {
+            return true;
         }
 
-        @Override
-        protected Void doInBackground(Void... params) {
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            String dayName;
-            String monthName;
+        return false;
+    }
 
-            mDateList = new ArrayList<CalendarItem>();
-            CalendarItem calendarItem;
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(startDate);
-
-            while (calendar.getTime().before(endDate)) {
-                dayName = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
-                monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
-                calendarItem = new CalendarItem(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR),
-                        dayName,
-                        monthName);
-
-                mDateList.add(calendarItem);
-
-                if (df.format(calendar.getTime()).equals(df.format(defaultDate))) {
-                    defaultPosition = mDateList.size() - 1;
-                }
-
-                calendar.add(Calendar.DATE, 1);
-            }
-
-            return null;
+    /**
+     * Check if is the last date
+     *
+     * @return
+     */
+    public boolean isLastDate() {
+        if (this.currentPosition == mDateList.size()) {
+            return true;
         }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        return false;
+    }
+
+
+    /**
+     * Add Future Date
+     *
+     * @param schedules
+     */
+    public void addPastDate(ArrayList<ScheduleResp.Schedule> schedules) {
+        ArrayList<CalendarItem> pastDates = createDateList(schedules);
+        currentPosition = schedules.size() - 1;
+        pastDates.addAll(mDateList);
+        mDateList = pastDates;
+        mAdapter.updateList(pastDates);
+        mAdapter.notifyDataSetChanged();
+        mRvCalendar.scrollToPosition(currentPosition);
+    }
+
+
+    /**
+     * Add Future Date
+     *
+     * @param schedules
+     */
+    public void addFutureDate(ArrayList<ScheduleResp.Schedule> schedules) {
+        currentPosition = mDateList.size();
+        mDateList.addAll(createDateList(schedules));
+        mAdapter.updateList(mDateList);
+        mAdapter.notifyDataSetChanged();
+        mRvCalendar.scrollToPosition(currentPosition);
+    }
+
+    /**
+     * Set OnScrollListener
+     *
+     * @param onDateScrollListener
+     */
+    public void setOnDateScrollListener(OnDateScrollListener onDateScrollListener) {
+        this.onDateScrollListener = onDateScrollListener;
+    }
+
+    /**
+     * Init Date List
+     */
+    public void initDateList() {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String dayName;
+        String monthName;
+
+        mDateList = new ArrayList<>();
+        CalendarItem calendarItem;
+        Calendar calendar = new GregorianCalendar();
+
+        /**
+         * Create Dates for Calendar
+         * based on Appointments
+         */
+        for (ScheduleResp.Schedule schedule : schedules) {
+            calendar.setTime(schedule.date);
+
+            dayName = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+            monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+            calendarItem = new CalendarItem(calendar.getTime(), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR),
+                    dayName,
+                    monthName);
+
+            mDateList.add(calendarItem);
+        }
+
+
+        if (mDateList.size() != 0) {
+            selectDefaultDate();
 
             mAdapter.updateList(mDateList);
             mAdapter.notifyDataSetChanged();
             mRvCalendar.scrollToPosition(defaultPosition);
+            onDateScrollListener.onScroll(defaultPosition);
         }
+    }
+
+    /**
+     * Create Date list from schedules
+     *
+     * @param schedules
+     * @return
+     */
+    public ArrayList<CalendarItem> createDateList(ArrayList<ScheduleResp.Schedule> schedules) {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String dayName;
+        String monthName;
+
+        ArrayList<CalendarItem> dateList = new ArrayList<>();
+        CalendarItem calendarItem;
+        Calendar calendar = new GregorianCalendar();
+
+        /**
+         * Create Dates for Calendar
+         * based on Appointments
+         */
+        for (ScheduleResp.Schedule schedule : schedules) {
+            calendar.setTime(schedule.date);
+
+            dayName = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+            monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+            calendarItem = new CalendarItem(calendar.getTime(), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR),
+                    dayName,
+                    monthName);
+
+            dateList.add(calendarItem);
+        }
+
+        return dateList;
+    }
+
+    public interface OnDateScrollListener {
+        void onScroll(int position);
     }
 }

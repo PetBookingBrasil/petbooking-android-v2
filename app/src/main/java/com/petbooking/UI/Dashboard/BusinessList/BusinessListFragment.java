@@ -1,8 +1,8 @@
 package com.petbooking.UI.Dashboard.BusinessList;
 
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +13,13 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.petbooking.API.Business.BusinessService;
-import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.R;
+import com.petbooking.UI.Menu.Search.SearchActivity;
+import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
 
@@ -27,9 +28,14 @@ import java.util.ArrayList;
  */
 public class BusinessListFragment extends Fragment {
 
+    private static final int SEARCH_REQUEST = 235;
+    private static final int PAGE_SIZE = 10;
+
     private BusinessService mBusinessService;
     private LocationManager mLocationManager;
     private String userId;
+
+    private FloatingActionButton mFBSearch;
 
     /**
      * Business List
@@ -46,22 +52,35 @@ public class BusinessListFragment extends Fragment {
     private boolean isLastPage = false;
     private int currentPage = 1;
 
+    View.OnClickListener filterButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startFilterActivity();
+        }
+    };
+
     RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
+        }
 
-            int lastItemPosition = mVerticalLayoutManager.findLastVisibleItemPosition();
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            int visibleItemCount = mVerticalLayoutManager.getChildCount();
+            int totalItemCount = mVerticalLayoutManager.getItemCount();
+            int firstVisibleItemPosition = mVerticalLayoutManager.findFirstVisibleItemPosition();
 
-            if ((lastItemPosition == mAdapter.getItemCount() - 3) || (lastItemPosition == mAdapter.getItemCount() - 1)) {
-
-                if (!isLastPage) {
-                    currentPage++;
+            if (!isLoading && !isLastPage) {
+                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                        && firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE) {
                     loadMore();
                 }
             }
         }
     };
+
 
     public BusinessListFragment() {
         // Required empty public constructor
@@ -77,6 +96,9 @@ public class BusinessListFragment extends Fragment {
         mLocationManager = LocationManager.getInstance();
         userId = SessionManager.getInstance().getUserLogged().id;
 
+        mFBSearch = (FloatingActionButton) view.findViewById(R.id.float_filter_button);
+        mFBSearch.setOnClickListener(filterButtonListener);
+
         mBusinessList = new ArrayList<>();
         mRvBusinessList = (RecyclerView) view.findViewById(R.id.businessList);
         mRvBusinessList.setHasFixedSize(true);
@@ -91,9 +113,7 @@ public class BusinessListFragment extends Fragment {
             mRvBusinessList.setAdapter(mAdapter);
         }
 
-
         mRvBusinessList.addOnScrollListener(scrollListener);
-
         listBusiness();
 
         return view;
@@ -110,18 +130,20 @@ public class BusinessListFragment extends Fragment {
      */
     public void listBusiness() {
         currentPage = 1;
-        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, 10, new APICallback() {
+        AppUtils.showLoadingDialog(getContext());
+        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, PAGE_SIZE, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 mBusinessList = (ArrayList<Business>) response;
 
                 mAdapter.updateList(mBusinessList);
                 mAdapter.notifyDataSetChanged();
+                AppUtils.hideDialog();
             }
 
             @Override
             public void onError(Object error) {
-
+                AppUtils.hideDialog();
             }
         });
     }
@@ -130,8 +152,10 @@ public class BusinessListFragment extends Fragment {
      * Load More Itens
      */
     public synchronized void loadMore() {
+        AppUtils.showLoadingDialog(getContext());
+        currentPage++;
         isLoading = true;
-        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, 10,new APICallback() {
+        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, PAGE_SIZE, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 ArrayList<Business> nextPage = (ArrayList<Business>) response;
@@ -139,15 +163,29 @@ public class BusinessListFragment extends Fragment {
 
                 mAdapter.updateList(mBusinessList);
                 mAdapter.notifyDataSetChanged();
+
                 if (nextPage.size() == 0) {
                     isLastPage = true;
                 }
+
+                isLoading = false;
+                AppUtils.hideDialog();
             }
 
             @Override
             public void onError(Object error) {
-
+                currentPage--;
+                isLoading = false;
+                AppUtils.hideDialog();
             }
         });
+    }
+
+    /**
+     * Start Activity for filter
+     */
+    public void startFilterActivity() {
+        Intent activity = new Intent(getActivity(), SearchActivity.class);
+        getActivity().startActivityForResult(activity, SEARCH_REQUEST);
     }
 }

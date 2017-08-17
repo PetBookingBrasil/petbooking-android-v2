@@ -5,22 +5,32 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.petbooking.API.Business.APIBusinessConstants;
 import com.petbooking.API.Pet.APIPetConstants;
+import com.petbooking.Models.AppointmentDate;
 import com.petbooking.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by Luciano José on 06/05/2017.
  */
 
 public abstract class AppUtils {
+
+    private static AlertDialog mDialog;
+    private static AlertDialog.Builder mBuilder;
 
     public static String getGender(Context context, String gender) {
         if (TextUtils.equals(gender, context.getString(R.string.gender_male))) {
@@ -209,13 +219,11 @@ public abstract class AppUtils {
             return context.getResources().getDrawable(R.drawable.ic_category_hospital);
         } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_DIAGNOSIS)) {
             return context.getResources().getDrawable(R.drawable.ic_category_diagnosis);
-        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_PETSHOP)) {
-            return context.getResources().getDrawable(R.drawable.ic_category_petshop);
-        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_PETSHOP_MOVEL)) {
-            return context.getResources().getDrawable(R.drawable.ic_category_petshop_delivery);
-        } else {
-            return context.getResources().getDrawable(R.drawable.ic_category_other);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CONSULTATIONS)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_consultations);
         }
+
+        return null;
     }
 
     public static int getCategoryColor(Context context, String businesstype) {
@@ -241,13 +249,41 @@ public abstract class AppUtils {
             return context.getResources().getColor(R.color.category_hospital);
         } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_DIAGNOSIS)) {
             return context.getResources().getColor(R.color.category_diagnosis);
-        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_PETSHOP)) {
-            return context.getResources().getColor(R.color.category_petshop);
-        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_PETSHOP_MOVEL)) {
-            return context.getResources().getColor(R.color.category_petshop_delivery);
-        } else {
-            return context.getResources().getColor(R.color.category_other);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CONSULTATIONS)) {
+            return context.getResources().getColor(R.color.category_consultations);
         }
+
+        return -1;
+    }
+
+    public static int getCategoryText(String businesstype) {
+        if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CLINIC)) {
+            return R.string.category_clinic;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_TRAINING)) {
+            return R.string.category_training;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_BATH)) {
+            return R.string.category_bath;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_TRANSPORT)) {
+            return R.string.category_transport;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_WALKER)) {
+            return R.string.category_walker;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_DAYCARE)) {
+            return R.string.category_daycare;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_HOTEL)) {
+            return R.string.category_hotel;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_EMERGENCY)) {
+            return R.string.category_emergency;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_EXAMS)) {
+            return R.string.category_exams;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_HOSPITAL)) {
+            return R.string.category_hospital;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_DIAGNOSIS)) {
+            return R.string.category_diagnosis;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CONSULTATIONS)) {
+            return R.string.category_consultations;
+        }
+
+        return -1;
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -270,4 +306,43 @@ public abstract class AppUtils {
             throw new IllegalArgumentException("unsupported drawable type");
         }
     }
+
+    public static void showLoadingDialog(Context context) {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
+
+        mBuilder = new AlertDialog.Builder(context);
+        mBuilder.setView(R.layout.dialog_loading);
+        mDialog = mBuilder.create();
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mDialog.setCancelable(false);
+        mDialog.show();
+    }
+
+    public static void hideDialog() {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+            mDialog = null;
+        }
+    }
+
+    public static int containsMonth(ArrayList<AppointmentDate> dates, String monthName, int year) {
+        int index = 0;
+
+        if (dates.size() == 0) {
+            return -1;
+        } else {
+            for (AppointmentDate date : dates) {
+                if (date.monthName.equals(monthName) && date.year == year) {
+                    return index;
+                }
+
+                index++;
+            }
+        }
+
+        return -1;
+    }
+
 }

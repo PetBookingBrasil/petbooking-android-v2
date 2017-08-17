@@ -11,10 +11,23 @@ import com.petbooking.Constants.AppConstants;
 
 public class PreferenceManager {
 
+    private static PreferenceManager instance;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
 
-    public PreferenceManager(Context context) {
+    public static PreferenceManager getInstance() {
+        if (instance == null) {
+            instance = new PreferenceManager();
+        }
+
+        return instance;
+    }
+
+    public PreferenceManager() {
+
+    }
+
+    public void initialize(Context context) {
         pref = context.getSharedPreferences(AppConstants.PREF_NAME, AppConstants.PREF_PRIVATE_MODE);
         editor = pref.edit();
     }
@@ -56,6 +69,10 @@ public class PreferenceManager {
 
     public long getLong(String key) {
         return pref.getLong(key, 0);
+    }
+
+    public float getFloat(String key) {
+        return pref.getFloat(key, 0);
     }
 
     public void clear() {

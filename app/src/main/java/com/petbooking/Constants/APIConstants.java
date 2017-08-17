@@ -6,9 +6,9 @@ package com.petbooking.Constants;
 
 public class APIConstants {
 
-    public static final String BASE_URL_BETA = "https://staging.petbooking.com.br/api/v2/";
+    public static final String BASE_URL_BETA = "https://beta.petbooking.com.br/api/v2/";
     public static final String BASE_URL_PRODUCTION = "https://petbooking.com.br/api/v2/";
-    public static final String ASSET_ENDPOINT_BETA = "https://staging.petbooking.com.br/%s";
+    public static final String ASSET_ENDPOINT_BETA = "https://beta.petbooking.com.br/%s";
     public static final String ASSET_ENDPOINT_PRODUCTION = "https://petbooking.com.br/%s";
 
     /**
@@ -34,6 +34,8 @@ public class APIConstants {
     public static final String QUERY_COORDS = "coords";
     public static final String QUERY_PAGE_SIZE_DEAFULT = "?page[size]=" + PAGE_SIZE_DEAFULT;
     public static final String QUERY_USER_ID = "user_id";
+    public static final String QUERY_TEXT = "q";
+    public static final String QUERY_CATEGORY_TEMPLATE = "category_template_id";
 
     /**
      * Headers

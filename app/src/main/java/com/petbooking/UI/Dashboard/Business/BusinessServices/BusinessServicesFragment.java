@@ -1,48 +1,123 @@
 package com.petbooking.UI.Dashboard.Business.BusinessServices;
 
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-import com.petbooking.API.Business.APIBusinessConstants;
-import com.petbooking.Models.Business;
+import com.google.gson.Gson;
+import com.petbooking.API.Appointment.AppointmentService;
+import com.petbooking.API.Business.Models.CategoryResp;
+import com.petbooking.API.Pet.PetService;
+import com.petbooking.Constants.AppConstants;
+import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Managers.AppointmentManager;
+import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Category;
+import com.petbooking.Models.Pet;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.ServiceDetail.ServiceDetailActivity;
+import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
+import com.petbooking.UI.Menu.Agenda.PetCalendarListAdapter;
+import com.petbooking.Utils.APIUtils;
+import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BusinessServicesFragment extends Fragment implements CategoryListAdapter.OnItemClick {
+public class BusinessServicesFragment extends Fragment implements ConfirmDialogFragment.FinishDialogListener {
 
+    private String userId;
     private Context mContext;
+    private PetService mPetService;
+    private AppointmentManager mAppointmentManager;
+    private AppointmentService mAppointmentService;
     private com.petbooking.API.Business.BusinessService mBusinessService;
-    private String businessId;
-    private Business mBusiness;
-    private AlertDialog mLoadingDialog;
 
     /**
-     * BusinessServices Components
+     * Flow Control
      */
-    private ArrayList<Category> mCategoryList;
-    private ArrayList<BusinessServices> mServiceList;
-    private LinearLayoutManager mLayoutManager;
-    private LinearLayoutManager mCategoryLayout;
-    private RecyclerView mRvCategory;
+    private Button mBtnFinishScheduling;
+    private String businessId = null;
+    private int selectedPet = -1;
+    private int selectedCategory = -1;
+    private int totalAppointments = 0;
+    private int toRemoveService = -1;
+
+    /**
+     * Pet List
+     */
+    private RecyclerView mRvPets;
+    private LinearLayoutManager mPetLayoutManager;
+    private PetCalendarListAdapter mPetAdapter;
+    private ArrayList<Pet> mPetList;
+
+    /**
+     * Services Components
+     */
     private RecyclerView mRvServices;
+    private ArrayList<BusinessServices> mServiceList;
+    private LinearLayoutManager mServicesLayoutManager;
+    private ServiceListAdapter mServiceAdapter;
+
+    /**
+     * Categories Components
+     */
+    private RecyclerView mRvCategory;
+    private ArrayList<Category> mCategoryList;
+    private LinearLayoutManager mCategoryLayout;
     private CategoryListAdapter mCategoryAdapter;
-    private ServiceListAdapter mAdapter;
+
+    private ConfirmDialogFragment mConfirmDialogFragment;
+
+    CategoryListAdapter.OnSelectCategoryListener categoryListener = new CategoryListAdapter.OnSelectCategoryListener() {
+        @Override
+        public void onSelect(int position) {
+            if (position != -1 && position != selectedCategory) {
+                selectedCategory = position;
+                listServices(mCategoryList.get(selectedCategory).id, mPetList.get(selectedPet).id);
+            }
+        }
+    };
+
+    PetCalendarListAdapter.OnSelectPetListener selectPetListener = new PetCalendarListAdapter.OnSelectPetListener() {
+        @Override
+        public void onSelect(int position) {
+            if (position != -1) {
+                selectedPet = position;
+                mCategoryAdapter.setPetId(mPetList.get(selectedPet).id);
+                mCategoryAdapter.notifyDataSetChanged();
+                mServiceAdapter.setPetId(mPetList.get(selectedPet).id);
+                mServiceAdapter.notifyDataSetChanged();
+                mRvCategory.setVisibility(View.VISIBLE);
+            }
+        }
+    };
+
+    ServiceListAdapter.OnServiceListener mServiceListener = new ServiceListAdapter.OnServiceListener() {
+        @Override
+        public void onSelect(int position) {
+            showDetail(position);
+        }
+
+        @Override
+        public void onRemove(int position) {
+            toRemoveService = position;
+            showConfirmFragment();
+        }
+    };
+
 
     public BusinessServicesFragment() {
         // Required empty public constructor
@@ -61,8 +136,19 @@ public class BusinessServicesFragment extends Fragment implements CategoryListAd
         super.onCreate(savedInstanceState);
 
         mBusinessService = new com.petbooking.API.Business.BusinessService();
+        mConfirmDialogFragment = ConfirmDialogFragment.newInstance();
+        mPetService = new PetService();
+        mAppointmentService = new AppointmentService();
+        mAppointmentManager = AppointmentManager.getInstance();
         this.mContext = getContext();
         this.businessId = getArguments().getString("businessId", "0");
+        this.userId = SessionManager.getInstance().getUserLogged().id;
+        this.totalAppointments = mAppointmentManager.getTotalAppointments();
+
+        if (businessId.equals("0") && mAppointmentManager.getCurrentBusinessId() != null) {
+            this.businessId = mAppointmentManager.getCurrentBusinessId();
+            mAppointmentManager.removeKey("businessId");
+        }
     }
 
     @Override
@@ -70,29 +156,51 @@ public class BusinessServicesFragment extends Fragment implements CategoryListAd
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_business_services, container, false);
 
+        mPetList = new ArrayList<>();
         mServiceList = new ArrayList<>();
         mCategoryList = new ArrayList<>();
-        prepareListData();
-        initCategoryList();
+        getCategories();
+
+        mBtnFinishScheduling = (Button) view.findViewById(R.id.btnFinishSchedule);
+
+        if (totalAppointments > 0) {
+            mBtnFinishScheduling.setEnabled(true);
+        }
+
+        /**
+         * Create Pet RecyclerView
+         */
+        mRvPets = (RecyclerView) view.findViewById(R.id.pet_list);
+        mPetLayoutManager = new LinearLayoutManager(mContext);
+        mPetAdapter = new PetCalendarListAdapter(mContext, mPetList, selectPetListener);
+
+        mPetLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRvPets.setLayoutManager(mPetLayoutManager);
+        mRvPets.setHasFixedSize(true);
+        mRvPets.setAdapter(mPetAdapter);
+
+        /**
+         * Create Categories Recyclerview
+         */
+        mRvServices = (RecyclerView) view.findViewById(R.id.service_list);
+        mServiceAdapter = new ServiceListAdapter(mContext, mServiceList, mServiceListener);
+        mServicesLayoutManager = new LinearLayoutManager(mContext);
+        mServicesLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         mRvCategory = (RecyclerView) view.findViewById(R.id.category_list);
-        mRvServices = (RecyclerView) view.findViewById(R.id.service_list);
-
-        mCategoryAdapter = new CategoryListAdapter(mContext, mCategoryList, this);
-        mAdapter = new ServiceListAdapter(mContext, mServiceList);
-
-        mLayoutManager = new LinearLayoutManager(mContext);
+        mCategoryAdapter = new CategoryListAdapter(mContext, mCategoryList);
+        mCategoryAdapter.setOnSelectCategoryListener(categoryListener);
         mCategoryLayout = new LinearLayoutManager(mContext);
-        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mCategoryLayout.setOrientation(LinearLayoutManager.HORIZONTAL);
 
         mRvServices.setHasFixedSize(true);
-        mRvServices.setLayoutManager(mLayoutManager);
+        mRvServices.setLayoutManager(mServicesLayoutManager);
+
         mRvCategory.setHasFixedSize(true);
         mRvCategory.setLayoutManager(mCategoryLayout);
 
-        if (mAdapter != null) {
-            mRvServices.setAdapter(mAdapter);
+        if (mServiceAdapter != null) {
+            mRvServices.setAdapter(mServiceAdapter);
         }
 
         if (mCategoryAdapter != null) {
@@ -101,42 +209,134 @@ public class BusinessServicesFragment extends Fragment implements CategoryListAd
 
         mRvCategory.getLayoutManager().scrollToPosition(Integer.MAX_VALUE / 2);
 
+        getPets();
+
         return view;
     }
 
-    private void prepareListData() {
-        BusinessServices service;
-        ArrayList<BusinessServices> sub = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            sub = new ArrayList<>();
-            service = new BusinessServices(i + "", "Serviço " + i, i + "", "Serviço Número " + i, i * 20.33);
-            sub.add(new BusinessServices(i + "", "SB " + i, i + "", "SB Número " + i, i * 20.33));
-            sub.add(new BusinessServices(i + "", "SB " + i, i + "", "SB Número " + i, i * 20.33));
-            sub.add(new BusinessServices(i + "", "SB " + i, i + "", "SB Número " + i, i * 20.33));
-            service.setAdditionalServices(sub);
-            mServiceList.add(service);
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPets();
+        mPetAdapter.resetSelectedPosition();
+        mCategoryAdapter.resetCategorySelected();
+        selectedCategory = -1;
+        selectedPet = -1;
+        mRvCategory.setVisibility(View.GONE);
+        mRvServices.setVisibility(View.GONE);
+
+        totalAppointments = mAppointmentManager.getTotalAppointments();
+        if (totalAppointments > 0) {
+            mBtnFinishScheduling.setEnabled(true);
         }
     }
 
-    private void initCategoryList() {
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_CLINIC, R.drawable.ic_category_clinic));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_TRAINING, R.drawable.ic_category_trainer));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_BATH, R.drawable.ic_category_bath));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_TRANSPORT, R.drawable.ic_category_transport));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_WALKER, R.drawable.ic_category_walker));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_DAYCARE, R.drawable.ic_category_daycare));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_HOTEL, R.drawable.ic_category_hotel));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_EMERGENCY, R.drawable.ic_category_emergency));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_EXAMS, R.drawable.ic_category_exam));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_HOSPITAL, R.drawable.ic_category_hospital));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_DIAGNOSIS, R.drawable.ic_category_diagnosis));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_PETSHOP, R.drawable.ic_category_petshop));
-        mCategoryList.add(new Category("1", APIBusinessConstants.DATA_PETSHOP_MOVEL, R.drawable.ic_category_petshop_delivery));
-        mCategoryList.add(new Category("1", "Outros", R.drawable.ic_category_other));
+    /**
+     * Get Categories
+     */
+    public void getCategories() {
+        mBusinessService.listBusinessCategories(businessId, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                CategoryResp resp = (CategoryResp) response;
+                for (CategoryResp.Item item : resp.data) {
+                    mCategoryList.add(APIUtils.parseCategory(getContext(), item));
+                }
+
+                mCategoryAdapter.updateList(mCategoryList);
+                mServiceAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(Object error) {
+                AppUtils.hideDialog();
+            }
+        });
+    }
+
+    /**
+     * Get User Pets
+     */
+    public void getPets() {
+        AppUtils.showLoadingDialog(mContext);
+        mPetService.listPets(userId, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                mPetList = (ArrayList<Pet>) response;
+
+                mPetAdapter.updateList(mPetList);
+                mPetAdapter.notifyDataSetChanged();
+
+                AppUtils.hideDialog();
+            }
+
+            @Override
+            public void onError(Object error) {
+                AppUtils.hideDialog();
+            }
+        });
+    }
+
+    /**
+     * List Services
+     */
+    public void listServices(String categoryId, String petId) {
+        AppUtils.showLoadingDialog(mContext);
+        mAppointmentService.listServices(categoryId, petId, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                mServiceList = (ArrayList<BusinessServices>) response;
+
+                mServiceAdapter.updateList(mServiceList);
+                mServiceAdapter.notifyDataSetChanged();
+                mRvServices.setVisibility(View.VISIBLE);
+
+                AppUtils.hideDialog();
+            }
+
+            @Override
+            public void onError(Object error) {
+                AppUtils.hideDialog();
+            }
+        });
+    }
+
+    /**
+     * Show Service Detail
+     */
+    public void showDetail(int position) {
+        Intent detailItent = new Intent(mContext, ServiceDetailActivity.class);
+        mAppointmentManager.setCurrentBusinessId(this.businessId);
+        detailItent.putExtra("selected_pet", new Gson().toJson(mPetList.get(selectedPet)));
+        detailItent.putExtra("selected_service", new Gson().toJson(mServiceList.get(position)));
+        detailItent.putExtra("category_id", mCategoryList.get(selectedCategory).id);
+        mContext.startActivity(detailItent);
+    }
+
+    /**
+     * Show Confirm Fragment
+     */
+    public void showConfirmFragment() {
+        mConfirmDialogFragment.setDialogInfo(R.string.cancel_appointment_title, R.string.cancel_appointment_text,
+                R.string.confirm_cancel_appointment);
+        mConfirmDialogFragment.setCancelText(R.string.dialog_back);
+        mConfirmDialogFragment.setFinishDialogListener(this);
+        mConfirmDialogFragment.show(getFragmentManager(), "CANCEL_SERVICE");
     }
 
     @Override
-    public void onItemClick(int position) {
-        mCategoryLayout.scrollToPositionWithOffset(position, 10);
+    public void onFinishDialog(int action) {
+        if (action == AppConstants.CONFIRM_ACTION && toRemoveService != -1) {
+            mAppointmentManager.removeItem(mServiceList.get(toRemoveService).id, mCategoryList.get(selectedCategory).id, mPetList.get(selectedPet).id);
+        }
+
+        mServiceAdapter.notifyDataSetChanged();
+        mPetAdapter.notifyItemChanged(selectedPet);
+        mCategoryAdapter.notifyItemChanged(selectedCategory);
+
+        totalAppointments = mAppointmentManager.getTotalAppointments();
+        if (totalAppointments == 0) {
+            mBtnFinishScheduling.setEnabled(false);
+        }
     }
 }

@@ -16,14 +16,15 @@ public class APIBusinessConstants {
     public static final String DATA_CLINIC = "Clínica veterinária";
     public static final String DATA_TRAINING = "Adestramento";
     public static final String DATA_BATH = "Banho e Tosa";
-    public static final String DATA_TRANSPORT = "Transporte (leva e traz)";
+    public static final String DATA_TRANSPORT = "Transporte (Leva e traz)";
     public static final String DATA_WALKER = "Passeadores";
     public static final String DATA_DAYCARE = "Creche";
     public static final String DATA_HOTEL = "Hotelzinho";
-    public static final String DATA_EMERGENCY = "Emergências e Serviços 24 horas";
+    public static final String DATA_EMERGENCY = "Serviços 24 Horas";
     public static final String DATA_EXAMS = "Exames";
     public static final String DATA_HOSPITAL = "Hospitais veterinários";
     public static final String DATA_DIAGNOSIS = "Centro de Diagnóstico";
+    public static final String DATA_CONSULTATIONS = "Consulta veterinária";
 
     public static final String PATH_CATEGORY_ID = "categoryID";
     public static final String PATH_BUSINESS_ID = "businessID";
@@ -55,8 +56,7 @@ public class APIBusinessConstants {
     /**
      * APIs
      */
-    public static final String BUSINESS_FEATURED_ENDPOINT = "businesses/search" +
-            APIConstants.QUERY_PAGE_SIZE_DEAFULT + FILTER_FEATURED;
+    public static final String BUSINESS_SEARCH_ENDPOINT = "businesses/search" + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 
     public static final String BUSINESS_ENDPOINT = "businesses" + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 
@@ -64,11 +64,10 @@ public class APIBusinessConstants {
 
     public static final String BUSINESS_BY_CATEGORY_ENDPOINT = "category-templates/{" + PATH_CATEGORY_ID + "}/businesses" + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 
-    public static final String BUSINESS_SEARCH_ENDPOINT = "businesses/search" + QUERY_INCLUDE_SEARCH +
-            APIConstants.QUERY_PAGE_SIZE_DEAFULT;
+    public static final String SERVICES_CATEGORIES_ENDPOINT = "category-templates" + FIELDS_CATEGORIES;
 
-    public static final String SERVICES_CATEGORIES_ENDPOINT = "category-templates" +
-            APIConstants.QUERY_PAGE_SIZE_DEAFULT + FIELDS_CATEGORIES;
+    public static final String BUSINESS_CATEGORIES_ENDPOINT = "businesses/{" + PATH_BUSINESS_ID + "}/service-categories" + FIELDS_CATEGORIES;
+
 
     public static final String BUSINESS_INFO_ENDPOINT = "businesses/{" + PATH_BUSINESS_ID + "}";
 

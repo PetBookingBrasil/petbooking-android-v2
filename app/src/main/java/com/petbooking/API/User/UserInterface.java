@@ -6,6 +6,7 @@ import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.API.User.Models.CreateSocialUserRqt;
 import com.petbooking.API.User.Models.CreateUserRqt;
 import com.petbooking.API.User.Models.RecoverPasswordRqt;
+import com.petbooking.API.User.Models.ScheduleResp;
 import com.petbooking.API.User.Models.UpdateUserRqt;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Models.UserAddress;
@@ -54,5 +55,21 @@ public interface UserInterface {
     Call<BusinessesResp> listFavorites(@Path(APIConstants.PATH_PARAM) String userId,
                                        @Query(APIConstants.QUERY_COORDS) String coords,
                                        @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
+    @GET(APIUserConstants.SCHEDULES_ENDPOINT)
+    Call<ScheduleResp> listSchedules(@Path(APIConstants.PATH_PARAM) String userId);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
+    @GET(APIUserConstants.SCHEDULES_ENDPOINT)
+    Call<ScheduleResp> listPastSchedules(@Path(APIConstants.PATH_PARAM) String userId,
+                                         @Query(APIUserConstants.QUERY_SCHEDULE_DATE) String date,
+                                         @Query(APIUserConstants.QUERY_ONLY_PAST) boolean onlyPast);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
+    @GET(APIUserConstants.SCHEDULES_ENDPOINT)
+    Call<ScheduleResp> listFutureSchedules(@Path(APIConstants.PATH_PARAM) String userId,
+                                         @Query(APIUserConstants.QUERY_SCHEDULE_DATE) String date,
+                                         @Query(APIUserConstants.QUERY_ONLY_FUTURE) boolean onlyFuture);
 
 }

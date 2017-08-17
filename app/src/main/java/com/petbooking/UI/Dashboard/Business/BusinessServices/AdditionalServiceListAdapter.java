@@ -3,12 +3,16 @@ package com.petbooking.UI.Dashboard.Business.BusinessServices;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.R;
 
@@ -21,12 +25,18 @@ import java.util.ArrayList;
 
 public class AdditionalServiceListAdapter extends RecyclerView.Adapter<AdditionalServiceListAdapter.AdditionalViewHolder> {
 
+    private boolean isFromDetail;
+    private String petId;
+    private AppointmentManager mAppointmentManager;
+    private OnAdditionalSelect onAdditionalSelect;
     private ArrayList<BusinessServices> mServiceList;
     private Context mContext;
 
-    public AdditionalServiceListAdapter(Context context, ArrayList<BusinessServices> reviewList) {
+    public AdditionalServiceListAdapter(Context context, ArrayList<BusinessServices> reviewList, OnAdditionalSelect onAdditionalSelect) {
         this.mServiceList = reviewList;
         this.mContext = context;
+        this.onAdditionalSelect = onAdditionalSelect;
+        this.mAppointmentManager = AppointmentManager.getInstance();
     }
 
     public void updateList(ArrayList<BusinessServices> serviceList) {
@@ -48,9 +58,26 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
         final BusinessServices service = mServiceList.get(position);
 
         String price = mContext.getResources().getString(R.string.business_service_price, String.format("%.2f", service.price));
+        boolean isAdditionalSelected = false;
 
-        holder.mTvAdditionalName.setText(service.name);
+        if (petId != null) {
+            isAdditionalSelected = mAppointmentManager.isAdditionalSelected(service.id, petId);
+        }
+
+        if (!isFromDetail && isAdditionalSelected) {
+            holder.mCbServiceCheck.setOnCheckedChangeListener(null);
+            holder.mCbServiceCheck.setChecked(true);
+        }
+
+        holder.mCbServiceCheck.setText(service.name);
         holder.mTvAdditionalPrice.setText(price);
+
+        holder.mCbServiceCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                onAdditionalSelect.onSelect(isChecked, service.id);
+            }
+        });
     }
 
     @Override
@@ -61,16 +88,26 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
     public class AdditionalViewHolder extends RecyclerView.ViewHolder {
 
         public CheckBox mCbServiceCheck;
-        public TextView mTvAdditionalName;
         public TextView mTvAdditionalPrice;
 
         public AdditionalViewHolder(View view) {
             super(view);
 
-            mCbServiceCheck = (CheckBox) view.findViewById(R.id.additional_check);
-            mTvAdditionalName = (TextView) view.findViewById(R.id.additional_name);
+            mCbServiceCheck = (CheckBox) view.findViewById(R.id.additional_checkbox);
             mTvAdditionalPrice = (TextView) view.findViewById(R.id.additional_price);
         }
+    }
+
+    public void setFromDetail(boolean fromDetail) {
+        isFromDetail = fromDetail;
+    }
+
+    public void setPetId(String petId) {
+        this.petId = petId;
+    }
+
+    public interface OnAdditionalSelect {
+        void onSelect(boolean selected, String additionalId);
     }
 
 }

@@ -1,4 +1,4 @@
-<resources>
+﻿<resources>
     <string name="app_slogan">Esse app é animal</string>
 
     <string name="navigation_drawer_open">Abrir Menu Lateral</string>
@@ -11,6 +11,7 @@
     <string name="profile_title">Perfil</string>
     <string name="pets_title">Meus Pets</string>
     <string name="new_pet_title">Preencha os dados do pet</string>
+    <string name="search_title">Filtre sua busca</string>
 
     <!-- Pet -->
     <string name="gender_male">Macho</string>
@@ -142,10 +143,15 @@
     <string name="business_label_social_network">Redes Sociais</string>
     <string name="business_label_location">Localização</string>
     <string name="business_label_reviews">Reviews</string>
-    <string name="business_label_additional">Adicionais</string>
+    <string name="business_label_additional">Serviços Adicionais</string>
     <string name="business_service_price">R$ %1$s</string>
     <string name="business_service_finish">Finalizar Agendamento</string>
     <string name="call_button">Ligar</string>
+
+    <!-- Search -->
+    <string name="filter_hint">Filtrar por nome, local&#8230;</string>
+    <string name="filter_label">Filtre por categoria</string>
+    <string name="filter">Filtrar</string>
 
     <!-- Settings -->
     <string name="kilometers">Quilômetro</string>
@@ -156,6 +162,25 @@
     <string name="support">Suporte</string>
     <string name="terms">Legal</string>
 
+    <!-- Agenda -->
+    <string name="reschedule">Reagendar</string>
+    <string name="professional_label">Profissional</string>
+    <string name="cancel_service_title">Cancelar Agendamento</string>
+    <string name="cancel_service_button">Sim, cancelar agendamento</string>
+    <string name="cancel_service_message">Olá, você está prestes a cancelar um
+        agendamento já configurado. Quando cancelar não será possível reagendar o mesmo serviço.\n \n Deseja realmente cancelar?</string>
+    <string name="agenda_empty_title">Ops, sua agenda encontra-se vazia.</string>
+    <string name="agenda_empty_text">O que você esta esperando para agendar os mais variados serviços para seus pets no Pet Booking?</string>
+
+    <!-- Appointment -->
+    <string name="choose_professional">Escolha o profissional</string>
+    <string name="continue_scheduling">Continuar Agendamento</string>
+    <string name="cancel_appointment_title">Atenção!</string>
+    <string name="cancel_appointment_text">Todos os serviços agendados serão perdidos ao voltar. Deseja cancelar?</string>
+    <string name="cancel_service_text">Esse serviço será cancelado. Deseja continuar?</string>
+    <string name="confirm_cancel_appointment">Quero cancelar</string>
+    <string name="appointment_date_info">%1$s de %2$s, %3$s - %4$s</string>
+
     <!-- Dialog -->
     <string name="dialog_picture_title">Selecionar foto de perfil</string>
     <string name="dialog_picture_text">Selecione o método de entrada de imagens que deseja usar.</string>
@@ -164,12 +189,31 @@
     <string name="dialog_button_add_pet">Adicionar outro pet</string>
     <string name="dialog_button_start">Começar a usar</string>
     <string name="dialog_button_check_info">Verificar informações</string>
+    <string name="dialog_back">Voltar</string>
     <string name="dialog_back_screen">Voltar à Tela</string>
     <string name="dialog_cancel">Cancelar</string>
 
     <!-- Info -->
     <string name="favorites_empty_title">Você ainda não possui favoritos.</string>
     <string name="favorites_empty_message">Marque seus estabelecimentos favoritos e acesse-os rapidamente nessa tela.</string>
+    <string name="business_empty_title">Ops! Infelizmente não encontramos nenhum estabelecimento.</string>
+    <string name="business_empty_message">Para facilitar o processo de pagamento, cadastre uma ou mais formas de pagamento.</string>
+    <string name="pets_empty_title">Você ainda não adicionou seus pets.</string>
+    <string name="pets_empty_message">Clique no botão de + logo acima para adicioná-los.</string>
+
+    <!-- Categories -->
+    <string name="category_clinic">Clínicas</string>
+    <string name="category_training">Adestramento</string>
+    <string name="category_bath">Banho e Tosa</string>
+    <string name="category_transport">Transporte</string>
+    <string name="category_walker">Passeadores</string>
+    <string name="category_daycare">Creche</string>
+    <string name="category_hotel">Hotel</string>
+    <string name="category_emergency">Emergência e 24h</string>
+    <string name="category_exams">Exames</string>
+    <string name="category_hospital">Hospitais</string>
+    <string name="category_diagnosis">Diagnóstico</string>
+    <string name="category_consultations">Consultas</string>
 
     <!-- Errors -->
     <string name="error_fields_empty">Preencha todos os campos.</string>

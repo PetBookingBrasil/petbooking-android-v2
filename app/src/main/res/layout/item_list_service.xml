@@ -1,128 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_layout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <com.github.vipulasri.timelineview.TimelineView
-        android:id="@+id/time_marker"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginLeft="@dimen/spacing_xtiny"
-        android:paddingTop="@dimen/spacing_tiny"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:line="@color/timeline_color"
-        app:lineSize="1dp"
-        app:marker="@drawable/ic_circle"
-        app:markerInCenter="false"
-        app:markerSize="14dp" />
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_xmicro"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/spacing_xmicro"
+    android:paddingRight="@dimen/spacing_xmicro">
 
     <TextView
-        android:id="@+id/service_name"
-        android:layout_width="0dp"
+        android:id="@+id/appointment_date"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/spacing_xmicro"
         android:layout_marginTop="@dimen/spacing_xmicro"
-        android:text="Novo serviço de teste"
-        android:textSize="16sp"
+        android:text="20 de Junho, 10:30 - 12:00"
+        android:textColor="@color/brand_primary"
+        android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toRightOf="@+id/time_marker"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/service_price"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/spacing_xmicro"
-        android:layout_marginRight="@dimen/spacing_nano"
+        android:layout_marginBottom="@dimen/spacing_xmicro">
+
+        <CheckBox
+            android:id="@+id/service_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/spacing_nano"
+            android:layout_marginTop="@dimen/spacing_xmicro"
+            android:theme="@style/CustomCheckbox" />
+
+        <LinearLayout
+            android:id="@+id/item_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_xmicro"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:layout_toRightOf="@+id/service_checkbox"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xmicro">
+
+                <TextView
+                    android:id="@+id/service_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="@dimen/spacing_xtiny"
+                    android:layout_toLeftOf="@+id/service_price"
+                    android:maxLines="2"
+                    android:text="Novo serviço de teste aea hfkajdsfh jkasfh ajsdkfha sdjkhakjsfhjkadfhjka h"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/service_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="R$ 40"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/service_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:maxLines="3"
+                android:text="lraoie hjadsgjadsg fjadsgfhqg fwehjghqjwe gdhqewjgdhjqewdg qewhjqgwed hqjwedg jqewhdgqwe jhqewg dhqwejg qwedjhqedg jqhewdg " />
+
+            <TextView
+                android:id="@+id/additional_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_micro"
+                android:layout_marginLeft="@dimen/spacing_xmicro"
+                android:layout_marginRight="@dimen/spacing_xmicro"
+                android:layout_marginTop="@dimen/spacing_xmicro"
+                android:text="@string/business_label_additional"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/additional_services"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/separator_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="@dimen/spacing_xmicro"
         android:layout_marginTop="@dimen/spacing_xmicro"
-        android:text="R$ 40"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.850"
-        app:layout_constraintLeft_toRightOf="@+id/service_name"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/light_gray"
+        android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/service_duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/spacing_xmicro"
-        android:text="1h"
-        app:layout_constraintLeft_toRightOf="@+id/time_marker"
-        app:layout_constraintTop_toBottomOf="@+id/service_name" />
-
-    <TextView
-        android:id="@+id/service_description"
-        android:layout_width="0dp"
+    <RelativeLayout
+        android:id="@+id/appointment_info"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_xmicro"
-        android:layout_marginLeft="@dimen/spacing_xmicro"
-        android:layout_marginRight="@dimen/spacing_xmicro"
-        android:layout_marginTop="@dimen/spacing_micro"
-        android:maxLines="3"
-        android:text="lraoie hjadsgjadsg fjadsgfhqg fwehjghqjwe gdhqewjgdhjqewdg qewhjqgwed hqjwedg jqewhdgqwe jhqewg dhqwejg qwedjhqedg jqhewdg "
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toRightOf="@+id/time_marker"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/service_duration" />
+        android:visibility="gone">
 
-    <View
-        android:id="@+id/service_separator"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/spacing_nano"
-        android:layout_marginLeft="@dimen/spacing_xmicro"
-        android:layout_marginRight="@dimen/spacing_xmicro"
-        android:layout_marginTop="@dimen/spacing_xtiny"
-        android:background="@color/default_gray"
-        android:paddingRight="@dimen/spacing_xtiny"
-        app:layout_constraintLeft_toRightOf="@+id/time_marker"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/service_description" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/professional_photo"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/spacing_micro" />
 
-    <TextView
-        android:id="@+id/additional_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_xmicro"
-        android:layout_marginLeft="@dimen/spacing_xmicro"
-        android:layout_marginRight="@dimen/spacing_xmicro"
-        android:layout_marginTop="@dimen/spacing_tiny"
-        android:text="@string/business_label_additional"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toRightOf="@+id/time_marker"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/service_separator" />
+        <TextView
+            android:id="@+id/professional_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/spacing_xmicro"
+            android:layout_toRightOf="@id/professional_photo"
+            android:text="Maria" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/additional_services"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toRightOf="@+id/time_marker"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/additional_label" />
+        <TextView
+            android:id="@+id/total_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/spacing_xmicro"
+            android:layout_toLeftOf="@+id/total_price"
+            android:text="Total"
+            android:textColor="@color/text_gray"
+            android:textSize="12sp" />
 
-    <View
-        android:id="@+id/additional_separator"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/spacing_nano"
-        android:layout_marginLeft="@dimen/spacing_xmicro"
-        android:layout_marginRight="@dimen/spacing_xmicro"
-        android:layout_marginTop="@dimen/spacing_xtiny"
-        android:background="@color/default_gray"
-        android:paddingRight="@dimen/spacing_xtiny"
-        android:visibility="gone"
-        app:layout_constraintLeft_toRightOf="@+id/time_marker"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/additional_services" />
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="R$ 120,00"
+            android:textColor="@color/brand_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</LinearLayout>
+
+
+

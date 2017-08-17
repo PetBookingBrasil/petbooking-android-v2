@@ -8,12 +8,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 
+import com.petbooking.Constants.AppConstants;
+import com.petbooking.Managers.AppointmentManager;
+import com.petbooking.Managers.PreferenceManager;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Content.ContentTabsAdapter;
+import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
 
-public class BusinessActivity extends AppCompatActivity {
+public class BusinessActivity extends AppCompatActivity implements ConfirmDialogFragment.FinishDialogListener {
 
     private Toolbar mToolbar;
+    private AppointmentManager mAppointmentManager;
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -21,11 +26,16 @@ public class BusinessActivity extends AppCompatActivity {
     private String businessId;
     private String businessName;
     private float businessDistance;
+    private boolean alreadyShow = false;
+
+    private ConfirmDialogFragment mConfirmDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business);
+
+        mAppointmentManager = AppointmentManager.getInstance();
 
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -33,6 +43,15 @@ public class BusinessActivity extends AppCompatActivity {
         businessId = getIntent().getStringExtra("businessId");
         businessName = getIntent().getStringExtra("businessName");
         businessDistance = getIntent().getFloatExtra("businessDistance", 0);
+
+        if (!getIntent().hasExtra("businessId")) {
+            businessId = mAppointmentManager.getCurrentBusinessId();
+            businessName = mAppointmentManager.getCurrentBusinessName();
+            businessDistance = mAppointmentManager.getCurrentBusinessDistance();
+            mAppointmentManager.removeKey("businessId");
+            mAppointmentManager.removeKey("businessName");
+            mAppointmentManager.removeKey("businessDistance");
+        }
 
         getSupportActionBar().setElevation(0);
         getSupportActionBar().setTitle(businessName);
@@ -46,6 +65,8 @@ public class BusinessActivity extends AppCompatActivity {
 
         mTabLayout.getTabAt(0).setText(R.string.business_tab_services);
         mTabLayout.getTabAt(1).setText(R.string.business_tab_information);
+
+        mConfirmDialogFragment = ConfirmDialogFragment.newInstance();
     }
 
     @Override
@@ -69,6 +90,39 @@ public class BusinessActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (alreadyShow) {
+            super.onBackPressed();
+        } else {
+            alreadyShow = true;
+            mConfirmDialogFragment.setDialogInfo(R.string.cancel_appointment_title, R.string.cancel_appointment_text,
+                    R.string.confirm_cancel_appointment);
+            mConfirmDialogFragment.setCancelText(R.string.dialog_back);
+            mConfirmDialogFragment.show(getSupportFragmentManager(), "CANCEL_APPOINTMENT");
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        mAppointmentManager.setCurrentBusinessId(this.businessId);
+        mAppointmentManager.setCurrentBusinessName(this.businessName);
+        mAppointmentManager.setCurrentBusinessDistance(this.businessDistance);
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onFinishDialog(int action) {
+        if (action == AppConstants.CONFIRM_ACTION) {
+            mConfirmDialogFragment.dismiss();
+            mAppointmentManager.reset();
+            onBackPressed();
+        } else if (action == AppConstants.CANCEL_ACTION) {
+            mConfirmDialogFragment.dismiss();
+            alreadyShow = false;
+        }
     }
 }

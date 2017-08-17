@@ -42,9 +42,7 @@ public class HeaderInterceptor implements Interceptor {
 
         newRequestBuilder.header(APIConstants.HEADER_LANGUAGE, Locale.getDefault().toString());
 
-        EventBus.getDefault().post(new ShowLoadingEvt());
         Response response = chain.proceed(newRequestBuilder.build());
-        EventBus.getDefault().post(new HideLoadingEvt());
         return response;
     }
 }

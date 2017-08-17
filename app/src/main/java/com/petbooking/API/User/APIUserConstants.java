@@ -14,8 +14,14 @@ public class APIUserConstants {
     public static final String ENDPOINT_USER_ADDRESS = "https://viacep.com.br/ws/{" + APIConstants.PATH_PARAM + "}/json/";
     public static final String ENDPOINT_RECOVER_PASSWORD = "users/recover-password";
 
+    public static final String QUERY_SCHEDULE_DATE = "date";
+    public static final String QUERY_ONLY_PAST = "only_past";
+    public static final String QUERY_ONLY_FUTURE = "only_future";
+
     public static final String FILTER_TYPE_BUSINESS = "&type=businesses";
 
     public static final String FAVORITES_ENDPOINT = "users/{" + APIConstants.PATH_PARAM + "}/favorites" + APIConstants.QUERY_PAGE_SIZE_DEAFULT
             + FILTER_TYPE_BUSINESS;
+
+    public static final String SCHEDULES_ENDPOINT = "users/{" + APIConstants.PATH_PARAM + "}/schedules";
 }

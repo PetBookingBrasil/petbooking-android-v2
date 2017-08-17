@@ -23,10 +23,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.LatLng;
 import com.petbooking.Constants.AppConstants;
-import com.petbooking.Events.LocationChangedEvt;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
@@ -34,24 +31,24 @@ import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Content.ContentFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Login.LoginActivity;
-import com.petbooking.UI.Menu.Calendar.CalendarActivity;
+import com.petbooking.UI.Menu.Agenda.AgendaActivity;
 import com.petbooking.UI.Menu.Favorites.FavoritesActivity;
 import com.petbooking.UI.Menu.Pets.PetsActivity;
 import com.petbooking.UI.Menu.Profile.ProfileActivity;
+import com.petbooking.UI.Menu.Search.SearchActivity;
+import com.petbooking.UI.Menu.Search.SearchResultFragment;
 import com.petbooking.UI.Menu.Settings.SettingsActivity;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashboardActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
-        FeedbackDialogFragment.FinishDialogListener {
+        FeedbackDialogFragment.FinishDialogListener,
+        SearchResultFragment.OnBarClick {
 
     private boolean permissionDenied = false;
     private static final int RC_PERMISSION = 234;
+    private static final int SEARCH_REQUEST = 235;
 
     private SessionManager mSessionManager;
     private LocationManager mLocationManager;
@@ -61,6 +58,7 @@ public class DashboardActivity extends AppCompatActivity implements
 
     private FragmentManager mFragmentManager;
     ContentFragment contentFragment;
+    SearchResultFragment searchResultFragment;
     NavigationView mNavView;
     View mHeaderView;
     DrawerLayout mDrawerLayout;
@@ -129,6 +127,7 @@ public class DashboardActivity extends AppCompatActivity implements
         mIBtnProfile.setOnClickListener(btnProfileListener);
 
         inflateBusinessFragment();
+        //inflateSearchResultFragment();
     }
 
     @Override
@@ -188,6 +187,9 @@ public class DashboardActivity extends AppCompatActivity implements
         if (id == R.id.my_pets) {
             activity = new Intent(this, PetsActivity.class);
             startActivity(activity);
+        } else if (id == R.id.search) {
+            activity = new Intent(this, SearchActivity.class);
+            startActivityForResult(activity, SEARCH_REQUEST);
         } else if (id == R.id.payments) {
             Log.d("PAYMENTS", "PAYMENTS");
         } else if (id == R.id.favorites) {
@@ -197,7 +199,7 @@ public class DashboardActivity extends AppCompatActivity implements
             activity = new Intent(this, SettingsActivity.class);
             startActivity(activity);
         } else if (id == R.id.calendar) {
-            activity = new Intent(this, CalendarActivity.class);
+            activity = new Intent(this, AgendaActivity.class);
             startActivity(activity);
         } else if (id == R.id.logout) {
             mSessionManager.logout();
@@ -211,6 +213,26 @@ public class DashboardActivity extends AppCompatActivity implements
 
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SEARCH_REQUEST && resultCode == RESULT_OK) {
+            int categoryPosition = data.getIntExtra("CATEGORY_POSITION", -1);
+            String categoryId = "";
+            String categoryName = "";
+            String filterText = "";
+
+            filterText = data.getStringExtra("FILTER_TEXT");
+            if (categoryPosition != -1) {
+                categoryName = data.getStringExtra("CATEGORY_NAME");
+                categoryId = data.getStringExtra("CATEGORY_ID");
+            }
+
+            inflateSearchResultFragment(filterText, categoryId, categoryName);
+        }
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         if (requestCode == RC_PERMISSION) {
@@ -220,6 +242,7 @@ public class DashboardActivity extends AppCompatActivity implements
                 permissionDenied = true;
             }
         }
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
@@ -285,4 +308,23 @@ public class DashboardActivity extends AppCompatActivity implements
         mFragmentManager.beginTransaction().replace(R.id.content_main, contentFragment).commit();
     }
 
+    /**
+     * Inflate Search Result List
+     */
+    private void inflateSearchResultFragment(String filterText, String categoryId, String categoryName) {
+        searchResultFragment = SearchResultFragment.newInstance(filterText, categoryId, categoryName);
+        mFragmentManager.beginTransaction().replace(R.id.content_main, searchResultFragment).commit();
+    }
+
+
+    @Override
+    public void onReset() {
+        inflateBusinessFragment();
+    }
+
+    @Override
+    public void onNewSearch() {
+        Intent activity = new Intent(this, SearchActivity.class);
+        startActivityForResult(activity, SEARCH_REQUEST);
+    }
 }

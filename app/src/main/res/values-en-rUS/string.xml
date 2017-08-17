@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_slogan">This App is Animal</string>
 
@@ -75,6 +75,7 @@
     <!-- Sidemenu and Toolbar Options-->
     <string name="my_pets">My Pets</string>
     <string name="search">Search</string>
+    <string name="search_title">Filtre your search</string>
     <string name="calendar">Calendar</string>
     <string name="payments">Payments</string>
     <string name="favorites">Favorites</string>
@@ -126,11 +127,15 @@
     <string name="business_label_social_network">Social Network</string>
     <string name="business_label_location">Location</string>
     <string name="business_label_reviews">Reviews</string>
-    <string name="business_label_additional">Additional</string>
+    <string name="business_label_additional">Additional Services</string>
     <string name="business_service_price">U$ %1$s</string>
     <string name="business_service_finish">Finish Schedule</string>
     <string name="call_button">Call</string>
 
+    <!-- Search -->
+    <string name="filter_hint">Filtrar by name, location&#8230;</string>
+    <string name="filter_label">Filter by category</string>
+    <string name="filter">Filter</string>
 
     <!-- Settings -->
     <string name="kilometers">Kilometers</string>
@@ -141,6 +146,25 @@
     <string name="support">Support</string>
     <string name="terms">Terms</string>
 
+    <!-- Agenda -->
+    <string name="reschedule">Reschedule</string>
+    <string name="professional_label">Professional</string>
+    <string name="cancel_service_title">Cancel Schedule</string>
+    <string name="cancel_service_button">Yes, cancel schedule</string>
+    <string name="cancel_service_message">Hello, you are about to cancel an already configured schedule. When canceling,
+        you will not be able to reschedule the same service. \n \n Do you really want to cancel?</string>
+    <string name="agenda_empty_title">Oops, your schedule is empty.</string>
+    <string name="agenda_empty_text">What are you waiting for to schedule the most varied services for your pets at Pet Booking?</string>
+
+    <!-- Appointment -->
+    <string name="choose_professional">Choose the professional</string>
+    <string name="continue_scheduling">Continue scheduling</string>
+    <string name="cancel_appointment_title">attention!</string>
+    <string name="cancel_appointment_text">All scheduled services will be lost upon return. Do you want to cancel?</string>
+    <string name="cancel_service_text">This service will be canceled. Do you wish to continue?</string>
+    <string name="confirm_cancel_appointment">I want to cancel</string>
+    <string name="appointment_date_info">%2$s %1$s, %3$s - %4$s</string>
+
     <!-- Dialog -->
     <string name="dialog_picture_title">Select profile photo</string>
     <string name="dialog_picture_text">Select the image input method you want to use.</string>
@@ -149,12 +173,31 @@
     <string name="dialog_button_add_pet">Add another pet</string>
     <string name="dialog_button_start">Start to use</string>
     <string name="dialog_button_check_info">Check information</string>
+    <string name="dialog_back">Back</string>
     <string name="dialog_back_screen">Back to the screen</string>
     <string name="dialog_cancel">Cancel</string>
 
     <!-- Info -->
     <string name="favorites_empty_title">You do not have any favorites yet.</string>
     <string name="favorites_empty_message">Mark your favorite business and quickly access them on here.</string>
+    <string name="business_empty_title">Oops! Unfortunately we did not find any business.</string>
+    <string name="business_empty_message">To facilitate the payment process, register one or more payment methods.</string>
+    <string name="pets_empty_title">You have not added your pets yet.</string>
+    <string name="pets_empty_message">Click the + button above to add them.</string>
+
+    <!-- Categories -->
+    <string name="category_clinic">Clinics</string>
+    <string name="category_training">Training</string>
+    <string name="category_bath">Bath and Cough</string>
+    <string name="category_transport">Transport</string>
+    <string name="category_walker">Walkers</string>
+    <string name="category_daycare">Daycare</string>
+    <string name="category_hotel">Hotel</string>
+    <string name="category_emergency">Emergency</string>
+    <string name="category_exams">Exams</string>
+    <string name="category_hospital">Hospitals</string>
+    <string name="category_diagnosis">Diagnosis</string>
+    <string name="category_consultations">Veterinary Consulting</string>
 
     <!-- Errors -->
     <string name="error_fields_empty">Complete all fields.</string>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.petbooking.UI.Dashboard.Business.ServiceDetail.ServiceDetailActivity">
+
+    <LinearLayout
+        android:id="@+id/pet_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/light_gray"
+        android:paddingBottom="@dimen/spacing_xmicro"
+        android:paddingLeft="@dimen/spacing_xtiny"
+        android:paddingRight="@dimen/spacing_xtiny"
+        android:paddingTop="@dimen/spacing_xmicro">
+
+        <CheckBox
+            android:id="@+id/pet_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:paddingLeft="@dimen/spacing_xmicro"
+            android:text="@string/app_name"
+            android:textColor="@color/text_color"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:theme="@style/CustomCheckbox" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pet_info"
+        android:paddingLeft="@dimen/spacing_xtiny"
+        android:paddingRight="@dimen/spacing_xtiny">
+
+        <CheckBox
+            android:id="@+id/service_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="@dimen/spacing_xmicro"
+            android:checked="true"
+            android:theme="@style/CustomCheckbox" />
+
+        <LinearLayout
+            android:id="@+id/item_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_xmicro"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:layout_toRightOf="@+id/service_checkbox"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xmicro">
+
+                <TextView
+                    android:id="@+id/service_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="@dimen/spacing_xtiny"
+                    android:layout_toLeftOf="@+id/service_price"
+                    android:maxLines="2"
+                    android:textColor="@color/text_color"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/service_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="R$ 40"
+                    android:textColor="@color/text_color"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/service_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:maxLines="3" />
+
+            <TextView
+                android:id="@+id/additional_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_micro"
+                android:layout_marginLeft="@dimen/spacing_xmicro"
+                android:layout_marginRight="@dimen/spacing_xmicro"
+                android:layout_marginTop="@dimen/spacing_xmicro"
+                android:text="@string/business_label_additional"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/additional_services"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/professional_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/professional_list_background"
+        android:paddingBottom="@dimen/spacing_xmicro"
+        android:paddingLeft="@dimen/spacing_tiny"
+        android:paddingRight="@dimen/spacing_tiny"
+        android:paddingTop="@dimen/spacing_xmicro">
+
+        <TextView
+            android:id="@+id/professional_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="@dimen/spacing_xmicro"
+            android:text="@string/choose_professional"
+            android:textColor="@color/text_color" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/professional_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/professional_label" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

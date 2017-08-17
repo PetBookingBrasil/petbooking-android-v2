@@ -6,10 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +17,16 @@ import com.google.gson.Gson;
 import com.petbooking.API.Appointment.AppointmentService;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Pet.PetService;
+import com.petbooking.Constants.AppConstants;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.AppointmentManager;
-import com.petbooking.Managers.PreferenceManager;
 import com.petbooking.Managers.SessionManager;
-import com.petbooking.Models.Business;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Category;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.ServiceDetail.ServiceDetailActivity;
+import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
 import com.petbooking.UI.Menu.Agenda.PetCalendarListAdapter;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
@@ -38,7 +36,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BusinessServicesFragment extends Fragment {
+public class BusinessServicesFragment extends Fragment implements ConfirmDialogFragment.FinishDialogListener {
 
     private String userId;
     private Context mContext;
@@ -55,6 +53,7 @@ public class BusinessServicesFragment extends Fragment {
     private int selectedPet = -1;
     private int selectedCategory = -1;
     private int totalAppointments = 0;
+    private int toRemoveService = -1;
 
     /**
      * Pet List
@@ -80,6 +79,7 @@ public class BusinessServicesFragment extends Fragment {
     private LinearLayoutManager mCategoryLayout;
     private CategoryListAdapter mCategoryAdapter;
 
+    private ConfirmDialogFragment mConfirmDialogFragment;
 
     CategoryListAdapter.OnSelectCategoryListener categoryListener = new CategoryListAdapter.OnSelectCategoryListener() {
         @Override
@@ -110,6 +110,12 @@ public class BusinessServicesFragment extends Fragment {
         public void onSelect(int position) {
             showDetail(position);
         }
+
+        @Override
+        public void onRemove(int position) {
+            toRemoveService = position;
+            showConfirmFragment();
+        }
     };
 
 
@@ -130,6 +136,7 @@ public class BusinessServicesFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mBusinessService = new com.petbooking.API.Business.BusinessService();
+        mConfirmDialogFragment = ConfirmDialogFragment.newInstance();
         mPetService = new PetService();
         mAppointmentService = new AppointmentService();
         mAppointmentManager = AppointmentManager.getInstance();
@@ -306,4 +313,30 @@ public class BusinessServicesFragment extends Fragment {
         mContext.startActivity(detailItent);
     }
 
+    /**
+     * Show Confirm Fragment
+     */
+    public void showConfirmFragment() {
+        mConfirmDialogFragment.setDialogInfo(R.string.cancel_appointment_title, R.string.cancel_appointment_text,
+                R.string.confirm_cancel_appointment);
+        mConfirmDialogFragment.setCancelText(R.string.dialog_back);
+        mConfirmDialogFragment.setFinishDialogListener(this);
+        mConfirmDialogFragment.show(getFragmentManager(), "CANCEL_SERVICE");
+    }
+
+    @Override
+    public void onFinishDialog(int action) {
+        if (action == AppConstants.CONFIRM_ACTION && toRemoveService != -1) {
+            mAppointmentManager.removeItem(mServiceList.get(toRemoveService).id, mCategoryList.get(selectedCategory).id, mPetList.get(selectedPet).id);
+        }
+
+        mServiceAdapter.notifyDataSetChanged();
+        mPetAdapter.notifyItemChanged(selectedPet);
+        mCategoryAdapter.notifyItemChanged(selectedCategory);
+
+        totalAppointments = mAppointmentManager.getTotalAppointments();
+        if (totalAppointments == 0) {
+            mBtnFinishScheduling.setEnabled(false);
+        }
+    }
 }

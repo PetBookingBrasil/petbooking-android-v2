@@ -5,9 +5,11 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.petbooking.Constants.AppConstants;
+import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.CartItem;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Luciano José on 08/08/2017.
@@ -38,11 +40,32 @@ public class AppointmentManager {
 
     public void addItem(CartItem item) {
         this.cart.add(item);
-        setServiceSelected(item.service.id, item.pet.id);
+
+        if (!isServiceSelected(item.service.id, item.pet.id)) {
+            incrementPetAppointment(item.pet.id);
+            incrementCategoryAppointment(item.categoryId, item.pet.id);
+            incrementTotalAppointments();
+        }
+
+        setServiceSelected(item.service.id, item.pet.id, true);
         saveItem(item);
-        incrementPetAppointment(item.pet.id);
-        incrementCategoryAppointment(item.categoryId, item.pet.id);
-        incrementTotalAppointments();
+        clearAdditional(item.service.id);
+
+        if (item.additionalServices.size() != 0) {
+            for (BusinessServices additional : item.additionalServices) {
+                setAdditionalSelected(additional.id, item.pet.id);
+            }
+        }
+    }
+
+    public void removeItem(String serviceId, String categoryKey, String petId) {
+        removeKey(serviceId + "_" + petId + "_ITEM");
+        setServiceSelected(serviceId, petId, false);
+        removeCartItem(serviceId);
+        clearAdditional(serviceId);
+        decreasePetAppointment(petId);
+        decreaseCategoryAppointment(categoryKey, petId);
+        decreaseTotalAppointments();
     }
 
     private void saveItem(CartItem item) {
@@ -97,14 +120,38 @@ public class AppointmentManager {
         incrementKey(categoryId + "_" + petId + "_TOTAL");
     }
 
-    private void setServiceSelected(String serviceId, String petId) {
-        editor.putBoolean(serviceId + "_" + petId, true);
+    private void decreaseTotalAppointments() {
+        decreaseKey("TOTAL_APPOINTMENTS");
+    }
+
+    private void decreasePetAppointment(String petId) {
+        decreaseKey(petId + "_SERVICE");
+    }
+
+    private void decreaseCategoryAppointment(String categoryId, String petId) {
+        decreaseKey(categoryId + "_" + petId + "_TOTAL");
+    }
+
+    private void setServiceSelected(String serviceId, String petId, boolean status) {
+        editor.putBoolean(serviceId + "_" + petId, status);
+        editor.apply();
+    }
+
+    private void setAdditionalSelected(String serviceId, String petId) {
+        editor.putBoolean("ADDITIONAL_" + serviceId + "_" + petId, true);
         editor.apply();
     }
 
     private void incrementKey(String key) {
         int total = pref.getInt(key, 0);
         total++;
+        editor.putInt(key, total);
+        editor.apply();
+    }
+
+    private void decreaseKey(String key) {
+        int total = pref.getInt(key, 0);
+        total--;
         editor.putInt(key, total);
         editor.apply();
     }
@@ -125,12 +172,40 @@ public class AppointmentManager {
         return pref.getBoolean(serviceId + "_" + petId, false);
     }
 
+    public boolean isAdditionalSelected(String serviceId, String petId) {
+        return pref.getBoolean("ADDITIONAL_" + serviceId + "_" + petId, false);
+    }
+
+    public void clearAdditional(String serviceId) {
+        Map<String, ?> allEntries = pref.getAll();
+        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            String key = entry.getKey();
+            if (key.contains("ADDITIONAL_" + serviceId)) {
+                editor.remove(key);
+            }
+            editor.commit();
+        }
+    }
+
+    public void removeCartItem(String serviceId) {
+        int index = 0;
+        for (CartItem cartItem : this.cart) {
+            if (cartItem.service.id.equals(serviceId)) {
+                this.cart.remove(index);
+                break;
+            }
+
+            index++;
+        }
+    }
+
     public AppointmentManager removeKey(String key) {
         pref.edit().remove(key).apply();
         return this;
     }
 
     public void reset() {
+        this.cart = new ArrayList<>();
         editor.clear();
         editor.commit();
     }

@@ -75,7 +75,9 @@ public class ConfirmDialogFragment extends DialogFragment implements DialogInter
         mBtnConfirm.setOnClickListener(buttonListener);
         mBtnCancel.setOnClickListener(buttonListener);
 
-        finishDialogListener = (FinishDialogListener) getActivity();
+        if (finishDialogListener == null) {
+            finishDialogListener = (FinishDialogListener) getActivity();
+        }
 
         updateInfo();
     }
@@ -113,7 +115,7 @@ public class ConfirmDialogFragment extends DialogFragment implements DialogInter
         this.mAction = action;
     }
 
-    public void setCancelText(int text){
+    public void setCancelText(int text) {
         this.mButtonCancelText = text;
     }
 
@@ -126,6 +128,10 @@ public class ConfirmDialogFragment extends DialogFragment implements DialogInter
 
     public interface FinishDialogListener {
         void onFinishDialog(int action);
+    }
+
+    public void setFinishDialogListener(FinishDialogListener finishDialogListener) {
+        this.finishDialogListener = finishDialogListener;
     }
 
     @Override

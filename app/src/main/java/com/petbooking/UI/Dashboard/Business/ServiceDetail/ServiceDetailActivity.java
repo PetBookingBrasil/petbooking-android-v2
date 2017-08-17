@@ -59,14 +59,15 @@ public class ServiceDetailActivity extends AppCompatActivity {
     private ProfessionalListAdapter mProfessionalAdapter;
     private RecyclerView mRvProfessional;
 
+
     ProfessionalListAdapter.OnSelectProfessionaListener professionaListener = new ProfessionalListAdapter.OnSelectProfessionaListener() {
         @Override
         public void onSelect(int position) {
             if (position != -1 && position != selectedProfessional) {
                 selectedProfessional = position;
                 mProfessionalContainer.setVisibility(View.GONE);
+                mAppointmentFragment.setSelectedProfessional(position);
                 mAppointmentFragment.show(getSupportFragmentManager(), mAppointmentFragment.getTag());
-                //handleSelectProfessional();
             }
         }
     };

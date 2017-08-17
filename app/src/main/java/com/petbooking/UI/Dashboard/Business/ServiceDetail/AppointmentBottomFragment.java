@@ -1,5 +1,6 @@
 package com.petbooking.UI.Dashboard.Business.ServiceDetail;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -244,7 +245,6 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
         mRvDays.setAdapter(mDaysListAdapter);
         mRvTime.setAdapter(mTimeAdapter);
 
-
         return view;
     }
 
@@ -265,6 +265,11 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
                 mProfessionalAdapter.updateList(mProfessionalList);
                 mProfessionalAdapter.notifyDataSetChanged();
                 mFragmentLayout.setVisibility(View.VISIBLE);
+
+                if (selectedProfessional != -1) {
+                    mProfessionalAdapter.setSelectedPosition(selectedProfessional);
+                    handleSelectProfessional();
+                }
 
                 AppUtils.hideDialog();
             }
@@ -360,6 +365,16 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
 
     public void setOnAppointmentListener(OnAppointmentListener onAppointmentListener) {
         this.onAppointmentListener = onAppointmentListener;
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        super.onCancel(dialog);
+        onAppointmentListener.onAction(AppConstants.CANCEL_ACTION);
+    }
+
+    public void setSelectedProfessional(int selectedProfessional) {
+        this.selectedProfessional = selectedProfessional;
     }
 
     public interface OnAppointmentListener {

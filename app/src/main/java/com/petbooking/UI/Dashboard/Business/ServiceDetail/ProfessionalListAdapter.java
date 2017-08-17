@@ -120,6 +120,11 @@ public class ProfessionalListAdapter extends RecyclerView.Adapter<ProfessionalLi
         }
     }
 
+    public void setSelectedPosition(int selectedPosition) {
+        this.selectedPosition = selectedPosition;
+        notifyItemChanged(selectedPosition);
+    }
+
     public interface OnSelectProfessionaListener {
         void onSelect(int position);
     }

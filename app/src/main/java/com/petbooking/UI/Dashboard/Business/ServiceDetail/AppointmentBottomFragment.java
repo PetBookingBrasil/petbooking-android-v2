@@ -44,6 +44,7 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
     private AppointmentManager mAppointmentManager;
     private OnAppointmentListener onAppointmentListener;
     private LinearLayout mFragmentLayout;
+    private ArrayList<BusinessServices> mAdditionalList;
 
     /**
      * Buttons
@@ -294,6 +295,13 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
 
         item.totalPrice += service.price;
 
+        if (mAdditionalList != null) {
+            for (BusinessServices additional : mAdditionalList) {
+                item.totalPrice += additional.price;
+                item.additionalServices.add(additional);
+            }
+        }
+
         mAppointmentManager.addItem(item);
         onAppointmentListener.onAction(AppConstants.OK_ACTION);
         Log.d("CARTITEM", new Gson().toJson(item));
@@ -375,6 +383,10 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
 
     public void setSelectedProfessional(int selectedProfessional) {
         this.selectedProfessional = selectedProfessional;
+    }
+
+    public void setAdditionalList(ArrayList<BusinessServices> additionalList) {
+        this.mAdditionalList = additionalList;
     }
 
     public interface OnAppointmentListener {

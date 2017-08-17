@@ -34,6 +34,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
     private String categoryId;
     private BusinessServices selectedService;
     private Pet selectedPet;
+    private ArrayList<BusinessServices> mAdditionalList;
 
     /**
      * Content
@@ -60,6 +61,17 @@ public class ServiceDetailActivity extends AppCompatActivity {
     private RecyclerView mRvProfessional;
 
 
+    AdditionalServiceListAdapter.OnAdditionalSelect onAdditionalSelect = new AdditionalServiceListAdapter.OnAdditionalSelect() {
+        @Override
+        public void onSelect(boolean selected, String additionalId) {
+            if (selected) {
+                addAdditional(additionalId);
+            } else {
+                removeAdditional(additionalId);
+            }
+        }
+    };
+
     ProfessionalListAdapter.OnSelectProfessionaListener professionaListener = new ProfessionalListAdapter.OnSelectProfessionaListener() {
         @Override
         public void onSelect(int position) {
@@ -67,6 +79,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
                 selectedProfessional = position;
                 mProfessionalContainer.setVisibility(View.GONE);
                 mAppointmentFragment.setSelectedProfessional(position);
+                mAppointmentFragment.setAdditionalList(mAdditionalList);
                 mAppointmentFragment.show(getSupportFragmentManager(), mAppointmentFragment.getTag());
             }
         }
@@ -89,6 +102,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
         mAppointmentFragment = new AppointmentBottomFragment();
         mAppointmentService = new AppointmentService();
         mProfessionalList = new ArrayList<>();
+        mAdditionalList = new ArrayList<>();
         businessName = AppointmentManager.getInstance().getCurrentBusinessName();
         getSupportActionBar().setTitle(businessName);
 
@@ -130,7 +144,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
             LinearLayoutManager mAdditionalLayout = new LinearLayoutManager(this);
             mAdditionalLayout.setOrientation(LinearLayoutManager.VERTICAL);
 
-            mAdditionalAdapter = new AdditionalServiceListAdapter(this, selectedService.additionalServices);
+            mAdditionalAdapter = new AdditionalServiceListAdapter(this, selectedService.additionalServices, onAdditionalSelect);
 
             mRvAdditionalServices.setHasFixedSize(true);
             mRvAdditionalServices.setLayoutManager(mAdditionalLayout);
@@ -173,6 +187,31 @@ public class ServiceDetailActivity extends AppCompatActivity {
                 AppUtils.hideDialog();
             }
         });
+    }
+
+    public void addAdditional(String additionalId) {
+        int index = 0;
+
+        for (BusinessServices additional : selectedService.additionalServices) {
+            if (additional.id.equals(additionalId)) {
+                mAdditionalList.add(selectedService.additionalServices.get(index));
+                break;
+            }
+
+            index++;
+        }
+    }
+
+    public void removeAdditional(String additionalId) {
+        int index = 0;
+        for (BusinessServices additional : mAdditionalList) {
+            if (additional.id.equals(additionalId)) {
+                mAdditionalList.remove(index);
+                break;
+            }
+
+            index++;
+        }
     }
 
     @Override

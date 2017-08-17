@@ -53,7 +53,7 @@ public class AppointmentManager {
 
         if (item.additionalServices.size() != 0) {
             for (BusinessServices additional : item.additionalServices) {
-                setAdditionalSelected(additional.id, item.pet.id);
+                setAdditionalSelected(additional.id, item.pet.id, true);
             }
         }
     }
@@ -79,6 +79,22 @@ public class AppointmentManager {
         }
 
         return mJsonManager.fromJson(pref.getString(serviceId + "_" + petId + "_ITEM", ""), CartItem.class);
+    }
+
+    public void addNewAdditional(String serviceId, BusinessServices additional, String petId) {
+        CartItem item = getItem(serviceId, petId);
+        item.addAdditional(additional);
+        item.totalPrice += additional.price;
+        setAdditionalSelected(additional.id, petId, true);
+        saveItem(item);
+    }
+
+    public void removeAdditional(String serviceId, BusinessServices additional, String petId) {
+        CartItem item = getItem(serviceId, petId);
+        item.removeAdditional(additional.id);
+        item.totalPrice -= additional.price;
+        setAdditionalSelected(additional.id, petId, false);
+        saveItem(item);
     }
 
     public void setCurrentBusinessId(String businessId) {
@@ -137,8 +153,8 @@ public class AppointmentManager {
         editor.apply();
     }
 
-    private void setAdditionalSelected(String serviceId, String petId) {
-        editor.putBoolean("ADDITIONAL_" + serviceId + "_" + petId, true);
+    private void setAdditionalSelected(String serviceId, String petId, boolean status) {
+        editor.putBoolean("ADDITIONAL_" + serviceId + "_" + petId, status);
         editor.apply();
     }
 

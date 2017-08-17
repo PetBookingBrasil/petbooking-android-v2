@@ -86,7 +86,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
         CartItem item = null;
 
         String price = mContext.getResources().getString(R.string.business_service_price, String.format("%.2f", service.price));
-        String totalPrice;
+        final String totalPrice;
         String appointmentDate;
 
         holder.mTvServiceName.setText(service.name);
@@ -144,7 +144,25 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
             mAdditionalLayout = new LinearLayoutManager(mContext);
             mAdditionalLayout.setOrientation(LinearLayoutManager.VERTICAL);
 
-            mAdditionalAdapter = new AdditionalServiceListAdapter(mContext, service.additionalServices, null);
+            final CartItem finalItem = item;
+            mAdditionalAdapter = new AdditionalServiceListAdapter(mContext, service.additionalServices, new AdditionalServiceListAdapter.OnAdditionalSelect() {
+                @Override
+                public void onSelect(boolean selected, String additionalId) {
+                    String newPrice;
+                    BusinessServices additional = getAdditional(service.additionalServices, additionalId);
+
+                    if (selected) {
+                        addNewAdditional(finalItem.service.id, additional, finalItem.pet.id);
+                        finalItem.totalPrice += additional.price;
+                    } else {
+                        removeAdditional(finalItem.service.id, additional, finalItem.pet.id);
+                        finalItem.totalPrice -= additional.price;
+                    }
+
+                    newPrice = mContext.getResources().getString(R.string.business_service_price, String.format("%.2f", finalItem.totalPrice));
+                    holder.mTvTotalPrice.setText(newPrice);
+                }
+            });
             mAdditionalAdapter.setPetId(petId);
             mAdditionalAdapter.setFromDetail(false);
 
@@ -209,6 +227,31 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
             mTvAdditionalLabel = (TextView) view.findViewById(R.id.additional_label);
             mRvAdditionalServices = (RecyclerView) view.findViewById(R.id.additional_services);
         }
+    }
+
+    /**
+     * Get Additional price
+     *
+     * @param services
+     * @param additionalId
+     * @return
+     */
+    public BusinessServices getAdditional(ArrayList<BusinessServices> services, String additionalId) {
+        for (BusinessServices service : services) {
+            if (service.id.equals(additionalId)) {
+                return service;
+            }
+        }
+
+        return null;
+    }
+
+    public void addNewAdditional(String serviceId, BusinessServices additional, String petId) {
+        mAppointmentManager.addNewAdditional(serviceId, additional, petId);
+    }
+
+    public void removeAdditional(String serviceId, BusinessServices additional, String petId) {
+        mAppointmentManager.removeAdditional(serviceId, additional, petId);
     }
 
     public interface OnServiceListener {

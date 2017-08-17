@@ -18,7 +18,7 @@ public class CartItem {
     public String notes;
     public double totalPrice;
     public boolean withTransportation;
-    public ArrayList<String> additionalServiceIds;
+    public ArrayList<BusinessServices> additionalServices;
 
     public CartItem(String startDate, String startTime, String businessId, BusinessServices service,
                     String categoryId, Professional professional, Pet pet) {
@@ -30,11 +30,23 @@ public class CartItem {
         this.professional = professional;
         this.pet = pet;
         this.withTransportation = false;
-        this.additionalServiceIds = new ArrayList<>();
+        this.additionalServices = new ArrayList<>();
     }
 
-    public void addAdditional(String additionalId) {
-        this.additionalServiceIds.add(additionalId);
+    public void addAdditional(BusinessServices additional) {
+        additionalServices.add(additional);
+    }
+
+    public void removeAdditional(String additionalId) {
+        int index = 0;
+        for (BusinessServices additional : additionalServices) {
+            if (additional.id.equals(additionalId)) {
+                additionalServices.remove(index);
+                break;
+            }
+
+            index++;
+        }
     }
 
     public void setNotes(String notes) {

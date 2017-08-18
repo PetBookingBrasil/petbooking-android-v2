@@ -3,6 +3,7 @@ package com.petbooking.Utils;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.petbooking.API.Appointment.Models.CartRqt;
 import com.petbooking.API.Appointment.Models.ServiceResp;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Business.BusinessService;
@@ -16,12 +17,14 @@ import com.petbooking.BuildConfig;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Business;
 import com.petbooking.Models.BusinessServices;
+import com.petbooking.Models.CartItem;
 import com.petbooking.Models.Category;
 import com.petbooking.Models.Review;
 import com.petbooking.Models.User;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -142,6 +145,28 @@ public class APIUtils {
                 item.attributes.name, AppUtils.getBusinessIcon(context, item.attributes.name));
 
         return category;
+    }
+
+    public static ArrayList<CartRqt.Item> getCartReqItens(ArrayList<CartItem> cartItens) {
+        ArrayList<CartRqt.Item> itens = new ArrayList<>();
+        CartRqt.Item item = null;
+
+        for (CartItem cartItem : cartItens) {
+            ArrayList<String> additionals = new ArrayList<>();
+
+            if (cartItem.additionalServices.size() != 0) {
+                for (BusinessServices additional : cartItem.additionalServices) {
+                    additionals.add(additional.id);
+                }
+            }
+
+            item = new CartRqt.Item(cartItem.startDate, cartItem.startTime, cartItem.businessId,
+                    cartItem.service.id, cartItem.professional.id, cartItem.pet.id, cartItem.notes,
+                    false, additionals);
+            itens.add(item);
+        }
+
+        return itens;
     }
 
     /**

@@ -8,6 +8,7 @@ import com.petbooking.Constants.APIConstants;
 
 public class APIAppointmentConstants {
 
+    public static final String DATA_CART_TYPE = "carts";
     public static final String PET_QUERY = "pet_id";
 
     public static final String CATEGORY_SERVICES_ENDPOINT = "service-categories/{" + APIConstants.PATH_PARAM + "}/services";

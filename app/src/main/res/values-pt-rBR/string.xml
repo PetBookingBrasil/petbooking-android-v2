@@ -181,6 +181,7 @@
     <string name="cancel_service_text">Esse serviço será cancelado. Deseja continuar?</string>
     <string name="confirm_cancel_appointment">Quero cancelar</string>
     <string name="appointment_date_info">%1$s de %2$s, %3$s - %4$s</string>
+    <string name="confirm_scheduling">Agendar</string>
 
     <!-- Dialog -->
     <string name="dialog_picture_title">Selecionar foto de perfil</string>

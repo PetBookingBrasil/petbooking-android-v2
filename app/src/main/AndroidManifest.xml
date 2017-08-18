@@ -94,8 +94,7 @@
             android:name=".UI.Dashboard.Cart.CartActivity"
             android:configChanges="orientation"
             android:parentActivityName=".UI.Dashboard.Business.BusinessActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/BusinessTheme">
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Dashboard.Business.BusinessActivity" />

@@ -5,6 +5,9 @@
     <string name="navigation_drawer_open">Abrir Menu Lateral</string>
     <string name="navigation_drawer_close">Fechar Menu Lateral</string>
 
+    <!-- Common -->
+    <string name="total_label" translatable="false">Total</string>
+
     <!--  Third-party Apps ID -->
     <string name="fabric_app_id" translatable="false">fe0c61a27b92b4a7f90ab0fc8f69e3a4326250e5</string>
     <string name="facebook_app_id" translatable="false">1799017433691061</string>
@@ -188,6 +191,7 @@
     <string name="cancel_service_text">Esse serviço será cancelado. Deseja continuar?</string>
     <string name="confirm_cancel_appointment">Quero cancelar</string>
     <string name="appointment_date_info">%1$s de %2$s, %3$s - %4$s</string>
+    <string name="confirm_scheduling">Agendar</string>
 
     <!-- Dialog -->
     <string name="dialog_picture_title">Selecionar foto de perfil</string>

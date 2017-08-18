@@ -19,6 +19,7 @@
     <string name="pets_title">Meus Pets</string>
     <string name="new_pet_title">Preencha os dados do pet</string>
     <string name="search_title">Filtre sua busca</string>
+    <string name="cart_title">Carrinho de Agendamentos</string>
 
     <!-- Pet -->
     <string name="gender_male">Macho</string>

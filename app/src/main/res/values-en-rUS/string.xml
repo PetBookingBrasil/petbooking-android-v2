@@ -12,6 +12,7 @@
     <string name="profile_title">Profile</string>
     <string name="pets_title">My Pets</string>
     <string name="new_pet_title">Enter your pet info</string>
+    <string name="cart_title">Scheduling cart</string>
 
     <!-- Pet -->
     <string name="gender_male">Male</string>

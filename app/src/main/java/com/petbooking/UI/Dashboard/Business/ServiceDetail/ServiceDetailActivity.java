@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
     private AppointmentBottomFragment mAppointmentFragment;
 
     private CheckBox mCbPet;
+    private CheckBox mCbService;
     private TextView mTvServiceName;
     private TextView mTvServicePrice;
     private TextView mTvServiceDescription;
@@ -60,6 +62,14 @@ public class ServiceDetailActivity extends AppCompatActivity {
     private ProfessionalListAdapter mProfessionalAdapter;
     private RecyclerView mRvProfessional;
 
+    CompoundButton.OnCheckedChangeListener onCheckedListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if(!isChecked){
+                onBackPressed();
+            }
+        }
+    };
 
     AdditionalServiceListAdapter.OnAdditionalSelect onAdditionalSelect = new AdditionalServiceListAdapter.OnAdditionalSelect() {
         @Override
@@ -129,6 +139,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
         mRvAdditionalServices = (RecyclerView) findViewById(R.id.additional_services);
 
         mCbPet = (CheckBox) findViewById(R.id.pet_checkbox);
+        mCbService = (CheckBox) findViewById(R.id.service_checkbox);
         mTvServiceName = (TextView) findViewById(R.id.service_name);
         mTvServicePrice = (TextView) findViewById(R.id.service_price);
         mTvServiceDescription = (TextView) findViewById(R.id.service_description);
@@ -164,6 +175,9 @@ public class ServiceDetailActivity extends AppCompatActivity {
         mAppointmentFragment.setPet(selectedPet);
         mAppointmentFragment.setCategoryId(categoryId);
         mAppointmentFragment.setOnAppointmentListener(onAppointmentListener);
+
+        mCbPet.setOnCheckedChangeListener(onCheckedListener);
+        mCbService.setOnCheckedChangeListener(onCheckedListener);
     }
 
     /**

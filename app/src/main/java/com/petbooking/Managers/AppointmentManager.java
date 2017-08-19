@@ -261,6 +261,11 @@ public class AppointmentManager {
         editor.apply();
     }
 
+    public void saveCartId(String cartId) {
+        editor.putString("CART_ID", mJsonManager.toJson(cartId));
+        editor.apply();
+    }
+
     public CartItem getCartItem(String serviceId, String petId) {
         int index = 0;
 
@@ -285,6 +290,10 @@ public class AppointmentManager {
         }
 
         return cart;
+    }
+
+    public String getCartId() {
+       return pref.getString("CART_ID", "");
     }
 
     public AppointmentManager removeKey(String key) {

@@ -15,4 +15,5 @@ public class APIAppointmentConstants {
     public static final String PROFESSIONAL_LIST_ENDPOINT = "services/{" + APIConstants.PATH_PARAM + "}/employments";
     public static final String CREATE_CART_ENDPOINT = "users/{" + APIConstants.PATH_PARAM + "}/carts";
 
+    public static final String PAYMENT_WEBVIEW_URL = "%swebviews/payments/%s/%s/new";
 }

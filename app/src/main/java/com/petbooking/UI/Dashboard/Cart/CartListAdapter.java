@@ -1,8 +1,8 @@
 package com.petbooking.UI.Dashboard.Cart;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.CartItem;
 import com.petbooking.R;
 import com.petbooking.Utils.CommonUtils;
@@ -36,14 +37,18 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
 
     private SimpleDateFormat mDateFormat;
     private SimpleDateFormat mTimeFormat;
+    private AppointmentManager mAppointmentManager;
+    private OnCartChange onCartChange;
     private Context mContext;
     private ArrayList<CartItem> mCartList;
 
-    public CartListAdapter(Context context, ArrayList<CartItem> mCartList) {
+    public CartListAdapter(Context context, ArrayList<CartItem> mCartList, OnCartChange onCartChange) {
         this.mContext = context;
         this.mCartList = mCartList;
         this.mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         this.mTimeFormat = new SimpleDateFormat("HH:mm");
+        this.mAppointmentManager = AppointmentManager.getInstance();
+        this.onCartChange = onCartChange;
     }
 
     public void updateList(ArrayList<CartItem> cartList) {
@@ -62,8 +67,10 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
 
     @Override
     public void onBindViewHolder(final CartViewHolder holder, final int position) {
-        CartItem cartItem = mCartList.get(position);
+        final CartItem cartItem = mCartList.get(position);
 
+        CartAdditionalServiceListAdapter mAdditionalAdapter;
+        LinearLayoutManager mAdditionalLayout;
         Calendar calendar = new GregorianCalendar();
         Calendar timeCalendar = Calendar.getInstance();
         String price = mContext.getResources().getString(R.string.business_service_price,
@@ -92,12 +99,28 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
         holder.mTvServicePrice.setText(price);
         holder.mTvTotalPrice.setText(totalPrice);
 
-        //TODO: Apresentar Adicionais
         if (cartItem.additionalServices.size() == 0) {
             holder.mAdditionalLayout.setVisibility(View.GONE);
         } else {
             holder.mAdditionalLayout.setVisibility(View.VISIBLE);
+
+            mAdditionalAdapter = new CartAdditionalServiceListAdapter(mContext, cartItem.additionalServices, onCartChange);
+            mAdditionalAdapter.setParentPosition(position);
+
+            mAdditionalLayout = new LinearLayoutManager(mContext);
+            mAdditionalLayout.setOrientation(LinearLayoutManager.VERTICAL);
+
+            holder.mRvAdditional.setLayoutManager(mAdditionalLayout);
+            holder.mRvAdditional.setAdapter(mAdditionalAdapter);
         }
+
+        holder.mBtnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAppointmentManager.removeItemByIndex(position);
+                onCartChange.onChange();
+            }
+        });
 
         Glide.with(mContext)
                 .load(cartItem.pet.avatar.url)
@@ -119,20 +142,20 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
 
     public class CartViewHolder extends RecyclerView.ViewHolder {
 
-        CircleImageView mIvPetPhoto;
-        TextView mTvPetName;
-        TextView mTvIndex;
-        TextView mTvDateInfo;
-        TextView mTvServiceName;
-        TextView mTvServicePrice;
-        RelativeLayout mAdditionalLayout;
-        RecyclerView mRvAdditional;
-        CircleImageView mIvProfessionalPhoto;
-        TextView mTvProfessionalName;
-        EditText mEdtNotes;
-        Button mBtnEdit;
-        ImageButton mBtnRemove;
-        TextView mTvTotalPrice;
+        public CircleImageView mIvPetPhoto;
+        public TextView mTvPetName;
+        public TextView mTvIndex;
+        public TextView mTvDateInfo;
+        public TextView mTvServiceName;
+        public TextView mTvServicePrice;
+        public RelativeLayout mAdditionalLayout;
+        public RecyclerView mRvAdditional;
+        public CircleImageView mIvProfessionalPhoto;
+        public TextView mTvProfessionalName;
+        public EditText mEdtNotes;
+        public Button mBtnEdit;
+        public ImageButton mBtnRemove;
+        public TextView mTvTotalPrice;
 
         public CartViewHolder(View view) {
             super(view);
@@ -152,5 +175,9 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
             mBtnRemove = (ImageButton) view.findViewById(R.id.remove_button);
             mTvTotalPrice = (TextView) view.findViewById(R.id.total_price);
         }
+    }
+
+    public interface OnCartChange {
+        void onChange();
     }
 }

@@ -1,5 +1,6 @@
 package com.petbooking.UI.Dashboard.Cart;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.CartItem;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.PaymentWebview.PaymentActivity;
 import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
@@ -111,13 +113,12 @@ public class CartActivity extends AppCompatActivity {
      */
     public void createCartRequest() {
         AppUtils.showLoadingDialog(this);
-        //TODO: Se for sucesso abrir webview
         mAppointmentService.createCart(userId, mCart, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 CartResp resp = (CartResp) response;
-                Log.i("CART_ID", resp.data.id);
-                mAppointmentManager.reset();
+                mAppointmentManager.saveCartId(resp.data.id);
+                goToPayment();
                 AppUtils.hideDialog();
             }
 
@@ -126,6 +127,14 @@ public class CartActivity extends AppCompatActivity {
                 AppUtils.hideDialog();
             }
         });
+    }
+
+    /**
+     * Go to Payment
+     */
+    public void goToPayment(){
+        Intent paymentIntent = new Intent(this, PaymentActivity.class);
+        startActivity(paymentIntent);
     }
 
     /**

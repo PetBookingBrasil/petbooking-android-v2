@@ -1,151 +1,141 @@
-package com.petbooking.UI.Dashboard.Business.BusinessServices;
+package com.petbooking.UI.Dashboard.Cart;
 
 import android.content.Context;
-import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.petbooking.Managers.AppointmentManager;
-import com.petbooking.Models.Category;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.petbooking.Models.CartItem;
 import com.petbooking.R;
-import com.petbooking.Utils.AppUtils;
+import com.petbooking.Utils.CommonUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * Created by Luciano José on 23/05/2017.
+ * Created by Luciano José on 18/08/2017.
  */
 
 
-public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder> {
+public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartViewHolder> {
 
+    private SimpleDateFormat mDateFormat;
+    private SimpleDateFormat mTimeFormat;
     private Context mContext;
-    private String petId;
-    private AppointmentManager mAppointmentManager;
-    private OnSelectCategoryListener onSelectCategoryListener;
-    private ArrayList<Category> mCategoryList;
-    private int selectedPosition = -1;
+    private ArrayList<CartItem> mCartList;
 
-    public CategoryListAdapter(Context context, ArrayList<Category> mCategoryList) {
+    public CartListAdapter(Context context, ArrayList<CartItem> mCartList) {
         this.mContext = context;
-        this.mCategoryList = mCategoryList;
-        this.mAppointmentManager = AppointmentManager.getInstance();
+        this.mCartList = mCartList;
+        this.mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        this.mTimeFormat = new SimpleDateFormat("HH:mm");
     }
 
-    public void updateList(ArrayList<Category> categoryList) {
-        selectedPosition = -1;
-        this.mCategoryList = categoryList;
-    }
-
-    public void setOnSelectCategoryListener(OnSelectCategoryListener onSelectCategoryListener) {
-        this.onSelectCategoryListener = onSelectCategoryListener;
+    public void updateList(ArrayList<CartItem> cartList) {
+        this.mCartList = cartList;
     }
 
     @Override
-    public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_list_category, parent, false);
+                .inflate(R.layout.item_list_cart, parent, false);
 
-        CategoryViewHolder holder = new CategoryViewHolder(view);
+        CartViewHolder holder = new CartViewHolder(view);
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(final CategoryViewHolder holder, final int position) {
-        Category category = mCategoryList.get(position);
+    public void onBindViewHolder(final CartViewHolder holder, final int position) {
+        CartItem cartItem = mCartList.get(position);
 
-        int totalAppointment = 0;
-        int color = AppUtils.getCategoryColor(mContext, category.categoryName);
-        String formatedText = mContext.getResources().getString(category.categoryText);
-        GradientDrawable iconBackground = (GradientDrawable) holder.mIvCategoryIcon.getBackground();
+        Calendar calendar = new GregorianCalendar();
+        Calendar timeCalendar = Calendar.getInstance();
+        String price = mContext.getResources().getString(R.string.business_service_price,
+                String.format("%.2f", cartItem.service.price));
+        String totalPrice = mContext.getResources().getString(R.string.business_service_price,
+                String.format("%.2f", cartItem.totalPrice));
+        String appointmentDate;
 
-        formatedText = formatedText.replace("e ", "e \n");
-
-        holder.mIvCategoryIcon.setImageDrawable(category.icon);
-        holder.mTvCategoryName.setText(formatedText);
-
-        if (petId != null) {
-            Log.d("PETID", petId);
-            totalAppointment = mAppointmentManager.getTotalCategoryAppointments(category.id, petId);
+        try {
+            calendar.setTime(mDateFormat.parse(cartItem.startDate));
+            timeCalendar.setTime(mTimeFormat.parse(cartItem.startTime));
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
-        if (totalAppointment == 0) {
-            holder.mTvTotalAppointment.setVisibility(View.GONE);
-        } else {
-            holder.mTvTotalAppointment.setVisibility(View.VISIBLE);
-            holder.mTvTotalAppointment.setText(String.valueOf(totalAppointment));
-        }
+        timeCalendar.add(Calendar.MINUTE, (cartItem.service.duration / 60));
+        appointmentDate = mContext.getResources().getString(R.string.appointment_date_info, String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)),
+                CommonUtils.uppercaseFirstLetter(calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())),
+                cartItem.startTime, mTimeFormat.format(timeCalendar.getTime()));
 
-        if (position == selectedPosition) {
-            holder.mTvCategoryName.setTextColor(color);
-            holder.mTvCategoryName.setTypeface(Typeface.DEFAULT_BOLD);
-            holder.mIvCategoryIcon.setAlpha((float) 1);
-        } else {
-            holder.mTvCategoryName.setTextColor(mContext.getResources().getColor(R.color.text_color));
-            holder.mTvCategoryName.setTypeface(Typeface.DEFAULT);
-            holder.mIvCategoryIcon.setAlpha((float) 0.4);
-        }
+        holder.mTvPetName.setText(cartItem.pet.name);
+        holder.mTvProfessionalName.setText(cartItem.professional.name);
+        holder.mTvIndex.setText("#" + (position + 1));
+        holder.mTvDateInfo.setText(appointmentDate);
+        holder.mTvServiceName.setText(cartItem.service.name);
+        holder.mTvServicePrice.setText(price);
+        holder.mTvTotalPrice.setText(totalPrice);
 
-        holder.mCategoryItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notifyItemChanged(selectedPosition);
+        Glide.with(mContext)
+                .load(cartItem.pet.avatar.url)
+                .error(R.drawable.ic_placeholder_dog)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .into(holder.mIvPetPhoto);
 
-                if (position == selectedPosition) {
-                    selectedPosition = -1;
-                } else {
-                    selectedPosition = position;
-                }
-
-                notifyItemChanged(selectedPosition);
-                onSelectCategoryListener.onSelect(selectedPosition);
-            }
-        });
-
-        iconBackground.setColor(color);
+        Glide.with(mContext)
+                .load(cartItem.professional.imageUrl)
+                .error(R.drawable.ic_placeholder_user)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .into(holder.mIvProfessionalPhoto);
     }
 
     @Override
     public int getItemCount() {
-        return mCategoryList.size();
+        return mCartList.size();
     }
 
-    public class CategoryViewHolder extends RecyclerView.ViewHolder {
+    public class CartViewHolder extends RecyclerView.ViewHolder {
 
-        public LinearLayout mCategoryItem;
-        public ImageView mIvCategoryIcon;
-        public TextView mTvCategoryName;
-        public TextView mTvTotalAppointment;
+        CircleImageView mIvPetPhoto;
+        TextView mTvPetName;
+        TextView mTvIndex;
+        TextView mTvDateInfo;
+        TextView mTvServiceName;
+        TextView mTvServicePrice;
+        CircleImageView mIvProfessionalPhoto;
+        TextView mTvProfessionalName;
+        Button mBtnEdit;
+        ImageButton mBtnRemove;
+        TextView mTvTotalPrice;
 
-        public CategoryViewHolder(View view) {
+        public CartViewHolder(View view) {
             super(view);
 
-            mCategoryItem = (LinearLayout) view.findViewById(R.id.category_item);
-            mIvCategoryIcon = (ImageView) view.findViewById(R.id.category_icon);
-            mTvCategoryName = (TextView) view.findViewById(R.id.category_name);
-            mTvTotalAppointment = (TextView) view.findViewById(R.id.total_appointments);
+            mIvPetPhoto = (CircleImageView) view.findViewById(R.id.pet_photo);
+            mTvPetName = (TextView) view.findViewById(R.id.pet_name);
+            mTvIndex = (TextView) view.findViewById(R.id.index_label);
+            mTvDateInfo = (TextView) view.findViewById(R.id.date_info);
+            mTvServiceName = (TextView) view.findViewById(R.id.service_name);
+            mTvServicePrice = (TextView) view.findViewById(R.id.service_price);
+            mIvProfessionalPhoto = (CircleImageView) view.findViewById(R.id.professional_photo);
+            mTvProfessionalName = (TextView) view.findViewById(R.id.professional_name);
+            mBtnEdit = (Button) view.findViewById(R.id.edit_button);
+            mBtnRemove = (ImageButton) view.findViewById(R.id.remove_button);
+            mTvTotalPrice = (TextView) view.findViewById(R.id.total_price);
         }
     }
-
-    public void setPetId(String petId) {
-        this.petId = petId;
-    }
-
-    public void resetCategorySelected() {
-        selectedPosition = -1;
-        notifyItemChanged(selectedPosition);
-    }
-
-    public interface OnSelectCategoryListener {
-        void onSelect(int position);
-    }
-
 }

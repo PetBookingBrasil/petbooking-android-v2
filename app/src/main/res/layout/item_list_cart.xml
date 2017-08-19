@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/spacing_tiny"
+            android:layout_marginRight="@dimen/spacing_xsmallest"
             android:textColor="@color/text_color"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -112,6 +112,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/additional_list"
+            android:layout_marginTop="@dimen/spacing_xtiny"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </RelativeLayout>

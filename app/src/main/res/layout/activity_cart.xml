@@ -36,7 +36,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="R$ 378,00"
             android:textColor="@color/white"
             android:textStyle="bold" />
 

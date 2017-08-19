@@ -49,12 +49,20 @@ public class CartActivity extends AppCompatActivity {
         }
     };
 
+    CartListAdapter.OnCartChange onCartChange = new CartListAdapter.OnCartChange() {
+        @Override
+        public void onChange() {
+            mCart = mAppointmentManager.getCart();
+            mCartAdapter.updateList(mCart);
+            mCartAdapter.notifyDataSetChanged();
+            setTotalPrice();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-
-        String totalPrice;
 
         mAppointmentManager = AppointmentManager.getInstance();
         mAppointmentService = new AppointmentService();
@@ -71,30 +79,29 @@ public class CartActivity extends AppCompatActivity {
         mCartLayoutManager = new LinearLayoutManager(this);
         mCartLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        mCartAdapter = new CartListAdapter(this, mCart);
+        mCartAdapter = new CartListAdapter(this, mCart, onCartChange);
 
         mRvCartItens = (RecyclerView) findViewById(R.id.cart_itens_list);
         mRvCartItens.setHasFixedSize(true);
         mRvCartItens.setLayoutManager(mCartLayoutManager);
         mRvCartItens.setAdapter(mCartAdapter);
 
-        totalPrice = getResources().getString(R.string.business_service_price, String.format("%.2f", getTotalPrice()));
-        mTvTotalPrice.setText(totalPrice);
+        setTotalPrice();
     }
 
     /**
-     * Get Total Cart price
-     *
-     * @return
+     * Set Total Cart price
      */
-    public double getTotalPrice() {
+    public void setTotalPrice() {
         double totalPrice = 0;
+        String totalPriceText;
 
         for (CartItem item : mCart) {
             totalPrice += item.totalPrice;
         }
 
-        return totalPrice;
+        totalPriceText = getResources().getString(R.string.business_service_price, String.format("%.2f", totalPrice));
+        mTvTotalPrice.setText(totalPriceText);
     }
 
     /**
@@ -108,6 +115,7 @@ public class CartActivity extends AppCompatActivity {
             public void onSuccess(Object response) {
                 CartResp resp = (CartResp) response;
                 Log.i("CART_ID", resp.data.id);
+                mAppointmentManager.reset();
                 AppUtils.hideDialog();
             }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.CartItem;
@@ -39,6 +40,7 @@ public class AppointmentManager {
     }
 
     public void addItem(CartItem item) {
+        this.cart = getCart();
         this.cart.add(item);
 
         if (!isServiceSelected(item.service.id, item.pet.id)) {
@@ -49,6 +51,7 @@ public class AppointmentManager {
 
         setServiceSelected(item.service.id, item.pet.id, true);
         saveItem(item);
+        saveCart(cart);
         clearAdditional(item.service.id);
 
         if (item.additionalServices.size() != 0) {
@@ -62,15 +65,40 @@ public class AppointmentManager {
         removeKey(serviceId + "_" + petId + "_ITEM");
         setServiceSelected(serviceId, petId, false);
         removeCartItem(serviceId);
+        saveCart(cart);
         clearAdditional(serviceId);
         decreasePetAppointment(petId);
         decreaseCategoryAppointment(categoryKey, petId);
         decreaseTotalAppointments();
     }
 
-    private void saveItem(CartItem item) {
-        editor.putString(item.service.id + "_" + item.pet.id + "_ITEM", mJsonManager.toJson(item));
-        editor.apply();
+    public void removeCartItem(String serviceId) {
+        int index = 0;
+        this.cart = getCart();
+        for (CartItem cartItem : this.cart) {
+            if (cartItem.service.id.equals(serviceId)) {
+                this.cart.remove(index);
+                break;
+            }
+
+            index++;
+        }
+    }
+
+    public void removeItemByIndex(int index) {
+        cart = getCart();
+        CartItem item = cart.get(index);
+
+        cart.remove(index);
+
+        setServiceSelected(item.service.id, item.pet.id, false);
+        clearAdditional(item.service.id);
+        removeKey(item.service.id + "_" + item.pet.id + "_ITEM");
+
+        decreasePetAppointment(item.pet.id);
+        decreaseCategoryAppointment(item.categoryId, item.pet.id);
+        decreaseTotalAppointments();
+        saveCart(cart);
     }
 
     public CartItem getItem(String serviceId, String petId) {
@@ -95,6 +123,22 @@ public class AppointmentManager {
         item.totalPrice -= additional.price;
         setAdditionalSelected(additional.id, petId, false);
         saveItem(item);
+        saveCart(cart);
+    }
+
+    public void removeAdditionalByIndex(int parentPosition, int additionalPosition) {
+        cart = getCart();
+        CartItem item = cart.get(parentPosition);
+        BusinessServices additional = item.additionalServices.get(additionalPosition);
+
+        item.totalPrice -= additional.price;
+        setAdditionalSelected(additional.id, item.pet.id, false);
+        item.additionalServices.remove(additionalPosition);
+
+        saveItem(item);
+        saveCart(cart);
+
+
     }
 
     public void setCurrentBusinessId(String businessId) {
@@ -203,16 +247,27 @@ public class AppointmentManager {
         }
     }
 
-    public void removeCartItem(String serviceId) {
-        int index = 0;
-        for (CartItem cartItem : this.cart) {
-            if (cartItem.service.id.equals(serviceId)) {
-                this.cart.remove(index);
-                break;
-            }
 
-            index++;
+    private void saveCart(ArrayList<CartItem> cart) {
+        editor.putString("CART", mJsonManager.toJson(cart));
+        editor.apply();
+    }
+
+    private void saveItem(CartItem item) {
+        editor.putString(item.service.id + "_" + item.pet.id + "_ITEM", mJsonManager.toJson(item));
+        editor.apply();
+    }
+
+    public ArrayList<CartItem> getCart() {
+        ArrayList<CartItem> cart = new ArrayList<>();
+        String cartStr = pref.getString("CART", null);
+
+        if (cartStr != null) {
+            cart = mJsonManager.fromJson(cartStr, new TypeToken<ArrayList<CartItem>>() {
+            }.getType());
         }
+
+        return cart;
     }
 
     public AppointmentManager removeKey(String key) {

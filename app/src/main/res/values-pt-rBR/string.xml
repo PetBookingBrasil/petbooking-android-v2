@@ -4,6 +4,9 @@
     <string name="navigation_drawer_open">Abrir Menu Lateral</string>
     <string name="navigation_drawer_close">Fechar Menu Lateral</string>
 
+    <!-- Common -->
+    <string name="edit_text">Editar</string>
+
     <!-- Screen Title -->
     <string name="dashboard_title">Estabelecimentos</string>
     <string name="recover_password_title">Esqueci a senha</string>

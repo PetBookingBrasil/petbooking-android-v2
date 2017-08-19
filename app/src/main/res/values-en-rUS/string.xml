@@ -5,6 +5,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!-- Common -->
+    <string name="edit_text">Edit</string>
+
     <!-- Screen Title -->
     <string name="dashboard_title">Businesses</string>
     <string name="recover_password_title">Forgot password</string>

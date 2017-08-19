@@ -56,6 +56,7 @@ public class CartActivity extends AppCompatActivity {
             mCartAdapter.updateList(mCart);
             mCartAdapter.notifyDataSetChanged();
             setTotalPrice();
+            handleConfirmButton();
         }
     };
 
@@ -87,6 +88,7 @@ public class CartActivity extends AppCompatActivity {
         mRvCartItens.setAdapter(mCartAdapter);
 
         setTotalPrice();
+        handleConfirmButton();
     }
 
     /**
@@ -124,5 +126,17 @@ public class CartActivity extends AppCompatActivity {
                 AppUtils.hideDialog();
             }
         });
+    }
+
+    /**
+     * Enable or disable button
+     * on cart change
+     */
+    public void handleConfirmButton(){
+        if(mCart.size() == 0){
+            mBtnSchedule.setEnabled(false);
+        }else{
+            mBtnSchedule.setEnabled(true);
+        }
     }
 }

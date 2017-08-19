@@ -1,5 +1,6 @@
 package com.petbooking.UI.Dashboard.Business;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import com.petbooking.Constants.AppConstants;
 import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Managers.PreferenceManager;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Cart.CartActivity;
 import com.petbooking.UI.Dashboard.Content.ContentTabsAdapter;
 import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
 
@@ -80,7 +82,7 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         } else if (item.getItemId() == R.id.schedules) {
-            Log.d("ITEM SELECTED", "CART");
+            goToCartActivity();
         } else if (item.getItemId() == R.id.notifications) {
             Log.d("ITEM SELECTED", "NOTIFICATIONS");
         }
@@ -112,6 +114,14 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    /**
+     * Go to cart activity
+     */
+    public void goToCartActivity() {
+        Intent cartIntent = new Intent(this, CartActivity.class);
+        startActivity(cartIntent);
     }
 
     @Override

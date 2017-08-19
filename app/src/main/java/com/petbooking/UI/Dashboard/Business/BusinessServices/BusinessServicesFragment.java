@@ -26,6 +26,7 @@ import com.petbooking.Models.Category;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.ServiceDetail.ServiceDetailActivity;
+import com.petbooking.UI.Dashboard.Cart.CartActivity;
 import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
 import com.petbooking.UI.Menu.Agenda.PetCalendarListAdapter;
 import com.petbooking.Utils.APIUtils;
@@ -80,6 +81,13 @@ public class BusinessServicesFragment extends Fragment implements ConfirmDialogF
     private CategoryListAdapter mCategoryAdapter;
 
     private ConfirmDialogFragment mConfirmDialogFragment;
+
+    View.OnClickListener btnFinishListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            goToCartActivity();
+        }
+    };
 
     CategoryListAdapter.OnSelectCategoryListener categoryListener = new CategoryListAdapter.OnSelectCategoryListener() {
         @Override
@@ -162,6 +170,7 @@ public class BusinessServicesFragment extends Fragment implements ConfirmDialogF
         getCategories();
 
         mBtnFinishScheduling = (Button) view.findViewById(R.id.btnFinishSchedule);
+        mBtnFinishScheduling.setOnClickListener(btnFinishListener);
 
         if (totalAppointments > 0) {
             mBtnFinishScheduling.setEnabled(true);
@@ -322,6 +331,14 @@ public class BusinessServicesFragment extends Fragment implements ConfirmDialogF
         mConfirmDialogFragment.setCancelText(R.string.dialog_back);
         mConfirmDialogFragment.setFinishDialogListener(this);
         mConfirmDialogFragment.show(getFragmentManager(), "CANCEL_SERVICE");
+    }
+
+    /**
+     * Go to cart activity
+     */
+    public void goToCartActivity() {
+        Intent cartIntent = new Intent(mContext, CartActivity.class);
+        startActivity(cartIntent);
     }
 
     @Override

@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -90,6 +92,13 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
         holder.mTvServicePrice.setText(price);
         holder.mTvTotalPrice.setText(totalPrice);
 
+        //TODO: Apresentar Adicionais
+        if (cartItem.additionalServices.size() == 0) {
+            holder.mAdditionalLayout.setVisibility(View.GONE);
+        } else {
+            holder.mAdditionalLayout.setVisibility(View.VISIBLE);
+        }
+
         Glide.with(mContext)
                 .load(cartItem.pet.avatar.url)
                 .error(R.drawable.ic_placeholder_dog)
@@ -116,8 +125,11 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
         TextView mTvDateInfo;
         TextView mTvServiceName;
         TextView mTvServicePrice;
+        RelativeLayout mAdditionalLayout;
+        RecyclerView mRvAdditional;
         CircleImageView mIvProfessionalPhoto;
         TextView mTvProfessionalName;
+        EditText mEdtNotes;
         Button mBtnEdit;
         ImageButton mBtnRemove;
         TextView mTvTotalPrice;
@@ -131,8 +143,11 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
             mTvDateInfo = (TextView) view.findViewById(R.id.date_info);
             mTvServiceName = (TextView) view.findViewById(R.id.service_name);
             mTvServicePrice = (TextView) view.findViewById(R.id.service_price);
+            mAdditionalLayout = (RelativeLayout) view.findViewById(R.id.additional_layout);
+            mRvAdditional = (RecyclerView) view.findViewById(R.id.additional_list);
             mIvProfessionalPhoto = (CircleImageView) view.findViewById(R.id.professional_photo);
             mTvProfessionalName = (TextView) view.findViewById(R.id.professional_name);
+            mEdtNotes = (EditText) view.findViewById(R.id.service_notes);
             mBtnEdit = (Button) view.findViewById(R.id.edit_button);
             mBtnRemove = (ImageButton) view.findViewById(R.id.remove_button);
             mTvTotalPrice = (TextView) view.findViewById(R.id.total_price);

@@ -8,6 +8,8 @@
     <!-- Common -->
     <string name="total_label" translatable="false">Total</string>
     <string name="edit_text">Editar</string>
+    <string name="additional_label">Adicionais</string>
+    <string name="observations_text">Observações&#8230;</string>
 
     <!--  Third-party Apps ID -->
     <string name="fabric_app_id" translatable="false">fe0c61a27b92b4a7f90ab0fc8f69e3a4326250e5</string>

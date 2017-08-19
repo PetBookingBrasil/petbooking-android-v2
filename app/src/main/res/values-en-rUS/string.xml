@@ -7,6 +7,8 @@
 
     <!-- Common -->
     <string name="edit_text">Edit</string>
+    <string name="observations_text">Notes&#8230;</string>
+    <string name="additional_label">Additionals</string>
 
     <!-- Screen Title -->
     <string name="dashboard_title">Businesses</string>

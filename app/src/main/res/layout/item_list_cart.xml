@@ -5,6 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/spacing_xmicro"
     android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:padding="@dimen/spacing_tiny">
 
     <RelativeLayout
@@ -94,10 +96,31 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/additional_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/service_layout"
+        android:layout_marginTop="@dimen/spacing_tiny">
+
+        <TextView
+            android:id="@+id/additional_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/additional_label"
+            android:textColor="@color/text_gray" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/additional_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/professional_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/service_layout"
+        android:layout_below="@+id/additional_layout"
         android:layout_marginTop="@dimen/spacing_tiny">
 
         <TextView
@@ -127,26 +150,30 @@
     </RelativeLayout>
 
     <EditText
-        android:id="@+id/edt_notes"
+        android:id="@+id/service_notes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/professional_layout"
-        android:background="@null"
+        android:layout_marginTop="@dimen/spacing_xtiny"
+        android:background="@drawable/notes_background"
         android:gravity="top|left"
-        android:hint="@string/edit_text"
+        android:hint="@string/observations_text"
         android:inputType="textMultiLine"
-        android:lines="6"
+        android:lines="3"
         android:overScrollMode="always"
+        android:paddingLeft="@dimen/spacing_xmicro"
+        android:paddingTop="@dimen/spacing_xmicro"
         android:scrollHorizontally="false"
         android:scrollbarStyle="insideInset"
         android:scrollbars="vertical"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="14sp" />
 
     <RelativeLayout
         android:id="@+id/info_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edt_notes"
+        android:layout_below="@id/service_notes"
         android:layout_marginTop="@dimen/spacing_tiny">
 
         <ImageButton

@@ -110,11 +110,15 @@ public class AppointmentManager {
     }
 
     public void addNewAdditional(String serviceId, BusinessServices additional, String petId) {
-        CartItem item = getItem(serviceId, petId);
+        cart = getCart();
+        CartItem item = getCartItem(serviceId, petId);
+
         item.addAdditional(additional);
         item.totalPrice += additional.price;
+
         setAdditionalSelected(additional.id, petId, true);
         saveItem(item);
+        saveCart(cart);
     }
 
     public void removeAdditional(String serviceId, BusinessServices additional, String petId) {
@@ -247,7 +251,6 @@ public class AppointmentManager {
         }
     }
 
-
     private void saveCart(ArrayList<CartItem> cart) {
         editor.putString("CART", mJsonManager.toJson(cart));
         editor.apply();
@@ -256,6 +259,20 @@ public class AppointmentManager {
     private void saveItem(CartItem item) {
         editor.putString(item.service.id + "_" + item.pet.id + "_ITEM", mJsonManager.toJson(item));
         editor.apply();
+    }
+
+    public CartItem getCartItem(String serviceId, String petId) {
+        int index = 0;
+
+        for (CartItem item : cart) {
+            if (item.service.id.equals(serviceId) && item.pet.id.equals(petId)) {
+                return cart.get(index);
+            }
+
+            index++;
+        }
+
+        return null;
     }
 
     public ArrayList<CartItem> getCart() {

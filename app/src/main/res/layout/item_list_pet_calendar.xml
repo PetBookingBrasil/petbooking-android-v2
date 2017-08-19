@@ -19,8 +19,7 @@
             android:id="@+id/pet_photo"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_centerInParent="true"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_centerInParent="true" />
 
         <TextView
             android:id="@+id/total_appointments"
@@ -31,10 +30,10 @@
             android:layout_marginLeft="@dimen/spacing_xmicro"
             android:background="@drawable/selected_day_background"
             android:gravity="center_vertical"
+            android:text="12"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="8sp"
-            android:text="12"
             android:textStyle="bold" />
 
     </RelativeLayout>

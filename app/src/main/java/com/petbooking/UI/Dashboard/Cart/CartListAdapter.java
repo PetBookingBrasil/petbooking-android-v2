@@ -3,6 +3,8 @@ package com.petbooking.UI.Dashboard.Cart;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,6 +124,30 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
             }
         });
 
+        holder.mBtnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCartChange.onEditItem();
+            }
+        });
+
+        holder.mEdtNotes.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                cartItem.notes = s.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         Glide.with(mContext)
                 .load(cartItem.pet.avatar.url)
                 .error(R.drawable.ic_placeholder_dog)
@@ -179,5 +205,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
 
     public interface OnCartChange {
         void onChange();
+
+        void onEditItem();
     }
 }

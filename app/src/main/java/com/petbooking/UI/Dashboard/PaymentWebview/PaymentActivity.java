@@ -1,12 +1,9 @@
 package com.petbooking.UI.Dashboard.PaymentWebview;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.webkit.ConsoleMessage;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -21,9 +18,6 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.Utils.AppUtils;
-
-import java.util.HashMap;
-import java.util.Objects;
 
 public class PaymentActivity extends AppCompatActivity {
 

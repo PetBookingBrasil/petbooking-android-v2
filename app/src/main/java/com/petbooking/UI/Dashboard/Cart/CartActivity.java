@@ -60,6 +60,11 @@ public class CartActivity extends AppCompatActivity {
             setTotalPrice();
             handleConfirmButton();
         }
+
+        @Override
+        public void onEditItem() {
+            onBackPressed();
+        }
     };
 
     @Override
@@ -132,7 +137,7 @@ public class CartActivity extends AppCompatActivity {
     /**
      * Go to Payment
      */
-    public void goToPayment(){
+    public void goToPayment() {
         Intent paymentIntent = new Intent(this, PaymentActivity.class);
         startActivity(paymentIntent);
     }
@@ -141,10 +146,10 @@ public class CartActivity extends AppCompatActivity {
      * Enable or disable button
      * on cart change
      */
-    public void handleConfirmButton(){
-        if(mCart.size() == 0){
+    public void handleConfirmButton() {
+        if (mCart.size() == 0) {
             mBtnSchedule.setEnabled(false);
-        }else{
+        } else {
             mBtnSchedule.setEnabled(true);
         }
     }

@@ -91,6 +91,26 @@
                 android:value=".UI.Dashboard.DashboardActivity" />
         </activity>
         <activity
+            android:name=".UI.Dashboard.Cart.CartActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".UI.Dashboard.Business.BusinessActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Dashboard.Business.BusinessActivity" />
+        </activity>
+        <activity
+            android:name=".UI.Dashboard.PaymentWebview.PaymentActivity"
+            android:configChanges="orientation"
+            android:label="@string/payments"
+            android:parentActivityName=".UI.Dashboard.Cart.CartActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Dashboard.Cart.CartActivity" />
+        </activity>
+
+        <activity
             android:name=".UI.Dashboard.Business.ServiceDetail.ServiceDetailActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
@@ -99,7 +119,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Dashboard.Business.BusinessActivity" />
         </activity>
-
         <activity
             android:name=".UI.Menu.Pets.PetsActivity"
             android:configChanges="orientation"
@@ -228,7 +247,6 @@
 
         <!-- Receivers -->
         <receiver android:name=".Managers.AlarmReceiver" />
-
     </application>
 
 </manifest>

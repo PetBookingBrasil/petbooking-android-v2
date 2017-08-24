@@ -139,7 +139,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/spacing_xmicro"
             android:layout_toLeftOf="@+id/total_price"
-            android:text="Total"
+            android:text="@string/total_label"
             android:textColor="@color/text_gray"
             android:textSize="12sp" />
 

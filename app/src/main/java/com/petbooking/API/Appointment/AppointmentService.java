@@ -3,12 +3,18 @@ package com.petbooking.API.Appointment;
 import android.util.Log;
 
 import com.petbooking.API.APIClient;
+import com.petbooking.API.Appointment.Models.CartResp;
+import com.petbooking.API.Appointment.Models.CartRqt;
 import com.petbooking.API.Appointment.Models.ProfessionalResp;
 import com.petbooking.API.Appointment.Models.ServiceResp;
+import com.petbooking.API.Auth.Models.AuthUserResp;
+import com.petbooking.API.User.Models.CreateUserRqt;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.AppointmentDate;
 import com.petbooking.Models.BusinessServices;
+import com.petbooking.Models.CartItem;
 import com.petbooking.Models.Professional;
+import com.petbooking.Models.User;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 
@@ -122,6 +128,22 @@ public class AppointmentService {
             @Override
             public void onFailure(Call<ProfessionalResp> call, Throwable t) {
                 t.printStackTrace();
+            }
+        });
+    }
+
+    public void createCart(String userId, ArrayList<CartItem> itens, final APICallback callback) {
+        CartRqt cartRqt = new CartRqt(itens);
+        Call<CartResp> call = mAppointmentInterface.createCart(userId, cartRqt);
+        call.enqueue(new Callback<CartResp>() {
+            @Override
+            public void onResponse(Call<CartResp> call, Response<CartResp> response) {
+                APIUtils.handleResponse(response, callback);
+            }
+
+            @Override
+            public void onFailure(Call<CartResp> call, Throwable t) {
+
             }
         });
     }

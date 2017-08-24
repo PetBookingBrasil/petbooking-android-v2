@@ -5,6 +5,11 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!-- Common -->
+    <string name="edit_text">Edit</string>
+    <string name="observations_text">Notes&#8230;</string>
+    <string name="additional_label">Additionals</string>
+
     <!-- Screen Title -->
     <string name="dashboard_title">Businesses</string>
     <string name="recover_password_title">Forgot password</string>
@@ -12,6 +17,7 @@
     <string name="profile_title">Profile</string>
     <string name="pets_title">My Pets</string>
     <string name="new_pet_title">Enter your pet info</string>
+    <string name="cart_title">Scheduling cart</string>
 
     <!-- Pet -->
     <string name="gender_male">Male</string>
@@ -164,6 +170,7 @@
     <string name="cancel_service_text">This service will be canceled. Do you wish to continue?</string>
     <string name="confirm_cancel_appointment">I want to cancel</string>
     <string name="appointment_date_info">%2$s %1$s, %3$s - %4$s</string>
+    <string name="confirm_scheduling">Schedule</string>
 
     <!-- Dialog -->
     <string name="dialog_picture_title">Select profile photo</string>

@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -39,8 +40,6 @@ import com.petbooking.UI.Menu.Search.SearchActivity;
 import com.petbooking.UI.Menu.Search.SearchResultFragment;
 import com.petbooking.UI.Menu.Settings.SettingsActivity;
 import com.petbooking.UI.Widget.CircleTransformation;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashboardActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -70,7 +69,7 @@ public class DashboardActivity extends AppCompatActivity implements
      */
     private User currentUser;
     private ImageButton mIBtnProfile;
-    private CircleImageView mCivSideMenuPicture;
+    private ImageView mIvSideMenuPicture;
     private TextView mTvSideMenuName;
     private TextView mTvSideMenuAddress;
 
@@ -125,7 +124,7 @@ public class DashboardActivity extends AppCompatActivity implements
          */
 
         mIBtnProfile = (ImageButton) mHeaderView.findViewById(R.id.profileButton);
-        mCivSideMenuPicture = (CircleImageView) mHeaderView.findViewById(R.id.sidemenu_picture);
+        mIvSideMenuPicture = (ImageView) mHeaderView.findViewById(R.id.sidemenu_picture);
         mTvSideMenuName = (TextView) mHeaderView.findViewById(R.id.sidemenu_name);
         mTvSideMenuAddress = (TextView) mHeaderView.findViewById(R.id.sidemenu_address);
         mIBtnProfile.setOnClickListener(btnProfileListener);
@@ -300,7 +299,7 @@ public class DashboardActivity extends AppCompatActivity implements
                 .error(R.drawable.ic_placeholder_user)
                 .bitmapTransform(new CircleTransformation(this))
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .into(mCivSideMenuPicture);
+                .into(mIvSideMenuPicture);
     }
 
     /**

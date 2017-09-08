@@ -18,13 +18,14 @@
         android:layout_marginBottom="@dimen/spacing_tiny"
         android:layout_marginTop="@dimen/spacing_smallest">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/sidemenu_picture"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/ic_placeholder_user" />
 
         <ImageButton
             android:id="@+id/profileButton"

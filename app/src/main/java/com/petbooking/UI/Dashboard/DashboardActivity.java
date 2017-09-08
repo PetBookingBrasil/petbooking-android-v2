@@ -38,6 +38,7 @@ import com.petbooking.UI.Menu.Profile.ProfileActivity;
 import com.petbooking.UI.Menu.Search.SearchActivity;
 import com.petbooking.UI.Menu.Search.SearchResultFragment;
 import com.petbooking.UI.Menu.Settings.SettingsActivity;
+import com.petbooking.UI.Widget.CircleTransformation;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -100,10 +101,13 @@ public class DashboardActivity extends AppCompatActivity implements
         mFeedbackDialogFragment = FeedbackDialogFragment.newInstance();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView toolbarTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(R.string.dashboard_title);
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -292,11 +296,10 @@ public class DashboardActivity extends AppCompatActivity implements
 
         Glide.with(this)
                 .load(currentUser.avatar.large.url)
-                .error(R.drawable.ic_placeholder_user)
                 .placeholder(R.drawable.ic_placeholder_user)
+                .error(R.drawable.ic_placeholder_user)
+                .bitmapTransform(new CircleTransformation(this))
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .centerCrop()
-                .dontAnimate()
                 .into(mCivSideMenuPicture);
     }
 

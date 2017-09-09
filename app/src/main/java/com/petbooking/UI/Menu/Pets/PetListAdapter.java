@@ -4,11 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -17,11 +17,9 @@ import com.google.gson.Gson;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
 import com.petbooking.UI.Menu.Pets.ProfilePet.ProfilePetActivity;
-import com.petbooking.Utils.APIUtils;
+import com.petbooking.UI.Widget.CircleTransformation;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Luciano José on 29/01/2017.
@@ -80,12 +78,13 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
 
         Glide.with(mContext)
                 .load(pet.avatar.url)
-                .error(petAvatar)
+                .thumbnail(0.5f)
+                .crossFade()
                 .placeholder(petAvatar)
+                .error(petAvatar)
+                .bitmapTransform(new CircleTransformation(mContext))
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .centerCrop()
-                .dontAnimate()
-                .into(holder.mCvPicture);
+                .into(holder.mIvPicture);
 
     }
 
@@ -97,7 +96,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
     public class PetViewHolder extends RecyclerView.ViewHolder {
 
         ConstraintLayout mClItem;
-        CircleImageView mCvPicture;
+        ImageView mIvPicture;
         TextView mTvName;
         TextView mTvBreed;
         ImageButton mBtnRemovePet;
@@ -106,7 +105,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
             super(view);
 
             mClItem = (ConstraintLayout) view.findViewById(R.id.layout);
-            mCvPicture = (CircleImageView) view.findViewById(R.id.pet_picture);
+            mIvPicture = (ImageView) view.findViewById(R.id.pet_picture);
             mTvName = (TextView) view.findViewById(R.id.pet_name);
             mTvBreed = (TextView) view.findViewById(R.id.pet_breed);
             mBtnRemovePet = (ImageButton) view.findViewById(R.id.remove_button);

@@ -31,6 +31,15 @@ public class FavoritesActivity extends AppCompatActivity {
     private BusinessListAdapter mAdapter;
     private RecyclerView mRvFavorites;
 
+    private BusinessListAdapter.OnFavoriteAction favoriteListener = new BusinessListAdapter.OnFavoriteAction() {
+        @Override
+        public void onDelete(int position) {
+            if (mFavoriteList.size() == 0) {
+                mFavoritesPlaceholder.setVisibility(View.VISIBLE);
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +56,9 @@ public class FavoritesActivity extends AppCompatActivity {
         mFavoritesPlaceholder = findViewById(R.id.favorites_placeholder);
         mRvFavorites = (RecyclerView) findViewById(R.id.favorites_list);
         mAdapter = new BusinessListAdapter(this, mFavoriteList, Glide.with(this));
+        mAdapter.setFavoriteList(true);
+        mAdapter.setOnFavoriteAction(favoriteListener);
+
         mLayoutManager = new LinearLayoutManager(this);
 
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

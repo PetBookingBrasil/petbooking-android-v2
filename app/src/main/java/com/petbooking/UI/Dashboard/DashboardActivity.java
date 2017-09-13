@@ -295,8 +295,8 @@ public class DashboardActivity extends AppCompatActivity implements
 
         Glide.with(this)
                 .load(currentUser.avatar.large.url)
-                .placeholder(R.drawable.ic_placeholder_user)
-                .error(R.drawable.ic_placeholder_user)
+                .placeholder(R.drawable.ic_placeholder_man)
+                .error(R.drawable.ic_placeholder_man)
                 .bitmapTransform(new CircleTransformation(this))
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(mIvSideMenuPicture);

@@ -231,7 +231,7 @@
                         android:drawablePadding="@dimen/spacing_xmicro"
                         android:drawableStart="@drawable/ic_point"
                         android:hint="@string/hint_street_number"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:paddingLeft="@dimen/spacing_xmicro"
                         android:text="@={user.streetNumber}" />
                 </android.support.design.widget.TextInputLayout>

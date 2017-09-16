@@ -245,8 +245,8 @@
     <string name="error_create_text">Por favor, verifique os dados informados.</string>
     <string name="error_auth_invalid">Token de autenticação inválido. Requisite um novo token.</string>
     <string name="error_invalid_login">Email ou senha inválidos.</string>
-
     <string name="error_no_location">Localização não dísponível.</string>
+    <string name="error_future_date">Selecione a data de aniversário anterior a hoje.</string>
 
     <!-- Success -->
     <string name="success_create_user">Usuário cadastrado com sucesso!</string>

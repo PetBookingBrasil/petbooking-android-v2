@@ -221,6 +221,7 @@
     <string name="error_auth_invalid">Invalid authentication token. Request a new one.</string>
     <string name="error_invalid_login">Invalid email or password.</string>
     <string name="error_no_location">Location not available.</string>
+    <string name="error_future_date">Select the birthday before today.</string>
 
     <!-- Success -->
     <string name="success_create_user">User successfully registered.</string>

@@ -60,7 +60,7 @@ public class HorizontalCalendarAdapter extends RecyclerView.Adapter<HorizontalCa
             holder.mTvDay.setBackground(mContext.getResources().getDrawable(R.drawable.past_day_background));
         } else if (date.date.after(today)) {
             holder.mTvDay.setTextColor(mContext.getResources().getColor(R.color.brand_primary));
-            holder.mTvDay.setBackground(mContext.getResources().getDrawable(R.drawable.selected_day_background));
+            holder.mTvDay.setBackground(mContext.getResources().getDrawable(R.drawable.future_day_background));
         }
     }
 

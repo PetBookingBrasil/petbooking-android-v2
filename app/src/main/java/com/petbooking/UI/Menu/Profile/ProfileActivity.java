@@ -39,6 +39,7 @@ import com.petbooking.databinding.UserFormBinding;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -180,7 +181,13 @@ public class ProfileActivity extends BaseActivity implements
      * Update User
      */
     public void updateUser() {
-        int message = FormUtils.validateUser(user, false);
+        int message = -1;
+
+        try {
+            message = FormUtils.validateUser(user, false);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         if (message == -1) {
             updateRequest(user);

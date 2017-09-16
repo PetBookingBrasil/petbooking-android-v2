@@ -40,6 +40,7 @@ import com.petbooking.databinding.PetFormBinding;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -296,7 +297,13 @@ public class ProfilePetActivity extends BaseActivity implements
      */
     public void updatePet() {
         parsePet();
-        int message = FormUtils.validatePet(pet);
+        int message = -1;
+
+        try {
+            message = FormUtils.validatePet(pet);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         if (message == -1) {
             updateRequest(pet);

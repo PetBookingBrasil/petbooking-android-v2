@@ -44,6 +44,7 @@ import com.petbooking.databinding.UserFormBinding;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -202,7 +203,14 @@ public class SignUpActivity extends BaseActivity implements
      * Register User
      */
     public void registerUser() {
-        int message = FormUtils.validateUser(user, true);
+        int message = -1;
+
+        try {
+            message = FormUtils.validateUser(user, true);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         String repeatPassword = mEdtRepeatPass.getText().toString();
 
         if (message == -1 && (user.password.equals(repeatPassword))) {

@@ -281,6 +281,8 @@ public class DashboardActivity extends AppCompatActivity implements
      */
     private void updateUserInfo() {
         currentUser = mSessionManager.getUserLogged();
+        int userAvatar = currentUser.gender.equals(User.GENDER_MALE) ? R.drawable.ic_placeholder_man
+                : R.drawable.ic_placeholder_woman;
 
         mTvSideMenuName.setText(currentUser.name);
         mUserAddress = mLocationManager.getLocationCityState();
@@ -293,10 +295,15 @@ public class DashboardActivity extends AppCompatActivity implements
             mTvSideMenuAddress.setText(R.string.prompt_loading);
         }
 
+        if (currentUser.avatar.large.url.contains("fallbacks")) {
+            mIvSideMenuPicture.setImageResource(userAvatar);
+            return;
+        }
+
         Glide.with(this)
                 .load(currentUser.avatar.large.url)
-                .placeholder(R.drawable.ic_placeholder_man)
-                .error(R.drawable.ic_placeholder_man)
+                .placeholder(userAvatar)
+                .error(userAvatar)
                 .bitmapTransform(new CircleTransformation(this))
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(mIvSideMenuPicture);

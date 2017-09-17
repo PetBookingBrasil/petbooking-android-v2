@@ -76,6 +76,11 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
             }
         });
 
+        if (pet.avatar.url.contains("fallbacks")) {
+            holder.mIvPicture.setImageResource(petAvatar);
+            return;
+        }
+
         Glide.with(mContext)
                 .load(pet.avatar.url)
                 .thumbnail(0.5f)

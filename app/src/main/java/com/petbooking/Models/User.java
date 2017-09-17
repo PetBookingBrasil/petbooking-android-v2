@@ -9,6 +9,9 @@ import com.petbooking.Utils.CommonUtils;
 
 public class User {
 
+    public static final String GENDER_MALE = "male";
+    public static final String GENDER_FEMALE = "female";
+
     public String id;
     public String authToken;
     public String name;

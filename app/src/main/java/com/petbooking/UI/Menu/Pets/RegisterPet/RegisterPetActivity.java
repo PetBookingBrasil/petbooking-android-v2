@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.petbooking.API.Pet.APIPetConstants;
 import com.petbooking.API.Pet.Models.BreedResp;
@@ -103,7 +104,7 @@ public class RegisterPetActivity extends BaseActivity implements
     private MaterialSpinner mSpBreed;
     private MaterialSpinner mSpCoat;
     private MaterialSpinner mSpTemper;
-    private CircleImageView mCiUserPhoto;
+    private ImageView mIvPetPhoto;
     private EditText mEdtBirthday;
     private ImageButton mIBtnSelectPicture;
     private Button mBtnSubmit;
@@ -174,7 +175,7 @@ public class RegisterPetActivity extends BaseActivity implements
         mTableDialogFragment = TableDialogFragment.newInstance();
         mDatePicker = DatePickerFragment.newInstance();
 
-        mCiUserPhoto = (CircleImageView) findViewById(R.id.pet_photo);
+        mIvPetPhoto = (ImageView) findViewById(R.id.pet_photo);
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
         mEdtName = (EditText) findViewById(R.id.pet_name);
         mEdtBirthday = (EditText) findViewById(R.id.pet_birthday);
@@ -192,7 +193,7 @@ public class RegisterPetActivity extends BaseActivity implements
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
         mIBtnSelectPicture.setOnClickListener(mSelectListener);
         mEdtBirthday.setOnClickListener(mBirthdayListener);
-        mCiUserPhoto.setOnClickListener(mSelectListener);
+        mIvPetPhoto.setOnClickListener(mSelectListener);
         mBtnSubmit.setOnClickListener(mSubmitListener);
 
         dogBreeds = new ArrayList<>();
@@ -274,8 +275,8 @@ public class RegisterPetActivity extends BaseActivity implements
      */
     public void updatePhoto(Bitmap photo) {
         mIBtnSelectPicture.setVisibility(GONE);
-        mCiUserPhoto.setVisibility(View.VISIBLE);
-        mCiUserPhoto.setImageBitmap(photo);
+        mIvPetPhoto.setVisibility(View.VISIBLE);
+        mIvPetPhoto.setImageBitmap(photo);
     }
 
     /**

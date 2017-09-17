@@ -13,12 +13,16 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.petbooking.API.Pet.APIPetConstants;
 import com.petbooking.API.Pet.Models.BreedResp;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.BaseActivity;
+import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
@@ -31,6 +35,7 @@ import com.petbooking.UI.Dialogs.DatePickerFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
 import com.petbooking.UI.Dialogs.TableDialogFragment;
+import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.UI.Widget.MaterialSpinner;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
@@ -103,7 +108,7 @@ public class ProfilePetActivity extends BaseActivity implements
     private MaterialSpinner mSpBreed;
     private MaterialSpinner mSpCoat;
     private MaterialSpinner mSpTemper;
-    private CircleImageView mCivPetPhoto;
+    private ImageView mIvPetPhoto;
     private EditText mEdtBirthday;
     private ImageButton mIBtnSelectPicture;
     private Button mBtnSubmit;
@@ -176,7 +181,7 @@ public class ProfilePetActivity extends BaseActivity implements
         mTableDialogFragment = TableDialogFragment.newInstance();
         mDatePicker = DatePickerFragment.newInstance();
 
-        mCivPetPhoto = (CircleImageView) findViewById(R.id.pet_photo);
+        mIvPetPhoto = (ImageView) findViewById(R.id.pet_photo);
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
         mEdtBirthday = (EditText) findViewById(R.id.pet_birthday);
         mSpGender = (MaterialSpinner) findViewById(R.id.pet_gender);
@@ -193,7 +198,7 @@ public class ProfilePetActivity extends BaseActivity implements
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
         mIBtnSelectPicture.setOnClickListener(mSelectListener);
         mEdtBirthday.setOnClickListener(mBirthdayListener);
-        mCivPetPhoto.setOnClickListener(mSelectListener);
+        mIvPetPhoto.setOnClickListener(mSelectListener);
         mBtnSubmit.setOnClickListener(mSubmitListener);
 
         dogBreeds = new ArrayList<>();
@@ -282,14 +287,14 @@ public class ProfilePetActivity extends BaseActivity implements
     }
 
     /**
-     * Update User Photo
+     * Update Pet Photo
      *
      * @param photo
      */
     public void updatePhoto(Bitmap photo) {
         mIBtnSelectPicture.setVisibility(GONE);
-        mCivPetPhoto.setVisibility(View.VISIBLE);
-        mCivPetPhoto.setImageBitmap(photo);
+        mIvPetPhoto.setVisibility(View.VISIBLE);
+        mIvPetPhoto.setImageBitmap(photo);
     }
 
     /**
@@ -313,17 +318,25 @@ public class ProfilePetActivity extends BaseActivity implements
     }
 
     /**
-     * Create Request to Register pet
+     * Create Request to Update pet
      *
      * @param pet
      */
     public void updateRequest(Pet pet) {
+        AppUtils.showLoadingDialog(this);
+
+        if (mBitmap != null) {
+            pet.photo = CommonUtils.encodeBase64(mBitmap);
+            pet.photo = APIPetConstants.DATA_BASE64 + pet.photo;
+        }
+
         mPetService.updatePet(mUser.id, pet, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 mDialogFragmentFeedback.setDialogInfo(R.string.update_pet_dialog_title, R.string.success_update_pet,
                         R.string.dialog_button_ok, AppConstants.OK_ACTION);
                 mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
+                AppUtils.hideDialog();
             }
 
             @Override
@@ -331,6 +344,7 @@ public class ProfilePetActivity extends BaseActivity implements
                 mDialogFragmentFeedback.setDialogInfo(R.string.update_pet_dialog_title, R.string.error_update_user,
                         R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
                 mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
+                AppUtils.hideDialog();
             }
         });
     }
@@ -366,12 +380,25 @@ public class ProfilePetActivity extends BaseActivity implements
      * Render Pet Info
      */
     public void renderPet(Pet pet) {
+        int petAvatar = pet.type.equals("dog") ? R.drawable.ic_placeholder_dog : R.drawable.ic_placeholder_cat;
+
         pet.birthday = CommonUtils.formatDate(pet.birthday);
         mSpGender.selectItem(AppUtils.getDisplayGender(this, pet.gender));
         mSpType.selectItem(AppUtils.getDisplayType(this, pet.type));
         mSpCoat.selectItem(AppUtils.getDisplayCoatType(this, pet.coatType));
         mSpTemper.selectItem(AppUtils.getDisplayTemper(this, pet.mood));
         mSpSize.selectItem(AppUtils.getDisplaySize(this, pet.size));
+
+        if (!pet.avatar.url.contains(APIConstants.FALLBACK_TAG)) {
+            Glide.with(this)
+                    .load(pet.avatar.url)
+                    .error(petAvatar)
+                    .bitmapTransform(new CircleTransformation(this))
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .into(mIvPetPhoto);
+            mIvPetPhoto.setVisibility(View.VISIBLE);
+            mIBtnSelectPicture.setVisibility(GONE);
+        }
     }
 
     @Override

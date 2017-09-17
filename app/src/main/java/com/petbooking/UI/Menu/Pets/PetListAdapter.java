@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
+import com.petbooking.Constants.APIConstants;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
 import com.petbooking.UI.Menu.Pets.ProfilePet.ProfilePetActivity;
@@ -76,16 +77,13 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
             }
         });
 
-        if (pet.avatar.url.contains("fallbacks")) {
+        if (pet.avatar.url.contains(APIConstants.FALLBACK_TAG)) {
             holder.mIvPicture.setImageResource(petAvatar);
             return;
         }
 
         Glide.with(mContext)
                 .load(pet.avatar.url)
-                .thumbnail(0.5f)
-                .crossFade()
-                .placeholder(petAvatar)
                 .error(petAvatar)
                 .bitmapTransform(new CircleTransformation(mContext))
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)

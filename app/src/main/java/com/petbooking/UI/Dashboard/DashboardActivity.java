@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
@@ -295,7 +296,7 @@ public class DashboardActivity extends AppCompatActivity implements
             mTvSideMenuAddress.setText(R.string.prompt_loading);
         }
 
-        if (currentUser.avatar.large.url.contains("fallbacks")) {
+        if (currentUser.avatar.large.url.contains(APIConstants.FALLBACK_TAG)) {
             mIvSideMenuPicture.setImageResource(userAvatar);
             return;
         }

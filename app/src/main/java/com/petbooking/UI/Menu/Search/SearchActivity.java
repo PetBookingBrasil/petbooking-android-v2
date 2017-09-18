@@ -100,6 +100,10 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
             mRvCategories.setAdapter(mAdapter);
         }
 
+        if (getIntent().hasExtra("newSearch")) {
+            mEdtSearchName.setText(getIntent().getStringExtra("filterText"));
+        }
+
         mBtnFilter.setOnClickListener(filterListener);
     }
 
@@ -117,6 +121,11 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
                 }
 
                 mAdapter.updateList(mCategoryList);
+
+                if (getIntent().hasExtra("newSearch")) {
+                    mAdapter.setSavedCategory(getIntent().getStringExtra("categoryId"));
+                }
+
                 mAdapter.notifyDataSetChanged();
                 AppUtils.hideDialog();
             }

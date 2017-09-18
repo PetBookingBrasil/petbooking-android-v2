@@ -333,8 +333,11 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onNewSearch() {
+    public void onNewSearch(String filterText, String categoryId) {
         Intent activity = new Intent(this, SearchActivity.class);
+        activity.putExtra("newSearch", true);
+        activity.putExtra("filterText", filterText);
+        activity.putExtra("categoryId", categoryId);
         startActivityForResult(activity, SEARCH_REQUEST);
     }
 }

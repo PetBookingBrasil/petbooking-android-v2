@@ -41,6 +41,7 @@
     <color name="category_trainer">#AF59BA</color>
     <color name="category_clinic">#006BA8</color>
     <color name="category_consultations">#0099DE</color>
+    <color name="category_city_hall_program">#0099DE</color>
 
     <!-- Components Colors -->
     <color name="past_date_color">#9A9A9A</color>

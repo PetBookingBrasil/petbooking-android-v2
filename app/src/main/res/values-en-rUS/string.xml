@@ -205,6 +205,7 @@
     <string name="category_hospital">Hospitals</string>
     <string name="category_diagnosis">Diagnosis</string>
     <string name="category_consultations">Veterinary Consulting</string>
+    <string name="category_city_hall_program">City Hall Program</string>
 
     <!-- Errors -->
     <string name="error_fields_empty">Complete all fields.</string>

@@ -221,6 +221,7 @@
     <string name="category_hospital">Hospitais</string>
     <string name="category_diagnosis">Diagnóstico</string>
     <string name="category_consultations">Consultas</string>
+    <string name="category_city_hall_program">Programa da Prefeitura</string>
 
     <!-- Errors -->
     <string name="error_fields_empty">Preencha todos os campos.</string>

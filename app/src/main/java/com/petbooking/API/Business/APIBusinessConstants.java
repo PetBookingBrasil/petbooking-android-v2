@@ -25,6 +25,7 @@ public class APIBusinessConstants {
     public static final String DATA_HOSPITAL = "Hospitais veterinários";
     public static final String DATA_DIAGNOSIS = "Centro de Diagnóstico";
     public static final String DATA_CONSULTATIONS = "Consulta veterinária";
+    public static final String DATA_CITY_HALL = "Programa da Prefeitura";
 
     public static final String PATH_CATEGORY_ID = "categoryID";
     public static final String PATH_BUSINESS_ID = "businessID";

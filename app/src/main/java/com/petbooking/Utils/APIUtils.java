@@ -25,6 +25,8 @@ import com.petbooking.Models.User;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -223,7 +225,7 @@ public class APIUtils {
      * @return
      */
     public static String getAssetEndpoint(String assetPath) {
-        String endpoint = String.format(BuildConfig.ASSET_URL, assetPath);
+        String endpoint = assetPath + "?" + new Date().getTime();
         return endpoint;
     }
 }

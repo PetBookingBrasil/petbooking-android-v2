@@ -19,6 +19,7 @@ import com.petbooking.Models.Pet;
 import com.petbooking.R;
 import com.petbooking.UI.Menu.Pets.ProfilePet.ProfilePetActivity;
 import com.petbooking.UI.Widget.CircleTransformation;
+import com.petbooking.Utils.APIUtils;
 
 import java.util.ArrayList;
 
@@ -83,7 +84,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
         }
 
         Glide.with(mContext)
-                .load(pet.avatar.url)
+                .load(APIUtils.getAssetEndpoint(pet.avatar.url))
                 .error(petAvatar)
                 .bitmapTransform(new CircleTransformation(mContext))
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)

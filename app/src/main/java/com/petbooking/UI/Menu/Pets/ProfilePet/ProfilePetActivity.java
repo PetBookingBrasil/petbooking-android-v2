@@ -37,6 +37,7 @@ import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
 import com.petbooking.UI.Dialogs.TableDialogFragment;
 import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.UI.Widget.MaterialSpinner;
+import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
@@ -391,7 +392,7 @@ public class ProfilePetActivity extends BaseActivity implements
 
         if (!pet.avatar.url.contains(APIConstants.FALLBACK_TAG)) {
             Glide.with(this)
-                    .load(pet.avatar.url)
+                    .load(APIUtils.getAssetEndpoint(pet.avatar.url))
                     .error(petAvatar)
                     .bitmapTransform(new CircleTransformation(this))
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)

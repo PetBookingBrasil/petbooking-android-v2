@@ -48,6 +48,7 @@ public class AuthUserResp {
 
         @SerializedName("street_number")
         public String streetNumber;
+        public String complement;
         public String city;
         public String state;
         public String nickname;

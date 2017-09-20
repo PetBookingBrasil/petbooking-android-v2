@@ -418,11 +418,12 @@ public class ProfilePetActivity extends BaseActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+
             if (requestCode == AppConstants.PICK_PHOTO) {
                 mUri = data.getData();
-
                 try {
                     mBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mUri);
+                    mBitmap = ImageUtils.modifyOrientation(this, mBitmap, mUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

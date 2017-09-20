@@ -282,8 +282,13 @@ public class DashboardActivity extends AppCompatActivity implements
      */
     private void updateUserInfo() {
         currentUser = mSessionManager.getUserLogged();
-        int userAvatar = currentUser.gender.equals(User.GENDER_MALE) ? R.drawable.ic_placeholder_man
-                : R.drawable.ic_placeholder_woman;
+        int userAvatar;
+
+        if (currentUser.gender == null || currentUser.gender.equals(User.GENDER_MALE)) {
+            userAvatar = R.drawable.ic_placeholder_man;
+        } else {
+            userAvatar = R.drawable.ic_placeholder_woman;
+        }
 
         mTvSideMenuName.setText(currentUser.name);
         mUserAddress = mLocationManager.getLocationCityState();

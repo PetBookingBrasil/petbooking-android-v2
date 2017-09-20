@@ -12,7 +12,7 @@ public class UpdateUserRqt {
     public UpdateUserRqt(String id, User user) {
         this.attributes = new Attributes(user.name, user.birthday, user.phone, user.cpf,
                 user.email, user.password, user.zipcode, user.street, user.neighborhood,
-                user.streetNumber, user.city, user.state, user.searchRange, user.acceptsEmail,
+                user.streetNumber, user.complement, user.city, user.state, user.searchRange, user.acceptsEmail,
                 user.acceptsNotifications, user.acceptsSms);
         this.data = new Data(id, attributes);
     }
@@ -41,6 +41,7 @@ public class UpdateUserRqt {
         public String street;
         public String neighborhood;
         public String street_number;
+        public String complement;
         public String city;
         public String state;
         @SerializedName("search_range")
@@ -53,7 +54,7 @@ public class UpdateUserRqt {
         public String acceptsSms;
 
         public Attributes(String name, String birthday, String phone, String cpf, String email, String password,
-                          String zipcode, String street, String neighborhood, String street_number,
+                          String zipcode, String street, String neighborhood, String street_number, String complement,
                           String city, String state, int searchRange, boolean acceptsEmail,
                           boolean acceptsNotifications, boolean acceptsSms) {
             this.name = name;
@@ -66,12 +67,13 @@ public class UpdateUserRqt {
             this.street = street;
             this.neighborhood = neighborhood;
             this.street_number = street_number;
+            this.complement = complement;
             this.city = city;
             this.state = state;
             this.searchRange = searchRange;
             this.acceptsEmail = acceptsEmail ? "true" : "false";
-            this.acceptsNotifications = acceptsNotifications  ? "true" : "false";
-            this.acceptsSms = acceptsSms  ? "true" : "false";
+            this.acceptsNotifications = acceptsNotifications ? "true" : "false";
+            this.acceptsSms = acceptsSms ? "true" : "false";
         }
     }
 }

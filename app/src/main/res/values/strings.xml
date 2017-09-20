@@ -89,6 +89,7 @@
     <string name="hint_city">Cidade</string>
     <string name="hint_state">UF</string>
     <string name="hint_neighborhood">Bairro</string>
+    <string name="hint_complement">Complemento</string>
     <string name="hint_street">Rua</string>
     <string name="hint_street_number">Número</string>
     <string name="hint_phone">Celular</string>

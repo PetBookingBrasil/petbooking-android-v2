@@ -48,7 +48,7 @@ public class APIUtils {
         AuthUserResp.Attributes attr = resp.data.attributes;
         User user = new User(resp.data.id, attr.authToken, attr.name, attr.birthday, attr.phone, attr.phoneActivated,
                 attr.phoneCodeCreatedAt, attr.email, attr.futureEventsCount, attr.acceptsSms, attr.zipcode,
-                attr.street, attr.neighborhood, attr.streetNumber, attr.city, attr.state, attr.nickname,
+                attr.street, attr.neighborhood, attr.streetNumber, attr.complement, attr.city, attr.state, attr.nickname,
                 attr.gender, attr.cpf, attr.searchRange, attr.acceptsEmail, attr.acceptsNotifications,
                 attr.acceptsTerms, attr.validForScheduling, attr.avatar);
 

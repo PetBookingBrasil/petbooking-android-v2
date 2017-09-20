@@ -13,7 +13,7 @@ public class CreateSocialUserRqt {
     public CreateSocialUserRqt(User user, String provider, String providerToken) {
         this.attributes = new Attributes(user.name, user.birthday, user.phone, user.cpf,
                 user.email, user.password, user.zipcode, user.street, user.neighborhood,
-                user.streetNumber, user.city, user.state, provider, providerToken);
+                user.streetNumber, user.complement, user.city, user.state, provider, providerToken);
         this.data = new Data(attributes);
     }
 
@@ -42,6 +42,7 @@ public class CreateSocialUserRqt {
         public String zipcode;
         public String street;
         public String street_number;
+        public String complement;
         public String neighborhood;
         public String password;
         public String city;
@@ -51,7 +52,7 @@ public class CreateSocialUserRqt {
         public String providerToken;
 
         public Attributes(String name, String birthday, String phone, String cpf, String email, String password,
-                          String zipcode, String street, String neighborhood, String street_number,
+                          String zipcode, String street, String neighborhood, String street_number, String complement,
                           String city, String state, String provider, String providerToken) {
             this.name = name;
             this.birthday = birthday;
@@ -63,6 +64,7 @@ public class CreateSocialUserRqt {
             this.street = street;
             this.neighborhood = neighborhood;
             this.street_number = street_number;
+            this.complement = complement;
             this.city = city;
             this.state = state;
             this.provider = provider;

@@ -36,6 +36,7 @@ import com.petbooking.UI.Widget.MaterialSpinner;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
+import com.petbooking.Utils.ImageUtils;
 import com.petbooking.databinding.PetFormBinding;
 
 import org.greenrobot.eventbus.EventBus;
@@ -406,8 +407,11 @@ public class RegisterPetActivity extends BaseActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+            String absolutePath = null;
+            
             if (requestCode == AppConstants.PICK_PHOTO) {
                 mUri = data.getData();
+                absolutePath = ImageUtils.getAbsolutePath(mUri, this);
 
                 try {
                     mBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mUri);
@@ -415,16 +419,19 @@ public class RegisterPetActivity extends BaseActivity implements
                     e.printStackTrace();
                 }
 
-                if (mBitmap != null) {
-                    updatePhoto(mBitmap);
-                }
             } else if (requestCode == AppConstants.TAKE_PHOTO) {
                 Bundle extras = data.getExtras();
                 mBitmap = (Bitmap) extras.get("data");
+            }
 
-                if (mBitmap != null) {
-                    updatePhoto(mBitmap);
+            if (mBitmap != null) {
+                try {
+                    mBitmap = ImageUtils.modifyOrientation(mBitmap, absolutePath);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+
+                updatePhoto(mBitmap);
             }
         }
     }

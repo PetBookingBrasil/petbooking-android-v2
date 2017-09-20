@@ -407,11 +407,8 @@ public class RegisterPetActivity extends BaseActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            String absolutePath = null;
-            
             if (requestCode == AppConstants.PICK_PHOTO) {
                 mUri = data.getData();
-                absolutePath = ImageUtils.getAbsolutePath(mUri, this);
 
                 try {
                     mBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mUri);
@@ -426,7 +423,7 @@ public class RegisterPetActivity extends BaseActivity implements
 
             if (mBitmap != null) {
                 try {
-                    mBitmap = ImageUtils.modifyOrientation(mBitmap, absolutePath);
+                    mBitmap = ImageUtils.modifyOrientation(this, mBitmap, mUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

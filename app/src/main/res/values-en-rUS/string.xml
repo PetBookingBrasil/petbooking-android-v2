@@ -228,7 +228,7 @@
     <string name="success_create_user">User successfully registered.</string>
     <string name="success_create_pet">Pet successfully registered.</string>
     <string name="success_update_pet">Pet updated successfully.</string>
-    <string name="success_create_pet_text">You can now start using Pet Booking to facilitate</string>
+    <string name="success_create_pet_text">Now, just start scheduling. Taking care of your pets has never been easier or faster!</string>
 
     <!-- Prompt -->
     <string name="prompt_loading">Loading…</string>

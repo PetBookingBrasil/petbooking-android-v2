@@ -245,7 +245,7 @@
     <string name="success_create_user">Usuário cadastrado com sucesso!</string>
     <string name="success_create_pet">Pet cadastrado com sucesso!</string>
     <string name="success_update_pet">Pet atualizado com sucesso!</string>
-    <string name="success_create_pet_text">Pronto, você já pode começar a usar o Pet Booking pra facilitar</string>
+    <string name="success_create_pet_text">Agora, é só começar a agendar.  Cuidar dos seus pets nunca foi tão fácil e rápido!</string>
 
     <!-- Prompt -->
     <string name="prompt_loading">Carregando…</string>

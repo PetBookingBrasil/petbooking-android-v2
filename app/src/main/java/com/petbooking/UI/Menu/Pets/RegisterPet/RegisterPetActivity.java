@@ -412,23 +412,21 @@ public class RegisterPetActivity extends BaseActivity implements
 
                 try {
                     mBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mUri);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            } else if (requestCode == AppConstants.TAKE_PHOTO) {
-                Bundle extras = data.getExtras();
-                mBitmap = (Bitmap) extras.get("data");
-            }
-
-            if (mBitmap != null) {
-                try {
                     mBitmap = ImageUtils.modifyOrientation(this, mBitmap, mUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                updatePhoto(mBitmap);
+                if (mBitmap != null) {
+                    updatePhoto(mBitmap);
+                }
+            } else if (requestCode == AppConstants.TAKE_PHOTO) {
+                Bundle extras = data.getExtras();
+                mBitmap = (Bitmap) extras.get("data");
+
+                if (mBitmap != null) {
+                    updatePhoto(mBitmap);
+                }
             }
         }
     }

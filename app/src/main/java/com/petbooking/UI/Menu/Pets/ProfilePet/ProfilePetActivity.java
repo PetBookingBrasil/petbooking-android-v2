@@ -421,26 +421,24 @@ public class ProfilePetActivity extends BaseActivity implements
 
             if (requestCode == AppConstants.PICK_PHOTO) {
                 mUri = data.getData();
+
                 try {
                     mBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mUri);
                     mBitmap = ImageUtils.modifyOrientation(this, mBitmap, mUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                if (mBitmap != null) {
+                    updatePhoto(mBitmap);
+                }
             } else if (requestCode == AppConstants.TAKE_PHOTO) {
                 Bundle extras = data.getExtras();
                 mBitmap = (Bitmap) extras.get("data");
 
-            }
-
-            if (mBitmap != null) {
-                try {
-                    mBitmap = ImageUtils.modifyOrientation(this, mBitmap, mUri);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (mBitmap != null) {
+                    updatePhoto(mBitmap);
                 }
-
-                updatePhoto(mBitmap);
             }
         }
     }

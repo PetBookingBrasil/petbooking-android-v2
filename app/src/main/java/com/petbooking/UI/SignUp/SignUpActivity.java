@@ -37,6 +37,7 @@ import com.petbooking.UI.Dialogs.DatePickerFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
 import com.petbooking.Utils.APIUtils;
+import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
 import com.petbooking.databinding.UserFormBinding;
@@ -290,9 +291,11 @@ public class SignUpActivity extends BaseActivity implements
      * @param user
      */
     public void createUser(User user) {
+        AppUtils.showLoadingDialog(this);
         mUserService.createUser(user, new APICallback() {
             @Override
             public void onSuccess(Object response) {
+                AppUtils.hideDialog();
                 AuthUserResp authUserResp = (AuthUserResp) response;
                 User user = APIUtils.parseUser(authUserResp);
                 mSessionManager.setUserLogged(user);
@@ -303,6 +306,7 @@ public class SignUpActivity extends BaseActivity implements
 
             @Override
             public void onError(Object error) {
+                AppUtils.hideDialog();
                 mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.error_create_user,
                         R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
                 mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
@@ -316,9 +320,11 @@ public class SignUpActivity extends BaseActivity implements
      * @param user
      */
     public void createSocialUser(User user) {
+        AppUtils.showLoadingDialog(this);
         mUserService.createSocialUser(user, APIConstants.DATA_PROVIDER_FACEBOOK, user.providerToken, new APICallback() {
             @Override
             public void onSuccess(Object response) {
+                AppUtils.hideDialog();
                 AuthUserResp authUserResp = (AuthUserResp) response;
                 User user = APIUtils.parseUser(authUserResp);
                 mSessionManager.setUserLogged(user);
@@ -329,6 +335,7 @@ public class SignUpActivity extends BaseActivity implements
 
             @Override
             public void onError(Object error) {
+                AppUtils.hideDialog();
                 mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.error_create_user,
                         R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
                 mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");

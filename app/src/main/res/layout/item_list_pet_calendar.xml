@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/pet_photo"
             android:layout_width="35dp"
             android:layout_height="35dp"

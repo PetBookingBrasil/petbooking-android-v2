@@ -86,6 +86,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
         Glide.with(mContext)
                 .load(APIUtils.getAssetEndpoint(pet.avatar.url))
                 .error(petAvatar)
+                .placeholder(petAvatar)
                 .bitmapTransform(new CircleTransformation(mContext))
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(holder.mIvPicture);

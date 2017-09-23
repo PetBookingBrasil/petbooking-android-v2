@@ -17,8 +17,11 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.UI.Menu.Settings.Contact.ContactActivity;
+import com.petbooking.UI.Menu.Settings.Privacy.PrivacyActivity;
+import com.petbooking.UI.Menu.Settings.Terms.TermsActivity;
 import com.petbooking.UI.Widget.StyledSwitch;
 import com.petbooking.Utils.APIUtils;
+import com.petbooking.Utils.AppUtils;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -32,6 +35,8 @@ public class SettingsActivity extends AppCompatActivity {
     private StyledSwitch mSwSms;
 
     private TextView mTvContact;
+    private TextView mTvTerms;
+    private TextView mTvPrivacy;
 
     SeekBar.OnSeekBarChangeListener distanceListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
@@ -50,13 +55,15 @@ public class SettingsActivity extends AppCompatActivity {
         }
     };
 
-    View.OnClickListener aboutListener = new View.OnClickListener() {
+    View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             int id = v.getId();
 
             if (id == mTvContact.getId()) {
                 goToContact();
+            } else if (id == mTvTerms.getId()) {
+                goToTerms();
             }
         }
     };
@@ -79,7 +86,10 @@ public class SettingsActivity extends AppCompatActivity {
         mSbDistance.setOnSeekBarChangeListener(distanceListener);
 
         mTvContact = (TextView) findViewById(R.id.contact);
-        mTvContact.setOnClickListener(aboutListener);
+        mTvTerms = (TextView) findViewById(R.id.terms);
+
+        mTvContact.setOnClickListener(clickListener);
+        mTvTerms.setOnClickListener(clickListener);
 
         getUserInfo();
     }
@@ -110,6 +120,7 @@ public class SettingsActivity extends AppCompatActivity {
      * from API
      */
     private void getUserInfo() {
+        AppUtils.showLoadingDialog(this);
         mUserService.getUser(mSessionManager.getUserLogged().id, new APICallback() {
             @Override
             public void onSuccess(Object response) {
@@ -117,11 +128,12 @@ public class SettingsActivity extends AppCompatActivity {
                 User user = APIUtils.parseUser(authUserResp);
                 renderInfo(user);
                 mSessionManager.setUserLogged(user);
+                AppUtils.hideDialog();
             }
 
             @Override
             public void onError(Object error) {
-
+                AppUtils.hideDialog();
             }
         });
     }
@@ -145,6 +157,16 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void goToContact() {
         Intent contactIntent = new Intent(this, ContactActivity.class);
+        startActivity(contactIntent);
+    }
+
+    public void goToTerms() {
+        Intent contactIntent = new Intent(this, TermsActivity.class);
+        startActivity(contactIntent);
+    }
+
+    public void goToPrivacy() {
+        Intent contactIntent = new Intent(this, PrivacyActivity.class);
         startActivity(contactIntent);
     }
 }

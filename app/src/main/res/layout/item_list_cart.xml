@@ -14,13 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/pet_photo"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
-            app:civ_border_color="@color/brand_primary"
-            app:civ_border_width="1dp" />
+            android:background="@drawable/imageview_border" />
 
         <TextView
             android:id="@+id/pet_name"
@@ -112,9 +111,9 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/additional_list"
-            android:layout_marginTop="@dimen/spacing_xtiny"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xtiny" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -133,7 +132,7 @@
             android:text="@string/professional_label"
             android:textColor="@color/text_gray" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/professional_photo"
             android:layout_width="30dp"
             android:layout_height="30dp"

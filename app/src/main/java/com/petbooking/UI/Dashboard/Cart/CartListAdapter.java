@@ -11,14 +11,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.petbooking.Constants.APIConstants;
 import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.CartItem;
+import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Widget.CircleTransformation;
+import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.CommonUtils;
 
 import java.text.ParseException;
@@ -80,6 +85,20 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
         String totalPrice = mContext.getResources().getString(R.string.business_service_price,
                 String.format("%.2f", cartItem.totalPrice));
         String appointmentDate;
+        int professionalAvatar;
+        int petAvatar;
+
+        if (cartItem.professional.gender == null || cartItem.professional.gender.equals(User.GENDER_MALE)) {
+            professionalAvatar = R.drawable.ic_placeholder_man;
+        } else {
+            professionalAvatar = R.drawable.ic_placeholder_woman;
+        }
+
+        if (cartItem.pet.type != null && cartItem.pet.type.equals("dog")) {
+            petAvatar = R.drawable.ic_placeholder_dog;
+        } else {
+            petAvatar = R.drawable.ic_placeholder_cat;
+        }
 
         try {
             calendar.setTime(mDateFormat.parse(cartItem.startDate));
@@ -149,16 +168,24 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
         });
 
         Glide.with(mContext)
-                .load(cartItem.pet.avatar.url)
-                .error(R.drawable.ic_placeholder_dog)
+                .load(APIUtils.getAssetEndpoint(cartItem.pet.avatar.url))
+                .error(petAvatar)
+                .placeholder(petAvatar)
+                .bitmapTransform(new CircleTransformation(mContext))
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(holder.mIvPetPhoto);
 
-        Glide.with(mContext)
-                .load(cartItem.professional.imageUrl)
-                .error(R.drawable.ic_placeholder_user)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .into(holder.mIvProfessionalPhoto);
+        if (cartItem.professional.imageUrl == null || cartItem.professional.imageUrl.contains(APIConstants.FALLBACK_TAG)) {
+            holder.mIvProfessionalPhoto.setImageResource(professionalAvatar);
+        } else {
+            Glide.with(mContext)
+                    .load(APIUtils.getAssetEndpoint(cartItem.professional.imageUrl))
+                    .error(professionalAvatar)
+                    .placeholder(professionalAvatar)
+                    .bitmapTransform(new CircleTransformation(mContext))
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .into(holder.mIvProfessionalPhoto);
+        }
     }
 
     @Override
@@ -168,7 +195,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
 
     public class CartViewHolder extends RecyclerView.ViewHolder {
 
-        public CircleImageView mIvPetPhoto;
+        public ImageView mIvPetPhoto;
         public TextView mTvPetName;
         public TextView mTvIndex;
         public TextView mTvDateInfo;
@@ -176,7 +203,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
         public TextView mTvServicePrice;
         public RelativeLayout mAdditionalLayout;
         public RecyclerView mRvAdditional;
-        public CircleImageView mIvProfessionalPhoto;
+        public ImageView mIvProfessionalPhoto;
         public TextView mTvProfessionalName;
         public EditText mEdtNotes;
         public Button mBtnEdit;
@@ -186,7 +213,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
         public CartViewHolder(View view) {
             super(view);
 
-            mIvPetPhoto = (CircleImageView) view.findViewById(R.id.pet_photo);
+            mIvPetPhoto = (ImageView) view.findViewById(R.id.pet_photo);
             mTvPetName = (TextView) view.findViewById(R.id.pet_name);
             mTvIndex = (TextView) view.findViewById(R.id.index_label);
             mTvDateInfo = (TextView) view.findViewById(R.id.date_info);
@@ -194,7 +221,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
             mTvServicePrice = (TextView) view.findViewById(R.id.service_price);
             mAdditionalLayout = (RelativeLayout) view.findViewById(R.id.additional_layout);
             mRvAdditional = (RecyclerView) view.findViewById(R.id.additional_list);
-            mIvProfessionalPhoto = (CircleImageView) view.findViewById(R.id.professional_photo);
+            mIvProfessionalPhoto = (ImageView) view.findViewById(R.id.professional_photo);
             mTvProfessionalName = (TextView) view.findViewById(R.id.professional_name);
             mEdtNotes = (EditText) view.findViewById(R.id.service_notes);
             mBtnEdit = (Button) view.findViewById(R.id.edit_button);

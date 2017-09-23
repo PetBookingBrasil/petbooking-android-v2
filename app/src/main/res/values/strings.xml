@@ -117,6 +117,8 @@
     <string name="schedules">Agendamentos</string>
     <string name="new_pet">Novo Pet</string>
     <string name="contact_us">Entre em contato</string>
+    <string name="terms_of_use">Termos de Uso</string>
+    <string name="privacy_policy">Política de Privacidade</string>
 
     <!-- Profile -->
     <string name="profile_dialog_title">Atualizar Perfil</string>

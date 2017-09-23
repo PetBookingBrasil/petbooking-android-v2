@@ -10,12 +10,14 @@ public class Professional {
 
     public String id;
     public String name;
+    public String gender;
     public String imageUrl;
     public ArrayList<AppointmentDate> availableDates = new ArrayList<>();
 
-    public Professional(String id, String name, String imageUrl) {
+    public Professional(String id, String name, String gender, String imageUrl) {
         this.id = id;
         this.name = name;
+        this.gender = gender;
         this.imageUrl = imageUrl;
     }
 

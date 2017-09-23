@@ -296,7 +296,11 @@ public class ProfilePetActivity extends BaseActivity implements
     public void updatePhoto(Bitmap photo) {
         mIBtnSelectPicture.setVisibility(GONE);
         mIvPetPhoto.setVisibility(View.VISIBLE);
-        mIvPetPhoto.setImageBitmap(photo);
+
+        Glide.with(this)
+                .load(ImageUtils.bitmapToByte(mBitmap))
+                .bitmapTransform(new CircleTransformation(this))
+                .into(mIvPetPhoto);
     }
 
     /**

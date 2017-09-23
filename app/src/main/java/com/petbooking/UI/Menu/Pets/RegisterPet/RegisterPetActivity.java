@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.petbooking.API.Pet.APIPetConstants;
 import com.petbooking.API.Pet.Models.BreedResp;
 import com.petbooking.API.Pet.PetService;
@@ -32,6 +33,7 @@ import com.petbooking.UI.Dialogs.DatePickerFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
 import com.petbooking.UI.Dialogs.TableDialogFragment;
+import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.UI.Widget.MaterialSpinner;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
@@ -277,7 +279,11 @@ public class RegisterPetActivity extends BaseActivity implements
     public void updatePhoto(Bitmap photo) {
         mIBtnSelectPicture.setVisibility(GONE);
         mIvPetPhoto.setVisibility(View.VISIBLE);
-        mIvPetPhoto.setImageBitmap(photo);
+
+        Glide.with(this)
+                .load(ImageUtils.bitmapToByte(photo))
+                .bitmapTransform(new CircleTransformation(this))
+                .into(mIvPetPhoto);
     }
 
     /**

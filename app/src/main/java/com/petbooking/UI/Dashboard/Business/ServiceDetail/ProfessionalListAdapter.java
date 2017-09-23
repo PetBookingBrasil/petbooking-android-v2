@@ -6,16 +6,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.petbooking.Constants.APIConstants;
 import com.petbooking.Models.Professional;
+import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Widget.CircleTransformation;
+import com.petbooking.Utils.APIUtils;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Luciano José on 23/05/2017.
@@ -55,28 +59,35 @@ public class ProfessionalListAdapter extends RecyclerView.Adapter<ProfessionalLi
 
         int redColor = mContext.getResources().getColor(R.color.brand_primary);
         int textColor = mContext.getResources().getColor(R.color.text_color);
+        int professionalAvatar;
+
+        if (professional.gender == null || professional.gender.equals(User.GENDER_MALE)) {
+            professionalAvatar = R.drawable.ic_placeholder_man;
+        } else {
+            professionalAvatar = R.drawable.ic_placeholder_woman;
+        }
 
         holder.mTvProfessionalName.setText(professional.name);
 
         if (selectedPosition == position) {
-            holder.mIvPhoto.setBorderColor(redColor);
-            holder.mIvPhoto.setBorderWidth(4);
-
             holder.mTvProfessionalName.setTextColor(redColor);
             holder.mTvProfessionalName.setTypeface(Typeface.DEFAULT_BOLD);
+            holder.mIvPhoto.setBackground(mContext.getResources().getDrawable(R.drawable.imageview_border));
         } else {
-            holder.mIvPhoto.setBorderWidth(0);
-
             holder.mTvProfessionalName.setTextColor(textColor);
             holder.mTvProfessionalName.setTypeface(Typeface.DEFAULT);
+            holder.mIvPhoto.setBackground(null);
         }
 
-        if (professional.imageUrl == null) {
-            holder.mIvPhoto.setImageResource(R.drawable.ic_placeholder_user);
+        if (professional.imageUrl == null || professional.imageUrl.contains(APIConstants.FALLBACK_TAG)) {
+            holder.mIvPhoto.setImageResource(professionalAvatar);
         } else {
             Glide.with(mContext)
-                    .load(professional.imageUrl)
-                    .error(R.drawable.ic_placeholder_user)
+                    .load(APIUtils.getAssetEndpoint(professional.imageUrl))
+                    .error(professionalAvatar)
+                    .placeholder(professionalAvatar)
+                    .bitmapTransform(new CircleTransformation(mContext))
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .into(holder.mIvPhoto);
         }
 
@@ -108,14 +119,14 @@ public class ProfessionalListAdapter extends RecyclerView.Adapter<ProfessionalLi
     public class ProfessionalViewHolder extends RecyclerView.ViewHolder {
 
         public LinearLayout mItemLayout;
-        public CircleImageView mIvPhoto;
+        public ImageView mIvPhoto;
         public TextView mTvProfessionalName;
 
         public ProfessionalViewHolder(View view) {
             super(view);
 
             mItemLayout = (LinearLayout) view.findViewById(R.id.item_layout);
-            mIvPhoto = (CircleImageView) view.findViewById(R.id.professional_photo);
+            mIvPhoto = (ImageView) view.findViewById(R.id.professional_photo);
             mTvProfessionalName = (TextView) view.findViewById(R.id.professional_name);
         }
     }

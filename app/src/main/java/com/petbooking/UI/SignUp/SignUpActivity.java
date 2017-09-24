@@ -36,10 +36,12 @@ import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.Dialogs.DatePickerFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
+import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
+import com.petbooking.Utils.ImageUtils;
 import com.petbooking.databinding.UserFormBinding;
 
 import org.greenrobot.eventbus.EventBus;
@@ -47,7 +49,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import java.text.ParseException;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+import android.widget.ImageView;
 
 import static android.view.View.GONE;
 
@@ -82,7 +84,7 @@ public class SignUpActivity extends BaseActivity implements
     /**
      * Form Inputs
      */
-    private CircleImageView mCiUserPhoto;
+    private ImageView mIvUserPhoto;
     private EditText mEdtBirthday;
     private EditText mEdtCpf;
     private EditText mEdtZipcode;
@@ -154,7 +156,7 @@ public class SignUpActivity extends BaseActivity implements
         mDialogFragmentFeedback = FeedbackDialogFragment.newInstance();
         mDatePicker = DatePickerFragment.newInstance();
 
-        mCiUserPhoto = (CircleImageView) findViewById(R.id.user_photo);
+        mIvUserPhoto = (ImageView) findViewById(R.id.user_photo);
         mEdtBirthday = (EditText) findViewById(R.id.user_birthday);
         mEdtCpf = (EditText) findViewById(R.id.user_cpf);
         mEdtPhone = (EditText) findViewById(R.id.user_phone);
@@ -177,13 +179,13 @@ public class SignUpActivity extends BaseActivity implements
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
         mBtnSubmit.setOnClickListener(mSubmitListener);
         mIBtnSelectPicture.setOnClickListener(mSelectListener);
-        mCiUserPhoto.setOnClickListener(mSelectListener);
+        mIvUserPhoto.setOnClickListener(mSelectListener);
 
         if (isSocialLogin) {
             String userWrapped = getIntent().getStringExtra(AppConstants.USER_WRAPPED);
             user = new Gson().fromJson(userWrapped, User.class);
             mIBtnSelectPicture.setVisibility(View.GONE);
-            mCiUserPhoto.setVisibility(View.VISIBLE);
+            mIvUserPhoto.setVisibility(View.VISIBLE);
             Glide.with(this)
                     .load(user.avatar.url)
                     .error(R.drawable.ic_menu_user)
@@ -191,7 +193,7 @@ public class SignUpActivity extends BaseActivity implements
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .centerCrop()
                     .dontAnimate()
-                    .into(mCiUserPhoto);
+                    .into(mIvUserPhoto);
         } else {
             user = new User();
         }
@@ -278,11 +280,15 @@ public class SignUpActivity extends BaseActivity implements
      */
     public void updatePhoto(Bitmap photo) {
         mIBtnSelectPicture.setVisibility(GONE);
-        mCiUserPhoto.setVisibility(View.VISIBLE);
-        mCiUserPhoto.setImageBitmap(photo);
+        mIvUserPhoto.setVisibility(View.VISIBLE);
 
         user.photo = CommonUtils.encodeBase64(mBitmap);
         user.photo = AppConstants.BASE64 + user.photo;
+
+        Glide.with(this)
+                .load(ImageUtils.bitmapToByte(photo))
+                .bitmapTransform(new CircleTransformation(this))
+                .into(mIvUserPhoto);
     }
 
     /**

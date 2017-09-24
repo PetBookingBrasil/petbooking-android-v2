@@ -41,6 +41,8 @@ import com.petbooking.UI.Menu.Search.SearchActivity;
 import com.petbooking.UI.Menu.Search.SearchResultFragment;
 import com.petbooking.UI.Menu.Settings.SettingsActivity;
 import com.petbooking.UI.Widget.CircleTransformation;
+import com.petbooking.Utils.APIUtils;
+import com.petbooking.Utils.ImageUtils;
 
 public class DashboardActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -301,13 +303,13 @@ public class DashboardActivity extends AppCompatActivity implements
             mTvSideMenuAddress.setText(R.string.prompt_loading);
         }
 
-        if (currentUser.avatar.large.url.contains(APIConstants.FALLBACK_TAG)) {
+        if (currentUser.avatar.url.contains(APIConstants.FALLBACK_TAG)) {
             mIvSideMenuPicture.setImageResource(userAvatar);
             return;
         }
 
         Glide.with(this)
-                .load(currentUser.avatar.large.url)
+                .load(APIUtils.getAssetEndpoint(currentUser.avatar.url))
                 .placeholder(userAvatar)
                 .error(userAvatar)
                 .bitmapTransform(new CircleTransformation(this))

@@ -82,6 +82,9 @@
     <!-- Register -->
     <string name="register_dialog_title">Cadastro de Usuário</string>
     <string name="hint_name">Nome Completo</string>
+    <string name="hint_user_gender">Sexo</string>
+    <string name="gender_user_male">Masculino</string>
+    <string name="gender_user_female">Feminino</string>
     <string name="hint_cpf">CPF</string>
     <string name="hint_birthday">Data Nasc.</string>
     <string name="hint_email">Email</string>

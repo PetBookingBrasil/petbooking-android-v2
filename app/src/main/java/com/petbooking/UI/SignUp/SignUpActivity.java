@@ -50,6 +50,7 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import android.widget.ImageView;
+import android.widget.RadioButton;
 
 import static android.view.View.GONE;
 
@@ -85,6 +86,8 @@ public class SignUpActivity extends BaseActivity implements
      * Form Inputs
      */
     private ImageView mIvUserPhoto;
+    private RadioButton mRbGenderMale;
+    private RadioButton mRbGenderFemale;
     private EditText mEdtBirthday;
     private EditText mEdtCpf;
     private EditText mEdtZipcode;
@@ -157,6 +160,8 @@ public class SignUpActivity extends BaseActivity implements
         mDatePicker = DatePickerFragment.newInstance();
 
         mIvUserPhoto = (ImageView) findViewById(R.id.user_photo);
+        mRbGenderMale = (RadioButton) findViewById(R.id.gender_male);
+        mRbGenderFemale = (RadioButton) findViewById(R.id.gender_female);
         mEdtBirthday = (EditText) findViewById(R.id.user_birthday);
         mEdtCpf = (EditText) findViewById(R.id.user_cpf);
         mEdtPhone = (EditText) findViewById(R.id.user_phone);
@@ -215,6 +220,8 @@ public class SignUpActivity extends BaseActivity implements
         }
 
         String repeatPassword = mEdtRepeatPass.getText().toString();
+
+        user.gender = mRbGenderMale.isChecked() ? User.GENDER_MALE : User.GENDER_FEMALE;
 
         if (message == -1 && (user.password.equals(repeatPassword))) {
             if (isSocialLogin) {
@@ -304,6 +311,10 @@ public class SignUpActivity extends BaseActivity implements
                 AppUtils.hideDialog();
                 AuthUserResp authUserResp = (AuthUserResp) response;
                 User user = APIUtils.parseUser(authUserResp);
+                mSessionManager.setSessionToken(authUserResp.data.attributes.authToken);
+                //mSessionManager.setSessionExpirationDate(sessionResp.data.attributes.expiresAt);
+                mSessionManager.setLastLogin(authUserResp.data.attributes.email, user.password);
+                //scheduleRefreshToken(AppConstants.SESSION_TOKEN);
                 mSessionManager.setUserLogged(user);
                 mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.success_create_user,
                         R.string.dialog_button_ok, AppConstants.OK_ACTION);

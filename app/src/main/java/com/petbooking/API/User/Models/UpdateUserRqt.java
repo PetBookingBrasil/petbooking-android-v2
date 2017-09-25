@@ -10,7 +10,7 @@ public class UpdateUserRqt {
     public transient Attributes attributes;
 
     public UpdateUserRqt(String id, User user) {
-        this.attributes = new Attributes(user.name, user.birthday, user.phone, user.cpf,
+        this.attributes = new Attributes(user.name, user.gender, user.birthday, user.phone, user.cpf,
                 user.email, user.password, user.zipcode, user.street, user.neighborhood,
                 user.streetNumber, user.complement, user.city, user.state, user.searchRange, user.acceptsEmail,
                 user.acceptsNotifications, user.acceptsSms);
@@ -32,6 +32,7 @@ public class UpdateUserRqt {
     public static class Attributes {
 
         public String name;
+        public String gender;
         public String phone;
         public String cpf;
         public String birthday;
@@ -53,11 +54,12 @@ public class UpdateUserRqt {
         @SerializedName("accepts_sms")
         public String acceptsSms;
 
-        public Attributes(String name, String birthday, String phone, String cpf, String email, String password,
+        public Attributes(String name, String gender, String birthday, String phone, String cpf, String email, String password,
                           String zipcode, String street, String neighborhood, String street_number, String complement,
                           String city, String state, int searchRange, boolean acceptsEmail,
                           boolean acceptsNotifications, boolean acceptsSms) {
             this.name = name;
+            this.gender = gender;
             this.birthday = birthday;
             this.phone = phone;
             this.cpf = cpf;

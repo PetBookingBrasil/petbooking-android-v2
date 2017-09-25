@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -81,6 +82,8 @@ public class ProfileActivity extends BaseActivity implements
      * Form Inputs
      */
     private LinearLayout mLPasswordGroup;
+    private RadioButton mRbGenderMale;
+    private RadioButton mRbGenderFemale;
     private ImageView mIvUserPhoto;
     private EditText mEdtBirthday;
     private EditText mEdtCpf;
@@ -158,6 +161,8 @@ public class ProfileActivity extends BaseActivity implements
 
         mLPasswordGroup = (LinearLayout) findViewById(R.id.passwordGroup);
         mIvUserPhoto = (ImageView) findViewById(R.id.user_photo);
+        mRbGenderMale = (RadioButton) findViewById(R.id.gender_male);
+        mRbGenderFemale = (RadioButton) findViewById(R.id.gender_female);
         mEdtBirthday = (EditText) findViewById(R.id.user_birthday);
         mEdtCpf = (EditText) findViewById(R.id.user_cpf);
         mEdtPhone = (EditText) findViewById(R.id.user_phone);
@@ -192,9 +197,12 @@ public class ProfileActivity extends BaseActivity implements
 
         if (user.gender == null || user.gender.equals(User.GENDER_MALE)) {
             userAvatar = R.drawable.ic_placeholder_man;
+            mRbGenderMale.setChecked(true);
         } else {
             userAvatar = R.drawable.ic_placeholder_woman;
+            mRbGenderFemale.setChecked(true);
         }
+
 
         if (!user.avatar.url.contains(APIConstants.FALLBACK_TAG)) {
             Glide.with(this)
@@ -220,6 +228,8 @@ public class ProfileActivity extends BaseActivity implements
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        user.gender = mRbGenderMale.isChecked() ? User.GENDER_MALE : User.GENDER_FEMALE;
 
         if (message == -1) {
             updateRequest(user);

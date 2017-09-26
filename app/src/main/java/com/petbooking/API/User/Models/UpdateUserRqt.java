@@ -13,7 +13,7 @@ public class UpdateUserRqt {
         this.attributes = new Attributes(user.name, user.gender, user.birthday, user.phone, user.cpf,
                 user.email, user.password, user.zipcode, user.street, user.neighborhood,
                 user.streetNumber, user.complement, user.city, user.state, user.searchRange, user.acceptsEmail,
-                user.acceptsNotifications, user.acceptsSms);
+                user.acceptsNotifications, user.acceptsSms, user.photo);
         this.data = new Data(id, attributes);
     }
 
@@ -53,11 +53,12 @@ public class UpdateUserRqt {
         public String acceptsNotifications;
         @SerializedName("accepts_sms")
         public String acceptsSms;
+        public String avatar;
 
         public Attributes(String name, String gender, String birthday, String phone, String cpf, String email, String password,
                           String zipcode, String street, String neighborhood, String street_number, String complement,
                           String city, String state, int searchRange, boolean acceptsEmail,
-                          boolean acceptsNotifications, boolean acceptsSms) {
+                          boolean acceptsNotifications, boolean acceptsSms, String photo) {
             this.name = name;
             this.gender = gender;
             this.birthday = birthday;
@@ -76,6 +77,7 @@ public class UpdateUserRqt {
             this.acceptsEmail = acceptsEmail ? "true" : "false";
             this.acceptsNotifications = acceptsNotifications ? "true" : "false";
             this.acceptsSms = acceptsSms ? "true" : "false";
+            this.avatar = photo;
         }
     }
 }

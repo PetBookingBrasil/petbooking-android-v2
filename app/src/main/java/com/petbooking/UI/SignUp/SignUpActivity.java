@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -303,19 +304,19 @@ public class SignUpActivity extends BaseActivity implements
      *
      * @param user
      */
-    public void createUser(User user) {
+    public void createUser(final User user) {
         AppUtils.showLoadingDialog(this);
         mUserService.createUser(user, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 AppUtils.hideDialog();
                 AuthUserResp authUserResp = (AuthUserResp) response;
-                User user = APIUtils.parseUser(authUserResp);
-                mSessionManager.setSessionToken(authUserResp.data.attributes.authToken);
+                User registeredUser = APIUtils.parseUser(authUserResp);
+                mSessionManager.setSessionToken(registeredUser.authToken);
                 //mSessionManager.setSessionExpirationDate(sessionResp.data.attributes.expiresAt);
-                mSessionManager.setLastLogin(authUserResp.data.attributes.email, user.password);
+                mSessionManager.setLastLogin(user.email, user.password);
                 //scheduleRefreshToken(AppConstants.SESSION_TOKEN);
-                mSessionManager.setUserLogged(user);
+                mSessionManager.setUserLogged(registeredUser);
                 mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.success_create_user,
                         R.string.dialog_button_ok, AppConstants.OK_ACTION);
                 mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
@@ -336,15 +337,19 @@ public class SignUpActivity extends BaseActivity implements
      *
      * @param user
      */
-    public void createSocialUser(User user) {
+    public void createSocialUser(final User user) {
         AppUtils.showLoadingDialog(this);
         mUserService.createSocialUser(user, APIConstants.DATA_PROVIDER_FACEBOOK, user.providerToken, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 AppUtils.hideDialog();
                 AuthUserResp authUserResp = (AuthUserResp) response;
-                User user = APIUtils.parseUser(authUserResp);
-                mSessionManager.setUserLogged(user);
+                User registeredUser = APIUtils.parseUser(authUserResp);
+                mSessionManager.setSessionToken(registeredUser.authToken);
+                //mSessionManager.setSessionExpirationDate(sessionResp.data.attributes.expiresAt);
+                mSessionManager.setLastLogin(user.email, user.password);
+                //scheduleRefreshToken(AppConstants.SESSION_TOKEN);
+                mSessionManager.setUserLogged(registeredUser);
                 mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.success_create_user,
                         R.string.dialog_button_ok, AppConstants.OK_ACTION);
                 mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");

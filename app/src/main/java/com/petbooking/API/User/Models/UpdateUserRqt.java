@@ -10,10 +10,10 @@ public class UpdateUserRqt {
     public transient Attributes attributes;
 
     public UpdateUserRqt(String id, User user) {
-        this.attributes = new Attributes(user.name, user.birthday, user.phone, user.cpf,
+        this.attributes = new Attributes(user.name, user.gender, user.birthday, user.phone, user.cpf,
                 user.email, user.password, user.zipcode, user.street, user.neighborhood,
-                user.streetNumber, user.city, user.state, user.searchRange, user.acceptsEmail,
-                user.acceptsNotifications, user.acceptsSms);
+                user.streetNumber, user.complement, user.city, user.state, user.searchRange, user.acceptsEmail,
+                user.acceptsNotifications, user.acceptsSms, user.photo);
         this.data = new Data(id, attributes);
     }
 
@@ -32,6 +32,7 @@ public class UpdateUserRqt {
     public static class Attributes {
 
         public String name;
+        public String gender;
         public String phone;
         public String cpf;
         public String birthday;
@@ -41,6 +42,7 @@ public class UpdateUserRqt {
         public String street;
         public String neighborhood;
         public String street_number;
+        public String complement;
         public String city;
         public String state;
         @SerializedName("search_range")
@@ -51,12 +53,14 @@ public class UpdateUserRqt {
         public String acceptsNotifications;
         @SerializedName("accepts_sms")
         public String acceptsSms;
+        public String avatar;
 
-        public Attributes(String name, String birthday, String phone, String cpf, String email, String password,
-                          String zipcode, String street, String neighborhood, String street_number,
+        public Attributes(String name, String gender, String birthday, String phone, String cpf, String email, String password,
+                          String zipcode, String street, String neighborhood, String street_number, String complement,
                           String city, String state, int searchRange, boolean acceptsEmail,
-                          boolean acceptsNotifications, boolean acceptsSms) {
+                          boolean acceptsNotifications, boolean acceptsSms, String photo) {
             this.name = name;
+            this.gender = gender;
             this.birthday = birthday;
             this.phone = phone;
             this.cpf = cpf;
@@ -66,12 +70,14 @@ public class UpdateUserRqt {
             this.street = street;
             this.neighborhood = neighborhood;
             this.street_number = street_number;
+            this.complement = complement;
             this.city = city;
             this.state = state;
             this.searchRange = searchRange;
             this.acceptsEmail = acceptsEmail ? "true" : "false";
-            this.acceptsNotifications = acceptsNotifications  ? "true" : "false";
-            this.acceptsSms = acceptsSms  ? "true" : "false";
+            this.acceptsNotifications = acceptsNotifications ? "true" : "false";
+            this.acceptsSms = acceptsSms ? "true" : "false";
+            this.avatar = photo;
         }
     }
 }

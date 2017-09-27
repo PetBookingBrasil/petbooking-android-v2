@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +15,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
+import com.petbooking.UI.Widget.CircleTransformation;
+import com.petbooking.Utils.APIUtils;
 
 import java.util.ArrayList;
 
@@ -60,6 +63,13 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
         int redColor = mContext.getResources().getColor(R.color.brand_primary);
         int textColor = mContext.getResources().getColor(R.color.text_color);
         int totalAppointments = mAppointmentManager.getTotalPetAppointments(pet.id);
+        int petAvatar;
+
+        if (pet.type != null && pet.type.equals("dog")) {
+            petAvatar = R.drawable.ic_placeholder_dog;
+        } else {
+            petAvatar = R.drawable.ic_placeholder_cat;
+        }
 
         if (totalAppointments == 0) {
             holder.mTvTotalAppointments.setVisibility(View.GONE);
@@ -69,18 +79,17 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
         }
 
         if (selectedPosition == position) {
-            holder.mIvPhoto.setBorderColor(redColor);
-            holder.mIvPhoto.setBorderWidth(4);
             holder.mIvPhoto.setColorFilter(mContext.getResources().getColor(R.color.picture_filter_color));
 
             holder.mTvName.setTextColor(redColor);
             holder.mTvName.setTypeface(Typeface.DEFAULT_BOLD);
+            holder.mIvPhoto.setBackground(mContext.getResources().getDrawable(R.drawable.imageview_border));
         } else {
-            holder.mIvPhoto.setBorderWidth(0);
             holder.mIvPhoto.setColorFilter(null);
 
             holder.mTvName.setTextColor(textColor);
             holder.mTvName.setTypeface(Typeface.DEFAULT);
+            holder.mIvPhoto.setBackground(null);
         }
 
         holder.mTvName.setText(pet.name);
@@ -92,10 +101,10 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
         });
 
         Glide.with(mContext)
-                .load(pet.avatar.url)
-                .centerCrop()
-                .error(R.drawable.ic_menu_user)
-                .dontAnimate()
+                .load(APIUtils.getAssetEndpoint(pet.avatar.url))
+                .error(petAvatar)
+                .placeholder(petAvatar)
+                .bitmapTransform(new CircleTransformation(mContext))
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(holder.mIvPhoto);
     }
@@ -129,7 +138,7 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
     public class PetViewHolder extends RecyclerView.ViewHolder {
 
         public LinearLayout mItemLayout;
-        public CircleImageView mIvPhoto;
+        public ImageView mIvPhoto;
         public TextView mTvName;
         public TextView mTvTotalAppointments;
 
@@ -137,7 +146,7 @@ public class PetCalendarListAdapter extends RecyclerView.Adapter<PetCalendarList
             super(view);
 
             mItemLayout = (LinearLayout) view.findViewById(R.id.item_layout);
-            mIvPhoto = (CircleImageView) view.findViewById(R.id.pet_photo);
+            mIvPhoto = (ImageView) view.findViewById(R.id.pet_photo);
             mTvName = (TextView) view.findViewById(R.id.pet_name);
             mTvTotalAppointments = (TextView) view.findViewById(R.id.total_appointments);
         }

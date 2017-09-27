@@ -63,6 +63,7 @@ public class PaymentActivity extends AppCompatActivity {
         mPaymentWebview.setWebChromeClient(new WebChromeClient() {
             public boolean onConsoleMessage(ConsoleMessage cm) {
                 if (cm.message().equals(APIConstants.PAYMENT_OK_TAG)) {
+                    mAppointmentManager.reset();
                     goToDashboard();
                 }
 

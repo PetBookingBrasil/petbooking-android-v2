@@ -13,7 +13,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.petbooking.API.Pet.APIPetConstants;
 import com.petbooking.API.Pet.Models.BreedResp;
 import com.petbooking.API.Pet.PetService;
@@ -31,15 +33,18 @@ import com.petbooking.UI.Dialogs.DatePickerFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
 import com.petbooking.UI.Dialogs.TableDialogFragment;
+import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.UI.Widget.MaterialSpinner;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
+import com.petbooking.Utils.ImageUtils;
 import com.petbooking.databinding.PetFormBinding;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,7 +107,7 @@ public class RegisterPetActivity extends BaseActivity implements
     private MaterialSpinner mSpBreed;
     private MaterialSpinner mSpCoat;
     private MaterialSpinner mSpTemper;
-    private CircleImageView mCiUserPhoto;
+    private ImageView mIvPetPhoto;
     private EditText mEdtBirthday;
     private ImageButton mIBtnSelectPicture;
     private Button mBtnSubmit;
@@ -173,7 +178,7 @@ public class RegisterPetActivity extends BaseActivity implements
         mTableDialogFragment = TableDialogFragment.newInstance();
         mDatePicker = DatePickerFragment.newInstance();
 
-        mCiUserPhoto = (CircleImageView) findViewById(R.id.pet_photo);
+        mIvPetPhoto = (ImageView) findViewById(R.id.pet_photo);
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
         mEdtName = (EditText) findViewById(R.id.pet_name);
         mEdtBirthday = (EditText) findViewById(R.id.pet_birthday);
@@ -191,7 +196,7 @@ public class RegisterPetActivity extends BaseActivity implements
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
         mIBtnSelectPicture.setOnClickListener(mSelectListener);
         mEdtBirthday.setOnClickListener(mBirthdayListener);
-        mCiUserPhoto.setOnClickListener(mSelectListener);
+        mIvPetPhoto.setOnClickListener(mSelectListener);
         mBtnSubmit.setOnClickListener(mSubmitListener);
 
         dogBreeds = new ArrayList<>();
@@ -273,8 +278,12 @@ public class RegisterPetActivity extends BaseActivity implements
      */
     public void updatePhoto(Bitmap photo) {
         mIBtnSelectPicture.setVisibility(GONE);
-        mCiUserPhoto.setVisibility(View.VISIBLE);
-        mCiUserPhoto.setImageBitmap(photo);
+        mIvPetPhoto.setVisibility(View.VISIBLE);
+
+        Glide.with(this)
+                .load(ImageUtils.bitmapToByte(photo))
+                .bitmapTransform(new CircleTransformation(this))
+                .into(mIvPetPhoto);
     }
 
     /**
@@ -282,7 +291,13 @@ public class RegisterPetActivity extends BaseActivity implements
      */
     public void registerPet() {
         parsePet();
-        int message = FormUtils.validatePet(pet);
+        int message = -1;
+
+        try {
+            message = FormUtils.validatePet(pet);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         if (message == -1) {
             createRequest(pet);
@@ -403,6 +418,7 @@ public class RegisterPetActivity extends BaseActivity implements
 
                 try {
                     mBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mUri);
+                    mBitmap = ImageUtils.modifyOrientation(this, mBitmap, mUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

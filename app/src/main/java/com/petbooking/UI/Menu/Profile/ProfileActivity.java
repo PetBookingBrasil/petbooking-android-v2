@@ -14,11 +14,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.User.UserService;
 import com.petbooking.BaseActivity;
+import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Events.HideLoadingEvt;
 import com.petbooking.Events.ShowLoadingEvt;
@@ -32,15 +37,20 @@ import com.petbooking.R;
 import com.petbooking.UI.Dialogs.DatePickerFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
+import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.Utils.APIUtils;
+import com.petbooking.Utils.AppUtils;
+import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
+import com.petbooking.Utils.ImageUtils;
 import com.petbooking.databinding.UserFormBinding;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.text.ParseException;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+import static android.view.View.GONE;
 
 public class ProfileActivity extends BaseActivity implements
         PictureSelectDialogFragment.FinishDialogListener,
@@ -72,7 +82,9 @@ public class ProfileActivity extends BaseActivity implements
      * Form Inputs
      */
     private LinearLayout mLPasswordGroup;
-    private CircleImageView mCiUserPhoto;
+    private RadioButton mRbGenderMale;
+    private RadioButton mRbGenderFemale;
+    private ImageView mIvUserPhoto;
     private EditText mEdtBirthday;
     private EditText mEdtCpf;
     private EditText mEdtZipcode;
@@ -148,7 +160,9 @@ public class ProfileActivity extends BaseActivity implements
         mDatePicker = DatePickerFragment.newInstance();
 
         mLPasswordGroup = (LinearLayout) findViewById(R.id.passwordGroup);
-        mCiUserPhoto = (CircleImageView) findViewById(R.id.user_photo);
+        mIvUserPhoto = (ImageView) findViewById(R.id.user_photo);
+        mRbGenderMale = (RadioButton) findViewById(R.id.gender_male);
+        mRbGenderFemale = (RadioButton) findViewById(R.id.gender_female);
         mEdtBirthday = (EditText) findViewById(R.id.user_birthday);
         mEdtCpf = (EditText) findViewById(R.id.user_cpf);
         mEdtPhone = (EditText) findViewById(R.id.user_phone);
@@ -169,18 +183,53 @@ public class ProfileActivity extends BaseActivity implements
         mEdtBirthday.setOnClickListener(mBirthdayListener);
         mBtnSubmit.setOnClickListener(mSubmitListener);
         mIBtnSelectPicture.setOnClickListener(mSelectListener);
-        mCiUserPhoto.setOnClickListener(mSelectListener);
+        mIvUserPhoto.setOnClickListener(mSelectListener);
 
         mLPasswordGroup.setVisibility(View.GONE);
 
         mBinding.setUser(user);
+
+        renderUser();
+    }
+
+    public void renderUser() {
+        int userAvatar;
+
+        if (user.gender == null || user.gender.equals(User.GENDER_MALE)) {
+            userAvatar = R.drawable.ic_placeholder_man;
+            mRbGenderMale.setChecked(true);
+        } else {
+            userAvatar = R.drawable.ic_placeholder_woman;
+            mRbGenderFemale.setChecked(true);
+        }
+
+
+        if (!user.avatar.url.contains(APIConstants.FALLBACK_TAG)) {
+            Glide.with(this)
+                    .load(APIUtils.getAssetEndpoint(user.avatar.url))
+                    .error(userAvatar)
+                    .bitmapTransform(new CircleTransformation(this))
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .into(mIvUserPhoto);
+
+            mIvUserPhoto.setVisibility(View.VISIBLE);
+            mIBtnSelectPicture.setVisibility(GONE);
+        }
     }
 
     /**
      * Update User
      */
     public void updateUser() {
-        int message = FormUtils.validateUser(user, false);
+        int message = -1;
+
+        try {
+            message = FormUtils.validateUser(user, false);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        user.gender = mRbGenderMale.isChecked() ? User.GENDER_MALE : User.GENDER_FEMALE;
 
         if (message == -1) {
             updateRequest(user);
@@ -240,8 +289,15 @@ public class ProfileActivity extends BaseActivity implements
      */
     public void updatePhoto(Bitmap photo) {
         mIBtnSelectPicture.setVisibility(View.GONE);
-        mCiUserPhoto.setVisibility(View.VISIBLE);
-        mCiUserPhoto.setImageBitmap(photo);
+        mIvUserPhoto.setVisibility(View.VISIBLE);
+
+        user.photo = CommonUtils.encodeBase64(mBitmap);
+        user.photo = AppConstants.BASE64 + user.photo;
+
+        Glide.with(this)
+                .load(ImageUtils.bitmapToByte(photo))
+                .bitmapTransform(new CircleTransformation(this))
+                .into(mIvUserPhoto);
     }
 
     /**
@@ -250,9 +306,12 @@ public class ProfileActivity extends BaseActivity implements
      * @param user
      */
     public void updateRequest(User user) {
+        AppUtils.showLoadingDialog(this);
+
         mUserService.updateUser(user.id, user, new APICallback() {
             @Override
             public void onSuccess(Object response) {
+                AppUtils.hideDialog();
                 AuthUserResp authUserResp = (AuthUserResp) response;
                 User user = APIUtils.parseUser(authUserResp);
                 mSessionManager.setUserLogged(user);
@@ -263,6 +322,7 @@ public class ProfileActivity extends BaseActivity implements
 
             @Override
             public void onError(Object error) {
+                AppUtils.hideDialog();
                 mDialogFragmentFeedback.setDialogInfo(R.string.profile_dialog_title, R.string.error_update_user,
                         R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
                 mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");

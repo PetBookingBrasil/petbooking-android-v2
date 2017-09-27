@@ -130,6 +130,8 @@ public class PetsActivity extends BaseActivity implements
 
             @Override
             public void onError(Object error) {
+                mPetsPlaceholder.setVisibility(View.VISIBLE);
+                mRvPets.setVisibility(View.GONE);
                 AppUtils.hideDialog();
             }
         });

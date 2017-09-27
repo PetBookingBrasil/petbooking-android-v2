@@ -1,4 +1,4 @@
-package com.petbooking.UI.Menu.Settings.Contact;
+package com.petbooking.UI.Menu.Settings.Privacy;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.webkit.WebViewClient;
 import com.petbooking.R;
 import com.petbooking.Utils.AppUtils;
 
-public class ContactActivity extends AppCompatActivity {
+public class PrivacyActivity extends AppCompatActivity {
 
     private WebView mWebView;
     private WebSettings webSettings;
@@ -17,14 +17,14 @@ public class ContactActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact);
+        setContentView(R.layout.activity_privacy);
 
         AppUtils.showLoadingDialog(this);
 
         mWebView = (WebView) findViewById(R.id.webview);
         webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        mWebView.loadUrl("https://petbooking.com.br/webviews/contact");
+        mWebView.loadUrl("https://petbooking.com.br/v2/webviews/privacidade");
 
         mWebView.setWebViewClient(new WebViewClient() {
             public void onPageFinished(WebView view, String url) {

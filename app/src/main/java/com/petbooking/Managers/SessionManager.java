@@ -59,7 +59,7 @@ public class SessionManager {
     }
 
     public long getSessionExpirationDate() {
-        return mPreferenceManager.getLong(AppConstants.CONSUMER_EXPIRATION_DATE);
+        return mPreferenceManager.getLong(AppConstants.SESSION_EXPIRATION_DATE);
     }
 
     public String getSessionToken() {

@@ -19,10 +19,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
@@ -38,8 +40,9 @@ import com.petbooking.UI.Menu.Profile.ProfileActivity;
 import com.petbooking.UI.Menu.Search.SearchActivity;
 import com.petbooking.UI.Menu.Search.SearchResultFragment;
 import com.petbooking.UI.Menu.Settings.SettingsActivity;
-
-import de.hdodenhof.circleimageview.CircleImageView;
+import com.petbooking.UI.Widget.CircleTransformation;
+import com.petbooking.Utils.APIUtils;
+import com.petbooking.Utils.ImageUtils;
 
 public class DashboardActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -69,7 +72,7 @@ public class DashboardActivity extends AppCompatActivity implements
      */
     private User currentUser;
     private ImageButton mIBtnProfile;
-    private CircleImageView mCivSideMenuPicture;
+    private ImageView mIvSideMenuPicture;
     private TextView mTvSideMenuName;
     private TextView mTvSideMenuAddress;
 
@@ -100,10 +103,13 @@ public class DashboardActivity extends AppCompatActivity implements
         mFeedbackDialogFragment = FeedbackDialogFragment.newInstance();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView toolbarTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(R.string.dashboard_title);
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -121,7 +127,7 @@ public class DashboardActivity extends AppCompatActivity implements
          */
 
         mIBtnProfile = (ImageButton) mHeaderView.findViewById(R.id.profileButton);
-        mCivSideMenuPicture = (CircleImageView) mHeaderView.findViewById(R.id.sidemenu_picture);
+        mIvSideMenuPicture = (ImageView) mHeaderView.findViewById(R.id.sidemenu_picture);
         mTvSideMenuName = (TextView) mHeaderView.findViewById(R.id.sidemenu_name);
         mTvSideMenuAddress = (TextView) mHeaderView.findViewById(R.id.sidemenu_address);
         mIBtnProfile.setOnClickListener(btnProfileListener);
@@ -278,6 +284,13 @@ public class DashboardActivity extends AppCompatActivity implements
      */
     private void updateUserInfo() {
         currentUser = mSessionManager.getUserLogged();
+        int userAvatar;
+
+        if (currentUser.gender == null || currentUser.gender.equals(User.GENDER_MALE)) {
+            userAvatar = R.drawable.ic_placeholder_man;
+        } else {
+            userAvatar = R.drawable.ic_placeholder_woman;
+        }
 
         mTvSideMenuName.setText(currentUser.name);
         mUserAddress = mLocationManager.getLocationCityState();
@@ -290,14 +303,18 @@ public class DashboardActivity extends AppCompatActivity implements
             mTvSideMenuAddress.setText(R.string.prompt_loading);
         }
 
+        if (currentUser.avatar.url.contains(APIConstants.FALLBACK_TAG)) {
+            mIvSideMenuPicture.setImageResource(userAvatar);
+            return;
+        }
+
         Glide.with(this)
-                .load(currentUser.avatar.large.url)
-                .error(R.drawable.ic_placeholder_user)
-                .placeholder(R.drawable.ic_placeholder_user)
+                .load(APIUtils.getAssetEndpoint(currentUser.avatar.url))
+                .placeholder(userAvatar)
+                .error(userAvatar)
+                .bitmapTransform(new CircleTransformation(this))
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .centerCrop()
-                .dontAnimate()
-                .into(mCivSideMenuPicture);
+                .into(mIvSideMenuPicture);
     }
 
     /**
@@ -323,8 +340,11 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onNewSearch() {
+    public void onNewSearch(String filterText, String categoryId) {
         Intent activity = new Intent(this, SearchActivity.class);
+        activity.putExtra("newSearch", true);
+        activity.putExtra("filterText", filterText);
+        activity.putExtra("categoryId", categoryId);
         startActivityForResult(activity, SEARCH_REQUEST);
     }
 }

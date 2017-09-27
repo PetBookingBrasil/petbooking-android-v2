@@ -43,7 +43,7 @@
                     android:padding="@dimen/spacing_tiny"
                     app:srcCompat="@drawable/ic_camera" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/pet_photo"
                     android:layout_width="120dp"
                     android:layout_height="120dp"

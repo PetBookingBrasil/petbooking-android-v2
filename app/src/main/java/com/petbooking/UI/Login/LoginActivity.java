@@ -8,6 +8,10 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +38,8 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
+import com.petbooking.UI.Menu.Settings.Privacy.PrivacyActivity;
+import com.petbooking.UI.Menu.Settings.Terms.TermsActivity;
 import com.petbooking.UI.RecoverPassword.RecoverPasswordActivity;
 import com.petbooking.UI.SignUp.SignUpActivity;
 import com.petbooking.Utils.APIUtils;
@@ -41,6 +47,9 @@ import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class LoginActivity extends BaseActivity {
 
@@ -57,6 +66,7 @@ public class LoginActivity extends BaseActivity {
     private Button mBtnFacebookLogin;
     private Button mBtnSignup;
     private TextView mTvForgotPassword;
+    private TextView mTvTerms;
 
     View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
@@ -96,6 +106,7 @@ public class LoginActivity extends BaseActivity {
 
         mIvAppLogo = (ImageView) findViewById(R.id.appLogo);
         mTvForgotPassword = (TextView) findViewById(R.id.forgotPassword);
+        mTvTerms = (TextView) findViewById(R.id.appTerms);
         mEdtEmail = (EditText) findViewById(R.id.email);
         mEdtPassword = (EditText) findViewById(R.id.password);
         mBtnSignup = (Button) findViewById(R.id.signup);
@@ -111,6 +122,7 @@ public class LoginActivity extends BaseActivity {
         mTvForgotPassword.setPaintFlags(mTvForgotPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         mFacebookAuthManager.init(fbRequestCallback);
+        createMultipleClick();
     }
 
     @Override
@@ -252,8 +264,47 @@ public class LoginActivity extends BaseActivity {
         mAlarmManager.set(AlarmManager.RTC_WAKEUP, dateMillis, mAlarmIntent);
     }
 
+    public void createMultipleClick() {
+        String str = getResources().getString(R.string.app_terms_info);
+        SpannableString ss = new SpannableString(str);
+        final String first = "Termos de uso";
+        final String second = "Política de Privacidade";
+
+        int firstIndex = str.indexOf(first);
+        int secondIndex = str.indexOf(second);
+
+        ClickableSpan firstWord = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                goToTerms();
+            }
+        };
+
+        ClickableSpan secondWord = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                goToPrivacy();
+            }
+        };
+        ss.setSpan(firstWord, firstIndex, firstIndex + first.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(secondWord, secondIndex, secondIndex + second.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mTvTerms.setLinksClickable(true);
+        mTvTerms.setMovementMethod(LinkMovementMethod.getInstance());
+        mTvTerms.setText(ss, TextView.BufferType.SPANNABLE);
+    }
+
     @Override
     public void onBackPressed() {
         Log.d("EXIT", "EXIT");
+    }
+
+    public void goToTerms() {
+        Intent contactIntent = new Intent(this, TermsActivity.class);
+        startActivity(contactIntent);
+    }
+
+    public void goToPrivacy() {
+        Intent contactIntent = new Intent(this, PrivacyActivity.class);
+        startActivity(contactIntent);
     }
 }

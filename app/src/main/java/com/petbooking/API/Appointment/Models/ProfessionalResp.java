@@ -24,6 +24,7 @@ public class ProfessionalResp {
         public String name;
         public String nickname;
         public String slug;
+        public String gender;
         public AvatarResp.Avatar_ avatar;
 
         @SerializedName("available_slots")

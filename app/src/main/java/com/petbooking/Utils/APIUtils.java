@@ -25,6 +25,8 @@ import com.petbooking.Models.User;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -46,7 +48,7 @@ public class APIUtils {
         AuthUserResp.Attributes attr = resp.data.attributes;
         User user = new User(resp.data.id, attr.authToken, attr.name, attr.birthday, attr.phone, attr.phoneActivated,
                 attr.phoneCodeCreatedAt, attr.email, attr.futureEventsCount, attr.acceptsSms, attr.zipcode,
-                attr.street, attr.neighborhood, attr.streetNumber, attr.city, attr.state, attr.nickname,
+                attr.street, attr.neighborhood, attr.streetNumber, attr.complement, attr.city, attr.state, attr.nickname,
                 attr.gender, attr.cpf, attr.searchRange, attr.acceptsEmail, attr.acceptsNotifications,
                 attr.acceptsTerms, attr.validForScheduling, attr.avatar);
 
@@ -223,7 +225,7 @@ public class APIUtils {
      * @return
      */
     public static String getAssetEndpoint(String assetPath) {
-        String endpoint = String.format(BuildConfig.ASSET_URL, assetPath);
+        String endpoint = assetPath + "?" + new Date().getTime();
         return endpoint;
     }
 }

@@ -73,6 +73,9 @@
     <!-- Register -->
     <string name="register_dialog_title">Cadastro de Usuário</string>
     <string name="hint_name">Nome Completo</string>
+    <string name="hint_user_gender">Sexo</string>
+    <string name="gender_user_male">Masculino</string>
+    <string name="gender_user_female">Feminino</string>
     <string name="hint_cpf">CPF</string>
     <string name="hint_birthday">Data Nasc.</string>
     <string name="hint_email">Email</string>
@@ -80,6 +83,7 @@
     <string name="hint_city">Cidade</string>
     <string name="hint_state">UF</string>
     <string name="hint_neighborhood">Bairro</string>
+    <string name="hint_complement">Complemento</string>
     <string name="hint_street">Rua</string>
     <string name="hint_street_number">Número</string>
     <string name="hint_phone">Celular</string>
@@ -107,6 +111,8 @@
     <string name="schedules">Agendamentos</string>
     <string name="new_pet">Novo Pet</string>
     <string name="contact_us">Entre em contato</string>
+    <string name="terms_of_use">Termos de Uso</string>
+    <string name="privacy_policy">Política de Privacidade</string>
 
     <!-- Profile -->
     <string name="profile_dialog_title">Atualizar Perfil</string>
@@ -221,6 +227,7 @@
     <string name="category_hospital">Hospitais</string>
     <string name="category_diagnosis">Diagnóstico</string>
     <string name="category_consultations">Consultas</string>
+    <string name="category_city_hall_program">Programa da Prefeitura</string>
 
     <!-- Errors -->
     <string name="error_fields_empty">Preencha todos os campos.</string>
@@ -236,14 +243,14 @@
     <string name="error_create_text">Por favor, verifique os dados informados.</string>
     <string name="error_auth_invalid">Token de autenticação inválido. Requisite um novo token.</string>
     <string name="error_invalid_login">Email ou senha inválidos.</string>
-
     <string name="error_no_location">Localização não dísponível.</string>
+    <string name="error_future_date">Selecione a data de aniversário anterior a hoje.</string>
 
     <!-- Success -->
     <string name="success_create_user">Usuário cadastrado com sucesso!</string>
     <string name="success_create_pet">Pet cadastrado com sucesso!</string>
     <string name="success_update_pet">Pet atualizado com sucesso!</string>
-    <string name="success_create_pet_text">Pronto, você já pode começar a usar o Pet Booking pra facilitar</string>
+    <string name="success_create_pet_text">Agora, é só começar a agendar.  Cuidar dos seus pets nunca foi tão fácil e rápido!</string>
 
     <!-- Prompt -->
     <string name="prompt_loading">Carregando…</string>

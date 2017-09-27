@@ -70,7 +70,7 @@ public class SearchResultFragment extends Fragment {
     View.OnClickListener mBtnNewSearchListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mCallback.onNewSearch();
+            mCallback.onNewSearch(filterText, categoryId);
         }
     };
 
@@ -258,7 +258,7 @@ public class SearchResultFragment extends Fragment {
 
         void onReset();
 
-        void onNewSearch();
+        void onNewSearch(String filterText, String categoryId);
     }
 
 }

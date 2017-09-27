@@ -29,7 +29,6 @@ public class FilterCategoryListAdapter extends RecyclerView.Adapter<FilterCatego
     private ArrayList<Category> mCategoryList;
     private int selectedPosition = -1;
 
-
     public FilterCategoryListAdapter(Context context, ArrayList<Category> mCategoryList) {
         this.mContext = context;
         this.mCategoryList = mCategoryList;
@@ -91,6 +90,21 @@ public class FilterCategoryListAdapter extends RecyclerView.Adapter<FilterCatego
         });
 
         iconBackground.setColor(color);
+    }
+
+    public void setSavedCategory(String categoryId) {
+        int index = 0;
+
+        for (Category category : mCategoryList) {
+            if (category.id.equals(categoryId)) {
+                selectedPosition = index;
+                break;
+            }
+
+            index++;
+        }
+
+        onSelectCategoryListener.onSelect(index);
     }
 
     @Override

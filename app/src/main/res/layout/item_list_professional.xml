@@ -8,7 +8,7 @@
     android:paddingBottom="@dimen/spacing_xmicro"
     android:paddingTop="@dimen/spacing_xmicro">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/professional_photo"
         android:layout_width="30dp"
         android:layout_height="30dp"

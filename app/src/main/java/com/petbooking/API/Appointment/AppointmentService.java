@@ -85,7 +85,7 @@ public class AppointmentService {
                     ProfessionalResp resp = response.body();
 
                     for (ProfessionalResp.Item item : resp.data) {
-                        Professional professional = new Professional(item.id, item.attributes.name,
+                        Professional professional = new Professional(item.id, item.attributes.name, item.attributes.gender,
                                 item.attributes.avatar.avatar.url);
 
                         if (item.attributes.availableSlots.size() != 0) {

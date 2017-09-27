@@ -9,9 +9,9 @@ public class CreateUserRqt {
     public transient Attributes attributes;
 
     public CreateUserRqt(User user) {
-        this.attributes = new Attributes(user.name, user.birthday, user.phone, user.cpf,
+        this.attributes = new Attributes(user.name, user.gender, user.birthday, user.phone, user.cpf,
                 user.email, user.password, user.zipcode, user.street, user.neighborhood,
-                user.streetNumber, user.city, user.state, user.photo);
+                user.streetNumber, user.complement, user.city, user.state, user.photo);
         this.data = new Data(attributes);
     }
 
@@ -28,6 +28,7 @@ public class CreateUserRqt {
     public static class Attributes {
 
         public String name;
+        public String gender;
         public String phone;
         public String cpf;
         public String birthday;
@@ -37,14 +38,16 @@ public class CreateUserRqt {
         public String street;
         public String neighborhood;
         public String street_number;
+        public String complement;
         public String city;
         public String state;
         public String avatar;
 
-        public Attributes(String name, String birthday, String phone, String cpf, String email, String password,
-                          String zipcode, String street, String neighborhood, String street_number,
+        public Attributes(String name, String gender, String birthday, String phone, String cpf, String email, String password,
+                          String zipcode, String street, String neighborhood, String street_number, String complement,
                           String city, String state, String photo) {
             this.name = name;
+            this.gender = gender;
             this.birthday = birthday;
             this.phone = phone;
             this.cpf = cpf;
@@ -54,6 +57,7 @@ public class CreateUserRqt {
             this.street = street;
             this.neighborhood = neighborhood;
             this.street_number = street_number;
+            this.complement = complement;
             this.city = city;
             this.state = state;
             this.avatar = photo;

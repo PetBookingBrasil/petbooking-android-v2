@@ -77,7 +77,6 @@
         <activity
             android:name=".UI.Dashboard.DashboardActivity"
             android:configChanges="orientation"
-            android:label="@string/dashboard_title"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -109,7 +108,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Dashboard.Cart.CartActivity" />
         </activity>
-
         <activity
             android:name=".UI.Dashboard.Business.ServiceDetail.ServiceDetailActivity"
             android:configChanges="orientation"
@@ -173,6 +171,26 @@
             android:name=".UI.Menu.Settings.Contact.ContactActivity"
             android:configChanges="orientation"
             android:label="@string/contact_us"
+            android:parentActivityName=".UI.Menu.Settings.SettingsActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Menu.Settings.SettingsActivity" />
+        </activity>
+        <activity
+            android:name=".UI.Menu.Settings.Terms.TermsActivity"
+            android:configChanges="orientation"
+            android:label="@string/terms_of_use"
+            android:parentActivityName=".UI.Menu.Settings.SettingsActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Menu.Settings.SettingsActivity" />
+        </activity>
+        <activity
+            android:name=".UI.Menu.Settings.Privacy.PrivacyActivity"
+            android:configChanges="orientation"
+            android:label="@string/privacy_policy"
             android:parentActivityName=".UI.Menu.Settings.SettingsActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -247,6 +265,7 @@
 
         <!-- Receivers -->
         <receiver android:name=".Managers.AlarmReceiver" />
+
     </application>
 
 </manifest>

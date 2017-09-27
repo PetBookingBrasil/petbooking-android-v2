@@ -195,7 +195,8 @@ public abstract class AppUtils {
             return context.getString(R.string.coat_short);
         }
     }
-
+    
+    //TODO: Trocar ícone do programa da prefeitura
     public static Drawable getBusinessIcon(Context context, String businesstype) {
         if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CLINIC)) {
             return context.getResources().getDrawable(R.drawable.ic_category_clinic);
@@ -220,6 +221,8 @@ public abstract class AppUtils {
         } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_DIAGNOSIS)) {
             return context.getResources().getDrawable(R.drawable.ic_category_diagnosis);
         } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CONSULTATIONS)) {
+            return context.getResources().getDrawable(R.drawable.ic_category_consultations);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CITY_HALL)) {
             return context.getResources().getDrawable(R.drawable.ic_category_consultations);
         }
 
@@ -251,6 +254,8 @@ public abstract class AppUtils {
             return context.getResources().getColor(R.color.category_diagnosis);
         } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CONSULTATIONS)) {
             return context.getResources().getColor(R.color.category_consultations);
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CITY_HALL)) {
+            return context.getResources().getColor(R.color.category_city_hall_program);
         }
 
         return -1;
@@ -281,6 +286,8 @@ public abstract class AppUtils {
             return R.string.category_diagnosis;
         } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CONSULTATIONS)) {
             return R.string.category_consultations;
+        } else if (TextUtils.equals(businesstype, APIBusinessConstants.DATA_CITY_HALL)) {
+            return R.string.category_city_hall_program;
         }
 
         return -1;

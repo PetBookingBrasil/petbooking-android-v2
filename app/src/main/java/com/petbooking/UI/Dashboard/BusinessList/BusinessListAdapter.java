@@ -41,6 +41,8 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private Context mContext;
     private String userId;
     private RequestManager mGlide;
+    private boolean isFavoriteList;
+    private OnFavoriteAction onFavoriteAction;
 
     public BusinessListAdapter(Context context, ArrayList<Business> businessList, RequestManager glide) {
         this.mBusinessList = businessList;
@@ -155,6 +157,12 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                             mBusinessList.get(position).setFavorited(false);
                             mBusinessList.get(position).setFavoritedId("");
                             holder.mBtnFavorite.setImageResource(R.drawable.ic_favorite_border);
+
+                            if (isFavoriteList) {
+                                mBusinessList.remove(position);
+                                onFavoriteAction.onDelete(position);
+                                notifyDataSetChanged();
+                            }
                         }
 
                         @Override
@@ -223,6 +231,12 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                             mBusinessList.get(position).setFavorited(false);
                             mBusinessList.get(position).setFavoritedId("");
                             holder.mBtnFavorite.setImageResource(R.drawable.ic_favorite_border_black);
+
+                            if (isFavoriteList) {
+                                mBusinessList.remove(position);
+                                onFavoriteAction.onDelete(position);
+                                notifyDataSetChanged();
+                            }
                         }
 
                         @Override
@@ -283,6 +297,14 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         mContext.startActivity(intent);
     }
 
+    public void setFavoriteList(boolean favoriteList) {
+        isFavoriteList = favoriteList;
+    }
+
+    public void setOnFavoriteAction(OnFavoriteAction onFavoriteAction) {
+        this.onFavoriteAction = onFavoriteAction;
+    }
+
     public class BusinessImportedViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout mClBusiness;
@@ -331,5 +353,9 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             mTvRate = (TextView) view.findViewById(R.id.business_rate);
             mTvDistance = (TextView) view.findViewById(R.id.business_distance);
         }
+    }
+
+    public interface OnFavoriteAction {
+        void onDelete(int position);
     }
 }

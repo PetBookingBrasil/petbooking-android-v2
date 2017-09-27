@@ -91,6 +91,8 @@
     <string name="schedules">Schedules</string>
     <string name="new_pet">New Pet</string>
     <string name="contact_us">Contact Us</string>
+    <string name="terms_of_use">Terms of Use</string>
+    <string name="privacy_policy">Privacy Policy</string>
 
     <!-- Profile -->
     <string name="profile_dialog_title">Update Profile</string>
@@ -205,6 +207,7 @@
     <string name="category_hospital">Hospitals</string>
     <string name="category_diagnosis">Diagnosis</string>
     <string name="category_consultations">Veterinary Consulting</string>
+    <string name="category_city_hall_program">City Hall Program</string>
 
     <!-- Errors -->
     <string name="error_fields_empty">Complete all fields.</string>
@@ -221,12 +224,13 @@
     <string name="error_auth_invalid">Invalid authentication token. Request a new one.</string>
     <string name="error_invalid_login">Invalid email or password.</string>
     <string name="error_no_location">Location not available.</string>
+    <string name="error_future_date">Select the birthday before today.</string>
 
     <!-- Success -->
     <string name="success_create_user">User successfully registered.</string>
     <string name="success_create_pet">Pet successfully registered.</string>
     <string name="success_update_pet">Pet updated successfully.</string>
-    <string name="success_create_pet_text">You can now start using Pet Booking to facilitate</string>
+    <string name="success_create_pet_text">Now, just start scheduling. Taking care of your pets has never been easier or faster!</string>
 
     <!-- Prompt -->
     <string name="prompt_loading">Loading…</string>

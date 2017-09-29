@@ -22,7 +22,7 @@ android {
         debug {
             ext.enableCrashlytics = false
 
-           buildConfigField("String", "BASE_URL", '"https://beta.petbooking.com.br/api/v2/"')
+            buildConfigField("String", "BASE_URL", '"https://beta.petbooking.com.br/api/v2/"')
             buildConfigField("String", "ASSET_URL", '"https://beta.petbooking.com.br/"')
             buildConfigField("String", "BUILD_UIDD", '"fe2e0261-2cac-440d-8027-c8cfc4720940"')
         }
@@ -46,11 +46,11 @@ dependencies {
     })
 
     // Design
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:percent:25.1.0'
-    compile 'com.android.support:support-v4:25.1.0'
+    compile 'com.android.support:percent:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
     compile 'com.kyleduo.switchbutton:library:1.4.6'
     compile('com.github.ganfra:material-spinner:1.1.1') {
         exclude group: 'com.android.support', module: 'appcompat-v7'
@@ -58,7 +58,6 @@ dependencies {
 
     // Image Manipulation
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'de.hdodenhof:circleimageview:2.1.0'
 
     // HTTP Client
     compile 'com.google.code.gson:gson:2.8.0'

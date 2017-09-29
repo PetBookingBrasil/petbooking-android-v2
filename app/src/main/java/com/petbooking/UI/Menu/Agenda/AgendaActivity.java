@@ -137,13 +137,11 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
                 mHCCalendar.nextDay();
             }
 
-            if (currentScheduleIndex != mHCCalendar.getCurrentDateIndex()) {
-                handleSelectedDate();
-            }
-
             currentScheduleIndex = mHCCalendar.getCurrentDateIndex();
             currentSchedule = mScheduleList.get(currentScheduleIndex);
+
             updateStyle(currentSchedule.date);
+            handleSelectedDate();
             selectFirstPet();
 
             if (mHCCalendar.isFirstDate() && hasMorePast) {
@@ -272,10 +270,10 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
             public void onSuccess(Object response) {
                 mScheduleList = (ArrayList<ScheduleResp.Schedule>) response;
 
-                if(mScheduleList.size() == 0){
+                if (mScheduleList.size() == 0) {
                     mAgendaPlaceholder.setVisibility(View.VISIBLE);
                     mRlCalendar.setVisibility(View.GONE);
-                }else{
+                } else {
                     mAgendaPlaceholder.setVisibility(View.GONE);
                     mRlCalendar.setVisibility(View.VISIBLE);
                     mHCCalendar.setSchedules(mScheduleList);

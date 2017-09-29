@@ -116,7 +116,7 @@
         android:layout_marginBottom="@dimen/spacing_xmicro"
         android:visibility="gone">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/professional_photo"
             android:layout_width="25dp"
             android:layout_height="25dp"

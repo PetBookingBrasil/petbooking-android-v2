@@ -33,8 +33,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 /**
  * Created by Luciano José on 18/08/2017.
  */

@@ -20,8 +20,6 @@ import com.petbooking.Utils.APIUtils;
 
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 /**
  * Created by Luciano José on 23/05/2017.
  */

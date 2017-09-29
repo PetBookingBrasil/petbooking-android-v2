@@ -4,12 +4,12 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,6 +20,7 @@ import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.CartItem;
 import com.petbooking.R;
+import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.Utils.CommonUtils;
 
 import java.text.ParseException;
@@ -28,8 +29,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Luciano José on 23/05/2017.
@@ -125,6 +124,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
             Glide.with(mContext)
                     .load(item.professional.imageUrl)
                     .error(R.drawable.ic_placeholder_user)
+                    .bitmapTransform(new CircleTransformation(mContext))
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .into(holder.mIvProfessionalPhoto);
         } else {
@@ -204,7 +204,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
         public TextView mTvServiceDescription;
         public TextView mTvAppointmentDate;
         public TextView mTvTotalPrice;
-        public CircleImageView mIvProfessionalPhoto;
+        public ImageView mIvProfessionalPhoto;
         public TextView mTvProfessionalName;
         public View mSeparatorLine;
         public RecyclerView mRvAdditionalServices;
@@ -222,7 +222,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
             mTvServiceName = (TextView) view.findViewById(R.id.service_name);
             mTvServicePrice = (TextView) view.findViewById(R.id.service_price);
             mTvServiceDescription = (TextView) view.findViewById(R.id.service_description);
-            mIvProfessionalPhoto = (CircleImageView) view.findViewById(R.id.professional_photo);
+            mIvProfessionalPhoto = (ImageView) view.findViewById(R.id.professional_photo);
             mTvProfessionalName = (TextView) view.findViewById(R.id.professional_name);
             mTvAdditionalLabel = (TextView) view.findViewById(R.id.additional_label);
             mRvAdditionalServices = (RecyclerView) view.findViewById(R.id.additional_services);

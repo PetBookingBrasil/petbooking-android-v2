@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/presentation_1">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/presentationImagem"
         android:layout_width="150dp"
         android:layout_height="150dp"

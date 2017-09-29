@@ -115,7 +115,7 @@
             android:layout_centerInParent="true"
             android:text="@string/professional_label" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/professional_photo"
             android:layout_width="28dp"
             android:layout_height="28dp"

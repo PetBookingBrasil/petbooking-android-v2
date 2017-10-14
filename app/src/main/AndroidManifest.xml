@@ -53,7 +53,8 @@
             android:configChanges="orientation"
             android:label="@string/signup_title"
             android:parentActivityName=".UI.Login.LoginActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Login.LoginActivity" />

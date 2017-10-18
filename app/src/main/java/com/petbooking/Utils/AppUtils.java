@@ -14,7 +14,6 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.petbooking.API.Business.APIBusinessConstants;
 import com.petbooking.API.Pet.APIPetConstants;

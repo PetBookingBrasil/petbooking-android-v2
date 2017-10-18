@@ -8,9 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.View;
 
-import com.petbooking.API.Pet.Models.ListPetsResp;
 import com.petbooking.API.Pet.PetService;
-import com.petbooking.App;
 import com.petbooking.BaseActivity;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Interfaces.APICallback;

@@ -1,9 +1,7 @@
 package com.petbooking.UI.Dashboard.Business.BusinessServices;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +9,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.R;

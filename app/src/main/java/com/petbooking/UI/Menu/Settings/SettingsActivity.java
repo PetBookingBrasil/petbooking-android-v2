@@ -3,15 +3,12 @@ package com.petbooking.UI.Menu.Settings;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.User.UserService;
-import com.petbooking.Constants.AppConstants;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;

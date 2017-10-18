@@ -10,10 +10,8 @@ import com.petbooking.API.Business.Models.ReviewResp;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Business;
-import com.petbooking.Models.Category;
 import com.petbooking.Models.Review;
 import com.petbooking.Utils.APIUtils;
-import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
 

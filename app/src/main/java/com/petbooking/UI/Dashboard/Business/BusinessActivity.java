@@ -1,20 +1,18 @@
 package com.petbooking.UI.Dashboard.Business;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Managers.AppointmentManager;
-import com.petbooking.Managers.PreferenceManager;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Cart.CartActivity;
-import com.petbooking.UI.Dashboard.Content.ContentTabsAdapter;
 import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
 
 public class BusinessActivity extends AppCompatActivity implements ConfirmDialogFragment.FinishDialogListener {

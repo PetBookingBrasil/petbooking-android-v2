@@ -1,8 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_slogan">This App is Animal</string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- Common -->
@@ -15,7 +12,6 @@
     <string name="recover_password_title">Forgot password</string>
     <string name="signup_title">Enter your info</string>
     <string name="profile_title">Profile</string>
-    <string name="pets_title">My Pets</string>
     <string name="new_pet_title">Enter your pet info</string>
     <string name="cart_title">Scheduling cart</string>
 
@@ -62,7 +58,6 @@
     <string name="skip">Skip</string>
 
     <!-- Login -->
-    <string name="description">Find services for your Pet \n next to you and schedule online!</string>
     <string name="sign_up">Sign up</string>
     <string name="login">Sign in</string>
     <string name="login_facebook">Sign in with <b>Facebook</b></string>
@@ -105,7 +100,6 @@
     <string name="success_remove_pet">Pet removed successfully.</string>
 
     <!-- Register Pet -->
-    <string name="register_pet_dialog_title">Register Pet</string>
     <string name="update_pet_dialog_title">Update Pet</string>
     <string name="hint_pet_name">Pet name</string>
     <string name="hint_pet_birthday">Birth</string>
@@ -120,7 +114,6 @@
     <!-- Business -->
     <string name="business_street">%1$s, %2$s - %3$s</string>
     <string name="business_city">%1$s - %2$s</string>
-    <string name="business_address">%1$s, %2$s, %3$s, %4$s</string>
     <plurals name="business_rating_count">
         <item quantity="one">%d Review</item>
         <item quantity="other">%$d Reviews</item>
@@ -137,7 +130,6 @@
     <string name="business_label_reviews">Reviews</string>
     <string name="business_label_additional">Additional Services</string>
     <string name="business_service_price">U$ %1$s</string>
-    <string name="business_service_finish">Finish Schedule</string>
     <string name="call_button">Call</string>
 
     <!-- Search -->
@@ -169,21 +161,17 @@
     <string name="continue_scheduling">Continue scheduling</string>
     <string name="cancel_appointment_title">attention!</string>
     <string name="cancel_appointment_text">All scheduled services will be lost upon return. Do you want to cancel?</string>
-    <string name="cancel_service_text">This service will be canceled. Do you wish to continue?</string>
     <string name="confirm_cancel_appointment">I want to cancel</string>
     <string name="appointment_date_info">%2$s %1$s, %3$s - %4$s</string>
-    <string name="confirm_scheduling">Schedule</string>
 
     <!-- Dialog -->
     <string name="dialog_picture_title">Select profile photo</string>
-    <string name="dialog_picture_text">Select the image input method you want to use.</string>
     <string name="dialog_button_ok">Ok</string>
     <string name="dialog_button_close">Close</string>
     <string name="dialog_button_add_pet">Add another pet</string>
     <string name="dialog_button_start">Start to use</string>
     <string name="dialog_button_check_info">Check information</string>
     <string name="dialog_back">Back</string>
-    <string name="dialog_back_screen">Back to the screen</string>
     <string name="dialog_cancel">Cancel</string>
 
     <!-- Info -->
@@ -219,9 +207,7 @@
     <string name="error_create_user">There was an error registering the user.</string>
     <string name="error_update_user">There was an error updating the user.</string>
     <string name="error_create_pet">There was an error registering the pet.</string>
-    <string name="error_update_pet">There was an error updating the user.</string>
     <string name="error_create_text">Please check the information provided.</string>
-    <string name="error_auth_invalid">Invalid authentication token. Request a new one.</string>
     <string name="error_invalid_login">Invalid email or password.</string>
     <string name="error_no_location">Location not available.</string>
     <string name="error_future_date">Select the birthday before today.</string>

@@ -1,25 +1,19 @@
 package com.petbooking.UI.Widget;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.petbooking.API.User.Models.ScheduleResp;
-import com.petbooking.Components.GravitySnapHelper.GravitySnapHelper;
-import com.petbooking.Models.Appointment;
 import com.petbooking.Models.CalendarItem;
 import com.petbooking.R;
 import com.petbooking.UI.Widget.Adapters.HorizontalCalendarAdapter;
-import com.petbooking.Utils.CommonUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

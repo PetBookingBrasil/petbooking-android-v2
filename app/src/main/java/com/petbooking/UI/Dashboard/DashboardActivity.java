@@ -42,7 +42,6 @@ import com.petbooking.UI.Menu.Search.SearchResultFragment;
 import com.petbooking.UI.Menu.Settings.SettingsActivity;
 import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.Utils.APIUtils;
-import com.petbooking.Utils.ImageUtils;
 
 public class DashboardActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,

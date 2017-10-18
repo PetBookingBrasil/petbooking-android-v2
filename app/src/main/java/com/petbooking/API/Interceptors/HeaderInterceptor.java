@@ -1,11 +1,7 @@
 package com.petbooking.API.Interceptors;
 
 import com.petbooking.Constants.APIConstants;
-import com.petbooking.Events.HideLoadingEvt;
-import com.petbooking.Events.ShowLoadingEvt;
 import com.petbooking.Managers.SessionManager;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.Locale;

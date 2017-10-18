@@ -1,19 +1,16 @@
 package com.petbooking.UI.Dashboard.Cart;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.petbooking.API.Appointment.AppointmentService;
 import com.petbooking.API.Appointment.Models.CartResp;
-import com.petbooking.API.Appointment.Models.CartRqt;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Managers.SessionManager;

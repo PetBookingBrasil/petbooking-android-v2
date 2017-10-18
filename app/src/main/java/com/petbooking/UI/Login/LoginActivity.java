@@ -5,7 +5,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.text.SpannableString;
@@ -25,7 +24,6 @@ import com.petbooking.API.Auth.Models.AuthUserResp;
 import com.petbooking.API.Auth.Models.SessionResp;
 import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.User.UserService;
-import com.petbooking.App;
 import com.petbooking.BaseActivity;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
@@ -47,9 +45,6 @@ import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class LoginActivity extends BaseActivity {
 

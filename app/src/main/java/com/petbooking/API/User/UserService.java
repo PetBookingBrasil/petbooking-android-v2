@@ -1,11 +1,7 @@
 package com.petbooking.API.User;
 
-import android.util.Log;
-
-import com.google.gson.Gson;
 import com.petbooking.API.APIClient;
 import com.petbooking.API.Auth.Models.AuthUserResp;
-import com.petbooking.API.Business.Models.BusinessResp;
 import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.API.User.Models.CreateSocialUserRqt;
 import com.petbooking.API.User.Models.CreateUserRqt;

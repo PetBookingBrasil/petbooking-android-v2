@@ -10,11 +10,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RadioButton;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -49,9 +50,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.text.ParseException;
-
-import android.widget.ImageView;
-import android.widget.RadioButton;
 
 import static android.view.View.GONE;
 

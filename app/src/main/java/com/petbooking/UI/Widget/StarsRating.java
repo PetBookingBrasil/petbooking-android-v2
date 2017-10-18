@@ -5,11 +5,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.petbooking.R;
-
-import java.util.Locale;
 
 /**
  * Created by Luciano José on 20/05/2017.

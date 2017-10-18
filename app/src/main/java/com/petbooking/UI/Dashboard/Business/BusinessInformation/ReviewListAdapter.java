@@ -1,7 +1,6 @@
 package com.petbooking.UI.Dashboard.Business.BusinessInformation;
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,14 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.petbooking.API.Business.BusinessService;
-import com.petbooking.Managers.SessionManager;
-import com.petbooking.Models.Business;
 import com.petbooking.Models.Review;
 import com.petbooking.R;
 import com.petbooking.UI.Widget.StarsRating;
-import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
 

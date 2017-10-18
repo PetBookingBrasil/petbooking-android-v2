@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.util.Base64;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 

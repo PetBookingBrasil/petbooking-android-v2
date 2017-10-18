@@ -1,11 +1,10 @@
 package com.petbooking.UI.Dashboard.Business.ServiceDetail;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -15,10 +14,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.petbooking.API.Appointment.AppointmentService;
-import com.petbooking.Constants.AppConstants;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.AppointmentManager;
-import com.petbooking.Managers.PreferenceManager;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Pet;
 import com.petbooking.Models.Professional;

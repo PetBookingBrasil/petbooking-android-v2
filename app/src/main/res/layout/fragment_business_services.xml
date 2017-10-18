@@ -1,52 +1,7 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fillViewport="true"
-    tools:context="com.petbooking.UI.Dashboard.Business.BusinessServices.BusinessServicesFragment">
+    tools:context=".UI.Dashboard.Business.BusinessActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/pet_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/light_gray" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/category_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_xmicro"
-            android:layout_marginTop="@dimen/spacing_xmicro"
-            android:visibility="gone" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/service_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/light_gray"
-            android:divider="@null"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/btnFinishSchedule"
-            style="@style/AppTheme.PrimaryButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_xtiny"
-            android:layout_marginLeft="@dimen/spacing_tiny"
-            android:layout_marginRight="@dimen/spacing_tiny"
-            android:layout_marginTop="@dimen/spacing_xtiny"
-            android:background="@drawable/primary_button"
-            android:enabled="false"
-            android:text="@string/business_service_finish" />
-
-    </LinearLayout>
-
-
-</ScrollView>
+</LinearLayout>

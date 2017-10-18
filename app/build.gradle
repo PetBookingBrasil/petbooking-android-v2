@@ -1,27 +1,25 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+
     dataBinding {
         enabled = true
     }
+
     defaultConfig {
         applicationId "com.petbooking"
         minSdkVersion 17
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
         debug {
             ext.enableCrashlytics = false
-
             buildConfigField("String", "BASE_URL", '"https://beta.petbooking.com.br/api/v2/"')
             buildConfigField("String", "ASSET_URL", '"https://beta.petbooking.com.br/"')
             buildConfigField("String", "BUILD_UIDD", '"fe2e0261-2cac-440d-8027-c8cfc4720940"')
@@ -29,7 +27,6 @@ android {
 
         release {
             minifyEnabled false
-
             buildConfigField("String", "BASE_URL", '"https://petbooking.com.br/api/v2/"')
             buildConfigField("String", "ASSET_URL", '"https://petbooking.com.br/"')
             buildConfigField("String", "BUILD_UIDD", '"fe2e0261-2cac-440d-8027-c8cfc4720940"')
@@ -38,43 +35,39 @@ android {
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+ext {
+    androidVersion = "26.1.0"
+    playServicesVersion="11.0.4"
+    retrofitVersion = "2.3.0"
+}
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+dependencies {
 
     // Design
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:percent:25.3.1'
-    compile 'com.android.support:support-v4:25.3.1'
+    compile("com.android.support:appcompat-v7:${androidVersion}") { force true }
+    compile("com.android.support:design:${androidVersion}") { force true }
+    compile("com.android.support:percent:${androidVersion}") { force true }
+    compile("com.android.support:support-v4:${androidVersion}") { force true }
+    compile('com.android.support.constraint:constraint-layout:1.0.2') { force true }
     compile 'com.kyleduo.switchbutton:library:1.4.6'
-    compile('com.github.ganfra:material-spinner:1.1.1') {
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-    }
+    compile('com.github.ganfra:material-spinner:2.0.0') { exclude group: 'com.android.support', module: 'appcompat-v7' }
 
     // Image Manipulation
-    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.github.bumptech.glide:glide:3.8.0'
 
     // HTTP Client
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
-    compile 'com.squareup.retrofit2:retrofit:2.2.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
 
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.facebook.android:facebook-android-sdk:4.19.0'
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
-        transitive = true;
-    }
+    compile 'com.facebook.android:facebook-android-sdk:4.27.0'
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') { transitive = true; }
 
     // Goggle API
-    compile "com.google.android.gms:play-services-location:9.0.0"
-    compile "com.google.android.gms:play-services-maps:9.0.0"
+    compile "com.google.android.gms:play-services-location:${playServicesVersion}"
+    compile "com.google.android.gms:play-services-maps:${playServicesVersion}"
 
-    // Tests
-    testCompile 'junit:junit:4.12'
 }
+
+apply plugin: 'com.google.gms.google-services'

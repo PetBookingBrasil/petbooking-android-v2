@@ -15,6 +15,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -54,6 +55,7 @@ dependencies {
 
     // Image Manipulation
     compile 'com.github.bumptech.glide:glide:3.8.0'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 
     // HTTP Client
     compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'

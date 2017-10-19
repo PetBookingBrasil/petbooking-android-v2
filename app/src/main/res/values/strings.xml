@@ -150,7 +150,7 @@
     </plurals>
     <string name="business_distance">%1$s Km</string>
     <string name="business_phone">Telefone: </string>
-    <string name="business_tab_services">Serviços</string>
+    <string name="business_tab_schedule">Agendar</string>
     <string name="business_tab_information">Informações</string>
     <string name="business_label_description">Descrição</string>
     <string name="business_label_contact">Contato</string>

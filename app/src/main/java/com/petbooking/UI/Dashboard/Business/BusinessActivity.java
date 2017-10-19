@@ -63,8 +63,10 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
         mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
         mTabLayout.setupWithViewPager(mViewPager);
 
-        mTabLayout.getTabAt(0).setText(R.string.business_tab_services);
-        mTabLayout.getTabAt(1).setText(R.string.business_tab_information);
+        String schedulingText = getString(R.string.business_tab_schedule).toUpperCase();
+        String informationText = getString(R.string.business_tab_information).toUpperCase();
+        mTabLayout.getTabAt(0).setText(schedulingText);
+        mTabLayout.getTabAt(1).setText(informationText);
 
         mConfirmDialogFragment = ConfirmDialogFragment.newInstance();
     }

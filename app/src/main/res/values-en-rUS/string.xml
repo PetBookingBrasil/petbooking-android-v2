@@ -120,7 +120,7 @@
     </plurals>
     <string name="business_distance">%1$s Km</string>
     <string name="business_phone">Phone: </string>
-    <string name="business_tab_services">Services</string>
+    <string name="business_tab_schedule">Schedule</string>
     <string name="business_tab_information">Information</string>
     <string name="business_label_description">Description</string>
     <string name="business_label_contact">Contact</string>

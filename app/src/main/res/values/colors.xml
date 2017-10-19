@@ -27,7 +27,6 @@
     <color name="text_color">#545454</color>
     <color name="text_gray">#858585</color>
 
-
     <!-- Category Colors -->
     <color name="category_diagnosis">#00BCFC</color>
     <color name="category_hospital">#009882</color>
@@ -47,5 +46,11 @@
     <color name="past_date_color">#9A9A9A</color>
     <color name="professional_list_background">#BABABA</color>
     <color name="date_list_background">#747474</color>
+
+    <!-- Schedule Colors -->
+    <color name="schedule_background">#F0F0F0</color>
+    <color name="schedule_tab">#EB8C92</color>
+    <color name="schedule_group_edit_icon">#3791BD</color>
+    <color name="schedule_group_edit_background">#D8EBF5</color>
 
 </resources>

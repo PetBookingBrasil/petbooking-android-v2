@@ -50,7 +50,8 @@
     <!-- Schedule Colors -->
     <color name="schedule_background">#F0F0F0</color>
     <color name="schedule_tab">#EB8C92</color>
-    <color name="schedule_group_edit_icon">#3791BD</color>
-    <color name="schedule_group_edit_background">#D8EBF5</color>
+    <color name="schedule_section_border_number">#AFAFAF</color>
+    <color name="schedule_item_edit_icon">#3791BD</color>
+    <color name="schedule_item_edit_background">#D8EBF5</color>
 
 </resources>

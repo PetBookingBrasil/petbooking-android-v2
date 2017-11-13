@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.1"
 
     dataBinding {
         enabled = true
@@ -12,10 +12,15 @@ android {
     defaultConfig {
         applicationId "com.petbooking"
         minSdkVersion 17
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildTypes {
@@ -37,8 +42,8 @@ android {
 }
 
 ext {
-    androidVersion = "26.1.0"
-    playServicesVersion="11.0.4"
+    androidVersion = "27.0.1"
+    playServicesVersion="11.6.0"
     retrofitVersion = "2.3.0"
 }
 
@@ -63,8 +68,8 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
 
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.facebook.android:facebook-android-sdk:4.27.0'
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') { transitive = true; }
+    compile 'com.facebook.android:facebook-android-sdk:4.28.0'
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') { transitive = true; }
 
     // Goggle API
     compile "com.google.android.gms:play-services-location:${playServicesVersion}"

@@ -3,7 +3,6 @@ package com.petbooking.UI.Dashboard.Business.Schedule;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.petbooking.R;
@@ -43,12 +42,7 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
     @Override
     public void onBindGroupViewHolder(SchedulingGroupViewHolder holder, int flatPosition, ExpandableGroup group) {
         ScheduleSection section = (ScheduleSection) group;
-
-        if (section.isSelected()) {
-            holder.setSelected(section);
-        } else {
-            holder.setUnselected(section);
-        }
+        holder.setTitle(section.getTitle());
     }
 
     @Override
@@ -63,35 +57,15 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
 
     class SchedulingGroupViewHolder extends GroupViewHolder {
 
-        private LinearLayout mLlUnselected;
-        private TextView mTxtUnselectedNumber;
-        private TextView mTxtUnselectedTitle;
-
-        private LinearLayout mLlSelected;
         private TextView mTxtSelectedTitle;
 
         SchedulingGroupViewHolder(View itemView) {
             super(itemView);
-
-            mLlUnselected = itemView.findViewById(R.id.ll_unselected);
-            mTxtUnselectedNumber = itemView.findViewById(R.id.txt_unselected_number);
-            mTxtUnselectedTitle = itemView.findViewById(R.id.txt_unselected_title);
-
-            mLlSelected = itemView.findViewById(R.id.ll_selected);
             mTxtSelectedTitle = itemView.findViewById(R.id.txt_selected_title);
         }
 
-        void setUnselected(ScheduleSection section) {
-            mLlSelected.setVisibility(View.GONE);
-            mLlUnselected.setVisibility(View.VISIBLE);
-            mTxtUnselectedNumber.setText(section.getTitle());
-            mTxtUnselectedTitle.setText(section.getTitle());
-        }
-
-        void setSelected(ScheduleSection section) {
-            mLlSelected.setVisibility(View.VISIBLE);
-            mLlUnselected.setVisibility(View.GONE);
-            mTxtSelectedTitle.setText(section.getTitle());
+        void setTitle(String title) {
+            mTxtSelectedTitle.setText(title);
         }
 
     }

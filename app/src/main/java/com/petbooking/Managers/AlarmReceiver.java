@@ -42,7 +42,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (isRefreshSession) {
             if (loginType.equals(AppConstants.FACEBOOK_TYPE)) {
                 authFB(context, mSessionManager.getLastFBToken());
-            } else if (loginType.equals(AppConstants.LOGIN_TYPE)) {
+            } else if (loginType.equals(AppConstants.EMAIL_TYPE)) {
                 authEmail(context);
             }
         }

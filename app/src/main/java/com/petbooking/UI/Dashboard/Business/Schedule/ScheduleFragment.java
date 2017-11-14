@@ -101,11 +101,21 @@ public class ScheduleFragment extends Fragment {
         artistsE.add(new ScheduleItem("E4"));
 
         List<ScheduleSection> genres = new ArrayList<>();
-        genres.add(new ScheduleSection(1, "Selecionar pet", artistsA));
-        genres.add(new ScheduleSection(2, "Categoria do serviço", artistsB));
-        genres.add(new ScheduleSection(3, "Serviço e adicionais", artistsC));
-        genres.add(new ScheduleSection(4, "Profissional", artistsD));
-        genres.add(new ScheduleSection(5, "Dia e horário", artistsE));
+
+        String titleA = getString(R.string.select_pet);
+        genres.add(new ScheduleSection(1, titleA, artistsA));
+
+        String titleB = getString(R.string.service_category);
+        genres.add(new ScheduleSection(2, titleB, artistsB));
+
+        String titleC = getString(R.string.additional_services);
+        genres.add(new ScheduleSection(3, titleC, artistsC));
+
+        String titleD = getString(R.string.professional_label);
+        genres.add(new ScheduleSection(4, titleD, artistsD));
+
+        String titleE = getString(R.string.day_and_time);
+        genres.add(new ScheduleSection(5, titleE, artistsE));
 
         return genres;
     }

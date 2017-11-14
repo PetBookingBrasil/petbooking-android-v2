@@ -132,6 +132,12 @@
     <string name="business_service_price">U$ %1$s</string>
     <string name="call_button">Call</string>
 
+    <!-- Schedule -->
+    <string name="select_pet">Selecionar Pet</string>
+    <string name="service_category">Service Category</string>
+    <string name="additional_services">Additional Services</string>
+    <string name="day_and_time">Day and Time</string>
+
     <!-- Search -->
     <string name="filter_hint">Filtrar by name, location&#8230;</string>
     <string name="filter_label">Filter by category</string>

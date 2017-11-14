@@ -10,6 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.petbooking.API.Business.BusinessService;
+import com.petbooking.API.Pet.PetService;
+import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Managers.SessionManager;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleItem;
 import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleSection;
@@ -24,6 +28,11 @@ public class ScheduleFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
 
+    private String mBusinessId;
+
+    private final PetService mPetService = new PetService();
+    private final BusinessService mBusinessService = new BusinessService();
+
     //region - Fragment
 
     public ScheduleFragment() {
@@ -31,16 +40,19 @@ public class ScheduleFragment extends Fragment {
     }
 
     public static ScheduleFragment newInstance(String id) {
-        ScheduleFragment fragment = new ScheduleFragment();
         Bundle bundle = new Bundle();
         bundle.putString("businessId", id);
+
+        ScheduleFragment fragment = new ScheduleFragment();
         fragment.setArguments(bundle);
+
         return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mBusinessId = getArguments().getString("businessId", "0");
     }
 
     @Override
@@ -49,6 +61,7 @@ public class ScheduleFragment extends Fragment {
 
         findViewsById(view);
         setupViews();
+        getContent();
 
         return view;
     }
@@ -68,6 +81,15 @@ public class ScheduleFragment extends Fragment {
         ScheduleAdapter adapter = new ScheduleAdapter(genres);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(adapter);
+    }
+
+    private void getContent() {
+        // pets
+        String userID = SessionManager.getInstance().getUserLogged().id;
+        mPetService.listPets(userID, mListPetsAPICallback);
+
+        // business categories
+        mBusinessService.listBusinessCategories(mBusinessId, mListBusinessCategoriesAPICallback);
     }
 
     private List<ScheduleSection> getGenres() {
@@ -124,6 +146,34 @@ public class ScheduleFragment extends Fragment {
 
         return genres;
     }
+
+    //endregion
+
+    //region - APICallback
+
+    private final APICallback mListPetsAPICallback = new APICallback() {
+        @Override
+        public void onSuccess(Object response) {
+
+        }
+
+        @Override
+        public void onError(Object error) {
+
+        }
+    };
+
+    private final APICallback mListBusinessCategoriesAPICallback = new APICallback() {
+        @Override
+        public void onSuccess(Object response) {
+
+        }
+
+        @Override
+        public void onError(Object error) {
+
+        }
+    };
 
     //endregion
 

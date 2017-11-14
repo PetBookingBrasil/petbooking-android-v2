@@ -9,6 +9,7 @@ import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleItem;
 import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleSection;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
+import com.thoughtbot.expandablerecyclerview.listeners.GroupExpandCollapseListener;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;
@@ -21,8 +22,25 @@ import java.util.List;
 
 final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapter.SchedulingGroupViewHolder, ScheduleAdapter.SchedulingGroupItemViewHolder> {
 
+    private ExpandableGroup mExpandedGroup;
+
     ScheduleAdapter(List<? extends ExpandableGroup> groups) {
         super(groups);
+
+        setOnGroupExpandCollapseListener(new GroupExpandCollapseListener() {
+            @Override
+            public void onGroupExpanded(ExpandableGroup group) {
+                if (mExpandedGroup != null) {
+                    toggleGroup(mExpandedGroup);
+                }
+                mExpandedGroup = group;
+            }
+
+            @Override
+            public void onGroupCollapsed(ExpandableGroup group) { }
+        });
+
+        toggleGroup(0);
     }
 
     //region - ExpandableRecyclerViewAdapter

@@ -102,20 +102,25 @@ public class ScheduleFragment extends Fragment {
 
         List<ScheduleSection> genres = new ArrayList<>();
 
-        String titleA = getString(R.string.select_pet);
-        genres.add(new ScheduleSection(1, titleA, artistsA));
+        ScheduleSection.Type typeA = ScheduleSection.Type.SELECT_PET;
+        String titleA = ScheduleSection.getTitle(getContext(), typeA);
+        genres.add(new ScheduleSection(titleA, typeA, artistsA));
 
-        String titleB = getString(R.string.service_category);
-        genres.add(new ScheduleSection(2, titleB, artistsB));
+        ScheduleSection.Type typeB = ScheduleSection.Type.SERVICE_CATEGORY;
+        String titleB = ScheduleSection.getTitle(getContext(), typeB);
+        genres.add(new ScheduleSection(titleB, typeB, artistsB));
 
-        String titleC = getString(R.string.additional_services);
-        genres.add(new ScheduleSection(3, titleC, artistsC));
+        ScheduleSection.Type typeC = ScheduleSection.Type.ADDITIONAL_SERVICES;
+        String titleC = ScheduleSection.getTitle(getContext(), typeC);
+        genres.add(new ScheduleSection(titleC, typeC, artistsC));
 
-        String titleD = getString(R.string.professional_label);
-        genres.add(new ScheduleSection(4, titleD, artistsD));
+        ScheduleSection.Type typeD = ScheduleSection.Type.PROFESSIONAL;
+        String titleD = ScheduleSection.getTitle(getContext(), typeD);
+        genres.add(new ScheduleSection(titleD, typeD, artistsD));
 
-        String titleE = getString(R.string.day_and_time);
-        genres.add(new ScheduleSection(5, titleE, artistsE));
+        ScheduleSection.Type typeE = ScheduleSection.Type.DAY_AND_TIME;
+        String titleE = ScheduleSection.getTitle(getContext(), typeE);
+        genres.add(new ScheduleSection(titleE, typeE, artistsE));
 
         return genres;
     }

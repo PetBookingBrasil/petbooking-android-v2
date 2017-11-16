@@ -82,6 +82,7 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
 
             int position = section.getType().getValue();
             notifyItemChanged(position);
+            toggleGroup(position);
         });
 
     }

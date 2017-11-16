@@ -15,6 +15,7 @@ import com.petbooking.API.Pet.PetService;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.BusinessActivity;
 import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleItem;
 import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleSection;
 
@@ -147,6 +148,16 @@ public class ScheduleFragment extends Fragment {
         return genres;
     }
 
+    private void listPetsLoaded() {
+        BusinessActivity activity = (BusinessActivity) getActivity();
+        activity.getAdapter().setListPetsLoaded(true);
+    }
+
+    private void listBusinessCategoriesLoaded() {
+        BusinessActivity activity = (BusinessActivity) getActivity();
+        activity.getAdapter().setListBusinessCategoriesLoaded(true);
+    }
+
     //endregion
 
     //region - APICallback
@@ -154,24 +165,24 @@ public class ScheduleFragment extends Fragment {
     private final APICallback mListPetsAPICallback = new APICallback() {
         @Override
         public void onSuccess(Object response) {
-
+            listPetsLoaded();
         }
 
         @Override
         public void onError(Object error) {
-
+            listPetsLoaded();
         }
     };
 
     private final APICallback mListBusinessCategoriesAPICallback = new APICallback() {
         @Override
         public void onSuccess(Object response) {
-
+            listBusinessCategoriesLoaded();
         }
 
         @Override
         public void onError(Object error) {
-
+            listBusinessCategoriesLoaded();
         }
     };
 

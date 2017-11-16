@@ -37,6 +37,7 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
 import com.petbooking.Models.Review;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.BusinessActivity;
 import com.petbooking.UI.Widget.StarsRating;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
@@ -117,66 +118,6 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
     private RecyclerView mRvReviews;
     private ReviewListAdapter mAdapter;
 
-    View.OnClickListener favoriteListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (mBusiness.favorited) {
-                mBusinessService.deleteFavorite(mBusiness.favoritedId, new APICallback() {
-                    @Override
-                    public void onSuccess(Object response) {
-                        mBusiness.setFavorited(false);
-                        mBusiness.setFavoritedId("");
-                        mIBtnFavorite.setImageResource(R.drawable.ic_favorite_border);
-                    }
-
-                    @Override
-                    public void onError(Object error) {
-
-                    }
-                });
-            } else {
-                mBusinessService.createFavorite(SessionManager.getInstance().getUserLogged().id,
-                        mBusiness.id, new APICallback() {
-                            @Override
-                            public void onSuccess(Object response) {
-                                FavoriteResp resp = (FavoriteResp) response;
-
-                                mBusiness.setFavorited(true);
-                                mBusiness.setFavoritedId(resp.data.id);
-                                mIBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
-                            }
-
-                            @Override
-                            public void onError(Object error) {
-
-                            }
-                        });
-            }
-        }
-    };
-
-    View.OnClickListener socialListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int id = v.getId();
-
-            if (id == mIvFacebook.getId()) {
-                openPage(mBusiness.facebook);
-            } else if (id == mIvTwitter.getId()) {
-                openPage(mBusiness.twitter);
-            } else if (id == mIvInstagram.getId()) {
-                openPage(mBusiness.instagram);
-            } else if (id == mIvGooglePlus.getId()) {
-                openPage(mBusiness.googlePlus);
-            } else if (id == mIvSnapchat.getId()) {
-                openPage(mBusiness.snapchat);
-            } else if (id == mTvWebsite.getId()) {
-                openPage(mBusiness.website);
-            }
-
-        }
-    };
-
     public BusinessInformationFragment() {
         // Required empty public constructor
     }
@@ -190,25 +131,7 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         return fragment;
     }
 
-    View.OnClickListener reviewButtonListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (isShown) {
-                mRvReviews.setVisibility(View.GONE);
-            } else {
-                mRvReviews.setVisibility(View.VISIBLE);
-                mSvInfo.post(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        mSvInfo.smoothScrollTo(mSvInfo.getScrollX(), mRvReviews.getTop());
-                    }
-                });
-            }
-
-            isShown = !isShown;
-        }
-    };
+    //region - Override
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -222,45 +145,7 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mMapView.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        mMapView.onPause();
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        mMapView.onDestroy();
-        super.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mMapView.onLowMemory();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);
-        if (mapViewBundle == null) {
-            mapViewBundle = new Bundle();
-            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle);
-        }
-
-        mMapView.onSaveInstanceState(mapViewBundle);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_business_information, container, false);
 
         Bundle mapViewBundle = null;
@@ -327,6 +212,46 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         return view;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);
+        if (mapViewBundle == null) {
+            mapViewBundle = new Bundle();
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle);
+        }
+
+        mMapView.onSaveInstanceState(mapViewBundle);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        mMapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        mMapView.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
+
+    //endregion
+
+    //region - Public
 
     /**
      * Get Business Information
@@ -338,14 +263,14 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         mBusinessService.getBusiness(id, SessionManager.getInstance().getUserLogged().id, new APICallback() {
             @Override
             public void onSuccess(Object response) {
+                businessInfoLoaded();
                 mBusiness = (Business) response;
                 updateBusinessInfo(mBusiness);
-                AppUtils.hideDialog();
             }
 
             @Override
             public void onError(Object error) {
-                AppUtils.hideDialog();
+                businessInfoLoaded();
             }
         });
     }
@@ -355,15 +280,15 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         mBusinessService.listBusinessReviews(id, 1, new APICallback() {
             @Override
             public void onSuccess(Object response) {
+                businessReviewsLoaded();
                 mReviewList = (ArrayList<Review>) response;
                 mAdapter.updateList(mReviewList);
                 mAdapter.notifyDataSetChanged();
-                AppUtils.hideDialog();
             }
 
             @Override
             public void onError(Object error) {
-                AppUtils.hideDialog();
+                businessReviewsLoaded();
             }
         });
     }
@@ -509,9 +434,114 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         startActivity(browserIntent);
     }
 
+    //endregion
+
+    //region - Private
+
+    private void businessReviewsLoaded() {
+        BusinessActivity activity = (BusinessActivity) getActivity();
+        activity.getAdapter().setBusinessReviewsLoaded(true);
+    }
+
+    private void businessInfoLoaded() {
+        BusinessActivity activity = (BusinessActivity) getActivity();
+        activity.getAdapter().setBusinessInfoLoaded(true);
+    }
+
+    //endregion
+
+    //region - OnMapReadyCallback
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGMap = googleMap;
         mGMap.getUiSettings().setAllGesturesEnabled(false);
     }
+
+    //endregion
+
+    //region - Listener
+
+    View.OnClickListener favoriteListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (mBusiness.favorited) {
+                mBusinessService.deleteFavorite(mBusiness.favoritedId, new APICallback() {
+                    @Override
+                    public void onSuccess(Object response) {
+                        mBusiness.setFavorited(false);
+                        mBusiness.setFavoritedId("");
+                        mIBtnFavorite.setImageResource(R.drawable.ic_favorite_border);
+                    }
+
+                    @Override
+                    public void onError(Object error) {
+
+                    }
+                });
+            } else {
+                mBusinessService.createFavorite(SessionManager.getInstance().getUserLogged().id,
+                        mBusiness.id, new APICallback() {
+                            @Override
+                            public void onSuccess(Object response) {
+                                FavoriteResp resp = (FavoriteResp) response;
+
+                                mBusiness.setFavorited(true);
+                                mBusiness.setFavoritedId(resp.data.id);
+                                mIBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
+                            }
+
+                            @Override
+                            public void onError(Object error) {
+
+                            }
+                        });
+            }
+        }
+    };
+
+    View.OnClickListener socialListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int id = v.getId();
+
+            if (id == mIvFacebook.getId()) {
+                openPage(mBusiness.facebook);
+            } else if (id == mIvTwitter.getId()) {
+                openPage(mBusiness.twitter);
+            } else if (id == mIvInstagram.getId()) {
+                openPage(mBusiness.instagram);
+            } else if (id == mIvGooglePlus.getId()) {
+                openPage(mBusiness.googlePlus);
+            } else if (id == mIvSnapchat.getId()) {
+                openPage(mBusiness.snapchat);
+            } else if (id == mTvWebsite.getId()) {
+                openPage(mBusiness.website);
+            }
+
+        }
+    };
+
+    View.OnClickListener reviewButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (isShown) {
+                mRvReviews.setVisibility(View.GONE);
+            } else {
+                mRvReviews.setVisibility(View.VISIBLE);
+                mSvInfo.post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        mSvInfo.smoothScrollTo(mSvInfo.getScrollX(), mRvReviews.getTop());
+                    }
+                });
+            }
+
+            isShown = !isShown;
+        }
+    };
+
+    //endregion
+
 }

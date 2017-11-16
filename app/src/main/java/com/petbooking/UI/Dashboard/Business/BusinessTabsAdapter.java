@@ -12,16 +12,24 @@ import com.petbooking.UI.Dashboard.Business.Schedule.ScheduleFragment;
  * Edited by Bruno Tortato Furtado on 16/11/2017.
  */
 
-final class BusinessTabsAdapter extends FragmentStatePagerAdapter {
+public final class BusinessTabsAdapter extends FragmentStatePagerAdapter {
 
     private String businessId;
     private float businessDistance;
+    private OnLoadedListener mOnLoadedListener;
+
+    private boolean mIsBusinessReviewsLoaded;
+    private boolean mIsBusinessInfoLoaded;
+    private boolean mIsListPetsLoaded;
+    private boolean mIsListBusinessCategoriesLoaded;
 
     BusinessTabsAdapter(FragmentManager fragmentManager, String businessId, float businessDistance) {
         super(fragmentManager);
         this.businessId = businessId;
         this.businessDistance = businessDistance;
     }
+
+    //region - Override
 
     @Override
     public Fragment getItem(int position) {
@@ -38,5 +46,58 @@ final class BusinessTabsAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return 2;
     }
+
+    //endregion
+
+    //region - Public
+
+    void setOnLoadedListener(OnLoadedListener onLoadedListener) {
+        mOnLoadedListener = onLoadedListener;
+    }
+
+    public void setBusinessReviewsLoaded(boolean isBusinessReviewsLoaded) {
+        mIsBusinessReviewsLoaded = isBusinessReviewsLoaded;
+        checkIfLoaded();
+    }
+
+    public void setBusinessInfoLoaded(boolean isBusinessInfoLoaded) {
+        mIsBusinessInfoLoaded = isBusinessInfoLoaded;
+        checkIfLoaded();
+    }
+
+    public void setListPetsLoaded(boolean isListPetsLoaded) {
+        mIsListPetsLoaded = isListPetsLoaded;
+        checkIfLoaded();
+    }
+
+    public void setListBusinessCategoriesLoaded(boolean isListBusinessCategoriesLoaded) {
+        mIsListBusinessCategoriesLoaded = isListBusinessCategoriesLoaded;
+        checkIfLoaded();
+    }
+
+    //endregion
+
+    //region - Private
+
+    private void checkIfLoaded() {
+        if (mOnLoadedListener != null) {
+            if (mIsBusinessReviewsLoaded && mIsBusinessInfoLoaded && mIsListPetsLoaded && mIsListBusinessCategoriesLoaded) {
+                mOnLoadedListener.endLoaded();
+            }
+        }
+    }
+
+
+
+    //endregion
+
+    //region - Interface
+
+    interface OnLoadedListener {
+        void endLoaded();
+    }
+
+    //endregion
+
 
 }

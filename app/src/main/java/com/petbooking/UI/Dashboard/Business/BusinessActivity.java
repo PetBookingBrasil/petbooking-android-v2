@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 
@@ -14,10 +13,10 @@ import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Cart.CartActivity;
 import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
+import com.petbooking.Utils.AppUtils;
 
 public class BusinessActivity extends AppCompatActivity implements ConfirmDialogFragment.FinishDialogListener {
 
-    private Toolbar mToolbar;
     private AppointmentManager mAppointmentManager;
 
     private TabLayout mTabLayout;
@@ -29,6 +28,8 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
     private boolean alreadyShow = false;
 
     private ConfirmDialogFragment mConfirmDialogFragment;
+
+    //region - Override
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,8 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
         getSupportActionBar().setTitle(businessName);
 
         mAdapter = new BusinessTabsAdapter(getSupportFragmentManager(), businessId, businessDistance);
+        mAdapter.setOnLoadedListener(mAdapterOnLoadedListener);
+
         mViewPager.setAdapter(mAdapter);
 
         mTabLayout.setBackgroundColor(getResources().getColor(R.color.secondary_red));
@@ -69,6 +72,16 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
         mTabLayout.getTabAt(1).setText(informationText);
 
         mConfirmDialogFragment = ConfirmDialogFragment.newInstance();
+
+        AppUtils.showLoadingDialog(this);
+    }
+
+    @Override
+    protected void onPause() {
+        mAppointmentManager.setCurrentBusinessId(this.businessId);
+        mAppointmentManager.setCurrentBusinessName(this.businessName);
+        mAppointmentManager.setCurrentBusinessDistance(this.businessDistance);
+        super.onPause();
     }
 
     @Override
@@ -91,6 +104,18 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
     }
 
     @Override
+    public void onFinishDialog(int action) {
+        if (action == AppConstants.CONFIRM_ACTION) {
+            mConfirmDialogFragment.dismiss();
+            mAppointmentManager.reset();
+            onBackPressed();
+        } else if (action == AppConstants.CANCEL_ACTION) {
+            mConfirmDialogFragment.dismiss();
+            alreadyShow = false;
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         if (alreadyShow) {
             super.onBackPressed();
@@ -104,17 +129,17 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
     }
 
     @Override
-    protected void onPause() {
-        mAppointmentManager.setCurrentBusinessId(this.businessId);
-        mAppointmentManager.setCurrentBusinessName(this.businessName);
-        mAppointmentManager.setCurrentBusinessDistance(this.businessDistance);
-        super.onPause();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.i("BRUNO", "resultCode: " + resultCode);
+        Log.i("BRUNO", "requestCode: " + requestCode);
+
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
+    //endregion
+
+    //region - Public
 
     /**
      * Go to cart activity
@@ -124,15 +149,15 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
         startActivity(cartIntent);
     }
 
-    @Override
-    public void onFinishDialog(int action) {
-        if (action == AppConstants.CONFIRM_ACTION) {
-            mConfirmDialogFragment.dismiss();
-            mAppointmentManager.reset();
-            onBackPressed();
-        } else if (action == AppConstants.CANCEL_ACTION) {
-            mConfirmDialogFragment.dismiss();
-            alreadyShow = false;
-        }
+    public BusinessTabsAdapter getAdapter() {
+        return mAdapter;
     }
+
+    //endregion
+
+    //region - Listener
+
+    private final BusinessTabsAdapter.OnLoadedListener mAdapterOnLoadedListener = () -> AppUtils.hideDialog();
+
+    //endregion
 }

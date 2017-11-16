@@ -15,16 +15,18 @@ public final class ScheduleSection extends ExpandableGroup<ScheduleItem> {
 
     private Type type;
 
-    public ScheduleSection(String title, Type type, List<ScheduleItem> items) {
-        super(title, items);
+    public ScheduleSection(Context context, Type type) {
+        this(context, type, null);
+    }
+
+    public ScheduleSection(Context context, Type type, List<ScheduleItem> items) {
+        super(ScheduleSection.getTitle(context, type), items);
         this.type = type;
     }
 
-    public Type getType() {
-        return type;
-    }
+    //region - Static
 
-    public static String getTitle(Context context, Type type) {
+    private static String getTitle(Context context, Type type) {
         switch (type) {
             case SELECT_PET:
                 return context.getString(R.string.select_pet);
@@ -41,12 +43,37 @@ public final class ScheduleSection extends ExpandableGroup<ScheduleItem> {
         }
     }
 
-    public enum Type {
-        SELECT_PET,
-        SERVICE_CATEGORY,
-        ADDITIONAL_SERVICES,
-        PROFESSIONAL,
-        DAY_AND_TIME
+    //endregion
+
+    //region - Public
+
+    public Type getType() {
+        return type;
     }
+
+    //endregion
+
+    //region - Enum
+
+    public enum Type {
+        SELECT_PET(0),
+        SERVICE_CATEGORY(1),
+        ADDITIONAL_SERVICES(2),
+        PROFESSIONAL(3),
+        DAY_AND_TIME(4);
+
+        private int mValue;
+
+        Type(int value) {
+            mValue = value;
+        }
+
+        public int getValue() {
+            return mValue;
+        }
+
+    }
+
+    //endregion
 
 }

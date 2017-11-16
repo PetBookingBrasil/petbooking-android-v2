@@ -16,11 +16,6 @@ import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.BusinessActivity;
-import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleItem;
-import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleSection;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +25,8 @@ public class ScheduleFragment extends Fragment {
     private RecyclerView mRecyclerView;
 
     private String mBusinessId;
+
+    private ScheduleAdapter mAdapter;
 
     private final PetService mPetService = new PetService();
     private final BusinessService mBusinessService = new BusinessService();
@@ -76,12 +73,11 @@ public class ScheduleFragment extends Fragment {
     }
 
     private void setupViews() {
-        List<ScheduleSection> genres = getGenres();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
-        ScheduleAdapter adapter = new ScheduleAdapter(genres);
+        mAdapter = new ScheduleAdapter(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void getContent() {
@@ -93,67 +89,16 @@ public class ScheduleFragment extends Fragment {
         mBusinessService.listBusinessCategories(mBusinessId, mListBusinessCategoriesAPICallback);
     }
 
-    private List<ScheduleSection> getGenres() {
-        List<ScheduleItem> artistsA = new ArrayList<>();
-        artistsA.add(new ScheduleItem("A1"));
-        artistsA.add(new ScheduleItem("A2"));
-        artistsA.add(new ScheduleItem("A3"));
-        artistsA.add(new ScheduleItem("A4"));
-
-        List<ScheduleItem> artistsB = new ArrayList<>();
-        artistsB.add(new ScheduleItem("B1"));
-        artistsB.add(new ScheduleItem("B2"));
-        artistsB.add(new ScheduleItem("B3"));
-        artistsB.add(new ScheduleItem("B4"));
-        artistsB.add(new ScheduleItem("B5"));
-        artistsB.add(new ScheduleItem("B6"));
-
-        List<ScheduleItem> artistsC = new ArrayList<>();
-        artistsC.add(new ScheduleItem("C1"));
-        artistsC.add(new ScheduleItem("C2"));
-        artistsC.add(new ScheduleItem("C3"));
-
-        List<ScheduleItem> artistsD = new ArrayList<>();
-        artistsD.add(new ScheduleItem("D1"));
-        artistsD.add(new ScheduleItem("D2"));
-
-        List<ScheduleItem> artistsE = new ArrayList<>();
-        artistsE.add(new ScheduleItem("E1"));
-        artistsE.add(new ScheduleItem("E2"));
-        artistsE.add(new ScheduleItem("E3"));
-        artistsE.add(new ScheduleItem("E4"));
-
-        List<ScheduleSection> genres = new ArrayList<>();
-
-        ScheduleSection.Type typeA = ScheduleSection.Type.SELECT_PET;
-        String titleA = ScheduleSection.getTitle(getContext(), typeA);
-        genres.add(new ScheduleSection(titleA, typeA, artistsA));
-
-        ScheduleSection.Type typeB = ScheduleSection.Type.SERVICE_CATEGORY;
-        String titleB = ScheduleSection.getTitle(getContext(), typeB);
-        genres.add(new ScheduleSection(titleB, typeB, artistsB));
-
-        ScheduleSection.Type typeC = ScheduleSection.Type.ADDITIONAL_SERVICES;
-        String titleC = ScheduleSection.getTitle(getContext(), typeC);
-        genres.add(new ScheduleSection(titleC, typeC, artistsC));
-
-        ScheduleSection.Type typeD = ScheduleSection.Type.PROFESSIONAL;
-        String titleD = ScheduleSection.getTitle(getContext(), typeD);
-        genres.add(new ScheduleSection(titleD, typeD, artistsD));
-
-        ScheduleSection.Type typeE = ScheduleSection.Type.DAY_AND_TIME;
-        String titleE = ScheduleSection.getTitle(getContext(), typeE);
-        genres.add(new ScheduleSection(titleE, typeE, artistsE));
-
-        return genres;
-    }
-
     private void listPetsLoaded() {
+        mAdapter.listPetsLoaded();
+
         BusinessActivity activity = (BusinessActivity) getActivity();
         activity.getAdapter().setListPetsLoaded(true);
     }
 
     private void listBusinessCategoriesLoaded() {
+        mAdapter.listBusinessCategoriesLoaded();
+
         BusinessActivity activity = (BusinessActivity) getActivity();
         activity.getAdapter().setListBusinessCategoriesLoaded(true);
     }

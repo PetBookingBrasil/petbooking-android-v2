@@ -1,5 +1,6 @@
 package com.petbooking.UI.Dashboard.Business.Schedule;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,10 +24,12 @@ import java.util.List;
 
 final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapter.SchedulingGroupViewHolder, ScheduleAdapter.SchedulingGroupItemViewHolder> {
 
+    private Context mContext;
     private ExpandableGroup mExpandedGroup;
 
-    ScheduleAdapter(List<? extends ExpandableGroup> groups) {
-        super(groups);
+    ScheduleAdapter(Context context) {
+        super(ScheduleAdapter.getGenres(context));
+        mContext = context;
 
         setOnGroupExpandCollapseListener(new GroupExpandCollapseListener() {
             @Override
@@ -39,8 +43,6 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
             @Override
             public void onGroupCollapsed(ExpandableGroup group) { }
         });
-
-        toggleGroup(0);
     }
 
     //region - ExpandableRecyclerViewAdapter
@@ -67,6 +69,70 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
     public void onBindChildViewHolder(SchedulingGroupItemViewHolder holder, int flatPosition, ExpandableGroup group, int childIndex) {
         final ScheduleItem artist = (ScheduleItem) group.getItems().get(childIndex);
         holder.setTitle(artist.getTitle());
+    }
+
+    //endregion
+
+    //region - Protected
+
+    void listPetsLoaded() {
+        ScheduleSection.Type type = ScheduleSection.Type.SELECT_PET;
+
+        List<ScheduleItem> items = new ArrayList<>();
+        items.add(new ScheduleItem("A1"));
+        items.add(new ScheduleItem("A2"));
+        items.add(new ScheduleItem("A3"));
+        items.add(new ScheduleItem("A4"));
+
+        loaded(type, items);
+        toggleGroup(type.getValue());
+    }
+
+    void listBusinessCategoriesLoaded() {
+        ScheduleSection.Type type = ScheduleSection.Type.SERVICE_CATEGORY;
+
+        List<ScheduleItem> items = new ArrayList<>();
+        items.add(new ScheduleItem("B1"));
+        items.add(new ScheduleItem("B2"));
+        items.add(new ScheduleItem("B3"));
+        items.add(new ScheduleItem("B4"));
+        items.add(new ScheduleItem("B5"));
+        items.add(new ScheduleItem("B6"));
+
+        loaded(type, items);
+    }
+
+    //endregion
+
+    //region - Private
+
+    private void loaded(ScheduleSection.Type type, List<ScheduleItem> items) {
+        int position = type.getValue();
+
+        List<ScheduleSection> sections = (List<ScheduleSection>) getGroups();
+        ScheduleSection oldSection = sections.get(position);
+        ScheduleSection newSection = new ScheduleSection(mContext, type, items);
+
+        sections.remove(oldSection);
+        sections.add(position, newSection);
+
+        notifyItemChanged(position);
+    }
+
+    //endregion
+
+    //region - Static
+
+    private static List<ScheduleSection> getGenres(Context context) {
+        List<ScheduleSection> genres = new ArrayList<>();
+
+        genres.add(new ScheduleSection(context, ScheduleSection.Type.SELECT_PET));
+        genres.add(new ScheduleSection(context, ScheduleSection.Type.SERVICE_CATEGORY));
+        genres.add(new ScheduleSection(context, ScheduleSection.Type.ADDITIONAL_SERVICES));
+        genres.add(new ScheduleSection(context, ScheduleSection.Type.PROFESSIONAL));
+        genres.add(new ScheduleSection(context, ScheduleSection.Type.DAY_AND_TIME));
+
+        return genres;
     }
 
     //endregion

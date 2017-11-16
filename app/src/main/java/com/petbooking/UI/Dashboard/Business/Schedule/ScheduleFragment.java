@@ -15,7 +15,6 @@ import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
-import com.petbooking.Models.Category;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.BusinessActivity;

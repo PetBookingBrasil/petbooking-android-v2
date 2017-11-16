@@ -4,10 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.petbooking.API.Business.Models.CategoryResp;
-import com.petbooking.Models.Category;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleItem;
@@ -65,13 +65,22 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
     @Override
     public void onBindGroupViewHolder(SchedulingGroupViewHolder holder, int flatPosition, ExpandableGroup group) {
         ScheduleSection section = (ScheduleSection) group;
-        holder.setTitle(section.getTitle());
+        holder.setTitle(section.getItemTitle());
     }
 
     @Override
     public void onBindChildViewHolder(SchedulingGroupItemViewHolder holder, int flatPosition, ExpandableGroup group, int childIndex) {
-        final ScheduleItem artist = (ScheduleItem) group.getItems().get(childIndex);
-        holder.setTitle(artist.getTitle());
+        final ScheduleItem item = (ScheduleItem) group.getItems().get(childIndex);
+        holder.setTitle(item.getTitle());
+
+        holder.setOnClickListener(view -> {
+            ScheduleSection section = (ScheduleSection) group;
+            section.setItemTitle(item.getTitle());
+
+            int position = section.getType().getValue();
+            notifyItemChanged(position);
+        });
+
     }
 
     //endregion
@@ -159,11 +168,17 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
 
     class SchedulingGroupItemViewHolder extends ChildViewHolder {
 
+        private LinearLayout mLinearLayout;
         private TextView mTxtTitle;
 
         SchedulingGroupItemViewHolder(View itemView) {
             super(itemView);
+            mLinearLayout = itemView.findViewById(R.id.linear_layout);
             mTxtTitle = itemView.findViewById(R.id.txt_selected_title);
+        }
+
+        void setOnClickListener(View.OnClickListener listener) {
+            mLinearLayout.setOnClickListener(listener);
         }
 
         void setTitle(String title) {

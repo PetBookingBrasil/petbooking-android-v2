@@ -13,6 +13,7 @@ import java.util.List;
 
 public final class ScheduleSection extends ExpandableGroup<ScheduleItem> {
 
+    private String itemTitle;
     private Type type;
 
     public ScheduleSection(Context context, Type type) {
@@ -46,6 +47,18 @@ public final class ScheduleSection extends ExpandableGroup<ScheduleItem> {
     //endregion
 
     //region - Public
+
+    public void setItemTitle(String title) {
+        this.itemTitle = title;
+    }
+
+    public String getItemTitle() {
+        if (itemTitle != null) {
+            return itemTitle;
+        }
+
+        return getTitle();
+    }
 
     public Type getType() {
         return type;

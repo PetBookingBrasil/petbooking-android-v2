@@ -1,6 +1,5 @@
 package com.petbooking.UI.Dashboard.Business;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -10,18 +9,16 @@ import com.petbooking.UI.Dashboard.Business.Schedule.ScheduleFragment;
 
 /**
  * Created by Luciano José on 29/01/2017.
+ * Edited by Bruno Tortato Furtado on 16/11/2017.
  */
 
-public class BusinessTabsAdapter extends FragmentStatePagerAdapter {
+final class BusinessTabsAdapter extends FragmentStatePagerAdapter {
 
-    private Context mContext;
     private String businessId;
     private float businessDistance;
-    private final int PAGES_COUNT = 2;
 
-    public BusinessTabsAdapter(FragmentManager fm, Context context, String businessId, float businessDistance) {
-        super(fm);
-        this.mContext = context;
+    BusinessTabsAdapter(FragmentManager fragmentManager, String businessId, float businessDistance) {
+        super(fragmentManager);
         this.businessId = businessId;
         this.businessDistance = businessDistance;
     }
@@ -39,7 +36,7 @@ public class BusinessTabsAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return PAGES_COUNT;
+        return 2;
     }
 
 }

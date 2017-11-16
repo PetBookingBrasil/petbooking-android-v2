@@ -56,7 +56,7 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
         getSupportActionBar().setElevation(0);
         getSupportActionBar().setTitle(businessName);
 
-        mAdapter = new BusinessTabsAdapter(getSupportFragmentManager(), this, businessId, businessDistance);
+        mAdapter = new BusinessTabsAdapter(getSupportFragmentManager(), businessId, businessDistance);
         mViewPager.setAdapter(mAdapter);
 
         mTabLayout.setBackgroundColor(getResources().getColor(R.color.secondary_red));

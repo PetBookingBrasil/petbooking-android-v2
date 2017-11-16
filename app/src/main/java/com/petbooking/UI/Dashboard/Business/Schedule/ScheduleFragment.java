@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +80,7 @@ public class ScheduleFragment extends Fragment {
     private void setupViews() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
-        mAdapter = new ScheduleAdapter(getContext());
+        mAdapter = new ScheduleAdapter(getContext(), mAdapterOnClickListener);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -106,6 +107,14 @@ public class ScheduleFragment extends Fragment {
         BusinessActivity activity = (BusinessActivity) getActivity();
         activity.getAdapter().setListBusinessCategoriesLoaded(true);
     }
+
+    //endregion
+
+    //region - Listener
+
+    private final ScheduleAdapter.OnClickListener mAdapterOnClickListener = id -> {
+        Log.i("BRUNO", "id: " + id);
+    };
 
     //endregion
 

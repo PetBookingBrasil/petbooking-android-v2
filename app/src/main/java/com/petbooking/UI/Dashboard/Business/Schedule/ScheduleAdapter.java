@@ -29,11 +29,15 @@ import java.util.List;
 final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapter.SchedulingGroupViewHolder, ScheduleAdapter.SchedulingGroupItemViewHolder> {
 
     private Context mContext;
+    private OnClickListener mOnClickListener;
+
     private ExpandableGroup mExpandedGroup;
 
-    ScheduleAdapter(Context context) {
+    ScheduleAdapter(Context context, OnClickListener onClickListener) {
         super(ScheduleAdapter.getGenres(context));
+
         mContext = context;
+        mOnClickListener = onClickListener;
 
         setOnGroupExpandCollapseListener(new GroupExpandCollapseListener() {
             @Override
@@ -81,9 +85,13 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
             section.setId(item.getId());
             section.setTitle(item.getTitle());
 
+            ScheduleSection.Type type = section.getType();
             int position = section.getType().getValue();
+
+            checkIfBusinessCategoryClicked(type, item.getId());
             notifyItemChanged(position);
             toggleGroup(position);
+
         });
 
     }
@@ -134,6 +142,15 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
         sections.add(position, newSection);
 
         notifyItemChanged(position);
+    }
+
+    private void checkIfBusinessCategoryClicked(ScheduleSection.Type type, String id) {
+        if (mOnClickListener != null) {
+            if (type == ScheduleSection.Type.SERVICE_CATEGORY) {
+                mOnClickListener.onBusinessCategoryClicked(id);
+            }
+        }
+
     }
 
     //endregion
@@ -193,5 +210,14 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
     }
 
     //endregion
+
+    //region - Interface
+
+    interface OnClickListener {
+        void onBusinessCategoryClicked(String id);
+    }
+
+    //endregion
+
 
 }

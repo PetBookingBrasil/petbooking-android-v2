@@ -14,6 +14,7 @@ import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleItem;
 import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleSection;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.listeners.GroupExpandCollapseListener;
+import com.thoughtbot.expandablerecyclerview.listeners.OnGroupClickListener;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;
@@ -44,7 +45,9 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
             }
 
             @Override
-            public void onGroupCollapsed(ExpandableGroup group) { }
+            public void onGroupCollapsed(ExpandableGroup group) {
+                mExpandedGroup = null;
+            }
         });
     }
 

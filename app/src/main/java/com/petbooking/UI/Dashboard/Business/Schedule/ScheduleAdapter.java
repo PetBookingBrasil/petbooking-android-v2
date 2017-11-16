@@ -78,6 +78,7 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
 
         holder.setOnClickListener(view -> {
             ScheduleSection section = (ScheduleSection) group;
+            section.setId(item.getId());
             section.setTitle(item.getTitle());
 
             int position = section.getType().getValue();
@@ -97,7 +98,7 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
 
         if (pets != null) {
             for (Pet pet: pets) {
-                items.add(new ScheduleItem(pet.name));
+                items.add(new ScheduleItem(pet.id, pet.name));
             }
         }
 
@@ -111,7 +112,7 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
 
         if (categoryResp != null) {
             for (CategoryResp.Item item: categoryResp.data) {
-                items.add(new ScheduleItem(item.attributes.name));
+                items.add(new ScheduleItem(item.id, item.attributes.name));
             }
         }
 

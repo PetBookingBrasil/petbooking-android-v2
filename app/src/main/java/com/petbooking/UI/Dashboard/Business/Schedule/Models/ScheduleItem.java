@@ -9,9 +9,11 @@ import android.os.Parcelable;
 
 public final class ScheduleItem implements Parcelable {
 
+    private String id;
     private String title;
 
-    public ScheduleItem(String title) {
+    public ScheduleItem(String id, String title) {
+        this.id = id;
         this.title = title;
     }
 
@@ -23,9 +25,14 @@ public final class ScheduleItem implements Parcelable {
         this.title = title;
     }
 
+    public String getId() {
+        return id;
+    }
+
     //region - Parcelable
 
     protected ScheduleItem(Parcel in) {
+        id = in.readString();
         title = in.readString();
     }
 
@@ -36,6 +43,7 @@ public final class ScheduleItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(title);
     }
 

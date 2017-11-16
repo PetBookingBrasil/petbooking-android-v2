@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.petbooking.API.Business.Models.CategoryResp;
+import com.petbooking.Models.Category;
+import com.petbooking.Models.Pet;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleItem;
 import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleSection;
@@ -75,29 +78,29 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
 
     //region - Protected
 
-    void listPetsLoaded() {
+    void listPetsLoaded(List<Pet> pets) {
         ScheduleSection.Type type = ScheduleSection.Type.SELECT_PET;
-
         List<ScheduleItem> items = new ArrayList<>();
-        items.add(new ScheduleItem("A1"));
-        items.add(new ScheduleItem("A2"));
-        items.add(new ScheduleItem("A3"));
-        items.add(new ScheduleItem("A4"));
+
+        if (pets != null) {
+            for (Pet pet: pets) {
+                items.add(new ScheduleItem(pet.name));
+            }
+        }
 
         loaded(type, items);
         toggleGroup(type.getValue());
     }
 
-    void listBusinessCategoriesLoaded() {
+    void listBusinessCategoriesLoaded(CategoryResp categoryResp) {
         ScheduleSection.Type type = ScheduleSection.Type.SERVICE_CATEGORY;
-
         List<ScheduleItem> items = new ArrayList<>();
-        items.add(new ScheduleItem("B1"));
-        items.add(new ScheduleItem("B2"));
-        items.add(new ScheduleItem("B3"));
-        items.add(new ScheduleItem("B4"));
-        items.add(new ScheduleItem("B5"));
-        items.add(new ScheduleItem("B6"));
+
+        if (categoryResp != null) {
+            for (CategoryResp.Item item: categoryResp.data) {
+                items.add(new ScheduleItem(item.attributes.name));
+            }
+        }
 
         loaded(type, items);
     }

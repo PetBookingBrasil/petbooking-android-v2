@@ -11,11 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.petbooking.API.Business.BusinessService;
+import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
+import com.petbooking.Models.Category;
+import com.petbooking.Models.Pet;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.BusinessActivity;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,15 +94,15 @@ public class ScheduleFragment extends Fragment {
         mBusinessService.listBusinessCategories(mBusinessId, mListBusinessCategoriesAPICallback);
     }
 
-    private void listPetsLoaded() {
-        mAdapter.listPetsLoaded();
+    private void listPetsLoaded(List<Pet> pets) {
+        mAdapter.listPetsLoaded(pets);
 
         BusinessActivity activity = (BusinessActivity) getActivity();
         activity.getAdapter().setListPetsLoaded(true);
     }
 
-    private void listBusinessCategoriesLoaded() {
-        mAdapter.listBusinessCategoriesLoaded();
+    private void listBusinessCategoriesLoaded(CategoryResp categoryResp) {
+        mAdapter.listBusinessCategoriesLoaded(categoryResp);
 
         BusinessActivity activity = (BusinessActivity) getActivity();
         activity.getAdapter().setListBusinessCategoriesLoaded(true);
@@ -110,24 +115,26 @@ public class ScheduleFragment extends Fragment {
     private final APICallback mListPetsAPICallback = new APICallback() {
         @Override
         public void onSuccess(Object response) {
-            listPetsLoaded();
+            List<Pet> pets = (List<Pet>) response;
+            listPetsLoaded(pets);
         }
 
         @Override
         public void onError(Object error) {
-            listPetsLoaded();
+            listPetsLoaded(null);
         }
     };
 
     private final APICallback mListBusinessCategoriesAPICallback = new APICallback() {
         @Override
         public void onSuccess(Object response) {
-            listBusinessCategoriesLoaded();
+            CategoryResp categoryResp = (CategoryResp) response;
+            listBusinessCategoriesLoaded(categoryResp);
         }
 
         @Override
         public void onError(Object error) {
-            listBusinessCategoriesLoaded();
+            listBusinessCategoriesLoaded(null);
         }
     };
 

@@ -68,7 +68,7 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
     @Override
     public void onBindGroupViewHolder(SchedulingGroupViewHolder holder, int flatPosition, ExpandableGroup group) {
         ScheduleSection section = (ScheduleSection) group;
-        holder.setTitle(section.getItemTitle());
+        holder.setTitle(section.getTitle());
     }
 
     @Override
@@ -78,7 +78,7 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
 
         holder.setOnClickListener(view -> {
             ScheduleSection section = (ScheduleSection) group;
-            section.setItemTitle(item.getTitle());
+            section.setTitle(item.getTitle());
 
             int position = section.getType().getValue();
             notifyItemChanged(position);

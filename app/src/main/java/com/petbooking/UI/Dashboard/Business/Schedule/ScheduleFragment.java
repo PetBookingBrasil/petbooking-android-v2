@@ -6,19 +6,22 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.petbooking.API.Appointment.AppointmentService;
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
+import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Pet;
+import com.petbooking.Models.Professional;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.BusinessActivity;
+import com.petbooking.Utils.AppUtils;
 
 import java.util.List;
 
@@ -35,6 +38,7 @@ public class ScheduleFragment extends Fragment {
 
     private final PetService mPetService = new PetService();
     private final BusinessService mBusinessService = new BusinessService();
+    private final AppointmentService mAppointmentService = new AppointmentService();
 
     //region - Fragment
 
@@ -94,6 +98,21 @@ public class ScheduleFragment extends Fragment {
         mBusinessService.listBusinessCategories(mBusinessId, mListBusinessCategoriesAPICallback);
     }
 
+    private void listServices() {
+        String petId = mAdapter.getPetId();
+        String categoryId = mAdapter.getCategoryId();
+
+        AppUtils.showLoadingDialog(getContext());
+        mAppointmentService.listServices(categoryId, petId, mListServicesAPICallback);
+    }
+
+    private void listProfessionals() {
+        String serviceId = mAdapter.getServiceId();
+
+        AppUtils.showLoadingDialog(getContext());
+        mAppointmentService.listProfessional(serviceId, mListProfessionalsAPICallback);
+    }
+
     private void listPetsLoaded(List<Pet> pets) {
         mAdapter.listPetsLoaded(pets);
 
@@ -108,12 +127,30 @@ public class ScheduleFragment extends Fragment {
         activity.getAdapter().setListBusinessCategoriesLoaded(true);
     }
 
+    private void listServidesLoaded(List<BusinessServices> services) {
+        AppUtils.hideDialog();
+        mAdapter.listServicesLoaded(services);
+    }
+
+    private void listProfessionalsLoaded(List<Professional> professionals) {
+        AppUtils.hideDialog();
+        mAdapter.listProfessionalsLoaded(professionals);
+    }
+
     //endregion
 
     //region - Listener
 
-    private final ScheduleAdapter.OnClickListener mAdapterOnClickListener = id -> {
-        Log.i("BRUNO", "id: " + id);
+    private final ScheduleAdapter.OnClickListener mAdapterOnClickListener = new ScheduleAdapter.OnClickListener() {
+        @Override
+        public void onBusinessCategoryClicked(String id) {
+            listServices();
+        }
+
+        @Override
+        public void onServicesClicked(String id) {
+            listProfessionals();
+        }
     };
 
     //endregion
@@ -147,5 +184,31 @@ public class ScheduleFragment extends Fragment {
     };
 
     //endregion
+
+    private final APICallback mListServicesAPICallback = new APICallback() {
+        @Override
+        public void onSuccess(Object response) {
+            List<BusinessServices> services = (List<BusinessServices>) response;
+            listServidesLoaded(services);
+        }
+
+        @Override
+        public void onError(Object error) {
+            listServidesLoaded(null);
+        }
+    };
+
+    private final APICallback mListProfessionalsAPICallback = new APICallback() {
+        @Override
+        public void onSuccess(Object response) {
+            List<Professional> professionals = (List<Professional>) response;
+            listProfessionalsLoaded(professionals);
+        }
+
+        @Override
+        public void onError(Object error) {
+            listProfessionalsLoaded(null);
+        }
+    };
 
 }

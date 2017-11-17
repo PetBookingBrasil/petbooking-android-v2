@@ -8,13 +8,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.petbooking.API.Business.Models.CategoryResp;
+import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Pet;
+import com.petbooking.Models.Professional;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleItem;
 import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleSection;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.listeners.GroupExpandCollapseListener;
-import com.thoughtbot.expandablerecyclerview.listeners.OnGroupClickListener;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;
@@ -89,11 +90,29 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
             int position = section.getType().getValue();
 
             checkIfBusinessCategoryClicked(type, item.getId());
+            checkIfServicesClicked(type, item.getId());
+
             notifyItemChanged(position);
             toggleGroup(position);
 
         });
 
+    }
+
+    //endregion
+
+    //region - Protected getters
+
+    String getPetId() {
+        return getId(ScheduleSection.Type.SELECT_PET);
+    }
+
+    String getCategoryId() {
+        return getId(ScheduleSection.Type.SERVICE_CATEGORY);
+    }
+
+    String getServiceId() {
+        return getId(ScheduleSection.Type.ADDITIONAL_SERVICES);
     }
 
     //endregion
@@ -127,9 +146,57 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
         loaded(type, items);
     }
 
+    void listServicesLoaded(List<BusinessServices> services) {
+        ScheduleSection.Type type = ScheduleSection.Type.ADDITIONAL_SERVICES;
+        List<ScheduleItem> items = new ArrayList<>();
+
+        if (services != null) {
+            for (BusinessServices service: services) {
+                items.add(new ScheduleItem(service.id, service.name));
+            }
+        }
+
+        loaded(type, items);
+    }
+
+    void listProfessionalsLoaded(List<Professional> professionals) {
+        ScheduleSection.Type type = ScheduleSection.Type.PROFESSIONAL;
+        List<ScheduleItem> items = new ArrayList<>();
+
+        if (professionals != null) {
+            for (Professional professional: professionals) {
+                items.add(new ScheduleItem(professional.id, professional.name));
+            }
+        }
+
+        loaded(type, items);
+    }
+
     //endregion
 
     //region - Private
+
+    private void checkIfBusinessCategoryClicked(ScheduleSection.Type type, String id) {
+        if (mOnClickListener != null) {
+            if (type == ScheduleSection.Type.SERVICE_CATEGORY) {
+                mOnClickListener.onBusinessCategoryClicked(id);
+            }
+        }
+
+    }
+
+    private void checkIfServicesClicked(ScheduleSection.Type type, String id) {
+        if (mOnClickListener != null) {
+            if (type == ScheduleSection.Type.ADDITIONAL_SERVICES) {
+                mOnClickListener.onServicesClicked(id);
+            }
+        }
+    }
+
+    private String getId(ScheduleSection.Type type) {
+        ScheduleSection section = (ScheduleSection) getGroups().get(type.getValue());
+        return section.getId();
+    }
 
     private void loaded(ScheduleSection.Type type, List<ScheduleItem> items) {
         int position = type.getValue();
@@ -142,15 +209,6 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
         sections.add(position, newSection);
 
         notifyItemChanged(position);
-    }
-
-    private void checkIfBusinessCategoryClicked(ScheduleSection.Type type, String id) {
-        if (mOnClickListener != null) {
-            if (type == ScheduleSection.Type.SERVICE_CATEGORY) {
-                mOnClickListener.onBusinessCategoryClicked(id);
-            }
-        }
-
     }
 
     //endregion
@@ -215,9 +273,9 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
 
     interface OnClickListener {
         void onBusinessCategoryClicked(String id);
+        void onServicesClicked(String id);
     }
 
     //endregion
-
 
 }

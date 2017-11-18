@@ -167,6 +167,7 @@
     <string name="service_category">Categoria do serviço</string>
     <string name="additional_services">Serviços adicionais</string>
     <string name="day_and_time">Dia e horário</string>
+    <string name="add_to_cart">Adicionar ao carrinho</string>
 
     <!-- Search -->
     <string name="filter_hint">Filtrar por nome, local&#8230;</string>

@@ -137,6 +137,7 @@
     <string name="service_category">Service Category</string>
     <string name="additional_services">Additional Services</string>
     <string name="day_and_time">Day and Time</string>
+    <string name="add_to_cart">Add to Cart</string>
 
     <!-- Search -->
     <string name="filter_hint">Filtrar by name, location&#8230;</string>

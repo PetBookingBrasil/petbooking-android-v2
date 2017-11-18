@@ -75,7 +75,7 @@ public class ScheduleFragment extends Fragment {
 
     //endregion
 
-    //region - Private
+    //region - Private view
 
     private void findViewsById(View view) {
         mRecyclerView = view.findViewById(R.id.recycler_view);
@@ -88,6 +88,10 @@ public class ScheduleFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
     }
+
+    //endregion
+
+    //region - Private service
 
     private void getContent() {
         // pets
@@ -113,16 +117,16 @@ public class ScheduleFragment extends Fragment {
         mAppointmentService.listProfessional(serviceId, mListProfessionalsAPICallback);
     }
 
-    private void listDayAndTime(Professional professional) {
-
-    }
-
     private void listPetsLoaded(List<Pet> pets) {
         mAdapter.listPetsLoaded(pets);
 
         BusinessActivity activity = (BusinessActivity) getActivity();
         activity.getAdapter().setListPetsLoaded(true);
     }
+
+    //endregion
+
+    //region - Private helper
 
     private void listBusinessCategoriesLoaded(CategoryResp categoryResp) {
         mAdapter.listBusinessCategoriesLoaded(categoryResp);
@@ -156,10 +160,6 @@ public class ScheduleFragment extends Fragment {
             listProfessionals();
         }
 
-        @Override
-        public void onProfessionalsClicked(Professional professional) {
-            listDayAndTime(professional);
-        }
     };
 
     //endregion

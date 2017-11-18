@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.petbooking.API.Business.Models.CategoryResp;
+import com.petbooking.Models.AppointmentDate;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Pet;
 import com.petbooking.Models.Professional;
@@ -176,6 +177,19 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
         loaded(type, items);
     }
 
+    void listAvailableDates(List<AppointmentDate> availableDates) {
+        ScheduleSection.Type type = ScheduleSection.Type.DAY_AND_TIME;
+        List<ScheduleItem> items = new ArrayList<>();
+
+        if (availableDates != null) {
+            for (AppointmentDate date: availableDates) {
+                items.add(new ScheduleItem(date.monthName, date.monthName));
+            }
+        }
+
+        loaded(type, items);
+    }
+
     //endregion
 
     //region - Private
@@ -202,7 +216,7 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
             if (type == ScheduleSection.Type.PROFESSIONAL) {
                 for (Professional professional: mProfessionals) {
                     if (professional.id.equals(id)) {
-                        mOnClickListener.onProfessionalsClicked(professional);
+                        listAvailableDates(professional.availableDates);
                         break;
                     }
                 }
@@ -291,7 +305,6 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
     interface OnClickListener {
         void onBusinessCategoryClicked(String id);
         void onServicesClicked(String id);
-        void onProfessionalsClicked(Professional professional);
     }
 
     //endregion

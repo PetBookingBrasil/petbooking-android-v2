@@ -96,8 +96,7 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
             checkIfProfessionalsClicked(type, item.getId());
 
             notifyItemChanged(position);
-            toggleGroup(position+1);
-
+            toggleGroup(position);
         });
 
     }

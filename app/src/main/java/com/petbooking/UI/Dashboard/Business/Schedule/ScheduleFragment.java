@@ -113,6 +113,10 @@ public class ScheduleFragment extends Fragment {
         mAppointmentService.listProfessional(serviceId, mListProfessionalsAPICallback);
     }
 
+    private void listDayAndTime(Professional professional) {
+
+    }
+
     private void listPetsLoaded(List<Pet> pets) {
         mAdapter.listPetsLoaded(pets);
 
@@ -150,6 +154,11 @@ public class ScheduleFragment extends Fragment {
         @Override
         public void onServicesClicked(String id) {
             listProfessionals();
+        }
+
+        @Override
+        public void onProfessionalsClicked(Professional professional) {
+            listDayAndTime(professional);
         }
     };
 

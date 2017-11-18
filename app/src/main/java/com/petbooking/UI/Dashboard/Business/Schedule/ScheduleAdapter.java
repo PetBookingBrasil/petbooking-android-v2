@@ -33,6 +33,7 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
     private OnClickListener mOnClickListener;
 
     private ExpandableGroup mExpandedGroup;
+    private List<Professional> mProfessionals;
 
     ScheduleAdapter(Context context, OnClickListener onClickListener) {
         super(ScheduleAdapter.getGenres(context));
@@ -91,6 +92,7 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
 
             checkIfBusinessCategoryClicked(type, item.getId());
             checkIfServicesClicked(type, item.getId());
+            checkIfProfessionalsClicked(type, item.getId());
 
             notifyItemChanged(position);
             toggleGroup(position);
@@ -160,6 +162,8 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
     }
 
     void listProfessionalsLoaded(List<Professional> professionals) {
+        mProfessionals = professionals;
+
         ScheduleSection.Type type = ScheduleSection.Type.PROFESSIONAL;
         List<ScheduleItem> items = new ArrayList<>();
 
@@ -189,6 +193,19 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
         if (mOnClickListener != null) {
             if (type == ScheduleSection.Type.ADDITIONAL_SERVICES) {
                 mOnClickListener.onServicesClicked(id);
+            }
+        }
+    }
+
+    private void checkIfProfessionalsClicked(ScheduleSection.Type type, String id) {
+        if (mOnClickListener != null) {
+            if (type == ScheduleSection.Type.PROFESSIONAL) {
+                for (Professional professional: mProfessionals) {
+                    if (professional.id.equals(id)) {
+                        mOnClickListener.onProfessionalsClicked(professional);
+                        break;
+                    }
+                }
             }
         }
     }
@@ -274,6 +291,7 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
     interface OnClickListener {
         void onBusinessCategoryClicked(String id);
         void onServicesClicked(String id);
+        void onProfessionalsClicked(Professional professional);
     }
 
     //endregion

@@ -96,7 +96,7 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
             checkIfProfessionalsClicked(type, item.getId());
 
             notifyItemChanged(position);
-            toggleGroup(position);
+            toggleGroup(position+1);
 
         });
 
@@ -118,9 +118,14 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
         return getId(ScheduleSection.Type.ADDITIONAL_SERVICES);
     }
 
+    private String getId(ScheduleSection.Type type) {
+        ScheduleSection section = (ScheduleSection) getGroups().get(type.getValue());
+        return section.getId();
+    }
+
     //endregion
 
-    //region - Protected
+    //region - Loaded
 
     void listPetsLoaded(List<Pet> pets) {
         ScheduleSection.Type type = ScheduleSection.Type.SELECT_PET;
@@ -177,7 +182,7 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
         loaded(type, items);
     }
 
-    void listAvailableDates(List<AppointmentDate> availableDates) {
+    private void listAvailableDatesLoaded(List<AppointmentDate> availableDates) {
         ScheduleSection.Type type = ScheduleSection.Type.DAY_AND_TIME;
         List<ScheduleItem> items = new ArrayList<>();
 
@@ -190,9 +195,22 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
         loaded(type, items);
     }
 
+    private void loaded(ScheduleSection.Type type, List<ScheduleItem> items) {
+        int position = type.getValue();
+
+        List<ScheduleSection> sections = (List<ScheduleSection>) getGroups();
+        ScheduleSection oldSection = sections.get(position);
+        ScheduleSection newSection = new ScheduleSection(mContext, type, items);
+
+        sections.remove(oldSection);
+        sections.add(position, newSection);
+
+        notifyItemChanged(position);
+    }
+
     //endregion
 
-    //region - Private
+    //region - Check
 
     private void checkIfBusinessCategoryClicked(ScheduleSection.Type type, String id) {
         if (mOnClickListener != null) {
@@ -216,30 +234,12 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
             if (type == ScheduleSection.Type.PROFESSIONAL) {
                 for (Professional professional: mProfessionals) {
                     if (professional.id.equals(id)) {
-                        listAvailableDates(professional.availableDates);
+                        listAvailableDatesLoaded(professional.availableDates);
                         break;
                     }
                 }
             }
         }
-    }
-
-    private String getId(ScheduleSection.Type type) {
-        ScheduleSection section = (ScheduleSection) getGroups().get(type.getValue());
-        return section.getId();
-    }
-
-    private void loaded(ScheduleSection.Type type, List<ScheduleItem> items) {
-        int position = type.getValue();
-
-        List<ScheduleSection> sections = (List<ScheduleSection>) getGroups();
-        ScheduleSection oldSection = sections.get(position);
-        ScheduleSection newSection = new ScheduleSection(mContext, type, items);
-
-        sections.remove(oldSection);
-        sections.add(position, newSection);
-
-        notifyItemChanged(position);
     }
 
     //endregion

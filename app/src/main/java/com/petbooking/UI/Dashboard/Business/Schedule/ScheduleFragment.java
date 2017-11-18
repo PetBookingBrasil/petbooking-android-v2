@@ -75,7 +75,7 @@ public class ScheduleFragment extends Fragment {
 
     //endregion
 
-    //region - Private view
+    //region - View
 
     private void findViewsById(View view) {
         mRecyclerView = view.findViewById(R.id.recycler_view);
@@ -91,7 +91,7 @@ public class ScheduleFragment extends Fragment {
 
     //endregion
 
-    //region - Private service
+    //region - Service
 
     private void getContent() {
         // pets
@@ -126,7 +126,7 @@ public class ScheduleFragment extends Fragment {
 
     //endregion
 
-    //region - Private helper
+    //region - List
 
     private void listBusinessCategoriesLoaded(CategoryResp categoryResp) {
         mAdapter.listBusinessCategoriesLoaded(categoryResp);

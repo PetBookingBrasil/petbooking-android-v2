@@ -31,7 +31,7 @@ public final class ScheduleItem implements Parcelable {
 
     //region - Parcelable
 
-    protected ScheduleItem(Parcel in) {
+    private ScheduleItem(Parcel in) {
         id = in.readString();
         title = in.readString();
     }

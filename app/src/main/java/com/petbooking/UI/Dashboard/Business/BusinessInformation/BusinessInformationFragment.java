@@ -440,12 +440,12 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
 
     private void businessReviewsLoaded() {
         BusinessActivity activity = (BusinessActivity) getActivity();
-        activity.getAdapter().setBusinessReviewsLoaded(true);
+        activity.getAdapter().businessReviewsLoaded();
     }
 
     private void businessInfoLoaded() {
         BusinessActivity activity = (BusinessActivity) getActivity();
-        activity.getAdapter().setBusinessInfoLoaded(true);
+        activity.getAdapter().businessInfoLoaded();
     }
 
     //endregion

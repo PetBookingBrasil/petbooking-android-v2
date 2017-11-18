@@ -55,23 +55,23 @@ public final class BusinessTabsAdapter extends FragmentStatePagerAdapter {
         mOnLoadedListener = onLoadedListener;
     }
 
-    public void setBusinessReviewsLoaded(boolean isBusinessReviewsLoaded) {
-        mIsBusinessReviewsLoaded = isBusinessReviewsLoaded;
+    public void businessReviewsLoaded() {
+        mIsBusinessReviewsLoaded = true;
         checkIfLoaded();
     }
 
-    public void setBusinessInfoLoaded(boolean isBusinessInfoLoaded) {
-        mIsBusinessInfoLoaded = isBusinessInfoLoaded;
+    public void businessInfoLoaded() {
+        mIsBusinessInfoLoaded = true;
         checkIfLoaded();
     }
 
-    public void setListPetsLoaded(boolean isListPetsLoaded) {
-        mIsListPetsLoaded = isListPetsLoaded;
+    public void listPetsLoaded() {
+        mIsListPetsLoaded = true;
         checkIfLoaded();
     }
 
-    public void setListBusinessCategoriesLoaded(boolean isListBusinessCategoriesLoaded) {
-        mIsListBusinessCategoriesLoaded = isListBusinessCategoriesLoaded;
+    public void listBusinessCategoriesLoaded() {
+        mIsListBusinessCategoriesLoaded = true;
         checkIfLoaded();
     }
 

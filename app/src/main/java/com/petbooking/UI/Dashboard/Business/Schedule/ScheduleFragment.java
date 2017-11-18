@@ -121,7 +121,7 @@ public class ScheduleFragment extends Fragment {
         mAdapter.listPetsLoaded(pets);
 
         BusinessActivity activity = (BusinessActivity) getActivity();
-        activity.getAdapter().setListPetsLoaded(true);
+        activity.getAdapter().listPetsLoaded();
     }
 
     //endregion
@@ -132,7 +132,7 @@ public class ScheduleFragment extends Fragment {
         mAdapter.listBusinessCategoriesLoaded(categoryResp);
 
         BusinessActivity activity = (BusinessActivity) getActivity();
-        activity.getAdapter().setListBusinessCategoriesLoaded(true);
+        activity.getAdapter().listBusinessCategoriesLoaded();
     }
 
     private void listServidesLoaded(List<BusinessServices> services) {

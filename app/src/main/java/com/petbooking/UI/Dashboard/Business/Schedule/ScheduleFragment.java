@@ -160,6 +160,10 @@ public class ScheduleFragment extends Fragment {
             listProfessionals();
         }
 
+        @Override
+        public void onGroupButtonClicked() {
+
+        }
     };
 
     //endregion

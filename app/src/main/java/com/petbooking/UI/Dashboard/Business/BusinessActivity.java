@@ -171,7 +171,7 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
         }
     };
 
-    private final BusinessTabsAdapter.OnLoadedListener mAdapterOnLoadedListener = () -> AppUtils.hideDialog();
+    private final BusinessTabsAdapter.OnLoadedListener mAdapterOnLoadedListener = AppUtils::hideDialog;
 
     //endregion
 

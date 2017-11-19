@@ -152,10 +152,17 @@ final class ScheduleAdapter extends MultiTypeExpandableRecyclerViewAdapter<Sched
     }
 
     private void onBindGroupButtonViewHolder(GroupViewHolder holder) {
-        GroupButtonViewHolder buttonHolder = (GroupButtonViewHolder) holder;
-
         boolean enabled = (getDayAndTimeId() != null);
+
+        GroupButtonViewHolder buttonHolder = (GroupButtonViewHolder) holder;
         buttonHolder.setEnabled(enabled);
+
+        buttonHolder.setOnClickListener(view -> {
+            if (mOnClickListener != null) {
+                mOnClickListener.onGroupButtonClicked();
+            }
+        });
+
     }
 
     //endregion
@@ -362,6 +369,10 @@ final class ScheduleAdapter extends MultiTypeExpandableRecyclerViewAdapter<Sched
             mButton.setEnabled(enabled);
         }
 
+        void setOnClickListener(View.OnClickListener listener) {
+            mButton.setOnClickListener(listener);
+        }
+
     }
 
     class GroupViewHolder extends com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder {
@@ -400,6 +411,7 @@ final class ScheduleAdapter extends MultiTypeExpandableRecyclerViewAdapter<Sched
     interface OnClickListener {
         void onBusinessCategoryClicked(String id);
         void onServicesClicked(String id);
+        void onGroupButtonClicked();
     }
 
     //endregion

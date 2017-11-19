@@ -61,6 +61,7 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
         mAdapter.setOnLoadedListener(mAdapterOnLoadedListener);
 
         mViewPager.setAdapter(mAdapter);
+        mViewPager.addOnPageChangeListener(mViewPagerOnPageChangeListener);
 
         mTabLayout.setBackgroundColor(getResources().getColor(R.color.secondary_red));
         mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
@@ -86,7 +87,15 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        int menuId;
+
+        if (mViewPager.getCurrentItem() == 0) {
+            menuId = R.menu.menu_schedule;
+        } else {
+            menuId = R.menu.main;
+        }
+
+        getMenuInflater().inflate(menuId, menu);
         return true;
     }
 
@@ -148,7 +157,22 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
 
     //region - Listener
 
+    private final ViewPager.OnPageChangeListener mViewPagerOnPageChangeListener = new ViewPager.OnPageChangeListener() {
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
+
+        @Override
+        public void onPageScrollStateChanged(int state) { }
+
+        @Override
+        public void onPageSelected(int position) {
+            invalidateOptionsMenu();
+        }
+    };
+
     private final BusinessTabsAdapter.OnLoadedListener mAdapterOnLoadedListener = () -> AppUtils.hideDialog();
 
     //endregion
+
 }

@@ -159,6 +159,7 @@
     <string name="additional_services">Serviços adicionais</string>
     <string name="day_and_time">Dia e horário</string>
     <string name="add_to_cart">Adicionar ao carrinho</string>
+    <string name="cart">Carrinho</string>
 
     <!-- Search -->
     <string name="filter_hint">Filtrar por nome, local&#8230;</string>

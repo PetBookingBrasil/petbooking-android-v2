@@ -7,12 +7,12 @@ import android.os.Parcelable;
  * Created by Bruno Tortato Furtado on 18/10/17.
  */
 
-public final class ScheduleItem implements Parcelable {
+public final class ScheduleChild implements Parcelable {
 
     private String id;
     private String title;
 
-    public ScheduleItem(String id, String title) {
+    public ScheduleChild(String id, String title) {
         this.id = id;
         this.title = title;
     }
@@ -31,7 +31,7 @@ public final class ScheduleItem implements Parcelable {
 
     //region - Parcelable
 
-    private ScheduleItem(Parcel in) {
+    private ScheduleChild(Parcel in) {
         id = in.readString();
         title = in.readString();
     }
@@ -47,16 +47,16 @@ public final class ScheduleItem implements Parcelable {
         dest.writeString(title);
     }
 
-    public static final Parcelable.Creator<ScheduleItem> CREATOR = new Parcelable.Creator<ScheduleItem>() {
+    public static final Parcelable.Creator<ScheduleChild> CREATOR = new Parcelable.Creator<ScheduleChild>() {
 
         @Override
-        public ScheduleItem createFromParcel(Parcel source) {
-            return new ScheduleItem(source);
+        public ScheduleChild createFromParcel(Parcel source) {
+            return new ScheduleChild(source);
         }
 
         @Override
-        public ScheduleItem[] newArray(int size) {
-            return new ScheduleItem[size];
+        public ScheduleChild[] newArray(int size) {
+            return new ScheduleChild[size];
         }
     };
 

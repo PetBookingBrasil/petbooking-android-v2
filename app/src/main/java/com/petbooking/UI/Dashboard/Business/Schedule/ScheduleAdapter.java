@@ -13,13 +13,11 @@ import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Pet;
 import com.petbooking.Models.Professional;
 import com.petbooking.R;
-import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleItem;
-import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleSection;
-import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
+import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleChild;
+import com.petbooking.UI.Dashboard.Business.Schedule.Models.ScheduleGroup;
+import com.thoughtbot.expandablerecyclerview.MultiTypeExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.listeners.GroupExpandCollapseListener;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
-import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
-import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,11 @@ import java.util.List;
  * Created by Bruno Tortato Furtado on 18/10/17.
  */
 
-final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapter.SchedulingGroupViewHolder, ScheduleAdapter.SchedulingGroupItemViewHolder> {
+final class ScheduleAdapter extends MultiTypeExpandableRecyclerViewAdapter<ScheduleAdapter.GroupViewHolder, ScheduleAdapter.ChildViewHolder> {
+
+    private static final int GROUP_SECTION_VIEW_TYPE = 3;
+    private static final int GROUP_BUTTON_VIEW_TYPE = 4;
+    private static final int CHILD_VIEW_TYPE = 5;
 
     private Context mContext;
     private OnClickListener mOnClickListener;
@@ -58,37 +60,71 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
         });
     }
 
-    //region - ExpandableRecyclerViewAdapter
+    //region - MultiTypeExpandableRecyclerViewAdapter
 
     @Override
-    public SchedulingGroupViewHolder onCreateGroupViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_schedule_section, viewGroup, false);
-        return new SchedulingGroupViewHolder(view);
+    public int getGroupViewType(int position, ExpandableGroup group) {
+        ScheduleGroup scheduleGroup = (ScheduleGroup) group;
+
+        if (scheduleGroup.getType() == ScheduleGroup.Type.BUTTON) {
+            return GROUP_BUTTON_VIEW_TYPE;
+        }
+
+        return GROUP_SECTION_VIEW_TYPE;
     }
 
     @Override
-    public SchedulingGroupItemViewHolder onCreateChildViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_schedule_item, viewGroup, false);
-        return new SchedulingGroupItemViewHolder(view);
+    public int getChildViewType(int position, ExpandableGroup group, int childIndex) {
+        return CHILD_VIEW_TYPE;
     }
 
     @Override
-    public void onBindGroupViewHolder(SchedulingGroupViewHolder holder, int flatPosition, ExpandableGroup group) {
-        ScheduleSection section = (ScheduleSection) group;
-        holder.setTitle(section.getTitle());
+    public boolean isGroup(int viewType) {
+        return (viewType == GROUP_SECTION_VIEW_TYPE || viewType == GROUP_BUTTON_VIEW_TYPE);
     }
 
     @Override
-    public void onBindChildViewHolder(SchedulingGroupItemViewHolder holder, int flatPosition, ExpandableGroup group, int childIndex) {
-        final ScheduleItem item = (ScheduleItem) group.getItems().get(childIndex);
+    public boolean isChild(int viewType) {
+        return (viewType == CHILD_VIEW_TYPE);
+    }
+
+    @Override
+    public GroupViewHolder onCreateGroupViewHolder(ViewGroup viewGroup, int viewType) {
+        if (viewType == GROUP_BUTTON_VIEW_TYPE) {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_schedule_group_button, viewGroup, false);
+            return new GroupButtonViewHolder(view);
+        }
+
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_schedule_group_section, viewGroup, false);
+        return new GroupSectionViewHolder(view);
+    }
+
+    @Override
+    public ChildViewHolder onCreateChildViewHolder(ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_schedule_child, viewGroup, false);
+        return new ChildViewHolder(view);
+    }
+
+    @Override
+    public void onBindGroupViewHolder(GroupViewHolder holder, int flatPosition, ExpandableGroup group) {
+        if (getGroupViewType(flatPosition, group) == GROUP_BUTTON_VIEW_TYPE) {
+            onBindGroupButtonViewHolder();
+        } else {
+            onBindGroupSectionViewHolder(holder, group);
+        }
+    }
+
+    @Override
+    public void onBindChildViewHolder(ChildViewHolder holder, int flatPosition, ExpandableGroup group, int childIndex) {
+        final ScheduleChild item = (ScheduleChild) group.getItems().get(childIndex);
         holder.setTitle(item.getTitle());
 
         holder.setOnClickListener(view -> {
-            ScheduleSection section = (ScheduleSection) group;
+            ScheduleGroup section = (ScheduleGroup) group;
             section.setId(item.getId());
             section.setTitle(item.getTitle());
 
-            ScheduleSection.Type type = section.getType();
+            ScheduleGroup.Type type = section.getType();
             int position = section.getType().getValue();
 
             checkIfBusinessCategoryClicked(type, item.getId());
@@ -103,22 +139,37 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
 
     //endregion
 
-    //region - Protected getters
+    //region - OnBind
+
+    private void onBindGroupSectionViewHolder(GroupViewHolder holder, ExpandableGroup group) {
+        GroupSectionViewHolder sectionHolder = (GroupSectionViewHolder) holder;
+        ScheduleGroup section = (ScheduleGroup) group;
+
+        sectionHolder.setTitle(section.getTitle());
+    }
+
+    private void onBindGroupButtonViewHolder() {
+
+    }
+
+    //endregion
+
+    //region - Getters
 
     String getPetId() {
-        return getId(ScheduleSection.Type.SELECT_PET);
+        return getId(ScheduleGroup.Type.SELECT_PET);
     }
 
     String getCategoryId() {
-        return getId(ScheduleSection.Type.SERVICE_CATEGORY);
+        return getId(ScheduleGroup.Type.SERVICE_CATEGORY);
     }
 
     String getServiceId() {
-        return getId(ScheduleSection.Type.ADDITIONAL_SERVICES);
+        return getId(ScheduleGroup.Type.ADDITIONAL_SERVICES);
     }
 
-    private String getId(ScheduleSection.Type type) {
-        ScheduleSection section = (ScheduleSection) getGroups().get(type.getValue());
+    private String getId(ScheduleGroup.Type type) {
+        ScheduleGroup section = (ScheduleGroup) getGroups().get(type.getValue());
         return section.getId();
     }
 
@@ -127,12 +178,12 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
     //region - Loaded
 
     void listPetsLoaded(List<Pet> pets) {
-        ScheduleSection.Type type = ScheduleSection.Type.SELECT_PET;
-        List<ScheduleItem> items = new ArrayList<>();
+        ScheduleGroup.Type type = ScheduleGroup.Type.SELECT_PET;
+        List<ScheduleChild> items = new ArrayList<>();
 
         if (pets != null) {
             for (Pet pet: pets) {
-                items.add(new ScheduleItem(pet.id, pet.name));
+                items.add(new ScheduleChild(pet.id, pet.name));
             }
         }
 
@@ -141,12 +192,12 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
     }
 
     void listBusinessCategoriesLoaded(CategoryResp categoryResp) {
-        ScheduleSection.Type type = ScheduleSection.Type.SERVICE_CATEGORY;
-        List<ScheduleItem> items = new ArrayList<>();
+        ScheduleGroup.Type type = ScheduleGroup.Type.SERVICE_CATEGORY;
+        List<ScheduleChild> items = new ArrayList<>();
 
         if (categoryResp != null) {
             for (CategoryResp.Item item: categoryResp.data) {
-                items.add(new ScheduleItem(item.id, item.attributes.name));
+                items.add(new ScheduleChild(item.id, item.attributes.name));
             }
         }
 
@@ -154,12 +205,12 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
     }
 
     void listServicesLoaded(List<BusinessServices> services) {
-        ScheduleSection.Type type = ScheduleSection.Type.ADDITIONAL_SERVICES;
-        List<ScheduleItem> items = new ArrayList<>();
+        ScheduleGroup.Type type = ScheduleGroup.Type.ADDITIONAL_SERVICES;
+        List<ScheduleChild> items = new ArrayList<>();
 
         if (services != null) {
             for (BusinessServices service: services) {
-                items.add(new ScheduleItem(service.id, service.name));
+                items.add(new ScheduleChild(service.id, service.name));
             }
         }
 
@@ -169,12 +220,12 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
     void listProfessionalsLoaded(List<Professional> professionals) {
         mProfessionals = professionals;
 
-        ScheduleSection.Type type = ScheduleSection.Type.PROFESSIONAL;
-        List<ScheduleItem> items = new ArrayList<>();
+        ScheduleGroup.Type type = ScheduleGroup.Type.PROFESSIONAL;
+        List<ScheduleChild> items = new ArrayList<>();
 
         if (professionals != null) {
             for (Professional professional: professionals) {
-                items.add(new ScheduleItem(professional.id, professional.name));
+                items.add(new ScheduleChild(professional.id, professional.name));
             }
         }
 
@@ -182,24 +233,24 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
     }
 
     private void listAvailableDatesLoaded(List<AppointmentDate> availableDates) {
-        ScheduleSection.Type type = ScheduleSection.Type.DAY_AND_TIME;
-        List<ScheduleItem> items = new ArrayList<>();
+        ScheduleGroup.Type type = ScheduleGroup.Type.DAY_AND_TIME;
+        List<ScheduleChild> items = new ArrayList<>();
 
         if (availableDates != null) {
             for (AppointmentDate date: availableDates) {
-                items.add(new ScheduleItem(date.monthName, date.monthName));
+                items.add(new ScheduleChild(date.monthName, date.monthName));
             }
         }
 
         loaded(type, items);
     }
 
-    private void loaded(ScheduleSection.Type type, List<ScheduleItem> items) {
+    private void loaded(ScheduleGroup.Type type, List<ScheduleChild> items) {
         int position = type.getValue();
 
-        List<ScheduleSection> sections = (List<ScheduleSection>) getGroups();
-        ScheduleSection oldSection = sections.get(position);
-        ScheduleSection newSection = new ScheduleSection(mContext, type, items);
+        List<ScheduleGroup> sections = (List<ScheduleGroup>) getGroups();
+        ScheduleGroup oldSection = sections.get(position);
+        ScheduleGroup newSection = new ScheduleGroup(mContext, type, items);
 
         sections.remove(oldSection);
         sections.add(position, newSection);
@@ -211,26 +262,26 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
 
     //region - Check
 
-    private void checkIfBusinessCategoryClicked(ScheduleSection.Type type, String id) {
+    private void checkIfBusinessCategoryClicked(ScheduleGroup.Type type, String id) {
         if (mOnClickListener != null) {
-            if (type == ScheduleSection.Type.SERVICE_CATEGORY) {
+            if (type == ScheduleGroup.Type.SERVICE_CATEGORY) {
                 mOnClickListener.onBusinessCategoryClicked(id);
             }
         }
 
     }
 
-    private void checkIfServicesClicked(ScheduleSection.Type type, String id) {
+    private void checkIfServicesClicked(ScheduleGroup.Type type, String id) {
         if (mOnClickListener != null) {
-            if (type == ScheduleSection.Type.ADDITIONAL_SERVICES) {
+            if (type == ScheduleGroup.Type.ADDITIONAL_SERVICES) {
                 mOnClickListener.onServicesClicked(id);
             }
         }
     }
 
-    private void checkIfProfessionalsClicked(ScheduleSection.Type type, String id) {
+    private void checkIfProfessionalsClicked(ScheduleGroup.Type type, String id) {
         if (mOnClickListener != null) {
-            if (type == ScheduleSection.Type.PROFESSIONAL) {
+            if (type == ScheduleGroup.Type.PROFESSIONAL) {
                 for (Professional professional: mProfessionals) {
                     if (professional.id.equals(id)) {
                         listAvailableDatesLoaded(professional.availableDates);
@@ -245,14 +296,15 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
 
     //region - Static
 
-    private static List<ScheduleSection> getGenres(Context context) {
-        List<ScheduleSection> genres = new ArrayList<>();
+    private static List<ScheduleGroup> getGenres(Context context) {
+        List<ScheduleGroup> genres = new ArrayList<>();
 
-        genres.add(new ScheduleSection(context, ScheduleSection.Type.SELECT_PET));
-        genres.add(new ScheduleSection(context, ScheduleSection.Type.SERVICE_CATEGORY));
-        genres.add(new ScheduleSection(context, ScheduleSection.Type.ADDITIONAL_SERVICES));
-        genres.add(new ScheduleSection(context, ScheduleSection.Type.PROFESSIONAL));
-        genres.add(new ScheduleSection(context, ScheduleSection.Type.DAY_AND_TIME));
+        genres.add(new ScheduleGroup(context, ScheduleGroup.Type.SELECT_PET));
+        genres.add(new ScheduleGroup(context, ScheduleGroup.Type.SERVICE_CATEGORY));
+        genres.add(new ScheduleGroup(context, ScheduleGroup.Type.ADDITIONAL_SERVICES));
+        genres.add(new ScheduleGroup(context, ScheduleGroup.Type.PROFESSIONAL));
+        genres.add(new ScheduleGroup(context, ScheduleGroup.Type.DAY_AND_TIME));
+        genres.add(new ScheduleGroup(context, ScheduleGroup.Type.BUTTON));
 
         return genres;
     }
@@ -261,11 +313,11 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
 
     //region - ViewHolder
 
-    class SchedulingGroupViewHolder extends GroupViewHolder {
+    class GroupSectionViewHolder extends GroupViewHolder {
 
         private TextView mTxtSelectedTitle;
 
-        SchedulingGroupViewHolder(View itemView) {
+        GroupSectionViewHolder(View itemView) {
             super(itemView);
             mTxtSelectedTitle = itemView.findViewById(R.id.txt_selected_title);
         }
@@ -276,12 +328,28 @@ final class ScheduleAdapter extends ExpandableRecyclerViewAdapter<ScheduleAdapte
 
     }
 
-    class SchedulingGroupItemViewHolder extends ChildViewHolder {
+    class GroupButtonViewHolder extends GroupViewHolder {
+
+        GroupButtonViewHolder(View itemView) {
+            super(itemView);
+        }
+
+    }
+
+    class GroupViewHolder extends com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder {
+
+        GroupViewHolder(View itemView) {
+            super(itemView);
+        }
+
+    }
+
+    class ChildViewHolder extends com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder {
 
         private LinearLayout mLinearLayout;
         private TextView mTxtTitle;
 
-        SchedulingGroupItemViewHolder(View itemView) {
+        ChildViewHolder(View itemView) {
             super(itemView);
             mLinearLayout = itemView.findViewById(R.id.linear_layout);
             mTxtTitle = itemView.findViewById(R.id.txt_selected_title);

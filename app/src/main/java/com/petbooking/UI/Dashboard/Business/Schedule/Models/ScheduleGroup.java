@@ -11,18 +11,18 @@ import java.util.List;
  * Created by Bruno Tortato Furtado on 18/10/17.
  */
 
-public final class ScheduleSection extends ExpandableGroup<ScheduleItem> {
+public final class ScheduleGroup extends ExpandableGroup<ScheduleChild> {
 
     private String id;
     private String title;
     private Type type;
 
-    public ScheduleSection(Context context, Type type) {
+    public ScheduleGroup(Context context, Type type) {
         this(context, type, null);
     }
 
-    public ScheduleSection(Context context, Type type, List<ScheduleItem> items) {
-        super(ScheduleSection.getTitle(context, type), items);
+    public ScheduleGroup(Context context, Type type, List<ScheduleChild> items) {
+        super(ScheduleGroup.getTitle(context, type), items);
         this.type = type;
     }
 
@@ -84,7 +84,8 @@ public final class ScheduleSection extends ExpandableGroup<ScheduleItem> {
         SERVICE_CATEGORY(1),
         ADDITIONAL_SERVICES(2),
         PROFESSIONAL(3),
-        DAY_AND_TIME(4);
+        DAY_AND_TIME(4),
+        BUTTON(5);
 
         private int mValue;
 

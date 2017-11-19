@@ -1,9 +1,11 @@
 package com.petbooking.UI.Dashboard.Business.Schedule;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -108,7 +110,7 @@ final class ScheduleAdapter extends MultiTypeExpandableRecyclerViewAdapter<Sched
     @Override
     public void onBindGroupViewHolder(GroupViewHolder holder, int flatPosition, ExpandableGroup group) {
         if (getGroupViewType(flatPosition, group) == GROUP_BUTTON_VIEW_TYPE) {
-            onBindGroupButtonViewHolder();
+            onBindGroupButtonViewHolder(holder);
         } else {
             onBindGroupSectionViewHolder(holder, group);
         }
@@ -133,6 +135,8 @@ final class ScheduleAdapter extends MultiTypeExpandableRecyclerViewAdapter<Sched
 
             notifyItemChanged(position);
             toggleGroup(position);
+
+            checkIfDayAndTimeClicked(type);
         });
 
     }
@@ -148,8 +152,11 @@ final class ScheduleAdapter extends MultiTypeExpandableRecyclerViewAdapter<Sched
         sectionHolder.setTitle(section.getTitle());
     }
 
-    private void onBindGroupButtonViewHolder() {
+    private void onBindGroupButtonViewHolder(GroupViewHolder holder) {
+        GroupButtonViewHolder buttonHolder = (GroupButtonViewHolder) holder;
 
+        boolean enabled = (getDayAndTimeId() != null);
+        buttonHolder.setEnabled(enabled);
     }
 
     //endregion
@@ -166,6 +173,14 @@ final class ScheduleAdapter extends MultiTypeExpandableRecyclerViewAdapter<Sched
 
     String getServiceId() {
         return getId(ScheduleGroup.Type.ADDITIONAL_SERVICES);
+    }
+
+    String getProfessionalId() {
+        return getId(ScheduleGroup.Type.PROFESSIONAL);
+    }
+
+    String getDayAndTimeId() {
+        return getId(ScheduleGroup.Type.DAY_AND_TIME);
     }
 
     private String getId(ScheduleGroup.Type type) {
@@ -292,6 +307,13 @@ final class ScheduleAdapter extends MultiTypeExpandableRecyclerViewAdapter<Sched
         }
     }
 
+    private void checkIfDayAndTimeClicked(ScheduleGroup.Type type) {
+        if (type == ScheduleGroup.Type.DAY_AND_TIME) {
+            int position = ScheduleGroup.Type.BUTTON.getValue();
+            notifyItemChanged(position);
+        }
+    }
+
     //endregion
 
     //region - Static
@@ -330,8 +352,15 @@ final class ScheduleAdapter extends MultiTypeExpandableRecyclerViewAdapter<Sched
 
     class GroupButtonViewHolder extends GroupViewHolder {
 
+        private Button mButton;
+
         GroupButtonViewHolder(View itemView) {
             super(itemView);
+            mButton = itemView.findViewById(R.id.button);
+        }
+
+        void setEnabled(boolean enabled) {
+            mButton.setEnabled(enabled);
         }
 
     }

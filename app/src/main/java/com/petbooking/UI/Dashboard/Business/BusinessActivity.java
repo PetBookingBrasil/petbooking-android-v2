@@ -101,11 +101,13 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
 
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        int itemId = item.getItemId();
+
+        if (itemId == android.R.id.home) {
             onBackPressed();
-        } else if (item.getItemId() == R.id.schedules) {
+        } else if (itemId == R.id.schedules || itemId == R.id.cart) {
             goToCartActivity();
-        } else if (item.getItemId() == R.id.notifications) {
+        } else if (itemId == R.id.notifications) {
             Log.d("ITEM SELECTED", "NOTIFICATIONS");
         }
 

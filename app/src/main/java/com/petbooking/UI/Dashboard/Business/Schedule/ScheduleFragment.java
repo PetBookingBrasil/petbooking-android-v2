@@ -1,8 +1,6 @@
 package com.petbooking.UI.Dashboard.Business.Schedule;
 
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,7 +21,6 @@ import com.petbooking.Models.Pet;
 import com.petbooking.Models.Professional;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.BusinessActivity;
-import com.petbooking.UI.Dashboard.Cart.CartActivity;
 import com.petbooking.Utils.AppUtils;
 
 import java.util.List;

@@ -9,8 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.petbooking.API.Business.Models.CategoryResp;
+import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.AppointmentDate;
 import com.petbooking.Models.BusinessServices;
+import com.petbooking.Models.CartItem;
 import com.petbooking.Models.Pet;
 import com.petbooking.Models.Professional;
 import com.petbooking.R;
@@ -37,6 +39,9 @@ final class ScheduleAdapter extends MultiTypeExpandableRecyclerViewAdapter<Sched
     private OnClickListener mOnClickListener;
 
     private ExpandableGroup mExpandedGroup;
+
+    private List<Pet> mPets;
+    private List<BusinessServices> mBusinessServices;
     private List<Professional> mProfessionals;
 
     ScheduleAdapter(Context context, OnClickListener onClickListener) {
@@ -156,13 +161,6 @@ final class ScheduleAdapter extends MultiTypeExpandableRecyclerViewAdapter<Sched
 
         GroupButtonViewHolder buttonHolder = (GroupButtonViewHolder) holder;
         buttonHolder.setEnabled(enabled);
-
-        buttonHolder.setOnClickListener(view -> {
-            if (mOnClickListener != null) {
-                mOnClickListener.onGroupButtonClicked();
-            }
-        });
-
     }
 
     //endregion
@@ -199,6 +197,8 @@ final class ScheduleAdapter extends MultiTypeExpandableRecyclerViewAdapter<Sched
     //region - Loaded
 
     void listPetsLoaded(List<Pet> pets) {
+        mPets = pets;
+
         ScheduleGroup.Type type = ScheduleGroup.Type.SELECT_PET;
         List<ScheduleChild> items = new ArrayList<>();
 
@@ -226,6 +226,8 @@ final class ScheduleAdapter extends MultiTypeExpandableRecyclerViewAdapter<Sched
     }
 
     void listServicesLoaded(List<BusinessServices> services) {
+        mBusinessServices = services;
+
         ScheduleGroup.Type type = ScheduleGroup.Type.ADDITIONAL_SERVICES;
         List<ScheduleChild> items = new ArrayList<>();
 
@@ -363,14 +365,62 @@ final class ScheduleAdapter extends MultiTypeExpandableRecyclerViewAdapter<Sched
         GroupButtonViewHolder(View itemView) {
             super(itemView);
             mButton = itemView.findViewById(R.id.button);
+
+            mButton.setOnClickListener(view -> {
+                if (mOnClickListener != null) {
+                    confirmAppointment();
+                    mOnClickListener.onGroupButtonClicked();
+                }
+            });
         }
 
         void setEnabled(boolean enabled) {
             mButton.setEnabled(enabled);
         }
 
-        void setOnClickListener(View.OnClickListener listener) {
-            mButton.setOnClickListener(listener);
+        private void confirmAppointment() {
+            AppointmentManager manager = AppointmentManager.getInstance();
+
+            Pet pet = getPet(getPetId());
+            Professional professional = getProfessional(getProfessionalId());
+            BusinessServices service = getBusinessServices(getServiceId());
+
+            String categoryId = getCategoryId();
+            String businessId = manager.getCurrentBusinessId();
+            String startDate = "2017-11-29";
+            String startTime = "12:00";
+
+            CartItem item = new CartItem(startDate, startTime, businessId, service, categoryId, professional, pet);
+            item.totalPrice += service.price;
+
+            manager.addItem(item);
+        }
+
+        private Pet getPet(String id) {
+            for (Pet pet: mPets) {
+                if (pet.id.equals(id)) {
+                    return pet;
+                }
+            }
+            return null;
+        }
+
+        private Professional getProfessional(String id) {
+            for (Professional professional: mProfessionals) {
+                if (professional.id.equals(id)) {
+                    return professional;
+                }
+            }
+            return null;
+        }
+
+        private BusinessServices getBusinessServices(String id) {
+            for (BusinessServices service: mBusinessServices) {
+                if (service.id.equals(id)) {
+                    return service;
+                }
+            }
+            return null;
         }
 
     }

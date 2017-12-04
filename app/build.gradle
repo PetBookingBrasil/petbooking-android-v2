@@ -58,6 +58,7 @@ dependencies {
 
     // Image Manipulation
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 
     // HTTP Client
     compile 'com.google.code.gson:gson:2.8.0'
@@ -74,6 +75,13 @@ dependencies {
     // Goggle API
     compile "com.google.android.gms:play-services-location:9.0.0"
     compile "com.google.android.gms:play-services-maps:9.0.0"
+
+    //Jake Wharton
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    //RecyclerView
+    compile 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.1.3'
 
     // Tests
     testCompile 'junit:junit:4.12'

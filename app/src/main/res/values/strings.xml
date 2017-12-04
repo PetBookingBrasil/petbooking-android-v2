@@ -168,6 +168,7 @@
     <string name="business_service_price">R$ %1$s</string>
     <string name="business_service_finish">Finalizar Agendamento</string>
     <string name="call_button">Ligar</string>
+    <string name="bussines_category">Categoria do Serviço</string>
 
     <!-- Search -->
     <string name="filter_hint">Filtrar por nome, local&#8230;</string>
@@ -267,4 +268,5 @@
     <!-- Permissions -->
     <string name="permission_location_title">Ativar Localização</string>
     <string name="permission_location">Sua localização é necessária para utilizar as nossas funcionalidades.</string>
+    <string name="select_pet">Selecione um pet</string>
 </resources>

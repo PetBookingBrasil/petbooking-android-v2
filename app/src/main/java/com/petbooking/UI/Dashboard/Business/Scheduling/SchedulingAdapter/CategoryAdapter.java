@@ -1,24 +1,20 @@
 package com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter;
 
-import android.app.Fragment;
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.petbooking.Models.Pet;
+import com.petbooking.Models.Category;
 import com.petbooking.R;
-import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingFragment;
-import com.petbooking.UI.Widget.CircleTransformation;
-import com.petbooking.Utils.APIUtils;
+import com.petbooking.Utils.AppUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,32 +26,31 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
  * Created by victorneves on 30/11/17.
  */
 
-public class PetAdapter extends StatelessSection {
+public class CategoryAdapter extends StatelessSection {
     String title;
     List<String> itens;
-    SchedulingFragment fragment;
-    boolean expaned = true;
+    boolean expaned = false;
     Context context;
-    List<Pet> pets;
+    List<Category> services;
+    OnSelectCategoryListener onSelectCategoryListener;
 
-    public PetAdapter(String title, List<String> itens, SchedulingFragment fragment,List<Pet> pet,Context context) {
+    public CategoryAdapter(String title, List<String> itens, Context context, List<Category> services) {
         super(new SectionParameters.Builder(R.layout.custom_pet_adapter)
                 .headerResourceId(R.layout.header_scheduling)
                 .build());
         this.title = title;
         this.itens = itens;
-        this.fragment = fragment;
-        this.pets = pet;
         this.context = context;
+        this.services = services;
+    }
+
+    public void setOnSelectCategoryListener(OnSelectCategoryListener onSelectCategoryListener) {
+        this.onSelectCategoryListener = onSelectCategoryListener;
     }
 
     @Override
     public int getContentItemsTotal() {
         return expaned ? 1 : 0;
-    }
-
-    public void addPets(ArrayList<Pet> pets){
-        this.pets = pets;
     }
 
     @Override
@@ -66,13 +61,19 @@ public class PetAdapter extends StatelessSection {
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder item, final int position) {
         ItemViewHolder holder = (ItemViewHolder) item;
-        holder.pets.setLayoutManager(new GridLayoutManager(context,3));
-        holder.pets.setAdapter(new CustomPetAdapter(context,pets));
+        holder.titleNumber.setText("2");
+        holder.textTitle.setText(R.string.bussines_category);
+        holder.services.setLayoutManager(new GridLayoutManager(context,3));
+        holder.services.setAdapter(new CustomServiceAdapter(context,services));
 
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setServices(List<Category> services) {
+        this.services = services;
     }
 
     @Override
@@ -86,13 +87,17 @@ public class PetAdapter extends StatelessSection {
         viewHolder.headerTitle.setText(title);
     }
 
+    public void setExpanable(boolean expaned) {
+        this.expaned = expaned;
+    }
+
     class ItemViewHolder extends RecyclerView.ViewHolder {
-       @BindView(R.id.recycler_custom)
-       RecyclerView pets;
-       @BindView(R.id.text_title_number)
-       TextView titleNumber;
-       @BindView(R.id.text_title)
-       TextView textTitle;
+        @BindView(R.id.recycler_custom)
+        RecyclerView services;
+        @BindView(R.id.text_title_number)
+        TextView titleNumber;
+        @BindView(R.id.text_title)
+        TextView textTitle;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -100,75 +105,60 @@ public class PetAdapter extends StatelessSection {
         }
     }
 
-
-    class CustomPetAdapter extends RecyclerView.Adapter<CustomPetAdapter.ViewHolder>{
+    class CustomServiceAdapter extends RecyclerView.Adapter<CustomServiceAdapter.ViewHolder>{
         Context context;
-        List<Pet> pets;
+        List<Category> services;
 
-        public CustomPetAdapter(Context context, List<Pet> pets) {
+        public CustomServiceAdapter(Context context, List<Category> services) {
             this.context = context;
-            this.pets = pets;
+            this.services = services;
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_list_pet_calendar,parent,false);
+            View view = LayoutInflater.from(context).inflate(R.layout.item_list_category,parent,false);
             ViewHolder holder = new ViewHolder(view);
             return holder;
         }
 
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
-            final Pet pet = pets.get(position);
-            holder.petName.setText(pet.name);
-            int petAvatar;
+            Category category = services.get(position);
+            int color = AppUtils.getCategoryColor(context, category.categoryName);
+            GradientDrawable iconBackground = (GradientDrawable) holder.categoryIcon.getBackground();
+            holder.categoryName.setText(category.categoryName);
+            holder.categoryIcon.setImageDrawable(category.icon);
 
-            if (pet.type != null && pet.type.equals("dog")) {
-                petAvatar = R.drawable.ic_placeholder_dog;
-            } else {
-                petAvatar = R.drawable.ic_placeholder_cat;
-            }
-
-            holder.view.setOnClickListener(new View.OnClickListener() {
+            holder.v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PetAdapter.this.expaned = false;
-                    setTitle(pet.name);
-                    fragment.notifyChanged(position);
-
+                    onSelectCategoryListener.onSelect(position);
                 }
             });
-            Glide.with(context)
-                    .load(APIUtils.getAssetEndpoint(pet.avatar.url))
-                    .error(petAvatar)
-                    .placeholder(petAvatar)
-                    .bitmapTransform(new CircleTransformation(context))
-                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                    .into(holder.imgPet);
+
+            iconBackground.setColor(color);
         }
 
         @Override
         public int getItemCount() {
-            return pets.size();
+            return services.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder{
-            @BindView(R.id.pet_photo)
-            ImageView imgPet;
-            @BindView(R.id.pet_name)
-            TextView petName;
-            View view;
+            @BindView(R.id.category_icon)
+            ImageView categoryIcon;
+            @BindView(R.id.category_name)
+            TextView categoryName;
+            View v;
             public ViewHolder(View itemView) {
                 super(itemView);
                 ButterKnife.bind(this,itemView);
-                view = itemView;
-
+                v = itemView;
             }
         }
-
     }
 
+    public interface OnSelectCategoryListener {
+        void onSelect(int position);
+    }
 }
-
-
-

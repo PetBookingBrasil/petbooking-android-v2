@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.petbooking.API.Appointment.AppointmentService;
+import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.Interfaces.APICallback;
@@ -18,7 +19,9 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Category;
 import com.petbooking.Models.Pet;
+import com.petbooking.Models.Professional;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.CategoryAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.PetAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.ServiceAdapter;
 import com.petbooking.Utils.APIUtils;
@@ -34,21 +37,60 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
  */
 
 public class SchedulingFragment extends Fragment {
+    private static final String TAG = "services";
+    //List
     RecyclerView mRecyclerView;
+
+    //Adapters
     private SectionedRecyclerViewAdapter mAdapter;
     PetAdapter petAdapter;
+    CategoryAdapter categoryAdapter;
     ServiceAdapter serviceAdapter;
 
+    //Lists
     private ArrayList<Pet> mPetList;
     private ArrayList<BusinessServices> mServiceList;
     private ArrayList<Category> mCategoryList;
+    private ArrayList<BusinessServices> mSerceListCopy;
 
+    //Models
     private AppointmentService mAppointmentService;
     private AppointmentManager mAppointmentManager;
     private com.petbooking.API.Business.BusinessService mBusinessService;
+    BusinessServices mBusinessServices;
+
+    PetService mPetService;
+
+    //Ids
     private String userId;
     private String businessId = null;
-    PetService mPetService;
+    String categoryId;
+    String petId;
+
+    CategoryAdapter.OnSelectCategoryListener mSelectedCategory = new CategoryAdapter.OnSelectCategoryListener() {
+        @Override
+        public void onSelect(int position) {
+            categoryId = mCategoryList.get(position).id;
+            categoryAdapter.setTitle(mCategoryList.get(position).categoryName);
+            categoryAdapter.setExpanable(false);
+            listServices(categoryId,petId);
+        }
+    };
+
+    ServiceAdapter.OnSelectecService mSelectedService = new ServiceAdapter.OnSelectecService() {
+        @Override
+        public void onSelect(String petId, BusinessServices service, boolean add) {
+            if(add){
+                mSerceListCopy.add(service);
+                serviceAdapter.setServices(mSerceListCopy,true);
+                mAdapter.notifyDataSetChanged();
+            }else{
+                mSerceListCopy.remove(0);
+                serviceAdapter.setServices(mServiceList,false);
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+    };
 
     public static SchedulingFragment newInstance(String id) {
         SchedulingFragment fragment = new SchedulingFragment();
@@ -56,6 +98,10 @@ public class SchedulingFragment extends Fragment {
         bundle.putString("businessId", id);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    public void setPetId(String petId){
+        this.petId = petId;
     }
 
     @Override
@@ -66,8 +112,9 @@ public class SchedulingFragment extends Fragment {
         mPetList = new ArrayList<>();
         mPetService = new PetService();
         mServiceList = new ArrayList<>();
-        mAppointmentService = new AppointmentService();
         mCategoryList = new ArrayList<>();
+        mSerceListCopy = new ArrayList<>();
+        mAppointmentService = new AppointmentService();
         mBusinessService = new com.petbooking.API.Business.BusinessService();
         this.businessId = getArguments().getString("businessId", "0");
 
@@ -97,9 +144,11 @@ public class SchedulingFragment extends Fragment {
             services.add(service);
         }
         petAdapter = new PetAdapter("Pet", pets, this,mPetList,getActivity());
-        serviceAdapter = new ServiceAdapter("Service", services,getContext(),mCategoryList);
+        categoryAdapter = new CategoryAdapter("Categoria", services,getContext(),mCategoryList);
+        categoryAdapter.setOnSelectCategoryListener(mSelectedCategory);
+        serviceAdapter = new ServiceAdapter(getContext(),mServiceList,"Serviço e adicionais",mSelectedService);
         mAdapter.addSection(petAdapter);
-        mAdapter.addSection(serviceAdapter);
+        mAdapter.addSection(categoryAdapter);
         mRecyclerView.setAdapter(mAdapter);
         getPets();
         getCategories();
@@ -108,7 +157,11 @@ public class SchedulingFragment extends Fragment {
     }
 
     public void notifyChanged(int position) {
-        serviceAdapter.setExpanable(true);
+        String petId = mPetList.get(position).id;
+        this.petId = petId;
+        categoryAdapter.setExpanable(true);
+        serviceAdapter.setPetId(petId);
+        mAdapter.addSection(TAG,serviceAdapter);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -118,10 +171,9 @@ public class SchedulingFragment extends Fragment {
             @Override
             public void onSuccess(Object response) {
                 mPetList = (ArrayList<Pet>) response;
-
+                serviceAdapter.setExpaned(true);
                 petAdapter.addPets(mPetList);
                 mAdapter.notifyDataSetChanged();
-
                 AppUtils.hideDialog();
             }
 
@@ -139,9 +191,8 @@ public class SchedulingFragment extends Fragment {
             public void onSuccess(Object response) {
                 mServiceList = (ArrayList<BusinessServices>) response;
 
-                //serviceAdapter.setServices(mServiceList);
+                serviceAdapter.setServices(mServiceList,false);
                 mAdapter.notifyDataSetChanged();
-
 
                 AppUtils.hideDialog();
             }
@@ -162,7 +213,7 @@ public class SchedulingFragment extends Fragment {
                     mCategoryList.add(APIUtils.parseCategory(getContext(), item));
                 }
 
-                serviceAdapter.setServices(mCategoryList);
+                categoryAdapter.setServices(mCategoryList);
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -172,4 +223,24 @@ public class SchedulingFragment extends Fragment {
             }
         });
     }
+
+//    public void listProfessional() {
+//        AppUtils.showLoadingDialog(this);
+//        mAppointmentService.listProfessional(this.selectedService.id, new APICallback() {
+//            @Override
+//            public void onSuccess(Object response) {
+//                mProfessionalList = (ArrayList<Professional>) response;
+//
+//                mProfessionalAdapter.updateList(mProfessionalList);
+//                mProfessionalAdapter.notifyDataSetChanged();
+//
+//                AppUtils.hideDialog();
+//            }
+//
+//            @Override
+//            public void onError(Object error) {
+//                AppUtils.hideDialog();
+//            }
+//        });
+//    }
 }

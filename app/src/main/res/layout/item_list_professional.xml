@@ -4,7 +4,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginRight="@dimen/spacing_tiny"
-    android:orientation="horizontal"
+    android:orientation="vertical"
+    android:layout_marginLeft="8dp"
     android:paddingBottom="@dimen/spacing_xmicro"
     android:paddingTop="@dimen/spacing_xmicro">
 
@@ -19,7 +20,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/spacing_xmicro"
         android:text="Text"
         android:textColor="@color/text_color" />
 

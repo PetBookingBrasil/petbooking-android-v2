@@ -29,7 +29,7 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 public class CategoryAdapter extends StatelessSection {
     String title;
     List<String> itens;
-    boolean expaned = false;
+    boolean expanded = false;
     Context context;
     List<Category> services;
     OnSelectCategoryListener onSelectCategoryListener;
@@ -50,7 +50,7 @@ public class CategoryAdapter extends StatelessSection {
 
     @Override
     public int getContentItemsTotal() {
-        return expaned ? 1 : 0;
+        return expanded ? 1 : 0;
     }
 
     @Override
@@ -87,8 +87,8 @@ public class CategoryAdapter extends StatelessSection {
         viewHolder.headerTitle.setText(title);
     }
 
-    public void setExpanable(boolean expaned) {
-        this.expaned = expaned;
+    public void setExpanable(boolean expanded) {
+        this.expanded = expanded;
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {

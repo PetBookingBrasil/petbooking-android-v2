@@ -37,7 +37,7 @@ public class ServiceAdapter extends StatelessSection {
     Context mContext;
     List<BusinessServices> services;
     String title;
-    boolean expaned = false;
+    boolean expanded = false;
     boolean checked = false;
     private String petId;
     private AppointmentManager mAppointmentManager;
@@ -70,11 +70,11 @@ public class ServiceAdapter extends StatelessSection {
 
     @Override
     public int getContentItemsTotal() {
-        return expaned ? services.size() : 0;
+        return expanded ? services.size() : 0;
     }
 
-    public void setExpaned(boolean expaned) {
-        this.expaned = expaned;
+    public void setexpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 
     @Override

@@ -34,7 +34,7 @@ public class PetAdapter extends StatelessSection {
     String title;
     List<String> itens;
     SchedulingFragment fragment;
-    boolean expaned = true;
+    boolean expanded = true;
     Context context;
     List<Pet> pets;
 
@@ -51,7 +51,7 @@ public class PetAdapter extends StatelessSection {
 
     @Override
     public int getContentItemsTotal() {
-        return expaned ? 1 : 0;
+        return expanded ? 1 : 0;
     }
 
     public void addPets(ArrayList<Pet> pets){
@@ -132,7 +132,7 @@ public class PetAdapter extends StatelessSection {
             holder.view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PetAdapter.this.expaned = false;
+                    PetAdapter.this.expanded = false;
                     setTitle(pet.name);
                     fragment.notifyChanged(position);
 

@@ -236,6 +236,13 @@ public class SchedulingFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
+    public void editPet(){
+        categoryAdapter.setExpanable(false);
+        serviceAdapter.setexpanded(false);
+        professionalAdapter.setexpanded(false);
+        mAdapter.notifyDataSetChanged();
+    }
+
     public void getPets() {
         AppUtils.showLoadingDialog(getContext());
         mPetService.listPets(userId, new APICallback() {

@@ -84,6 +84,14 @@ public class PetAdapter extends StatelessSection {
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
         HeaderViewHolder viewHolder = (HeaderViewHolder) holder;
         viewHolder.headerTitle.setText(title);
+        viewHolder.headerEdit.setVisibility(View.VISIBLE);
+        viewHolder.headerEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                expanded = true;
+                fragment.editPet();
+            }
+        });
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {

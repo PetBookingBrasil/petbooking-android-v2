@@ -85,6 +85,7 @@ public class CategoryAdapter extends StatelessSection {
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
         HeaderViewHolder viewHolder = (HeaderViewHolder) holder;
         viewHolder.headerTitle.setText(title);
+
     }
 
     public void setExpanable(boolean expanded) {

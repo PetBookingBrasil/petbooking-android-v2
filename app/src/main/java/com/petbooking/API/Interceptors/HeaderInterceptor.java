@@ -1,5 +1,7 @@
 package com.petbooking.API.Interceptors;
 
+import android.util.Log;
+
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Events.HideLoadingEvt;
 import com.petbooking.Events.ShowLoadingEvt;
@@ -32,11 +34,13 @@ public class HeaderInterceptor implements Interceptor {
         if (headers.contains(APIConstants.HEADER_AUTHORIZATION)) {
             String authorization = String.format(APIConstants.HEADER_AUTHORIZATION_FORMAT,
                     SessionManager.getInstance().getConsumerToken());
+            Log.i(getClass().getSimpleName(),"Pegando o token 1" + authorization);
             newRequestBuilder.header(APIConstants.HEADER_AUTHORIZATION, authorization);
         }
 
         if (headers.contains(APIConstants.HEADER_SESSION_TOKEN)) {
             String sessionToken = String.format(APIConstants.HEADER_SESSION_TOKEN_FORMAT, SessionManager.getInstance().getSessionToken());
+            Log.i(getClass().getSimpleName(),"Pegando o token " + sessionToken);
             newRequestBuilder.header(APIConstants.HEADER_SESSION_TOKEN, sessionToken);
         }
 

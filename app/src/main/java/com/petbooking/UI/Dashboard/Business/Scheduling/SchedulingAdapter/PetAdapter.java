@@ -32,21 +32,23 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
 public class PetAdapter extends StatelessSection {
     String title;
-    List<String> itens;
     SchedulingFragment fragment;
     boolean expanded = true;
     Context context;
     List<Pet> pets;
 
-    public PetAdapter(String title, List<String> itens, SchedulingFragment fragment,List<Pet> pet,Context context) {
+    public PetAdapter(String title, SchedulingFragment fragment,List<Pet> pet,Context context) {
         super(new SectionParameters.Builder(R.layout.custom_pet_adapter)
                 .headerResourceId(R.layout.header_scheduling)
                 .build());
         this.title = title;
-        this.itens = itens;
         this.fragment = fragment;
         this.pets = pet;
         this.context = context;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 
     @Override
@@ -85,10 +87,10 @@ public class PetAdapter extends StatelessSection {
         HeaderViewHolder viewHolder = (HeaderViewHolder) holder;
         viewHolder.headerTitle.setText(title);
         viewHolder.headerEdit.setVisibility(View.VISIBLE);
+        viewHolder.image_header.setVisibility(View.VISIBLE);
         viewHolder.headerEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                expanded = true;
                 fragment.editPet();
             }
         });

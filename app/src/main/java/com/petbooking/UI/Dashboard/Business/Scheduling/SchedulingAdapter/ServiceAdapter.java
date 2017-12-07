@@ -2,6 +2,9 @@ package com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -20,12 +23,14 @@ import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.CartItem;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.BusinessServices.AdditionalServiceListAdapter;
+import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
@@ -42,9 +47,25 @@ public class ServiceAdapter extends StatelessSection {
     private String petId;
     private AppointmentManager mAppointmentManager;
     private AdditionalServiceListAdapter mAdditionalServiceListAdapter;
+    SchedulingFragment fragment;
     OnSelectecService onSelectecService;
+    int selectedPosition = -1;
 
-    public ServiceAdapter(Context mContext, List<BusinessServices> services, String title, OnSelectecService onSelectecService) {
+    AdditionalServiceListAdapter.OnAdditionalSelect mAdditionalSelected = new AdditionalServiceListAdapter.OnAdditionalSelect() {
+        @Override
+        public void onSelect(boolean selected, String additionalId) {
+            BusinessServices service = services.get(selectedPosition);
+            if (selected) {
+                fragment.addServiceAdditional(getAdditional(service.additionalServices,additionalId));
+            }else{
+                fragment.removeAdditional(getAdditional(service.additionalServices,additionalId));
+            }
+
+        }
+    };
+
+
+    public ServiceAdapter(Context mContext, List<BusinessServices> services, String title, OnSelectecService onSelectecService,SchedulingFragment fragment) {
         super(new SectionParameters.Builder(R.layout.item_list_service)
                 .headerResourceId(R.layout.header_scheduling)
                 .build());
@@ -53,6 +74,12 @@ public class ServiceAdapter extends StatelessSection {
         this.title = title;
         this.onSelectecService = onSelectecService;
         this.mAppointmentManager = AppointmentManager.getInstance();
+        mAdditionalServiceListAdapter = new AdditionalServiceListAdapter(mContext, new ArrayList<BusinessServices>(),mAdditionalSelected);
+        this.fragment = fragment;
+    }
+
+    public void setSelectedPosition(int selectedPosition) {
+        this.selectedPosition = selectedPosition;
     }
 
     public void setTitle(String title) {
@@ -83,10 +110,19 @@ public class ServiceAdapter extends StatelessSection {
     }
 
     @Override
-    public void onBindItemViewHolder(final RecyclerView.ViewHolder item, int position) {
+    public void onBindItemViewHolder(final RecyclerView.ViewHolder item, final int position) {
         final BusinessServices service = services.get(position);
         final ServiceViewHolder holder = (ServiceViewHolder) item;
-        CartItem cartItem = null;
+
+        mAdditionalServiceListAdapter.setPetId(petId);
+        mAdditionalServiceListAdapter.setFromDetail(false);
+        mAdditionalServiceListAdapter.updateList(service.additionalServices);
+        holder.adicionalServicesList.setLayoutManager(new LinearLayoutManager(mContext));
+        holder.adicionalServicesList.setHasFixedSize(true);
+        holder.adicionalServicesList.setAdapter(mAdditionalServiceListAdapter);
+
+        final Drawable colorGreen = ContextCompat.getDrawable(mContext,R.drawable.circle_background_green);
+        final Drawable colorGray = ContextCompat.getDrawable(mContext,R.drawable.circle_background);
         String price = mContext.getResources().getString(R.string.business_service_price, String.format("%.2f", service.price));
         holder.serviceName.setText(service.name);
         holder.servicePrice.setText(price);
@@ -96,22 +132,48 @@ public class ServiceAdapter extends StatelessSection {
             holder.serviceDescription.setText(service.description);
         }
 
-        final CartItem finalCartItem = cartItem;
-        holder.adicionalServicesList.setVisibility(View.VISIBLE);
-
-        holder.serviceCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && !checked) {
-                    configureAdditional(holder, finalCartItem, service);
+            public void onClick(View v) {
+                if(selectedPosition != position && !checked){
                     onSelectecService.onSelect(petId, service, true);
-                } else if (!checked) {
+                    holder.circleImageView.setBackground(colorGreen);
+                    holder.checkUnicode.setTextColor(ContextCompat.getColor(mContext,R.color.white));
+                    setSelectedPosition(position);
+                    mAdditionalServiceListAdapter.updateList(service.additionalServices);
+                    holder.adicionalServicesList.setVisibility(View.VISIBLE);
+                    mAdditionalServiceListAdapter.notifyDataSetChanged();
+                    holder.aditionalLabel.setVisibility(View.VISIBLE);
+
+                }else if(!checked){
                     onSelectecService.onSelect(petId, null, false);
-                    holder.adicionalServicesList.setVisibility(View.INVISIBLE);
+                    holder.circleImageView.setBackground(colorGray);
+                    holder.checkUnicode.setTextColor(ContextCompat.getColor(mContext,R.color.text_gray));
+                    setSelectedPosition(-1);
+                    holder.adicionalServicesList.setVisibility(View.GONE);
+                    holder.aditionalLabel.setVisibility(View.GONE);
                 }
+
+
+
             }
         });
-        holder.serviceCheckbox.setChecked(checked);
+        if(checked){
+            holder.circleImageView.setBackground(colorGreen);
+            holder.checkUnicode.setTextColor(ContextCompat.getColor(mContext,R.color.white));
+            setSelectedPosition(position);
+            mAdditionalServiceListAdapter.updateList(service.additionalServices);
+            holder.adicionalServicesList.setVisibility(View.VISIBLE);
+            mAdditionalServiceListAdapter.notifyDataSetChanged();
+            holder.aditionalLabel.setVisibility(View.VISIBLE);
+        }else{
+            holder.circleImageView.setBackground(colorGray);
+            holder.checkUnicode.setTextColor(ContextCompat.getColor(mContext,R.color.text_gray));
+            setSelectedPosition(-1);
+            holder.adicionalServicesList.setVisibility(View.GONE);
+            holder.aditionalLabel.setVisibility(View.GONE);
+        }
+
         checked = false;
     }
 
@@ -124,11 +186,16 @@ public class ServiceAdapter extends StatelessSection {
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
         HeaderViewHolder viewHolder = (HeaderViewHolder) holder;
         viewHolder.headerTitle.setText(title);
+        viewHolder.image_header.setVisibility(View.GONE);
+        viewHolder.textCheckunicode.setVisibility(View.VISIBLE);
+
     }
 
     class ServiceViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.service_checkbox)
-        CheckBox serviceCheckbox;
+        RelativeLayout circleImageView;
+        @BindView(R.id.checkUnicode)
+        TextView checkUnicode;
         @BindView(R.id.item_layout)
         LinearLayout itemLayout;
         @BindView(R.id.separator_line)
@@ -141,6 +208,8 @@ public class ServiceAdapter extends StatelessSection {
         TextView servicePrice;
         @BindView(R.id.additional_services)
         RecyclerView adicionalServicesList;
+        @BindView(R.id.additional_label)
+        TextView aditionalLabel;
 
         public ServiceViewHolder(View itemView) {
             super(itemView);
@@ -170,28 +239,5 @@ public class ServiceAdapter extends StatelessSection {
         void onSelect(String petId, BusinessServices serviceId, boolean add);
     }
 
-    private void configureAdditional(ServiceViewHolder holder, CartItem cartItem, final BusinessServices service) {
-        LinearLayoutManager additionalServiceLayout = new LinearLayoutManager(mContext);
-        additionalServiceLayout.setOrientation(LinearLayoutManager.VERTICAL);
-        final CartItem finalItem = cartItem;
-        mAdditionalServiceListAdapter = new AdditionalServiceListAdapter(mContext, service.additionalServices, new AdditionalServiceListAdapter.OnAdditionalSelect() {
-            @Override
-            public void onSelect(boolean selected, String additionalId) {
-                BusinessServices additional = getAdditional(service.additionalServices, additionalId);
-                if (selected) {
-                    //addNewAdditional(finalItem.service.id, additional, finalItem.pet.id);
-                    //finalItem.totalPrice += additional.price;
-                } else {
-                    //removeAdditional(finalItem.service.id, additional, finalItem.pet.id);
-                    //finalItem.totalPrice -= additional.price;
-                }
-            }
-        });
-        mAdditionalServiceListAdapter.setPetId(petId);
-        mAdditionalServiceListAdapter.setFromDetail(false);
-        holder.adicionalServicesList.setLayoutManager(additionalServiceLayout);
-        holder.adicionalServicesList.setHasFixedSize(true);
-        holder.adicionalServicesList.setAdapter(mAdditionalServiceListAdapter);
-        holder.adicionalServicesList.setVisibility(View.VISIBLE);
-    }
+
 }

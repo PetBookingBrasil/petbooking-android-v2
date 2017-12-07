@@ -276,4 +276,6 @@
     <string name="service_additional">Serviço e adicionais</string>
     <string name="next_service">Continuar agendando</string>
     <string name="title_professionals">Profissional e horário</string>
+    <string name="add_cart">Adicionar ao carrinho</string>
+    <string name="check">\u2713</string>
 </resources>

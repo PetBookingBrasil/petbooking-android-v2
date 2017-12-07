@@ -21,7 +21,9 @@ import com.petbooking.Utils.AppUtils;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,10 +42,15 @@ public class AppointmentService {
     }
 
     public void listServices(String categoryId, String petId, final APICallback callback) {
-        Call<ServiceResp> call = mAppointmentInterface.listCategoryServices(categoryId, petId);
+        String finalPetId = petId + APIAppointmentConstants.FIELDS_SERVICES;
+        Map<String,String> map = new HashMap();
+        map.put(APIAppointmentConstants.FIELDS_QUERY,APIAppointmentConstants.FIELDS_SERVICES);
+        map.put(APIAppointmentConstants.PET_QUERY,petId);
+        Call<ServiceResp> call = mAppointmentInterface.listCategoryServices("151", map);
         call.enqueue(new Callback<ServiceResp>() {
             @Override
             public void onResponse(Call<ServiceResp> call, Response<ServiceResp> response) {
+                Log.i(getClass().getSimpleName(),"Qual a url do call " + call.request().url().toString());
                 if (response.isSuccessful()) {
                     ArrayList<BusinessServices> services = new ArrayList<BusinessServices>();
                     ServiceResp serviceResp = response.body();

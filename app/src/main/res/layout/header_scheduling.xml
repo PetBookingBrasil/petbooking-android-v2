@@ -15,11 +15,33 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_tiny">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_margin="@dimen/spacing_tiny"
             android:src="@color/schedule_background" />
+
+            <TextView
+                android:id="@+id/checkUnicode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="16sp"
+                android:text="@string/check"
+                android:visibility="gone"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/img_header"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/txt_selected_title"

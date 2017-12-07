@@ -28,18 +28,16 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
 public class CategoryAdapter extends StatelessSection {
     String title;
-    List<String> itens;
     boolean expanded = false;
     Context context;
     List<Category> services;
     OnSelectCategoryListener onSelectCategoryListener;
 
-    public CategoryAdapter(String title, List<String> itens, Context context, List<Category> services) {
+    public CategoryAdapter(String title, Context context, List<Category> services) {
         super(new SectionParameters.Builder(R.layout.custom_pet_adapter)
                 .headerResourceId(R.layout.header_scheduling)
                 .build());
         this.title = title;
-        this.itens = itens;
         this.context = context;
         this.services = services;
     }
@@ -85,6 +83,8 @@ public class CategoryAdapter extends StatelessSection {
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
         HeaderViewHolder viewHolder = (HeaderViewHolder) holder;
         viewHolder.headerTitle.setText(title);
+        viewHolder.image_header.setVisibility(View.VISIBLE);
+
 
     }
 

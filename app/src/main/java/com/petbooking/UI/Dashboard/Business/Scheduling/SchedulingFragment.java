@@ -15,6 +15,7 @@ import android.widget.Button;
 
 import com.google.gson.Gson;
 import com.petbooking.API.Appointment.AppointmentService;
+import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.Interfaces.APICallback;
@@ -67,6 +68,7 @@ public class SchedulingFragment extends Fragment {
     private ArrayList<Category> mCategoryList;
     private ArrayList<BusinessServices> mSerceListCopy;
     private ArrayList<Professional> mProfessionalList;
+    private ArrayList<BusinessServices> additionals;
 
     //Models
     private AppointmentService mAppointmentService;
@@ -109,16 +111,18 @@ public class SchedulingFragment extends Fragment {
             } else {
                 mSerceListCopy.remove(0);
                 serviceAdapter.setServices(mServiceList, false);
+                btnAddCart.setVisibility(View.INVISIBLE);
                 mAdapter.notifyDataSetChanged();
+                additionals.clear();
             }
         }
     };
 
     ProfessionalAdapter.OnProfessionalSelected mProfessionalSelected = new ProfessionalAdapter.OnProfessionalSelected() {
         @Override
-        public void selectedProfessional(Professional professional, AppointmentDate appointmentDate,AppointmentDateChild child) {
+        public void selectedProfessional(Professional professional, AppointmentDate appointmentDate, AppointmentDateChild child) {
             if (btnAddCart.getVisibility() != View.VISIBLE) {
-                btnAddCart.setText("Adicionar ao carrinho");
+                btnAddCart.setText(R.string.add_cart);
                 btnAddCart.setCompoundDrawables(null, null, ContextCompat.getDrawable(getContext(), R.drawable.ic_edit_profile), null);
                 btnAddCart.setVisibility(View.VISIBLE);
                 addToCart = true;
@@ -151,6 +155,7 @@ public class SchedulingFragment extends Fragment {
         mCategoryList = new ArrayList<>();
         mSerceListCopy = new ArrayList<>();
         mProfessionalList = new ArrayList<>();
+        additionals = new ArrayList<>();
         mAppointmentService = new AppointmentService();
         mBusinessService = new com.petbooking.API.Business.BusinessService();
         this.businessId = getArguments().getString("businessId", "0");
@@ -170,21 +175,10 @@ public class SchedulingFragment extends Fragment {
         btnAddCart = (Button) view.findViewById(R.id.btn_add_cart);
         mAdapter = new SectionedRecyclerViewAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        List<String> pets = new ArrayList<>();
-        List<String> services = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            String pet = "Pet numero " + i;
-            pets.add(pet);
-        }
-
-        for (int i = 0; i < 10; i++) {
-            String service = "Service numero " + i;
-            services.add(service);
-        }
-        petAdapter = new PetAdapter("Pet", pets, this, mPetList, getActivity());
-        categoryAdapter = new CategoryAdapter(getString(R.string.category), services, getContext(), mCategoryList);
+        petAdapter = new PetAdapter("Pet", this, mPetList, getActivity());
+        categoryAdapter = new CategoryAdapter(getString(R.string.category),  getContext(), mCategoryList);
         categoryAdapter.setOnSelectCategoryListener(mSelectedCategory);
-        serviceAdapter = new ServiceAdapter(getContext(), mServiceList, getString(R.string.service_additional), mSelectedService);
+        serviceAdapter = new ServiceAdapter(getContext(), mServiceList, getString(R.string.service_additional), mSelectedService,this);
         professionalAdapter = new ProfessionalAdapter(getContext(), mProfessionalList, getString(R.string.title_professionals));
         professionalAdapter.setOnProfessionalSelected(mProfessionalSelected);
         mAdapter.addSection(petAdapter);
@@ -209,6 +203,11 @@ public class SchedulingFragment extends Fragment {
                     item.totalPrice += businessServices.price;
                     mAppointmentManager.addItem(item);
 
+                    for(int i = 0; i< additionals.size(); i++){
+                        BusinessServices additional = additionals.get(i);
+                        mAppointmentManager.addNewAdditional(businessServices.id,additional,petId);
+                    }
+
                     Intent intent = new Intent(getContext(), CartActivity.class);
                     getContext().startActivity(intent);
                 }
@@ -216,6 +215,14 @@ public class SchedulingFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void addServiceAdditional(BusinessServices additional){
+        this.additionals.add(additional);
+    }
+
+    public void removeAdditional(BusinessServices additional){
+        this.additionals.remove(additional);
     }
 
     private Pet getPet() {
@@ -236,11 +243,33 @@ public class SchedulingFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
-    public void editPet(){
+    public void editPet() {
+        petAdapter.setExpanded(true);
         categoryAdapter.setExpanable(false);
         serviceAdapter.setexpanded(false);
         professionalAdapter.setexpanded(false);
+        mSerceListCopy.clear();
+        mProfessionalList.clear();
+        mPetList.clear();
+        mServiceList.clear();
+        mCategoryList.clear();
+        additionals.clear();
+        petAdapter.addPets(mPetList);
+        categoryAdapter.setServices(mCategoryList);
+        serviceAdapter.setServices(mServiceList, false);
+        professionalAdapter.setProfessionals(mProfessionalList);
+        categoryId = "";
+        petId = "";
+        appointmentDateChild = null;
+        professional = null;
+        btnAddCart.setVisibility(View.GONE);
+        btnAddCart.setText(R.string.next_service);
+        btnAddCart.setCompoundDrawables(null, null, null, null);
+        addToCart = false;
         mAdapter.notifyDataSetChanged();
+        getPets();
+        getCategories();
+
     }
 
     public void getPets() {

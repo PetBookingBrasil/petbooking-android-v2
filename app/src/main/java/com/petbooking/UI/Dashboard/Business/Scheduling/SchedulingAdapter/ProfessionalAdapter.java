@@ -92,11 +92,13 @@ public class ProfessionalAdapter extends StatelessSection {
         holder.professionalList.setClipToPadding(false);
         holder.professionalList.setAdapter(new ProfessionalListAdapter(context, professionals));
 
-        holder.datesAvaliableList.setLayoutManager(new LinearLayoutManager(context));
+        LinearLayoutManager managerDate = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        managerDate.setAutoMeasureEnabled(true);
+        holder.datesAvaliableList.setLayoutManager(managerDate);
         SnapHelper snapHelperLinear = new LinearSnapHelper();
         snapHelperLinear.attachToRecyclerView(holder.datesAvaliableList);
         holder.datesAvaliableList.setClipToPadding(false);
-        holder.datesAvaliableList.setHasFixedSize(true);
+        holder.datesAvaliableList.setHasFixedSize(false);
         List<AppointmentDateChild> childs = new ArrayList<>();
         dateListDayAdapter = new DateListDayAdapter(context, childs);
         holder.datesAvaliableList.setAdapter(dateListDayAdapter);
@@ -134,6 +136,38 @@ public class ProfessionalAdapter extends StatelessSection {
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder item) {
         HeaderViewHolder holder = (HeaderViewHolder) item;
         holder.headerTitle.setText(title);
+        if(professional !=null && expanded) {
+            int professionalAvatar;
+            if (professional.gender == null || professional.gender.equals(User.GENDER_MALE)) {
+                professionalAvatar = R.drawable.ic_placeholder_man;
+            } else {
+                professionalAvatar = R.drawable.ic_placeholder_woman;
+            }
+
+            if (professional.imageUrl == null || professional.imageUrl.contains(APIConstants.FALLBACK_TAG)) {
+                holder.image_header.setImageResource(professionalAvatar);
+            } else {
+                Glide.with(context)
+                        .load(APIUtils.getAssetEndpoint(professional.imageUrl))
+                        .error(professionalAvatar)
+                        .placeholder(professionalAvatar)
+                        .bitmapTransform(new CircleTransformation(context))
+                        .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                        .into(holder.image_header);
+            }
+            holder.image_header.setVisibility(View.VISIBLE);
+        }else{
+            holder.image_header.setVisibility(View.GONE);
+            holder.textCheckunicode.setText("4");
+            holder.textCheckunicode.setVisibility(View.VISIBLE);
+            holder.textCheckunicode.setTextColor(ContextCompat.getColor(context,R.color.gray));
+            holder.circleImageView.setImageResource(R.color.schedule_background);
+        }
+
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -252,9 +286,6 @@ public class ProfessionalAdapter extends StatelessSection {
         @Override
         public void onBindViewHolder(final DateListViewHolder holder, final int position) {
             final AppointmentDateChild date = days.get(position);
-            if (position > 0) {
-                holder.separatorTop.setVisibility(View.GONE);
-            }
             holder.dateAvaliable.setText(date.getDayDescription() + ", " + date.getDayNumber() + " de " + date.getMonthDescription().substring(0, 3));
             holder.hourAvaliable.setText(date.Time);
 
@@ -272,7 +303,7 @@ public class ProfessionalAdapter extends StatelessSection {
                 holder.dateAvaliable.setTextColor(ContextCompat.getColor(context, R.color.brand_primary));
                 holder.hourAvaliable.setTextColor(ContextCompat.getColor(context, R.color.brand_primary));
                 appointmentDate = professional.availableDates.get(date.position);
-                onProfessionalSelected.selectedProfessional(professional,appointmentDate,date);
+                onProfessionalSelected.selectedProfessional(professional, appointmentDate, date);
             } else {
                 holder.dateAvaliable.setTextColor(ContextCompat.getColor(context, R.color.text_gray));
                 holder.hourAvaliable.setTextColor(ContextCompat.getColor(context, R.color.text_gray));
@@ -302,6 +333,6 @@ public class ProfessionalAdapter extends StatelessSection {
     }
 
     public interface OnProfessionalSelected {
-        void selectedProfessional(Professional professional, AppointmentDate appointmentDate,AppointmentDateChild chil);
+        void selectedProfessional(Professional professional, AppointmentDate appointmentDate, AppointmentDateChild chil);
     }
 }

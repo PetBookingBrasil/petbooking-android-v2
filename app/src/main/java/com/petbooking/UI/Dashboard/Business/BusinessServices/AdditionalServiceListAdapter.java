@@ -82,6 +82,12 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
         holder.mTvAdditionalPrice.setText(price);
 
         final boolean finalIsAdditionalSelected = isAdditionalSelected;
+        holder.v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.mCbServiceCheck.performClick();
+            }
+        });
         holder.mCbServiceCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +101,7 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
                     setPositionSelected(-1);
                     holder.mCbServiceCheck.setBackground(colorGray);
                     servicesInsert.remove(service);
-                    holder.check.setTextColor(ContextCompat.getColor(mContext, R.color.text_gray));
+                    holder.check.setTextColor(ContextCompat.getColor(mContext, R.color.light_gray));
                     onAdditionalSelect.onSelect(false, service.id);
                 }
             }
@@ -106,7 +112,7 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
             holder.check.setTextColor(ContextCompat.getColor(mContext, R.color.white));
         } else {
             holder.mCbServiceCheck.setBackground(colorGray);
-            holder.check.setTextColor(ContextCompat.getColor(mContext, R.color.text_gray));
+            holder.check.setTextColor(ContextCompat.getColor(mContext, R.color.light_gray));
         }
 
     }
@@ -118,6 +124,10 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
             }
         }
         return false;
+    }
+
+    public void clearServices(){
+        this.servicesInsert.clear();
     }
 
     public void setPositionSelected(int positionSelected) {
@@ -136,10 +146,11 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
         public TextView mServiceName;
         public TextView check;
         public View view;
+        public View v;
 
         public AdditionalViewHolder(View view) {
             super(view);
-
+            v= view;
             mCbServiceCheck = (RelativeLayout) view.findViewById(R.id.additional_checkbox);
             mTvAdditionalPrice = (TextView) view.findViewById(R.id.additional_price);
             mServiceName = (TextView) view.findViewById(R.id.service_additional_name);

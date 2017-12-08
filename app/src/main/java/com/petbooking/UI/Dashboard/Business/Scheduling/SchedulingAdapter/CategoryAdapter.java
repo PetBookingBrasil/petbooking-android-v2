@@ -2,6 +2,7 @@ package com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -32,6 +33,7 @@ public class CategoryAdapter extends StatelessSection {
     Context context;
     List<Category> services;
     OnSelectCategoryListener onSelectCategoryListener;
+    int positionSelected = -1;
 
     public CategoryAdapter(String title, Context context, List<Category> services) {
         super(new SectionParameters.Builder(R.layout.custom_pet_adapter)
@@ -86,6 +88,27 @@ public class CategoryAdapter extends StatelessSection {
         viewHolder.image_header.setVisibility(View.VISIBLE);
 
 
+        if(positionSelected >=0){
+            Category category = services.get(positionSelected);
+            viewHolder.textCheckunicode.setVisibility(View.GONE);
+            int color = AppUtils.getCategoryColor(context, category.categoryName);
+            GradientDrawable iconBackground = (GradientDrawable) viewHolder.image_header.getBackground();
+            viewHolder.image_header.setImageDrawable(category.icon);
+            iconBackground.setColor(color);
+
+        }else{
+            viewHolder.image_header.setVisibility(View.GONE);
+            viewHolder.textCheckunicode.setText("2");
+            viewHolder.textCheckunicode.setVisibility(View.VISIBLE);
+            viewHolder.textCheckunicode.setTextColor(ContextCompat.getColor(context,R.color.gray));
+            viewHolder.circleImageView.setImageResource(R.color.schedule_background);
+        }
+
+
+    }
+
+    public void setPositionSelected(int positionSelected) {
+        this.positionSelected = positionSelected;
     }
 
     public void setExpanable(boolean expanded) {
@@ -134,6 +157,7 @@ public class CategoryAdapter extends StatelessSection {
                 @Override
                 public void onClick(View v) {
                     onSelectCategoryListener.onSelect(position);
+                    setPositionSelected(position);
                 }
             });
 

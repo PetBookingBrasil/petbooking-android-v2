@@ -25,6 +25,7 @@ import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.BusinessServices.AdditionalServiceListAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingFragment;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class ServiceAdapter extends StatelessSection {
     Context mContext;
     List<BusinessServices> services;
     String title;
+    String header;
     boolean expanded = false;
     boolean checked = false;
     private String petId;
@@ -49,6 +51,7 @@ public class ServiceAdapter extends StatelessSection {
     private AdditionalServiceListAdapter mAdditionalServiceListAdapter;
     SchedulingFragment fragment;
     OnSelectecService onSelectecService;
+    boolean serviceAdd = false;
     int selectedPosition = -1;
 
     AdditionalServiceListAdapter.OnAdditionalSelect mAdditionalSelected = new AdditionalServiceListAdapter.OnAdditionalSelect() {
@@ -84,6 +87,10 @@ public class ServiceAdapter extends StatelessSection {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
     }
 
     public void setServices(List<BusinessServices> services, boolean checked) {
@@ -144,14 +151,16 @@ public class ServiceAdapter extends StatelessSection {
                     holder.adicionalServicesList.setVisibility(View.VISIBLE);
                     mAdditionalServiceListAdapter.notifyDataSetChanged();
                     holder.aditionalLabel.setVisibility(View.VISIBLE);
+                    serviceAdd = true;
 
                 }else if(!checked){
                     onSelectecService.onSelect(petId, null, false);
                     holder.circleImageView.setBackground(colorGray);
-                    holder.checkUnicode.setTextColor(ContextCompat.getColor(mContext,R.color.text_gray));
+                    holder.checkUnicode.setTextColor(ContextCompat.getColor(mContext,R.color.light_gray));
                     setSelectedPosition(-1);
                     holder.adicionalServicesList.setVisibility(View.GONE);
                     holder.aditionalLabel.setVisibility(View.GONE);
+                    serviceAdd = false;
                 }
 
 
@@ -168,13 +177,29 @@ public class ServiceAdapter extends StatelessSection {
             holder.aditionalLabel.setVisibility(View.VISIBLE);
         }else{
             holder.circleImageView.setBackground(colorGray);
-            holder.checkUnicode.setTextColor(ContextCompat.getColor(mContext,R.color.text_gray));
+            holder.checkUnicode.setTextColor(ContextCompat.getColor(mContext,R.color.light_gray));
             setSelectedPosition(-1);
             holder.adicionalServicesList.setVisibility(View.GONE);
             holder.aditionalLabel.setVisibility(View.GONE);
         }
 
+        holder.v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.circleImageView.performClick();
+            }
+        });
+
         checked = false;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+        mAdditionalServiceListAdapter.clearServices();
+    }
+
+    public void setServiceAdd(boolean serviceAdd) {
+        this.serviceAdd = serviceAdd;
     }
 
     @Override
@@ -188,6 +213,22 @@ public class ServiceAdapter extends StatelessSection {
         viewHolder.headerTitle.setText(title);
         viewHolder.image_header.setVisibility(View.GONE);
         viewHolder.textCheckunicode.setVisibility(View.VISIBLE);
+
+        if(serviceAdd){
+            viewHolder.textCheckunicode.setText(R.string.check);
+            viewHolder.textCheckunicode.setTextColor(ContextCompat.getColor(mContext,R.color.white));
+            viewHolder.circleImageView.setImageResource(R.drawable.circle_background_green);
+            Log.i(getClass().getSimpleName(),"Qual o count " + fragment.getCount());
+            if(fragment.getCount() > 0) {
+                viewHolder.layoutAdditionas.setVisibility(View.VISIBLE);
+                viewHolder.quantAdditional.setText(MessageFormat.format("+{0}", fragment.getCount()));
+            }
+        }else{
+            viewHolder.textCheckunicode.setText("3");
+            viewHolder.textCheckunicode.setTextColor(ContextCompat.getColor(mContext,R.color.gray));
+            viewHolder.circleImageView.setImageResource(R.color.schedule_background);
+            viewHolder.layoutAdditionas.setVisibility(View.GONE);
+        }
 
     }
 
@@ -210,10 +251,12 @@ public class ServiceAdapter extends StatelessSection {
         RecyclerView adicionalServicesList;
         @BindView(R.id.additional_label)
         TextView aditionalLabel;
+        View v;
 
         public ServiceViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            v = itemView;
         }
     }
 

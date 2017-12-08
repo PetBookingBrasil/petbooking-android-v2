@@ -2,6 +2,7 @@ package com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ public class PetAdapter extends StatelessSection {
     boolean expanded = true;
     Context context;
     List<Pet> pets;
+    int selectedPosition = -1;
 
     public PetAdapter(String title, SchedulingFragment fragment,List<Pet> pet,Context context) {
         super(new SectionParameters.Builder(R.layout.custom_pet_adapter)
@@ -94,6 +96,32 @@ public class PetAdapter extends StatelessSection {
                 fragment.editPet();
             }
         });
+        if(selectedPosition >=0) {
+            Pet pet = pets.get(selectedPosition);
+            int petAvatar;
+            if (pet.type != null && pet.type.equals("dog")) {
+                petAvatar = R.drawable.ic_placeholder_dog;
+            } else {
+                petAvatar = R.drawable.ic_placeholder_cat;
+            }
+            Glide.with(context)
+                    .load(APIUtils.getAssetEndpoint(pet.avatar.url))
+                    .error(petAvatar)
+                    .placeholder(petAvatar)
+                    .bitmapTransform(new CircleTransformation(context))
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .into(viewHolder.image_header);
+        }else{
+            viewHolder.image_header.setVisibility(View.GONE);
+            viewHolder.textCheckunicode.setText("1");
+            viewHolder.textCheckunicode.setVisibility(View.VISIBLE);
+            viewHolder.textCheckunicode.setTextColor(ContextCompat.getColor(context,R.color.gray));
+            viewHolder.circleImageView.setImageResource(R.color.schedule_background);
+        }
+    }
+
+    public void setSelectedPosition(int selectedPosition) {
+        this.selectedPosition = selectedPosition;
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -145,6 +173,7 @@ public class PetAdapter extends StatelessSection {
                     PetAdapter.this.expanded = false;
                     setTitle(pet.name);
                     fragment.notifyChanged(position);
+                    setSelectedPosition(position);
 
                 }
             });

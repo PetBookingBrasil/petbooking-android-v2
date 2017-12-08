@@ -42,8 +42,9 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_custom"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp">
 
     </android.support.v7.widget.RecyclerView>

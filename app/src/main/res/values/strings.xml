@@ -278,4 +278,8 @@
     <string name="title_professionals">Profissional e horário</string>
     <string name="add_cart">Adicionar ao carrinho</string>
     <string name="check">\u2713</string>
+    <string name="sucess_schedule">O agendamento foi adicionado ao carrinho com sucesso.</string>
+    <string name="action_schedule">Agendar mais um serviço</string>
+    <string name="go_to_cart">Ir para o carrinho</string>
+    <string name="schedule_empty"></string>
 </resources>

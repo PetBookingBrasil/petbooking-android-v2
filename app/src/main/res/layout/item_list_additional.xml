@@ -20,6 +20,7 @@
             android:layout_centerInParent="true"
             android:text="@string/check"
             android:textSize="10dp"
+            android:textColor="@color/light_gray"
             android:textStyle="bold" />
     </RelativeLayout>
 
@@ -30,8 +31,9 @@
         android:layout_toRightOf="@+id/additional_checkbox"
         android:layout_centerInParent="true"
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
         android:text="Service Name"
-        android:textSize="14sp"
+        android:textSize="13dp"
         android:textStyle="bold" />
 
     <TextView

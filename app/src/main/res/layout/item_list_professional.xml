@@ -13,6 +13,7 @@
         android:id="@+id/professional_photo"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_gravity="center"
         android:src="@mipmap/ic_launcher" />
 
     <TextView
@@ -20,7 +21,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Text"
-        android:textColor="@color/text_color" />
+        android:layout_marginTop="@dimen/spacing_xmicro"
+        android:maxEms="6"
+        android:maxLines="2"
+        android:text="Banho e Tosa"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"  />
 
 </LinearLayout>

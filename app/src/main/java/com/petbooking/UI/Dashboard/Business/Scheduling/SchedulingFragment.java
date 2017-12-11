@@ -36,6 +36,7 @@ import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.Service
 import com.petbooking.UI.Dashboard.Business.Scheduling.model.AppointmentDateChild;
 import com.petbooking.UI.Dashboard.Cart.CartActivity;
 import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
+import com.petbooking.UI.Dialogs.ConfirmDialogSchedule;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
@@ -49,7 +50,7 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
  * Created by victorneves on 30/11/17.
  */
 
-public class SchedulingFragment extends Fragment implements ConfirmDialogFragment.FinishDialogListener{
+public class SchedulingFragment extends Fragment implements ConfirmDialogSchedule.FinishDialogListener{
     private static final String TAG = "services";
     private static final String TAGPROFESSIONALS = "professionals";
 
@@ -87,7 +88,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogFragmen
     private String businessId = null;
     String categoryId;
     String petId;
-    private ConfirmDialogFragment mConfirmDialogFragment;
+    private ConfirmDialogSchedule mConfirmDialogFragment;
 
     boolean addToCart = false;
 
@@ -126,7 +127,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogFragmen
         public void selectedProfessional(Professional professional, AppointmentDate appointmentDate, AppointmentDateChild child) {
             if (btnAddCart.getVisibility() != View.VISIBLE) {
                 btnAddCart.setText(R.string.add_cart);
-                btnAddCart.setCompoundDrawables(null, null, ContextCompat.getDrawable(getContext(), R.drawable.ic_edit_profile), null);
+                btnAddCart.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(getContext(), R.drawable.ic_add_shopping_cart_white), null);
                 btnAddCart.setVisibility(View.VISIBLE);
                 addToCart = true;
             }
@@ -167,7 +168,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogFragmen
             this.businessId = mAppointmentManager.getCurrentBusinessId();
             mAppointmentManager.removeKey("businessId");
         }
-        mConfirmDialogFragment = ConfirmDialogFragment.newInstance();
+        mConfirmDialogFragment = ConfirmDialogSchedule.newInstance();
 
     }
 

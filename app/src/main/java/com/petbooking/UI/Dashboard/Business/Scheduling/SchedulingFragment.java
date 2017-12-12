@@ -7,15 +7,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.petbooking.API.Appointment.AppointmentService;
-import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.Constants.AppConstants;
@@ -29,20 +29,19 @@ import com.petbooking.Models.Category;
 import com.petbooking.Models.Pet;
 import com.petbooking.Models.Professional;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.BusinessActivity;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.CategoryAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.PetAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.ProfessionalAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.ServiceAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.model.AppointmentDateChild;
 import com.petbooking.UI.Dashboard.Cart.CartActivity;
-import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
 import com.petbooking.UI.Dialogs.ConfirmDialogSchedule;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
@@ -57,6 +56,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     //View
     Button btnAddCart;
     RecyclerView mRecyclerView;
+
 
     //Adapters
     private SectionedRecyclerViewAdapter mAdapter;
@@ -219,7 +219,10 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                             R.string.go_to_cart);
                     mConfirmDialogFragment.setCancelText(R.string.action_schedule);
                     mConfirmDialogFragment.setFinishDialogListener(SchedulingFragment.this);
-                    mConfirmDialogFragment.show(getFragmentManager(), "SHOW_CONFIRM");
+                    mConfirmDialogFragment.animation();
+                    mConfirmDialogFragment.show(getFragmentManager(), "SHOW_CONFIRM",getContext());
+
+                    ((BusinessActivity) getActivity()).updateCartCount(mAppointmentManager.getCart().size());
 
                 }
             }
@@ -258,7 +261,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         return additionals!=null? additionals.size() : 0;
     }
 
-    public void editPet() {
+    public void clearFields() {
         petAdapter.setExpanded(true);
         categoryAdapter.setExpanable(false);
         serviceAdapter.setexpanded(false);
@@ -292,6 +295,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         mAdapter.notifyDataSetChanged();
         getPets();
         getCategories();
+        ((BusinessActivity) getActivity()).hideCartMenu();
 
     }
 
@@ -325,6 +329,8 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 mAdapter.notifyDataSetChanged();
 
                 AppUtils.hideDialog();
+                ((BusinessActivity) getActivity()).showCartMenu();
+
             }
 
             @Override
@@ -378,7 +384,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     @Override
     public void onFinishDialog(int action) {
         if(action == AppConstants.CANCEL_ACTION){
-            editPet();
+            clearFields();
         }else{
             Intent intent = new Intent(getContext(), CartActivity.class);
             getContext().startActivity(intent);

@@ -46,11 +46,11 @@ public class AppointmentService {
         Map<String,String> map = new HashMap();
         map.put(APIAppointmentConstants.FIELDS_QUERY,APIAppointmentConstants.FIELDS_SERVICES);
         map.put(APIAppointmentConstants.PET_QUERY,petId);
-        Call<ServiceResp> call = mAppointmentInterface.listCategoryServices("151", map);
+        //151 categoryID
+        Call<ServiceResp> call = mAppointmentInterface.listCategoryServices(categoryId, map);
         call.enqueue(new Callback<ServiceResp>() {
             @Override
             public void onResponse(Call<ServiceResp> call, Response<ServiceResp> response) {
-                Log.i(getClass().getSimpleName(),"Qual a url do call " + call.request().url().toString());
                 if (response.isSuccessful()) {
                     ArrayList<BusinessServices> services = new ArrayList<BusinessServices>();
                     ServiceResp serviceResp = response.body();

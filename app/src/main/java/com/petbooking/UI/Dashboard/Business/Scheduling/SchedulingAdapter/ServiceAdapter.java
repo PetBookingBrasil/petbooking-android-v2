@@ -150,6 +150,7 @@ public class ServiceAdapter extends StatelessSection {
                     mAdditionalServiceListAdapter.updateList(service.additionalServices);
                     holder.adicionalServicesList.setVisibility(View.VISIBLE);
                     mAdditionalServiceListAdapter.notifyDataSetChanged();
+                    if(service.additionalServices.size() >0)
                     holder.aditionalLabel.setVisibility(View.VISIBLE);
                     serviceAdd = true;
 
@@ -174,6 +175,7 @@ public class ServiceAdapter extends StatelessSection {
             mAdditionalServiceListAdapter.updateList(service.additionalServices);
             holder.adicionalServicesList.setVisibility(View.VISIBLE);
             mAdditionalServiceListAdapter.notifyDataSetChanged();
+            if(service.additionalServices.size() >0)
             holder.aditionalLabel.setVisibility(View.VISIBLE);
         }else{
             holder.circleImageView.setBackground(colorGray);

@@ -282,4 +282,5 @@
     <string name="action_schedule">Agendar mais um serviço</string>
     <string name="go_to_cart">Ir para o carrinho</string>
     <string name="schedule_empty"></string>
+
 </resources>

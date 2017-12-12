@@ -2,12 +2,17 @@ package com.petbooking.UI.Dashboard.Business;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Managers.AppointmentManager;
@@ -29,6 +34,7 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
     private String businessName;
     private float businessDistance;
     private boolean alreadyShow = false;
+    private Menu menu;
 
     private ConfirmDialogFragment mConfirmDialogFragment;
 
@@ -74,8 +80,48 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem item = menu.findItem(R.id.cart);
+        MenuItemCompat.setActionView(item, R.layout.action_cart);
+        RelativeLayout notifCount = (RelativeLayout) MenuItemCompat.getActionView(item);
+
+        TextView tv = (TextView) notifCount.findViewById(R.id.count_cart);
+        tv.setVisibility(View.INVISIBLE);
+        item.setVisible(false);
+        this.menu = menu;
         return true;
     }
+
+    public void showCartMenu(){
+        if(menu != null){
+            MenuItem item = menu.findItem(R.id.cart);
+            RelativeLayout notifCount = (RelativeLayout) MenuItemCompat.getActionView(item);
+            TextView tv = (TextView) notifCount.findViewById(R.id.count_cart);
+            tv.setVisibility(View.INVISIBLE);
+            menu.findItem(R.id.schedules).setVisible(false);
+            menu.findItem(R.id.notifications).setVisible(false);
+            item.setVisible(true);
+        }
+    }
+    public void hideCartMenu(){
+        MenuItem item = menu.findItem(R.id.cart);
+        RelativeLayout notifCount = (RelativeLayout) MenuItemCompat.getActionView(item);
+        TextView tv = (TextView) notifCount.findViewById(R.id.count_cart);
+        tv.setVisibility(View.INVISIBLE);
+        menu.findItem(R.id.schedules).setVisible(true);
+        menu.findItem(R.id.notifications).setVisible(true);
+        item.setVisible(false);
+    }
+    public void updateCartCount(int size){
+        MenuItem item = menu.findItem(R.id.cart);
+        RelativeLayout notifCount = (RelativeLayout) MenuItemCompat.getActionView(item);
+        TextView tv = (TextView) notifCount.findViewById(R.id.count_cart);
+        tv.setVisibility(View.VISIBLE);
+        tv.setText(String.valueOf(size));
+        menu.findItem(R.id.schedules).setVisible(false);
+        menu.findItem(R.id.notifications).setVisible(false);
+        item.setVisible(true);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
@@ -85,6 +131,8 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
             goToCartActivity();
         } else if (item.getItemId() == R.id.notifications) {
             Log.d("ITEM SELECTED", "NOTIFICATIONS");
+        }else if(item.getItemId() == R.id.cart){
+            goToCartActivity();
         }
 
         return true;

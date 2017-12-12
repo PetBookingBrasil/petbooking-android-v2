@@ -11,4 +11,11 @@
         android:icon="@drawable/ic_menu_scheduling"
         android:title="@string/schedules"
         app:showAsAction="ifRoom"></item>
+    <item
+        android:id="@+id/cart"
+        android:actionLayout="@layout/action_cart"
+        android:title="@string/go_to_cart"
+        app:showAsAction="always">
+
+    </item>
 </menu>

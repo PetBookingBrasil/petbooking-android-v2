@@ -122,6 +122,7 @@ public class ProfessionalAdapter extends StatelessSection {
                 }
             }
         }
+        Log.i(getClass().getSimpleName(),"Qual o professional " + position);
         dateListDayAdapter.selectedPosition(0);
         dateListDayAdapter.setDays(childs);
         dateListDayAdapter.notifyDataSetChanged();
@@ -186,10 +187,16 @@ public class ProfessionalAdapter extends StatelessSection {
     class ProfessionalListAdapter extends RecyclerView.Adapter<ProfessionalListAdapter.ProfessionalViewHolder> {
         Context context;
         List<Professional> professionals;
+        int selectedPosition = -1;
+        boolean selected = true;
 
         public ProfessionalListAdapter(Context context, List<Professional> professionals) {
             this.context = context;
             this.professionals = professionals;
+        }
+
+        public void setSelectedPosition(int selectedPosition) {
+            this.selectedPosition = selectedPosition;
         }
 
         @Override
@@ -200,7 +207,7 @@ public class ProfessionalAdapter extends StatelessSection {
         }
 
         @Override
-        public void onBindViewHolder(ProfessionalViewHolder holder, final int position) {
+        public void onBindViewHolder(final ProfessionalViewHolder holder, final int position) {
             Professional professional = professionals.get(position);
             int professionalAvatar;
             holder.professionalName.setText(professional.name);
@@ -228,13 +235,26 @@ public class ProfessionalAdapter extends StatelessSection {
                 public void onClick(View v) {
                     updateProfissionals(position);
                     ProfessionalAdapter.this.professional = professionals.get(position);
+                    setSelectedPosition(position);
+                    holder.professionalPhoto.setBackground(ContextCompat.getDrawable(context,R.drawable.imageview_border));
+                    selected = false;
+                    notifyDataSetChanged();
                 }
             });
 
-            if (position == 0) {
+            if (position == 0 && selected) {
+                setSelectedPosition(position);
                 updateProfissionals(position);
                 ProfessionalAdapter.this.professional = professionals.get(position);
             }
+
+            if(selectedPosition == position){
+                holder.professionalPhoto.setBackground(ContextCompat.getDrawable(context,R.drawable.imageview_border));
+            }else{
+                holder.professionalPhoto.setBackground(ContextCompat.getDrawable(context,R.drawable.circle_background));
+            }
+
+            selected = true;
 
         }
 

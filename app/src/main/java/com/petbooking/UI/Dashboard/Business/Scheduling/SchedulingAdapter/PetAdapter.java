@@ -1,6 +1,5 @@
 package com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -93,7 +92,7 @@ public class PetAdapter extends StatelessSection {
         viewHolder.headerEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment.editPet();
+                fragment.clearFields();
             }
         });
         if(selectedPosition >=0) {

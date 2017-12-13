@@ -11,9 +11,10 @@
 
     <ImageView
         android:id="@+id/professional_photo"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="center"
+        android:elevation="10dp"
         android:src="@mipmap/ic_launcher" />
 
     <TextView

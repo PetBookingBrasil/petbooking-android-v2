@@ -97,6 +97,12 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
             RelativeLayout notifCount = (RelativeLayout) MenuItemCompat.getActionView(item);
             TextView tv = (TextView) notifCount.findViewById(R.id.count_cart);
             tv.setVisibility(View.INVISIBLE);
+            notifCount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goToCartActivity();
+                }
+            });
             menu.findItem(R.id.schedules).setVisible(false);
             menu.findItem(R.id.notifications).setVisible(false);
             item.setVisible(true);

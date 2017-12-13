@@ -11,6 +11,8 @@
     android:paddingLeft="@dimen/spacing_xmicro"
     android:paddingRight="@dimen/spacing_xmicro">
 
+
+
     <TextView
         android:id="@+id/appointment_date"
         android:layout_width="match_parent"
@@ -22,6 +24,44 @@
         android:textSize="15sp"
         android:textStyle="bold"
         android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/layout_header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:background="@drawable/circle_layout">
+
+            <TextView
+                android:id="@+id/text_title_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/brand_primary"
+                android:text="3"
+                android:textSize="18dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="@string/service_additional"
+            android:textColor="@color/brand_primary"
+            android:textSize="16dp" />
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

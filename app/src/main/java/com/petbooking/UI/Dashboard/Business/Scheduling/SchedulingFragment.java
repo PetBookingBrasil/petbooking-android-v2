@@ -10,10 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.petbooking.API.Appointment.AppointmentService;
 import com.petbooking.API.Business.Models.CategoryResp;
@@ -35,6 +32,8 @@ import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.PetAdap
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.ProfessionalAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.ServiceAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.model.AppointmentDateChild;
+import com.petbooking.UI.Dashboard.Business.Scheduling.widget.CustomLinearLayoutManager;
+import com.petbooking.UI.Dashboard.Business.Scheduling.widget.MyLinearLayout;
 import com.petbooking.UI.Dashboard.Cart.CartActivity;
 import com.petbooking.UI.Dialogs.ConfirmDialogSchedule;
 import com.petbooking.Utils.APIUtils;
@@ -50,8 +49,10 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
  */
 
 public class SchedulingFragment extends Fragment implements ConfirmDialogSchedule.FinishDialogListener{
-    private static final String TAG = "services";
+    private static final String TAGSERVICES = "services";
     private static final String TAGPROFESSIONALS = "professionals";
+    private static final String TAGPET = "pet";
+    private static final String TAGCATEGORY = "category";
 
     //View
     Button btnAddCart;
@@ -180,7 +181,8 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         mRecyclerView.setHasFixedSize(true);
         btnAddCart = (Button) view.findViewById(R.id.btn_add_cart);
         mAdapter = new SectionedRecyclerViewAdapter();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        CustomLinearLayoutManager linearLayoutManager = new CustomLinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         petAdapter = new PetAdapter("Pet", this, mPetList, getActivity());
         categoryAdapter = new CategoryAdapter(getString(R.string.category),  getContext(), mCategoryList);
         categoryAdapter.setOnSelectCategoryListener(mSelectedCategory);
@@ -188,7 +190,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         professionalAdapter = new ProfessionalAdapter(getContext(), mProfessionalList, getString(R.string.title_professionals));
         professionalAdapter.setOnProfessionalSelected(mProfessionalSelected);
         mAdapter.addSection(petAdapter);
-        mAdapter.addSection(categoryAdapter);
+        mAdapter.addSection(TAGCATEGORY,categoryAdapter);
         mRecyclerView.setAdapter(mAdapter);
         getPets();
         getCategories();
@@ -252,9 +254,11 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         String petId = mPetList.get(position).id;
         this.petId = petId;
         categoryAdapter.setExpanable(true);
+        int sectionPosition = mAdapter.getSectionPosition(TAGCATEGORY);
         serviceAdapter.setPetId(petId);
-        mAdapter.addSection(TAG, serviceAdapter);
+        mAdapter.addSection(TAGSERVICES, serviceAdapter);
         mAdapter.notifyDataSetChanged();
+        mRecyclerView.smoothScrollToPosition(sectionPosition);
     }
 
     public int getCount(){
@@ -326,7 +330,9 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 mServiceList = (ArrayList<BusinessServices>) response;
                 serviceAdapter.setServices(mServiceList, false);
                 mAdapter.addSection(TAGPROFESSIONALS, professionalAdapter);
+                int sectionPosition = mAdapter.getSectionPosition(TAGCATEGORY);
                 mAdapter.notifyDataSetChanged();
+                mRecyclerView.smoothScrollToPosition(sectionPosition);
 
                 AppUtils.hideDialog();
                 ((BusinessActivity) getActivity()).showCartMenu();
@@ -368,8 +374,10 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 mProfessionalList = (ArrayList<Professional>) response;
                 professionalAdapter.setProfessionals(mProfessionalList);
                 professionalAdapter.setexpanded(true);
+                int sectionPosition = mAdapter.getSectionPosition(TAGCATEGORY);
                 btnAddCart.setVisibility(View.GONE);
                 mAdapter.notifyDataSetChanged();
+                mRecyclerView.smoothScrollToPosition(sectionPosition);
 
                 AppUtils.hideDialog();
             }

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.petbooking.Models.Category;
@@ -89,11 +90,13 @@ public class CategoryAdapter extends StatelessSection {
 
 
         if(positionSelected >=0){
+
             Category category = services.get(positionSelected);
             viewHolder.textCheckunicode.setVisibility(View.GONE);
             int color = AppUtils.getCategoryColor(context, category.categoryName);
             GradientDrawable iconBackground = (GradientDrawable) viewHolder.image_header.getBackground();
             viewHolder.image_header.setImageDrawable(category.icon);
+            viewHolder.image_header.setPadding(18,18,18,18);
             iconBackground.setColor(color);
 
         }else{
@@ -150,6 +153,7 @@ public class CategoryAdapter extends StatelessSection {
             Category category = services.get(position);
             int color = AppUtils.getCategoryColor(context, category.categoryName);
             GradientDrawable iconBackground = (GradientDrawable) holder.categoryIcon.getBackground();
+            iconBackground.setCornerRadius(50);
             holder.categoryName.setText(category.categoryName);
             holder.categoryIcon.setImageDrawable(category.icon);
 

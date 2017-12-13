@@ -120,7 +120,9 @@ public class ServiceAdapter extends StatelessSection {
     public void onBindItemViewHolder(final RecyclerView.ViewHolder item, final int position) {
         final BusinessServices service = services.get(position);
         final ServiceViewHolder holder = (ServiceViewHolder) item;
-
+        if(position !=0){
+            holder.headerTitle.setVisibility(View.GONE);
+        }
         mAdditionalServiceListAdapter.setPetId(petId);
         mAdditionalServiceListAdapter.setFromDetail(false);
         mAdditionalServiceListAdapter.updateList(service.additionalServices);
@@ -253,6 +255,8 @@ public class ServiceAdapter extends StatelessSection {
         RecyclerView adicionalServicesList;
         @BindView(R.id.additional_label)
         TextView aditionalLabel;
+        @BindView(R.id.layout_header_title)
+        LinearLayout headerTitle;
         View v;
 
         public ServiceViewHolder(View itemView) {

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import com.petbooking.Models.Professional;
 import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.Scheduling.model.AppointmentDateChild;
+import com.petbooking.UI.Dashboard.Business.Scheduling.widget.MyLinearLayout;
 import com.petbooking.UI.Dashboard.Business.ServiceDetail.DateListAdapter;
 import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.Utils.APIUtils;
@@ -51,6 +53,29 @@ public class ProfessionalAdapter extends StatelessSection {
     Professional professional = null;
     RecyclerView datesRecycler;
     OnProfessionalSelected onProfessionalSelected;
+
+    RecyclerView.OnItemTouchListener mScrollTouchListener = new RecyclerView.OnItemTouchListener() {
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            int action = e.getAction();
+            switch (action) {
+                case MotionEvent.ACTION_MOVE:
+                    rv.getParent().requestDisallowInterceptTouchEvent(true);
+                    break;
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
+    };
 
     public ProfessionalAdapter(Context context, List<Professional> professionals, String title) {
         super(new SectionParameters.Builder(R.layout.custom_professional_adapter)
@@ -92,17 +117,15 @@ public class ProfessionalAdapter extends StatelessSection {
         holder.professionalList.setClipToPadding(false);
         holder.professionalList.setAdapter(new ProfessionalListAdapter(context, professionals));
 
-        LinearLayoutManager managerDate = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        managerDate.setAutoMeasureEnabled(true);
+        List<AppointmentDateChild> childs = new ArrayList<>();
+        dateListDayAdapter = new DateListDayAdapter(context, childs);
+        MyLinearLayout managerDate = new MyLinearLayout(context, LinearLayoutManager.VERTICAL, false);
         holder.datesAvaliableList.setLayoutManager(managerDate);
+        holder.datesAvaliableList.addOnItemTouchListener(mScrollTouchListener);
+        holder.datesAvaliableList.setAdapter(dateListDayAdapter);
         SnapHelper snapHelperLinear = new LinearSnapHelper();
         snapHelperLinear.attachToRecyclerView(holder.datesAvaliableList);
         holder.datesAvaliableList.setClipToPadding(false);
-        holder.datesAvaliableList.setHasFixedSize(false);
-        List<AppointmentDateChild> childs = new ArrayList<>();
-        dateListDayAdapter = new DateListDayAdapter(context, childs);
-        holder.datesAvaliableList.setAdapter(dateListDayAdapter);
-
     }
 
     public void updateProfissionals(int position) {

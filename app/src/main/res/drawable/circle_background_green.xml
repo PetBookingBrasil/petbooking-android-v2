@@ -7,7 +7,7 @@
         android:width="0dp"
         android:color="@color/green_017a0a"/>
     <solid
-        android:color="@color/green"/>
+        android:color="@color/category_bath"/>
 
     <size
         android:width="20dp"

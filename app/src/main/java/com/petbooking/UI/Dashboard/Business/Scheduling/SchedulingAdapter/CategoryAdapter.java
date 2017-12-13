@@ -2,6 +2,7 @@ package com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -153,9 +154,14 @@ public class CategoryAdapter extends StatelessSection {
             Category category = services.get(position);
             int color = AppUtils.getCategoryColor(context, category.categoryName);
             GradientDrawable iconBackground = (GradientDrawable) holder.categoryIcon.getBackground();
-            iconBackground.setCornerRadius(50);
+
             holder.categoryName.setText(category.categoryName);
             holder.categoryIcon.setImageDrawable(category.icon);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    holder.categoryIcon.setClipToOutline(false);
+
+            }
 
             holder.v.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -165,7 +171,16 @@ public class CategoryAdapter extends StatelessSection {
                 }
             });
 
-            iconBackground.setColor(color);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                iconBackground.setTint(color);
+                Log.i(getClass().getSimpleName(), "Qual a elevation " + holder.categoryIcon.getElevation());
+                holder.categoryIcon.setElevation(50f);
+                Log.i(getClass().getSimpleName(), "Qual a elevation 2 " + holder.categoryIcon.getElevation());
+            }else{
+                iconBackground.setColor(color);
+            }
+
+
         }
 
         @Override

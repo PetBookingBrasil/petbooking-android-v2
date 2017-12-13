@@ -14,7 +14,16 @@
     <RelativeLayout
         android:layout_width="60dp"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
         android:layout_gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/circle_shadow"
+            android:paddingBottom="5dp">
+
 
         <ImageView
             android:id="@+id/category_icon"
@@ -26,6 +35,10 @@
             android:background="@drawable/category_icon_background"
             android:padding="@dimen/spacing_xmicro"
             app:srcCompat="@drawable/ic_category_transport" />
+
+        </LinearLayout>
+
+
 
         <TextView
             android:id="@+id/total_appointments"

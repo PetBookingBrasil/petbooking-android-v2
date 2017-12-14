@@ -2,6 +2,7 @@ package com.petbooking.UI.Dashboard.Business.Scheduling;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -330,9 +331,15 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 mServiceList = (ArrayList<BusinessServices>) response;
                 serviceAdapter.setServices(mServiceList, false);
                 mAdapter.addSection(TAGPROFESSIONALS, professionalAdapter);
-                int sectionPosition = mAdapter.getSectionPosition(TAGCATEGORY);
+                final int sectionPosition = mAdapter.getSectionPosition(TAGCATEGORY);
                 mAdapter.notifyDataSetChanged();
-                mRecyclerView.smoothScrollToPosition(sectionPosition);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRecyclerView.smoothScrollToPosition(sectionPosition);
+                    }
+                },200);
+
 
                 AppUtils.hideDialog();
                 ((BusinessActivity) getActivity()).showCartMenu();

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -196,8 +197,12 @@ public class ProfessionalAdapter extends StatelessSection {
                         .diskCacheStrategy(DiskCacheStrategy.RESULT)
                         .into(holder.image_header);
             }
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            holder.headerSection.setLayoutParams(params);
             holder.image_header.setVisibility(View.VISIBLE);
         }else{
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
+            holder.headerSection.setLayoutParams(params);
             holder.image_header.setVisibility(View.GONE);
             holder.textCheckunicode.setText("4");
             holder.textCheckunicode.setVisibility(View.VISIBLE);

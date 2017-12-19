@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -99,8 +100,11 @@ public class CategoryAdapter extends StatelessSection {
             viewHolder.image_header.setImageDrawable(category.icon);
             viewHolder.image_header.setPadding(18,18,18,18);
             iconBackground.setColor(color);
-
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            viewHolder.headerSection.setLayoutParams(params);
         }else{
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
+            viewHolder.headerSection.setLayoutParams(params);
             viewHolder.image_header.setVisibility(View.GONE);
             viewHolder.textCheckunicode.setText("2");
             viewHolder.textCheckunicode.setVisibility(View.VISIBLE);

@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/spacing_xmicro"
-    android:background="@color/white"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:minHeight="50dp"

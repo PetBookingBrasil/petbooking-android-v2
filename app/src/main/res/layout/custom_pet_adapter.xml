@@ -12,6 +12,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/circle_text"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_gravity="center_vertical"

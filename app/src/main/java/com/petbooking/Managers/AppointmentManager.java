@@ -280,6 +280,16 @@ public class AppointmentManager {
         return null;
     }
 
+    public int getCountCartPetId(String petId){
+        int i = 0;
+        for (CartItem item : cart) {
+            if(item.pet.id.equals(petId)){
+                i++;
+            }
+        }
+        return i;
+    }
+
     public ArrayList<CartItem> getCart() {
         ArrayList<CartItem> cart = new ArrayList<>();
         String cartStr = pref.getString("CART", null);

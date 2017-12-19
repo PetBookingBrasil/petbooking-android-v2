@@ -93,6 +93,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     private ConfirmDialogSchedule mConfirmDialogFragment;
 
     boolean addToCart = false;
+    boolean initial = true;
 
 
     CategoryAdapter.OnSelectCategoryListener mSelectedCategory = new CategoryAdapter.OnSelectCategoryListener() {
@@ -225,7 +226,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                     mConfirmDialogFragment.animation();
                     mConfirmDialogFragment.show(getFragmentManager(), "SHOW_CONFIRM",getContext());
 
-                    ((BusinessActivity) getActivity()).updateCartCount(mAppointmentManager.getCart().size());
+                    ((BusinessActivity) getActivity()).updateCartCount(mAppointmentManager.getCountCartPetId(petId));
 
                 }
             }
@@ -268,6 +269,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
 
     public void clearFields() {
         petAdapter.setExpanded(true);
+        petAdapter.setInitial(false);
         categoryAdapter.setExpanable(false);
         serviceAdapter.setexpanded(false);
         professionalAdapter.setexpanded(false);
@@ -312,6 +314,13 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 mPetList = (ArrayList<Pet>) response;
                 serviceAdapter.setexpanded(true);
                 petAdapter.addPets(mPetList);
+                if(initial && mPetList.size() >0) {
+                    initial = false;
+                    petAdapter.setSelectedPosition(0);
+                    petAdapter.setExpanded(false);
+                    notifyChanged(0);
+
+                }else
                 mAdapter.notifyDataSetChanged();
                 AppUtils.hideDialog();
             }
@@ -399,6 +408,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     @Override
     public void onFinishDialog(int action) {
         if(action == AppConstants.CANCEL_ACTION){
+            initial = true;
             clearFields();
         }else{
             Intent intent = new Intent(getContext(), CartActivity.class);

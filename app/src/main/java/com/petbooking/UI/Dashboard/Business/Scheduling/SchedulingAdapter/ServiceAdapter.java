@@ -10,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -165,9 +167,6 @@ public class ServiceAdapter extends StatelessSection {
                     holder.aditionalLabel.setVisibility(View.GONE);
                     serviceAdd = false;
                 }
-
-
-
             }
         });
         if(checked){
@@ -193,7 +192,6 @@ public class ServiceAdapter extends StatelessSection {
                 holder.circleImageView.performClick();
             }
         });
-
         checked = false;
     }
 
@@ -222,12 +220,15 @@ public class ServiceAdapter extends StatelessSection {
             viewHolder.textCheckunicode.setText(R.string.check);
             viewHolder.textCheckunicode.setTextColor(ContextCompat.getColor(mContext,R.color.white));
             viewHolder.circleImageView.setImageResource(R.drawable.circle_background_green);
-            Log.i(getClass().getSimpleName(),"Qual o count " + fragment.getCount());
             if(fragment.getCount() > 0) {
                 viewHolder.layoutAdditionas.setVisibility(View.VISIBLE);
                 viewHolder.quantAdditional.setText(MessageFormat.format("+{0}", fragment.getCount()));
             }
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            viewHolder.headerSection.setLayoutParams(params);
         }else{
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
+            viewHolder.headerSection.setLayoutParams(params);
             viewHolder.textCheckunicode.setText("3");
             viewHolder.textCheckunicode.setTextColor(ContextCompat.getColor(mContext,R.color.gray));
             viewHolder.circleImageView.setImageResource(R.color.schedule_background);

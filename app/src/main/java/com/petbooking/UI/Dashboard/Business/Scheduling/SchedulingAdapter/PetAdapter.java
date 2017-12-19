@@ -7,7 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -37,6 +39,7 @@ public class PetAdapter extends StatelessSection {
     Context context;
     List<Pet> pets;
     int selectedPosition = -1;
+    boolean initial = true;
 
     public PetAdapter(String title, SchedulingFragment fragment,List<Pet> pet,Context context) {
         super(new SectionParameters.Builder(R.layout.custom_pet_adapter)
@@ -69,6 +72,8 @@ public class PetAdapter extends StatelessSection {
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder item, final int position) {
         ItemViewHolder holder = (ItemViewHolder) item;
+        holder.titleNumber.setVisibility(View.GONE);
+        holder.circleLayout.setVisibility(View.GONE);
         holder.pets.setLayoutManager(new GridLayoutManager(context,3));
         holder.pets.setAdapter(new CustomPetAdapter(context,pets));
 
@@ -78,6 +83,10 @@ public class PetAdapter extends StatelessSection {
         this.title = title;
     }
 
+    public void setInitial(boolean initial) {
+        this.initial = initial;
+    }
+
     @Override
     public RecyclerView.ViewHolder getHeaderViewHolder(View view) {
         return new HeaderViewHolder(view);
@@ -85,7 +94,7 @@ public class PetAdapter extends StatelessSection {
 
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
-        HeaderViewHolder viewHolder = (HeaderViewHolder) holder;
+        final HeaderViewHolder viewHolder = (HeaderViewHolder) holder;
         viewHolder.headerTitle.setText(title);
         viewHolder.headerEdit.setVisibility(View.VISIBLE);
         viewHolder.image_header.setVisibility(View.VISIBLE);
@@ -110,13 +119,23 @@ public class PetAdapter extends StatelessSection {
                     .bitmapTransform(new CircleTransformation(context))
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .into(viewHolder.image_header);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            viewHolder.headerSection.setLayoutParams(params);
+
         }else{
-            viewHolder.image_header.setVisibility(View.GONE);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
+            viewHolder.headerSection.setLayoutParams(params);
             viewHolder.textCheckunicode.setText("1");
             viewHolder.textCheckunicode.setVisibility(View.VISIBLE);
             viewHolder.textCheckunicode.setTextColor(ContextCompat.getColor(context,R.color.gray));
             viewHolder.circleImageView.setImageResource(R.color.schedule_background);
         }
+        viewHolder.headerSection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewHolder.headerEdit.performClick();
+            }
+        });
     }
 
     public void setSelectedPosition(int selectedPosition) {
@@ -130,6 +149,8 @@ public class PetAdapter extends StatelessSection {
        TextView titleNumber;
        @BindView(R.id.text_title)
        TextView textTitle;
+       @BindView(R.id.circle_text)
+       LinearLayout circleLayout;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -183,6 +204,14 @@ public class PetAdapter extends StatelessSection {
                     .bitmapTransform(new CircleTransformation(context))
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .into(holder.imgPet);
+
+            if(initial && position == pets.size()){
+                PetAdapter.this.expanded = false;
+                setTitle(pet.name);
+                fragment.notifyChanged(position);
+                setSelectedPosition(position);
+
+            }
         }
 
         @Override

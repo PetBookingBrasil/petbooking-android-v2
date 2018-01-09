@@ -149,8 +149,8 @@ public class APIUtils {
         return category;
     }
 
-    public static ArrayList<CartRqt.Item> getCartReqItens(ArrayList<CartItem> cartItens) {
-        ArrayList<CartRqt.Item> itens = new ArrayList<>();
+    public static ArrayList<CartRqt.Item> getCartReqItems(ArrayList<CartItem> cartItens) {
+        ArrayList<CartRqt.Item> items = new ArrayList<>();
         CartRqt.Item item = null;
 
         for (CartItem cartItem : cartItens) {
@@ -165,10 +165,10 @@ public class APIUtils {
             item = new CartRqt.Item(cartItem.startDate, cartItem.startTime, cartItem.businessId,
                     cartItem.service.id, cartItem.professional.id, cartItem.pet.id, cartItem.notes,
                     false, additionals);
-            itens.add(item);
+            items.add(item);
         }
 
-        return itens;
+        return items;
     }
 
     /**

@@ -54,6 +54,14 @@
         <item name="android:radius">2dp</item>
     </style>
 
+    <style name="AppTheme.SecondaryButtonSchedule" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:background">@drawable/secondary_button</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:radius">2dp</item>
+    </style>
+
     <style name="AppTheme.TransparentButton" parent="Widget.AppCompat.Button.Colored">
         <item name="android:background">@drawable/transparent_button</item>
         <item name="android:textAllCaps">false</item>

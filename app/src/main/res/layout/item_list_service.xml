@@ -3,10 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/spacing_xmicro"
-    android:background="@color/white"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:minHeight="50dp"
     android:orientation="vertical"
     android:paddingLeft="@dimen/spacing_xmicro"
     android:paddingRight="@dimen/spacing_xmicro">
+
+
 
     <TextView
         android:id="@+id/appointment_date"
@@ -20,19 +24,69 @@
         android:textStyle="bold"
         android:visibility="gone" />
 
+    <LinearLayout
+        android:id="@+id/layout_header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:background="@drawable/circle_layout">
+
+            <TextView
+                android:id="@+id/text_title_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/brand_primary"
+                android:text="3"
+                android:textSize="18dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="@string/service_additional"
+            android:textColor="@color/brand_primary"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_marginBottom="@dimen/spacing_xmicro">
 
-        <CheckBox
+        <RelativeLayout
             android:id="@+id/service_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/spacing_nano"
-            android:layout_marginTop="@dimen/spacing_xmicro"
-            android:theme="@style/CustomCheckbox" />
+            android:layout_marginTop="@dimen/spacing_xmicro">
+
+
+            <TextView
+                android:id="@+id/checkUnicode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="16sp"
+                android:text="@string/check"/>
+
+
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/item_layout"
@@ -83,9 +137,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/spacing_micro"
-                android:layout_marginLeft="@dimen/spacing_xmicro"
                 android:layout_marginRight="@dimen/spacing_xmicro"
-                android:layout_marginTop="@dimen/spacing_xmicro"
+                android:layout_marginTop="11dp"
                 android:text="@string/business_label_additional"
                 android:textSize="14sp"
                 android:visibility="gone" />
@@ -93,6 +146,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/additional_services"
                 android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
 

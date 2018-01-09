@@ -16,6 +16,7 @@ import com.petbooking.Models.CalendarItem;
 import com.petbooking.Models.UserAddress;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -29,7 +30,12 @@ import java.util.regex.Pattern;
 public class CommonUtils {
 
     public static final int PASSWORD_LENGTH = 6;
-
+    private static final Locale BRAZIL = new Locale("pt","BR");
+    final public static String DATEFORMATDEFAULT = "yyyy-MM-dd";
+    final public static String MONTH_DESCRIPTION_FORMAT = "MMMM";
+    final public static String DAY_FORMAT = "dd";
+    final public static String DAY_FORMAT_DESCRIOTION = "EE";
+    final public static String MONTH_NUMBER_FORMAT = "MM";
     public static void hideKeyboard(Activity activity) {
         if (activity == null || activity.getCurrentFocus() == null) {
             return;
@@ -142,6 +148,11 @@ public class CommonUtils {
         }
 
         return formatedDate;
+    }
+
+    public static String formatDate(final String formatType, final Date date) {
+        final SimpleDateFormat dateFormatterInstance = new SimpleDateFormat(formatType, BRAZIL);
+        return dateFormatterInstance.format(date);
     }
 
     public static UserAddress parseAddress(Address address) {

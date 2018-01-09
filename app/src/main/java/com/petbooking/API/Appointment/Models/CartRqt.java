@@ -16,8 +16,8 @@ public class CartRqt {
     public Data data;
     public transient Attributes attributes;
 
-    public CartRqt(ArrayList<CartItem> itens) {
-        attributes = new Attributes(itens);
+    public CartRqt(ArrayList<CartItem> items) {
+        attributes = new Attributes(items);
         data = new Data(attributes);
     }
 
@@ -31,10 +31,10 @@ public class CartRqt {
     }
 
     public static class Attributes {
-        ArrayList<Item> itens;
+        ArrayList<Item> items;
 
-        public Attributes(ArrayList<CartItem> cartItens) {
-            itens = APIUtils.getCartReqItens(cartItens);
+        public Attributes(ArrayList<CartItem> cartitems) {
+            items = APIUtils.getCartReqItems(cartitems);
         }
     }
 

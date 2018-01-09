@@ -168,6 +168,7 @@
     <string name="business_service_price">R$ %1$s</string>
     <string name="business_service_finish">Finalizar Agendamento</string>
     <string name="call_button">Ligar</string>
+    <string name="bussines_category">Categoria do Serviço</string>
 
     <!-- Search -->
     <string name="filter_hint">Filtrar por nome, local&#8230;</string>
@@ -267,4 +268,19 @@
     <!-- Permissions -->
     <string name="permission_location_title">Ativar Localização</string>
     <string name="permission_location">Sua localização é necessária para utilizar as nossas funcionalidades.</string>
+
+    <!-- Schedule -->
+    <string name="select_pet">Selecione um pet</string>
+    <string name="select_professional">Selecione um profissional</string>
+    <string name="category">Categoria</string>
+    <string name="service_additional">Serviço e adicionais</string>
+    <string name="next_service">Continuar agendando</string>
+    <string name="title_professionals">Profissional e horário</string>
+    <string name="add_cart">Adicionar ao carrinho</string>
+    <string name="check">\u2713</string>
+    <string name="sucess_schedule">O agendamento foi adicionado ao carrinho com sucesso.</string>
+    <string name="action_schedule">Agendar mais um serviço</string>
+    <string name="go_to_cart">Ir para o carrinho</string>
+    <string name="schedule_empty"></string>
+
 </resources>

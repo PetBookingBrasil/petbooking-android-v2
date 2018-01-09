@@ -171,6 +171,7 @@ public class DashboardActivity extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        menu.findItem(R.id.cart).setVisible(false);
         return true;
     }
 

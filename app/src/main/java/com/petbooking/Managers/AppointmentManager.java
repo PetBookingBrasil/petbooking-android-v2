@@ -2,6 +2,7 @@ package com.petbooking.Managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -282,12 +283,22 @@ public class AppointmentManager {
 
     public int getCountCartPetId(String petId){
         int i = 0;
-        for (CartItem item : cart) {
-            if(item.pet.id.equals(petId)){
-                i++;
-            }
+
+        ArrayList<CartItem> cart = new ArrayList<>();
+        String cartStr = pref.getString("CART", null);
+
+        if (cartStr != null) {
+            cart = mJsonManager.fromJson(cartStr, new TypeToken<ArrayList<CartItem>>() {
+            }.getType());
+        }
+            for (CartItem item : cart) {
+                if (item.pet.id.equals(petId)) {
+                    i++;
+                }
+
         }
         return i;
+
     }
 
     public ArrayList<CartItem> getCart() {

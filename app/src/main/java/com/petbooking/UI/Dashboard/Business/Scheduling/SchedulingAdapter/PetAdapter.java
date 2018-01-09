@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingFragment;
@@ -41,7 +43,7 @@ public class PetAdapter extends StatelessSection {
     int selectedPosition = -1;
     boolean initial = true;
 
-    public PetAdapter(String title, SchedulingFragment fragment,List<Pet> pet,Context context) {
+    public PetAdapter(String title, SchedulingFragment fragment, List<Pet> pet, Context context) {
         super(new SectionParameters.Builder(R.layout.custom_pet_adapter)
                 .headerResourceId(R.layout.header_scheduling)
                 .build());
@@ -60,7 +62,7 @@ public class PetAdapter extends StatelessSection {
         return expanded ? 1 : 0;
     }
 
-    public void addPets(ArrayList<Pet> pets){
+    public void addPets(ArrayList<Pet> pets) {
         this.pets = pets;
     }
 
@@ -74,8 +76,8 @@ public class PetAdapter extends StatelessSection {
         ItemViewHolder holder = (ItemViewHolder) item;
         holder.titleNumber.setVisibility(View.GONE);
         holder.circleLayout.setVisibility(View.GONE);
-        holder.pets.setLayoutManager(new GridLayoutManager(context,3));
-        holder.pets.setAdapter(new CustomPetAdapter(context,pets));
+        holder.pets.setLayoutManager(new GridLayoutManager(context, 3));
+        holder.pets.setAdapter(new CustomPetAdapter(context, pets));
 
     }
 
@@ -104,7 +106,7 @@ public class PetAdapter extends StatelessSection {
                 fragment.clearFields();
             }
         });
-        if(selectedPosition >=0) {
+        if (selectedPosition >= 0) {
             Pet pet = pets.get(selectedPosition);
             int petAvatar;
             if (pet.type != null && pet.type.equals("dog")) {
@@ -122,12 +124,12 @@ public class PetAdapter extends StatelessSection {
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             viewHolder.headerSection.setLayoutParams(params);
 
-        }else{
+        } else {
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
             viewHolder.headerSection.setLayoutParams(params);
             viewHolder.textCheckunicode.setText("1");
             viewHolder.textCheckunicode.setVisibility(View.VISIBLE);
-            viewHolder.textCheckunicode.setTextColor(ContextCompat.getColor(context,R.color.gray));
+            viewHolder.textCheckunicode.setTextColor(ContextCompat.getColor(context, R.color.gray));
             viewHolder.circleImageView.setImageResource(R.color.schedule_background);
         }
         viewHolder.headerSection.setOnClickListener(new View.OnClickListener() {
@@ -143,14 +145,14 @@ public class PetAdapter extends StatelessSection {
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-       @BindView(R.id.recycler_custom)
-       RecyclerView pets;
-       @BindView(R.id.text_title_number)
-       TextView titleNumber;
-       @BindView(R.id.text_title)
-       TextView textTitle;
-       @BindView(R.id.circle_text)
-       LinearLayout circleLayout;
+        @BindView(R.id.recycler_custom)
+        RecyclerView pets;
+        @BindView(R.id.text_title_number)
+        TextView titleNumber;
+        @BindView(R.id.text_title)
+        TextView textTitle;
+        @BindView(R.id.circle_text)
+        LinearLayout circleLayout;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -158,19 +160,21 @@ public class PetAdapter extends StatelessSection {
         }
     }
 
-
-    class CustomPetAdapter extends RecyclerView.Adapter<CustomPetAdapter.ViewHolder>{
+    class CustomPetAdapter extends RecyclerView.Adapter<CustomPetAdapter.ViewHolder> {
         Context context;
         List<Pet> pets;
+        AppointmentManager mAppointmentManager;
+
 
         public CustomPetAdapter(Context context, List<Pet> pets) {
             this.context = context;
             this.pets = pets;
+            this.mAppointmentManager = AppointmentManager.getInstance();
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_list_pet_calendar,parent,false);
+            View view = LayoutInflater.from(context).inflate(R.layout.item_list_pet_calendar, parent, false);
             ViewHolder holder = new ViewHolder(view);
             return holder;
         }
@@ -205,13 +209,19 @@ public class PetAdapter extends StatelessSection {
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .into(holder.imgPet);
 
-            if(initial && position == pets.size()){
+            if (initial && position == pets.size()) {
                 PetAdapter.this.expanded = false;
                 setTitle(pet.name);
                 fragment.notifyChanged(position);
                 setSelectedPosition(position);
-
             }
+            if (mAppointmentManager.getCountCartPetId(pet.id) > 0) {
+                holder.totalServices.setText(String.valueOf(mAppointmentManager.getCountCartPetId(pet.id)));
+                holder.totalServices.setVisibility(View.VISIBLE);
+            } else {
+                holder.totalServices.setVisibility(View.INVISIBLE);
+            }
+
         }
 
         @Override
@@ -219,15 +229,18 @@ public class PetAdapter extends StatelessSection {
             return pets.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder{
+        class ViewHolder extends RecyclerView.ViewHolder {
             @BindView(R.id.pet_photo)
             ImageView imgPet;
+            @BindView(R.id.total_appointments)
+            TextView totalServices;
             @BindView(R.id.pet_name)
             TextView petName;
             View view;
+
             public ViewHolder(View itemView) {
                 super(itemView);
-                ButterKnife.bind(this,itemView);
+                ButterKnife.bind(this, itemView);
                 view = itemView;
 
             }

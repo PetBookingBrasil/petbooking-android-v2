@@ -215,12 +215,12 @@ public class SignUpActivity extends BaseActivity implements
         int message = -1;
 
         try {
-            message = FormUtils.validateUser(user, true);
+            message = FormUtils.newValidateUser(user, true);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        String repeatPassword = mEdtRepeatPass.getText().toString();
+        String repeatPassword = user.password;
 
         user.gender = mRbGenderMale.isChecked() ? User.GENDER_MALE : User.GENDER_FEMALE;
 

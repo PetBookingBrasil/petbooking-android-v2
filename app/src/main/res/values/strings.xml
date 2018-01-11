@@ -283,5 +283,7 @@
     <string name="action_schedule">Agendar mais um serviço</string>
     <string name="go_to_cart">Ir para o carrinho</string>
     <string name="schedule_empty"></string>
+    <string name="complete_register">Complete as informações a seguir:</string>
+    <string name="continue_register">Concluir cadastro</string>
 
 </resources>

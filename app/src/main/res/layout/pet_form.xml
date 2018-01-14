@@ -31,6 +31,7 @@
                 android:layout_marginStart="@dimen/spacing_xmicro"
                 android:layout_marginTop="@dimen/spacing_xsmallest"
                 android:gravity="center"
+                android:orientation="horizontal"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -41,7 +42,8 @@
                     android:layout_height="90dp"
                     android:background="@drawable/circle_background"
                     android:padding="@dimen/spacing_tiny"
-                    app:srcCompat="@drawable/ic_camera" />
+                    app:srcCompat="@drawable/ic_camera"
+                    tools:ignore="VectorDrawableCompat" />
 
                 <ImageView
                     android:id="@+id/pet_photo"
@@ -49,33 +51,29 @@
                     android:layout_height="120dp"
                     android:padding="@dimen/spacing_tiny"
                     android:visibility="gone" />
-            </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/petNameTL"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/spacing_xmicro"
-                android:layout_marginLeft="@dimen/spacing_xmicro"
-                android:layout_marginRight="@dimen/spacing_xmicro"
-                android:layout_marginStart="@dimen/spacing_xmicro"
-                android:layout_marginTop="@dimen/spacing_xsmallest"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pictureLayout">
-
-                <EditText
-                    android:id="@+id/pet_name"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/petNameTL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_pet"
-                    android:drawablePadding="@dimen/spacing_xmicro"
-                    android:drawableStart="@drawable/ic_pet"
-                    android:hint="@string/hint_pet_name"
-                    android:inputType="textPersonName"
-                    android:paddingLeft="@dimen/spacing_xmicro"
-                    android:text="@={pet.name}" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_marginEnd="@dimen/spacing_xmicro"
+                    android:layout_marginLeft="@dimen/spacing_xmicro"
+                    android:layout_marginRight="@dimen/spacing_xmicro"
+                    android:layout_marginStart="@dimen/spacing_xmicro">
+
+                    <EditText
+                        android:id="@+id/pet_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_pet"
+                        android:drawablePadding="@dimen/spacing_xmicro"
+                        android:drawableStart="@drawable/ic_pet"
+                        android:hint="@string/hint_pet_name"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="@dimen/spacing_xmicro"
+                        android:text="@={pet.name}" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/groupOne"
@@ -85,11 +83,23 @@
                 android:layout_marginLeft="@dimen/spacing_xmicro"
                 android:layout_marginRight="@dimen/spacing_xmicro"
                 android:layout_marginStart="@dimen/spacing_xmicro"
+                android:layout_marginTop="@dimen/spacing_xsmallest"
                 android:orientation="horizontal"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/petNameTL">
+                app:layout_constraintTop_toBottomOf="@+id/pictureLayout">
+
+                <com.petbooking.UI.Widget.MaterialSpinner
+                    android:id="@+id/pet_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    app:entries="@array/type_array"
+                    app:hint="@string/hint_type"
+                    app:icon="@drawable/ic_pet" />
+
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -114,14 +124,7 @@
                         android:text="@={pet.birthday}" />
                 </android.support.design.widget.TextInputLayout>
 
-                <com.petbooking.UI.Widget.MaterialSpinner
-                    android:id="@+id/pet_gender"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:entries="@array/gender_array"
-                    app:hint="@string/hint_gender"
-                    app:icon="@drawable/ic_paw" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -132,30 +135,28 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="@dimen/spacing_xmicro"
                 android:layout_marginStart="@dimen/spacing_xmicro"
+                android:orientation="horizontal"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/groupOne">
+                app:layout_constraintTop_toBottomOf="@+id/pet_breed">
 
                 <com.petbooking.UI.Widget.MaterialSpinner
-                    android:id="@+id/pet_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    app:entries="@array/type_array"
-                    app:hint="@string/hint_type"
-                    app:icon="@drawable/ic_pet" />
-
-                <com.petbooking.UI.Widget.MaterialSpinner
-                    android:id="@+id/pet_size"
+                    android:id="@+id/pet_gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:enableInfo="true"
-                    app:entries="@array/size_dog_array"
-                    app:hint="@string/hint_size"
-                    app:icon="@drawable/ic_size" />
+                    app:entries="@array/gender_array"
+                    app:hint="@string/hint_gender"
+                    app:icon="@drawable/ic_paw" />
+
+
+                <com.petbooking.UI.Widget.StyledSwitch
+                    android:id="@+id/switch_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:title="@string/question_register"></com.petbooking.UI.Widget.StyledSwitch>
 
             </LinearLayout>
 
@@ -170,7 +171,43 @@
                 app:icon="@drawable/ic_paw"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/groupTwo" />
+                app:layout_constraintTop_toBottomOf="@+id/groupOne" />
+
+
+            <LinearLayout
+                android:id="@+id/groupSize"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_xmicro"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="@dimen/spacing_xmicro"
+                android:layout_marginStart="@dimen/spacing_xmicro"
+                android:orientation="horizontal"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/groupTwo">
+
+                <com.petbooking.UI.Widget.MaterialSpinner
+                    android:id="@+id/pet_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:enableInfo="true"
+                    app:entries="@array/size_dog_array"
+                    app:hint="@string/hint_size"
+                    app:icon="@drawable/ic_size" />
+
+                <com.petbooking.UI.Widget.MaterialSpinner
+                    android:id="@+id/pet_temper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:entries="@array/temper_array"
+                    app:hint="@string/hint_temper"
+                    app:icon="@drawable/ic_temper" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/groupThree"
@@ -184,7 +221,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pet_breed">
+                app:layout_constraintTop_toBottomOf="@+id/groupSize">
 
                 <com.petbooking.UI.Widget.MaterialSpinner
                     android:id="@+id/pet_coat"
@@ -197,13 +234,61 @@
                     app:icon="@drawable/ic_coat" />
 
                 <com.petbooking.UI.Widget.MaterialSpinner
-                    android:id="@+id/pet_temper"
+                    android:id="@+id/color_pet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    app:entries="@array/temper_array"
-                    app:hint="@string/hint_temper"
-                    app:icon="@drawable/ic_temper" />
+                    app:entries="@array/colors_array"
+                    app:hint="@string/color_pet"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/chip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_xmicro"
+                android:layout_marginLeft="@dimen/spacing_xmicro"
+                android:layout_marginRight="@dimen/spacing_xmicro"
+                android:layout_marginStart="@dimen/spacing_xmicro"
+                android:layout_marginTop="@dimen/spacing_xmicro"
+                android:orientation="horizontal"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/groupThree">
+
+                <com.petbooking.UI.Widget.StyledSwitch
+                    android:id="@+id/switch_chip"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="25dp"
+                    app:title="@string/chip_question">
+
+                </com.petbooking.UI.Widget.StyledSwitch>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/chip_number_tl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    >
+
+                    <EditText
+                        android:id="@+id/pet_chip_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/chip_number"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/spacing_xmicro"
+                        android:text="" />
+                </android.support.design.widget.TextInputLayout>
+
+
             </LinearLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -217,7 +302,7 @@
                 android:layout_marginTop="@dimen/spacing_xmicro"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/groupThree">
+                app:layout_constraintTop_toBottomOf="@+id/chip">
 
                 <EditText
                     android:id="@+id/pet_observation"
@@ -231,6 +316,8 @@
                     android:paddingLeft="@dimen/spacing_xmicro"
                     android:text="@={pet.description}" />
             </android.support.design.widget.TextInputLayout>
+
+
 
             <Button
                 android:id="@+id/submitButton"

@@ -29,6 +29,13 @@
         <item>@string/coat_medium</item>
         <item>@string/coat_long</item>
     </string-array>
+    
+    <string-array name="colors_array">
+        <item>@string/color_white</item>
+        <item>@string/color_black</item>
+        <item>@string/color_brown</item>
+        <item>@string/color_gray</item>
+    </string-array>
 
     <string-array name="temper_array">
         <item>@string/temper_agitated</item>

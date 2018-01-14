@@ -159,6 +159,23 @@ public abstract class AppUtils {
         return "";
     }
 
+    public static String getColorPet(Context context, String color){
+        if (TextUtils.equals(color, context.getString(R.string.color_white))) {
+            return APIPetConstants.DATA_TEMPER_NEEDY;
+        }
+        if (TextUtils.equals(color, context.getString(R.string.color_black))) {
+            return APIPetConstants.DATA_TEMPER_AFFECTIONATE;
+        }
+        if (TextUtils.equals(color, context.getString(R.string.color_brown))) {
+            return APIPetConstants.DATA_TEMPER_DOCILE;
+        }
+        if (TextUtils.equals(color, context.getString(R.string.color_gray))) {
+            return APIPetConstants.DATA_TEMPER_QUIET;
+        }
+
+        return "";
+    }
+
     public static String getDisplayType(Context context, String type) {
         if (TextUtils.equals(type.toLowerCase(), APIPetConstants.DATA_TYPE_CAT)) {
             return context.getString(R.string.type_cat);

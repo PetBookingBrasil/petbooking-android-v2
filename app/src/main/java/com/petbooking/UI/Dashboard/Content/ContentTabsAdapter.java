@@ -17,16 +17,20 @@ public class ContentTabsAdapter extends FragmentStatePagerAdapter {
 
     Context mContext;
     final int PAGES_COUNT = 2;
+    boolean category;
 
     public ContentTabsAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.mContext = context;
+        this.category = true;
     }
 
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
+        if (position == 0 && category) {
             return new CategoryListFragment();
+        } else if (position == 0 && !category) {
+            return new BusinessListFragment();
         } else if (position == 1) {
             return new BusinessMap();
         }
@@ -38,5 +42,4 @@ public class ContentTabsAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return PAGES_COUNT;
     }
-
 }

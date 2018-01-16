@@ -4,7 +4,9 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,12 +59,15 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.list_scheduling, container, false);
         ButterKnife.bind(this, view);
         categoryAdapter = new CategoryListAdapter(getActivity(),mCategoryList);
+        categorys.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        categorys.setAdapter(categoryAdapter);
         getCategories();
         return view;
     }
 
     public void getCategories() {
-        mBusinessService.listBusinessCategories("30", new APICallback() {
+        AppUtils.showLoadingDialog(getActivity());
+        mBusinessService.listCategories( new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 CategoryResp resp = (CategoryResp) response;
@@ -72,6 +77,7 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
 
                 categoryAdapter.setCategories(mCategoryList);
                 categoryAdapter.notifyDataSetChanged();
+                AppUtils.hideDialog();
             }
 
             @Override

@@ -221,7 +221,6 @@ public class RegisterPetActivity extends BaseActivity implements
                     dogBreedsString.add(breed.attributes.name);
                     dogBreeds.add(new Breed(breed.id, breed.attributes.name, breed.attributes.kind, breed.attributes.size));
                 }
-
             }
 
             @Override

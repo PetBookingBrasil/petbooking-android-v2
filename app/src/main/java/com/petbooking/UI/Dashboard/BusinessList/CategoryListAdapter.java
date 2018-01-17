@@ -14,7 +14,10 @@ import android.widget.TextView;
 import com.petbooking.Models.Category;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.CategoryAdapter;
+import com.petbooking.UI.Dashboard.Content.ContentTabsAdapter;
 import com.petbooking.Utils.AppUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -28,11 +31,16 @@ import butterknife.ButterKnife;
 public class CategoryListAdapter extends  RecyclerView.Adapter<CategoryListAdapter.ViewHolder>{
     Context context;
     ArrayList<Category> categories;
+    CategoryListFragment fragment;
 
 
     public CategoryListAdapter(Context context, ArrayList<Category> categories) {
         this.context = context;
         this.categories = categories;
+    }
+
+    public void setFragment(CategoryListFragment fragment) {
+        this.fragment = fragment;
     }
 
     public void setCategories(ArrayList<Category> categories) {
@@ -63,7 +71,9 @@ public class CategoryListAdapter extends  RecyclerView.Adapter<CategoryListAdapt
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                    if (fragment!=null){
+                        fragment.replaceFragment();
+                    }
             }
         });
 

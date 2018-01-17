@@ -1,6 +1,8 @@
 package com.petbooking.UI.Dashboard.BusinessList;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +17,7 @@ import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Category;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Content.ContentTabsAdapter;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 
@@ -59,6 +62,7 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.list_scheduling, container, false);
         ButterKnife.bind(this, view);
         categoryAdapter = new CategoryListAdapter(getActivity(),mCategoryList);
+        categoryAdapter.setFragment(this);
         categorys.setLayoutManager(new GridLayoutManager(getActivity(),2));
         categorys.setAdapter(categoryAdapter);
         getCategories();
@@ -85,5 +89,13 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
                 AppUtils.hideDialog();
             }
         });
+    }
+
+    public void replaceFragment(){
+        android.support.v4.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.root_frame, new BusinessListFragment());
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

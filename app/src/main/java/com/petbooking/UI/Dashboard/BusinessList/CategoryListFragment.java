@@ -91,9 +91,11 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
         });
     }
 
-    public void replaceFragment(){
+    public void replaceFragment(String categoryId){
         android.support.v4.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.root_frame, new BusinessListFragment());
+        BusinessListFragment businessListFragment = new BusinessListFragment();
+        businessListFragment.setCategoryId(categoryId);
+        transaction.replace(R.id.root_frame, businessListFragment);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.addToBackStack(null);
         transaction.commit();

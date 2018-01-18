@@ -84,6 +84,31 @@ public class BusinessService {
         });
     }
 
+    public void listBussinesByCategory(String coords, String userId, int page, int limit, String categoryId, final APICallback callback) {
+        Call<BusinessesResp> call = mBusinessInterface.listBusinessByCategory(coords, userId, page, limit, categoryId);
+        call.enqueue(new Callback<BusinessesResp>() {
+            @Override
+            public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {
+                if (response.isSuccessful()) {
+                    BusinessesResp responseList = response.body();
+                    ArrayList<Business> businessList = new ArrayList<>();
+                    for (BusinessesResp.Item item : responseList.data) {
+                        businessList.add(APIUtils.parseBusiness(item.id, item.attributes));
+                    }
+
+                    callback.onSuccess(businessList);
+                } else {
+                    callback.onError(APIUtils.handleError(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BusinessesResp> call, Throwable t) {
+
+            }
+        });
+    }
+
 
     public void listBusinessReviews(String businessId, int page, final APICallback callback) {
         Call<ReviewResp> call = mBusinessInterface.listBusinessReviews(businessId, page);

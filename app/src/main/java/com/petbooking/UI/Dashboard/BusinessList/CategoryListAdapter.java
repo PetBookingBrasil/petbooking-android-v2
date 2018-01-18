@@ -56,7 +56,7 @@ public class CategoryListAdapter extends  RecyclerView.Adapter<CategoryListAdapt
 
     @Override
     public void onBindViewHolder(CategoryListAdapter.ViewHolder holder, final int position) {
-        Category category = categories.get(position);
+        final Category category = categories.get(position);
         int color = AppUtils.getCategoryColor(context, category.categoryName);
         GradientDrawable iconBackground = (GradientDrawable) holder.categoryIcon.getBackground();
 
@@ -72,7 +72,7 @@ public class CategoryListAdapter extends  RecyclerView.Adapter<CategoryListAdapt
             @Override
             public void onClick(View v) {
                     if (fragment!=null){
-                        fragment.replaceFragment();
+                        fragment.replaceFragment(category.id);
                     }
             }
         });

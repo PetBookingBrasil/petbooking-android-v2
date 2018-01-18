@@ -51,6 +51,7 @@ public class BusinessListFragment extends Fragment {
     private boolean isLoading = false;
     private boolean isLastPage = false;
     private int currentPage = 1;
+    String categoryId;
 
     View.OnClickListener filterButtonListener = new View.OnClickListener() {
         @Override
@@ -86,6 +87,9 @@ public class BusinessListFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -131,7 +135,7 @@ public class BusinessListFragment extends Fragment {
     public void listBusiness() {
         currentPage = 1;
         AppUtils.showLoadingDialog(getContext());
-        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, PAGE_SIZE, new APICallback() {
+        mBusinessService.listBussinesByCategory(mLocationManager.getLocationCoords(), userId, currentPage, PAGE_SIZE, categoryId, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 mBusinessList = (ArrayList<Business>) response;
@@ -155,7 +159,7 @@ public class BusinessListFragment extends Fragment {
         AppUtils.showLoadingDialog(getContext());
         currentPage++;
         isLoading = true;
-        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, PAGE_SIZE, new APICallback() {
+        mBusinessService.listBussinesByCategory(mLocationManager.getLocationCoords(), userId, currentPage, PAGE_SIZE, categoryId, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 ArrayList<Business> nextPage = (ArrayList<Business>) response;

@@ -77,6 +77,10 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
         mConfirmDialogFragment = ConfirmDialogFragment.newInstance();
     }
 
+    public void setTitle(String name){
+        getSupportActionBar().setTitle(businessName);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);

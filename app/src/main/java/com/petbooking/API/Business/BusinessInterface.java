@@ -39,6 +39,15 @@ public interface BusinessInterface {
                                         @Query(APIConstants.QUERY_CATEGORY_TEMPLATE) String categoryID,
                                         @Query(APIConstants.QUERY_TEXT) String text);
 
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
+    @GET(APIBusinessConstants.BUSINESS_SEARCH_ENDPOINT)
+    Call<BusinessesResp> listBusinessByCategory(@Query(APIConstants.QUERY_COORDS) String coords,
+                                                @Query(APIConstants.QUERY_USER_ID) String userId,
+                                                @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex,
+                                                @Query(APIConstants.QUERY_PAGE_LIMIT) int limit,
+                                                @Query(APIConstants.QUERY_CATEGORY_TEMPLATE) String categoryID);
+
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @GET(APIBusinessConstants.ENDPOINT_BUSINESS_REVIEWS)
     Call<ReviewResp> listBusinessReviews(@Path(APIBusinessConstants.PATH_BUSINESS_ID) String businessID,

@@ -42,7 +42,6 @@ import com.petbooking.UI.Menu.Search.SearchResultFragment;
 import com.petbooking.UI.Menu.Settings.SettingsActivity;
 import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.Utils.APIUtils;
-import com.petbooking.Utils.ImageUtils;
 
 public class DashboardActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -66,6 +65,7 @@ public class DashboardActivity extends AppCompatActivity implements
     View mHeaderView;
     DrawerLayout mDrawerLayout;
     Toolbar mToolbar;
+    ActionBarDrawerToggle toggle;
 
     /**
      * Sidemenu content
@@ -75,6 +75,7 @@ public class DashboardActivity extends AppCompatActivity implements
     private ImageView mIvSideMenuPicture;
     private TextView mTvSideMenuName;
     private TextView mTvSideMenuAddress;
+    TextView toolbarTitle;
 
     View.OnClickListener btnProfileListener = new View.OnClickListener() {
         @Override
@@ -103,7 +104,7 @@ public class DashboardActivity extends AppCompatActivity implements
         mFeedbackDialogFragment = FeedbackDialogFragment.newInstance();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView toolbarTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
+        toolbarTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.dashboard_title);
         setSupportActionBar(mToolbar);
 
@@ -112,7 +113,7 @@ public class DashboardActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
@@ -134,6 +135,12 @@ public class DashboardActivity extends AppCompatActivity implements
 
         inflateBusinessFragment();
         //inflateSearchResultFragment();
+    }
+
+    public void setTitle(String title){
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24px);
+        toolbarTitle.setText(title);
     }
 
     @Override
@@ -164,7 +171,10 @@ public class DashboardActivity extends AppCompatActivity implements
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            //super.onBackPressed();
+            getSupportActionBar().setHomeButtonEnabled(true);
+            toggle.syncState();
+            toolbarTitle.setText(R.string.dashboard_title);
+            super.onBackPressed();
         }
     }
 

@@ -18,6 +18,7 @@ import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Category;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Content.ContentTabsAdapter;
+import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 
@@ -65,6 +66,7 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
         categoryAdapter.setFragment(this);
         categorys.setLayoutManager(new GridLayoutManager(getActivity(),2));
         categorys.setAdapter(categoryAdapter);
+        mCategoryList.clear();
         getCategories();
         return view;
     }
@@ -91,13 +93,15 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
         });
     }
 
-    public void replaceFragment(String categoryId){
+    public void replaceFragment(String categoryId, String categoryName){
         android.support.v4.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
         BusinessListFragment businessListFragment = new BusinessListFragment();
         businessListFragment.setCategoryId(categoryId);
         transaction.replace(R.id.root_frame, businessListFragment);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.addToBackStack(null);
+        transaction.addToBackStack(getClass().getSimpleName());
         transaction.commit();
+        DashboardActivity activity =(DashboardActivity) getActivity();
+        activity.setTitle(categoryName);
     }
 }

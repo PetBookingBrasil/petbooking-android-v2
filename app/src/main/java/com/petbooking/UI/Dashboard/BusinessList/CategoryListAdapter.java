@@ -72,7 +72,7 @@ public class CategoryListAdapter extends  RecyclerView.Adapter<CategoryListAdapt
             @Override
             public void onClick(View v) {
                     if (fragment!=null){
-                        fragment.replaceFragment(category.id);
+                        fragment.replaceFragment(category.id, category.categoryName);
                     }
             }
         });

@@ -53,7 +53,10 @@ public class ContentFragment extends Fragment {
         return view;
     }
 
+
+
     public void backToList() {
         mViewPager.setCurrentItem(0);
     }
+
 }

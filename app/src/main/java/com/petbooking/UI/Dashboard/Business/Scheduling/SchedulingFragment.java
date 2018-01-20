@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.petbooking.API.Appointment.AppointmentService;
 import com.petbooking.API.Business.Models.CategoryResp;
@@ -58,6 +59,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     //View
     Button btnAddCart;
     RecyclerView mRecyclerView;
+    LinearLayout placeHolderPet;
 
 
     //Adapters
@@ -81,6 +83,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     private com.petbooking.API.Business.BusinessService mBusinessService;
     AppointmentDateChild appointmentDateChild;
     Professional professional;
+    Category category;
 
 
     PetService mPetService;
@@ -94,6 +97,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
 
     boolean addToCart = false;
     boolean initial = true;
+    boolean categoryConfig = true;
 
 
     CategoryAdapter.OnSelectCategoryListener mSelectedCategory = new CategoryAdapter.OnSelectCategoryListener() {
@@ -182,6 +186,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         mRecyclerView = (RecyclerView) view.findViewById(R.id.listCategorys);
         mRecyclerView.setHasFixedSize(true);
         btnAddCart = (Button) view.findViewById(R.id.btn_add_cart);
+        placeHolderPet = (LinearLayout) view.findViewById(R.id.layout_header);
         mAdapter = new SectionedRecyclerViewAdapter();
         CustomLinearLayoutManager linearLayoutManager = new CustomLinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -196,6 +201,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         mRecyclerView.setAdapter(mAdapter);
         getPets();
         getCategories();
+        placeHolderPet.setVisibility(View.VISIBLE);
 
         btnAddCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,10 +261,15 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     public void notifyChanged(int position) {
         String petId = mPetList.get(position).id;
         this.petId = petId;
-        categoryAdapter.setExpanable(true);
         int sectionPosition = mAdapter.getSectionPosition(TAGCATEGORY);
         serviceAdapter.setPetId(petId);
         mAdapter.addSection(TAGSERVICES, serviceAdapter);
+        if (categoryConfig){
+            listServices(categoryId,petId);
+            categoryAdapter.setExpanable(false);
+        }else {
+            categoryAdapter.setExpanable(true);
+        }
         mAdapter.notifyDataSetChanged();
         mRecyclerView.smoothScrollToPosition(sectionPosition);
     }
@@ -319,14 +330,20 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                     petAdapter.setSelectedPosition(0);
                     petAdapter.setExpanded(false);
                     notifyChanged(0);
+                    placeHolderPet.setVisibility(View.GONE);
 
-                }else
-                mAdapter.notifyDataSetChanged();
+                }else {
+                    mAdapter.notifyDataSetChanged();
+                    if(mPetList.size() <= 0){
+                        placeHolderPet.setVisibility(View.VISIBLE);
+                    }
+                }
                 AppUtils.hideDialog();
             }
 
             @Override
             public void onError(Object error) {
+                placeHolderPet.setVisibility(View.VISIBLE);
                 AppUtils.hideDialog();
             }
         });
@@ -414,5 +431,11 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
             Intent intent = new Intent(getContext(), CartActivity.class);
             getContext().startActivity(intent);
         }
+    }
+
+    public void setCategory(Category category){
+        this.category = category;
+        this.categoryId = category.id;
+        this.categoryConfig = true;
     }
 }

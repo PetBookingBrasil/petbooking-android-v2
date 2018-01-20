@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.petbooking.Models.Category;
 import com.petbooking.UI.Dashboard.BusinessList.BusinessListFragment;
 import com.petbooking.UI.Dashboard.BusinessMap.BusinessMap;
 
@@ -16,16 +17,18 @@ public class ContentTabsAdapter extends FragmentStatePagerAdapter {
 
     Context mContext;
     final int PAGES_COUNT = 2;
+    Category category;
 
-    public ContentTabsAdapter(FragmentManager fm, Context context) {
+    public ContentTabsAdapter(FragmentManager fm, Context context,  Category category) {
         super(fm);
         this.mContext = context;
+        this.category = category;
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return new BusinessListFragment();
+            return new BusinessListFragment(category);
         } else if (position == 1) {
             return new BusinessMap();
         }

@@ -282,5 +282,6 @@
     <string name="action_schedule">Agendar mais um serviço</string>
     <string name="go_to_cart">Ir para o carrinho</string>
     <string name="schedule_empty"></string>
+    <string name="header_pets">Atenção! Os preços exibidos são médios. Cadastre seu pet para visualizar os valores condizentes as raças.</string>
 
 </resources>

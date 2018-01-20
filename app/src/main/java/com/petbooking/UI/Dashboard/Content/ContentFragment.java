@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.petbooking.Models.Category;
 import com.petbooking.R;
 
 /**
@@ -21,18 +22,22 @@ public class ContentFragment extends Fragment {
     private ContentTabsAdapter mAdapter;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
+    private Category category;
 
     public ContentFragment() {
         // Required empty public constructor
     }
 
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
 
-        mAdapter = new ContentTabsAdapter(getFragmentManager(), getContext());
+        mAdapter = new ContentTabsAdapter(getFragmentManager(), getContext(), category);
         mTabLayout = (TabLayout) view.findViewById(R.id.tabs);
         mViewPager = (ViewPager) view.findViewById(R.id.pager);
         mViewPager.setAdapter(mAdapter);

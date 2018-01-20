@@ -1,5 +1,6 @@
 package com.petbooking.UI.Dashboard.BusinessList;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
+import com.petbooking.Models.Category;
 import com.petbooking.R;
 import com.petbooking.UI.Menu.Search.SearchActivity;
 import com.petbooking.Utils.AppUtils;
@@ -52,6 +54,9 @@ public class BusinessListFragment extends Fragment {
     private boolean isLastPage = false;
     private int currentPage = 1;
 
+    //Model
+    Category category;
+
     View.OnClickListener filterButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -84,6 +89,11 @@ public class BusinessListFragment extends Fragment {
 
     public BusinessListFragment() {
         // Required empty public constructor
+    }
+
+    @SuppressLint("ValidFragment")
+    public BusinessListFragment(Category category){
+        this.category = category;
     }
 
 

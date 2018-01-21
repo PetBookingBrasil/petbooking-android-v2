@@ -22,9 +22,11 @@ import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
+import com.petbooking.Models.Category;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.BusinessActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -43,6 +45,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private RequestManager mGlide;
     private boolean isFavoriteList;
     private OnFavoriteAction onFavoriteAction;
+    private Category category;
 
     public BusinessListAdapter(Context context, ArrayList<Business> businessList, RequestManager glide) {
         this.mBusinessList = businessList;
@@ -54,6 +57,10 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void updateList(ArrayList<Business> businessList) {
         this.mBusinessList = businessList;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
@@ -281,6 +288,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         businessIntent.putExtra("businessId", businessId);
         businessIntent.putExtra("businessName", businessName);
         businessIntent.putExtra("businessDistance", businessDistance);
+        businessIntent.putExtra("category", category);
 
         mContext.startActivity(businessIntent);
     }

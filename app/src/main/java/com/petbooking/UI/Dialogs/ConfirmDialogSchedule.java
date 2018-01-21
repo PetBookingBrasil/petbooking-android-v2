@@ -37,12 +37,14 @@ public class ConfirmDialogSchedule extends DialogFragment implements DialogInter
     private TextView mTvText;
     private Button mBtnConfirm;
     private Button mBtnCancel;
+    private Button mOtherSchedule;
     TextView textAnim;
 
     private int mTitle;
     private int mText;
     private int mButtonConfirmText;
     private int mButtonCancelText;
+    private int mButtonScheduleText;
     private int mAction = -1;
 
     public ConfirmDialogSchedule() {
@@ -60,8 +62,10 @@ public class ConfirmDialogSchedule extends DialogFragment implements DialogInter
             if (v.getId() == R.id.confirm_button) {
                 int action = mAction == -1 ? AppConstants.CONFIRM_ACTION : mAction;
                 finishDialogListener.onFinishDialog(action);
-            } else {
+            } else if(v.getId() == R.id.cancel_button){
                 finishDialogListener.onFinishDialog(AppConstants.CANCEL_ACTION);
+            }else{
+                finishDialogListener.onFinishDialog(AppConstants.NEWSCHEDULE_SERVICE);
             }
             dismiss();
         }
@@ -82,6 +86,7 @@ public class ConfirmDialogSchedule extends DialogFragment implements DialogInter
         mTvText = (TextView) view.findViewById(R.id.dialogText);
         mBtnConfirm = (Button) view.findViewById(R.id.confirm_button);
         mBtnCancel = (Button) view.findViewById(R.id.cancel_button);
+        mOtherSchedule = (Button) view.findViewById(R.id.schedule_other_pet);
         textAnim = (TextView) view.findViewById(R.id.cart_anim);
         final RelativeLayout container = (RelativeLayout) view.findViewById(R.id.container);
         Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
@@ -108,6 +113,7 @@ public class ConfirmDialogSchedule extends DialogFragment implements DialogInter
 
         mBtnConfirm.setOnClickListener(buttonListener);
         mBtnCancel.setOnClickListener(buttonListener);
+        mOtherSchedule.setOnClickListener(buttonListener);
 
         if (finishDialogListener == null) {
             finishDialogListener = (FinishDialogListener) getActivity();
@@ -139,11 +145,12 @@ public class ConfirmDialogSchedule extends DialogFragment implements DialogInter
 
     }
 
-    public void setDialogInfo(int title, int text, int confirmText) {
+    public void setDialogInfo(int title, int text, int confirmText, int scheduleText) {
         this.mTitle = title;
         this.mText = text;
         this.mButtonConfirmText = confirmText;
         this.mButtonCancelText = R.string.dialog_cancel;
+        this.mButtonScheduleText = scheduleText;
     }
 
     public void setAction(int action) {
@@ -159,6 +166,7 @@ public class ConfirmDialogSchedule extends DialogFragment implements DialogInter
         mTvText.setText(mText);
         mBtnConfirm.setText(mButtonConfirmText);
         mBtnCancel.setText(mButtonCancelText);
+        mOtherSchedule.setText(mButtonScheduleText);
     }
 
     public void hideText(){

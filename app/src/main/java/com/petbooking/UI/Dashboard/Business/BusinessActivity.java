@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Managers.PreferenceManager;
+import com.petbooking.Models.Category;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Cart.CartActivity;
 import com.petbooking.UI.Dashboard.Content.ContentTabsAdapter;
@@ -35,6 +36,7 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
     private float businessDistance;
     private boolean alreadyShow = false;
     private Menu menu;
+    private Category category;
 
     private ConfirmDialogFragment mConfirmDialogFragment;
 
@@ -51,6 +53,7 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
         businessId = getIntent().getStringExtra("businessId");
         businessName = getIntent().getStringExtra("businessName");
         businessDistance = getIntent().getFloatExtra("businessDistance", 0);
+        category = (Category) getIntent().getParcelableExtra("category");
 
         if (!getIntent().hasExtra("businessId")) {
             businessId = mAppointmentManager.getCurrentBusinessId();
@@ -64,7 +67,7 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
         getSupportActionBar().setElevation(0);
         getSupportActionBar().setTitle(businessName);
 
-        mAdapter = new BusinessTabsAdapter(getSupportFragmentManager(), this, businessId, businessDistance);
+        mAdapter = new BusinessTabsAdapter(getSupportFragmentManager(), this, businessId, businessDistance,category);
         mViewPager.setAdapter(mAdapter);
 
         mTabLayout.setBackgroundColor(getResources().getColor(R.color.secondary_red));

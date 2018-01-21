@@ -125,6 +125,7 @@ public class BusinessListFragment extends Fragment {
 
         if (mAdapter != null) {
             mRvBusinessList.setAdapter(mAdapter);
+            mAdapter.setCategory(category);
         }
 
         mRvBusinessList.addOnScrollListener(scrollListener);

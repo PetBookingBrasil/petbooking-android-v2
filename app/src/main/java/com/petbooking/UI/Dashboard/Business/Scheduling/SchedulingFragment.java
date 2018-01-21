@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,7 +98,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
 
     boolean addToCart = false;
     boolean initial = true;
-    boolean categoryConfig = true;
+    boolean categoryConfig = false;
 
 
     CategoryAdapter.OnSelectCategoryListener mSelectedCategory = new CategoryAdapter.OnSelectCategoryListener() {
@@ -143,10 +144,11 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         }
     };
 
-    public static SchedulingFragment newInstance(String id) {
+    public static SchedulingFragment newInstance(String id, Category category) {
         SchedulingFragment fragment = new SchedulingFragment();
         Bundle bundle = new Bundle();
         bundle.putString("businessId", id);
+        bundle.putParcelable("category",category);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -170,6 +172,12 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         mAppointmentService = new AppointmentService();
         mBusinessService = new com.petbooking.API.Business.BusinessService();
         this.businessId = getArguments().getString("businessId", "0");
+        Category category = (Category) getArguments().getParcelable("category");
+        if(category !=null){
+            setCategory(category);
+        }else{
+
+        }
 
         if (businessId.equals("0") && mAppointmentManager.getCurrentBusinessId() != null) {
             this.businessId = mAppointmentManager.getCurrentBusinessId();
@@ -199,6 +207,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         mAdapter.addSection(petAdapter);
         mAdapter.addSection(TAGCATEGORY,categoryAdapter);
         mRecyclerView.setAdapter(mAdapter);
+        Log.i(getClass().getSimpleName(),"inicio pets");
         getPets();
         getCategories();
         placeHolderPet.setVisibility(View.VISIBLE);
@@ -226,7 +235,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                         mAppointmentManager.addNewAdditional(businessServices.id,additional,petId);
                     }
                     mConfirmDialogFragment.setDialogInfo(R.string.schedule_empty, R.string.sucess_schedule,
-                            R.string.go_to_cart);
+                            R.string.go_to_cart, R.string.other_schedule);
                     mConfirmDialogFragment.setCancelText(R.string.action_schedule);
                     mConfirmDialogFragment.setFinishDialogListener(SchedulingFragment.this);
                     mConfirmDialogFragment.animation();
@@ -265,8 +274,13 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         serviceAdapter.setPetId(petId);
         mAdapter.addSection(TAGSERVICES, serviceAdapter);
         if (categoryConfig){
-            listServices(categoryId,petId);
             categoryAdapter.setExpanable(false);
+            categoryAdapter.setTitle(category.categoryName);
+            categoryAdapter.setCategory(category);
+            serviceAdapter.setexpanded(true);
+            if(categoryConfig){
+                listServices(getCategoryId(category),petId);
+            }
         }else {
             categoryAdapter.setExpanable(true);
         }
@@ -331,7 +345,6 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                     petAdapter.setExpanded(false);
                     notifyChanged(0);
                     placeHolderPet.setVisibility(View.GONE);
-
                 }else {
                     mAdapter.notifyDataSetChanged();
                     if(mPetList.size() <= 0){
@@ -387,7 +400,6 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 for (CategoryResp.Item item : resp.data) {
                     mCategoryList.add(APIUtils.parseCategory(getContext(), item));
                 }
-
                 categoryAdapter.setServices(mCategoryList);
                 mAdapter.notifyDataSetChanged();
             }
@@ -434,8 +446,21 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     }
 
     public void setCategory(Category category){
+        Log.i(getClass().getSimpleName(),"Passando aqui man");
         this.category = category;
         this.categoryId = category.id;
         this.categoryConfig = true;
+    }
+
+    public String getCategoryId(Category categoryId){
+        if(mCategoryList.size() > 0){
+            Log.i(getClass().getSimpleName(), "Sou maior que 0 ");
+            for (Category category : mCategoryList){
+                if(categoryId.categoryName.equals(category.categoryName)){
+                    return category.id;
+                }
+            }
+        }
+        return categoryId.id;
     }
 }

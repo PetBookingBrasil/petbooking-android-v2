@@ -47,12 +47,23 @@
         android:textColor="@color/white"
         android:textSize="14sp" />
 
+        <Button
+            android:id="@+id/schedule_other_pet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_smallest"
+            android:layout_marginRight="@dimen/spacing_smallest"
+            android:background="@drawable/transparent_button"
+            android:stateListAnimator="@null"
+            android:theme="@style/AppTheme.TransparentButton" />
+
     <Button
         android:id="@+id/cancel_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/spacing_smallest"
         android:layout_marginRight="@dimen/spacing_smallest"
+        android:layout_marginTop="@dimen/spacing_tiny"
         android:background="@drawable/transparent_button"
         android:stateListAnimator="@null"
         android:theme="@style/AppTheme.TransparentButton" />

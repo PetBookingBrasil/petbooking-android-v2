@@ -37,6 +37,7 @@ public class CategoryAdapter extends StatelessSection {
     List<Category> services;
     OnSelectCategoryListener onSelectCategoryListener;
     int positionSelected = -1;
+    Category category;
 
     public CategoryAdapter(String title, Context context, List<Category> services) {
         super(new SectionParameters.Builder(R.layout.custom_pet_adapter)
@@ -49,6 +50,10 @@ public class CategoryAdapter extends StatelessSection {
 
     public void setOnSelectCategoryListener(OnSelectCategoryListener onSelectCategoryListener) {
         this.onSelectCategoryListener = onSelectCategoryListener;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
@@ -91,9 +96,13 @@ public class CategoryAdapter extends StatelessSection {
         viewHolder.image_header.setVisibility(View.VISIBLE);
 
 
-        if(positionSelected >=0){
-
-            Category category = services.get(positionSelected);
+        if(positionSelected >=0 || category !=null){
+            Category category;
+            if (positionSelected >=0) {
+                category = services.get(positionSelected);
+            }else{
+                category = this.category;
+            }
             viewHolder.textCheckunicode.setVisibility(View.GONE);
             int color = AppUtils.getCategoryColor(context, category.categoryName);
             GradientDrawable iconBackground = (GradientDrawable) viewHolder.image_header.getBackground();

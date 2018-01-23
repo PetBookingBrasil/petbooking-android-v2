@@ -39,6 +39,7 @@ public class StyledSwitch extends RelativeLayout {
 
         mView = (RelativeLayout) view.findViewById(R.id.switchView);
         mTvTitle = (TextView) view.findViewById(R.id.switch_title);
+
         mSwitch = (SwitchButton) view.findViewById(R.id.custom_switch);
 
         if (attrs != null) {
@@ -71,5 +72,9 @@ public class StyledSwitch extends RelativeLayout {
 
     public boolean isChecked() {
         return mSwitch.isChecked();
+    }
+
+    public SwitchButton getmSwitch() {
+        return mSwitch;
     }
 }

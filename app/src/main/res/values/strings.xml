@@ -143,8 +143,13 @@
     <string name="hint_size">Porte</string>
     <string name="hint_breed">Raça</string>
     <string name="hint_coat">Pelagem</string>
+    <string name="color_pet">Cor da pelagem</string>
     <string name="hint_temper">Temperamento</string>
     <string name="hint_observation">Observação</string>
+    <string name="color_white">Branco</string>
+    <string name="color_black">Preto</string>
+    <string name="color_brown">Marron</string>
+    <string name="color_gray">Cinza</string>
 
     <!-- Business -->
     <string name="business_street">%1$s, %2$s - %3$s</string>
@@ -284,5 +289,8 @@
     <string name="schedule_empty"></string>
     <string name="header_pets">Atenção! Os preços exibidos são médios. Cadastre seu pet para visualizar os valores condizentes as raças.</string>
     <string name="other_schedule">Agendar serviço para outro pet</string>
+    <string name="question_register">Cadastrado?</string>
+    <string name="chip_question">Possui chip?</string>
+    <string name="chip_number">Número do chip</string>
 
 </resources>

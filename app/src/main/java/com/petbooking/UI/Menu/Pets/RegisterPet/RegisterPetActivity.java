@@ -7,10 +7,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -35,6 +37,7 @@ import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
 import com.petbooking.UI.Dialogs.TableDialogFragment;
 import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.UI.Widget.MaterialSpinner;
+import com.petbooking.UI.Widget.StyledSwitch;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
@@ -105,10 +108,15 @@ public class RegisterPetActivity extends BaseActivity implements
     private MaterialSpinner mSpBreed;
     private MaterialSpinner mSpCoat;
     private MaterialSpinner mSpTemper;
+    private MaterialSpinner mSpColorPet;
     private ImageView mIvPetPhoto;
     private EditText mEdtBirthday;
     private ImageButton mIBtnSelectPicture;
     private Button mBtnSubmit;
+    private TextInputLayout textLayoutChip;
+    StyledSwitch registerSwitch;
+    StyledSwitch chipSwitch;
+    EditText chipNumberText;
 
     AdapterView.OnItemSelectedListener typeListener = new AdapterView.OnItemSelectedListener() {
         @Override
@@ -187,9 +195,13 @@ public class RegisterPetActivity extends BaseActivity implements
         mSpTemper = (MaterialSpinner) findViewById(R.id.pet_temper);
         mSpCoat = (MaterialSpinner) findViewById(R.id.pet_coat);
         mBtnSubmit = (Button) findViewById(R.id.submitButton);
-
+        chipNumberText = (EditText) findViewById(R.id.pet_chip_number);
+        chipSwitch = (StyledSwitch) findViewById(R.id.switch_chip);
+        textLayoutChip = (TextInputLayout) findViewById(R.id.chip_number_tl);
+        registerSwitch = (StyledSwitch) findViewById(R.id.switch_register);
         mSpType.setOnItemSelectedListener(typeListener);
         mSpSize.setOnInfoClickListener(infoSizeListener);
+        mSpColorPet = (MaterialSpinner) findViewById(R.id.color_pet);
 
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
         mIBtnSelectPicture.setOnClickListener(mSelectListener);
@@ -204,11 +216,20 @@ public class RegisterPetActivity extends BaseActivity implements
 
         listDogBreeds();
         listCatBreeds();
-
         pet = new Pet();
         mBinding.setPet(pet);
-    }
 
+       chipSwitch.getmSwitch().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+           @Override
+           public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               if(isChecked){
+                   textLayoutChip.setVisibility(View.VISIBLE);
+               }else{
+                   textLayoutChip.setVisibility(View.INVISIBLE);
+               }
+           }
+       });
+    }
     /**
      * List All Dog Breeds
      */

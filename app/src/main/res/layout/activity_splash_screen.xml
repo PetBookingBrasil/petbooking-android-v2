@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/appLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_splash" />
+        android:layout_width="145dp"
+        android:layout_height="135dp"
+        android:background="@drawable/ic_logo_pet_booking" />
 
 </LinearLayout>

@@ -99,6 +99,7 @@
     <string name="hint_password">Senha</string>
     <string name="hint_repeat_password">Conf. senha</string>
     <string name="register">Salvar</string>
+    <string name="save">Cadastre-se</string>
 
     <!-- Forgot Password -->
     <string name="recover_password_text">Informe abaixo o email de cadastro \n associado à sua conta no Pet Booking.</string>
@@ -292,5 +293,7 @@
     <string name="question_register">Cadastrado?</string>
     <string name="chip_question">Possui chip?</string>
     <string name="chip_number">Número do chip</string>
+    <string name="complete_register">Complete as informações a seguir:</string>
+    <string name="continue_register">Concluir cadastro</string>
 
 </resources>

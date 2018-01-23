@@ -39,6 +39,25 @@ public class FormUtils {
         return -1;
     }
 
+    public static int newValidateUser(User user, boolean checkPassword) throws ParseException {
+        Date today = new Date();
+
+        if (CommonUtils.isEmpty(user.name) || CommonUtils.isEmpty(user.cpf)
+                || CommonUtils.isEmpty(user.email)) {
+            return R.string.error_fields_empty;
+        } else if (!CommonUtils.isValidEmail(user.email)) {
+            return R.string.error_invalid_email;
+        } else if (!CommonUtils.isCPFValid(user.cpf)) {
+            return R.string.error_invalid_cpf;
+        } else if (!CommonUtils.isPhoneValid(user.phone)) {
+            return R.string.error_invalid_phone;
+        } else if (checkPassword && !CommonUtils.isValidPassword(user.password)) {
+            return R.string.error_invalid_password;
+        }
+
+        return -1;
+    }
+
     public static int validatePet(Pet pet) throws ParseException {
         Date today = new Date();
 

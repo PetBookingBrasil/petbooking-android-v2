@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -51,6 +52,7 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import static android.view.View.GONE;
@@ -98,8 +100,13 @@ public class SignUpActivity extends BaseActivity implements
     private EditText mEdtState;
     private EditText mEdtPhone;
     private EditText mEdtRepeatPass;
+    private EditText mUserPassword;
     private Button mBtnSubmit;
+    private TextInputLayout fulNameTL;
+    private TextInputLayout emailTL;
     private ImageButton mIBtnSelectPicture;
+    private LinearLayout layoutHeader;
+    private LinearLayout layoutPlaceHolder;
 
     private UserFormBinding mBinding;
     private User user;
@@ -172,6 +179,11 @@ public class SignUpActivity extends BaseActivity implements
         mEdtNeighborhood = (EditText) findViewById(R.id.user_neighborhood);
         mEdtState = (EditText) findViewById(R.id.user_state);
         mEdtRepeatPass = (EditText) findViewById(R.id.repeat_password);
+        fulNameTL = (TextInputLayout) findViewById(R.id.fullNameTL);
+        emailTL = (TextInputLayout) findViewById(R.id.emailTL);
+        mUserPassword = (EditText) findViewById(R.id.user_password);
+        layoutHeader = (LinearLayout) findViewById(R.id.layout_header);
+        layoutPlaceHolder = (LinearLayout) findViewById(R.id.placeHolder_complete_register);
 
         mEdtBirthday.addTextChangedListener(MaskManager.insert("##/##/####", mEdtBirthday));
         mEdtBirthday.setOnClickListener(mBirthdayListener);
@@ -197,9 +209,18 @@ public class SignUpActivity extends BaseActivity implements
                     .error(R.drawable.ic_menu_user)
                     .placeholder(R.drawable.ic_menu_user)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                    .centerCrop()
+                    .bitmapTransform(new CircleTransformation(this))
                     .dontAnimate()
                     .into(mIvUserPhoto);
+            layoutPlaceHolder.setVisibility(View.VISIBLE);
+            layoutHeader.setVisibility(View.VISIBLE);
+            fulNameTL.setVisibility(View.INVISIBLE);
+            mEdtCpf.setVisibility(GONE);
+            emailTL.setVisibility(GONE);
+            mUserPassword.setVisibility(GONE);
+            mBtnSubmit.setText(R.string.continue_register);
+
+
         } else {
             user = new User();
         }
@@ -215,12 +236,12 @@ public class SignUpActivity extends BaseActivity implements
         int message = -1;
 
         try {
-            message = FormUtils.validateUser(user, true);
+            message = FormUtils.newValidateUser(user, true);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        String repeatPassword = mEdtRepeatPass.getText().toString();
+        String repeatPassword = user.password;
 
         user.gender = mRbGenderMale.isChecked() ? User.GENDER_MALE : User.GENDER_FEMALE;
 

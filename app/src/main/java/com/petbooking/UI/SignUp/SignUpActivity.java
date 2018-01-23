@@ -223,6 +223,7 @@ public class SignUpActivity extends BaseActivity implements
 
         } else {
             user = new User();
+            mEdtPhone.setNextFocusDownId(R.id.user_password);
         }
 
 
@@ -236,7 +237,11 @@ public class SignUpActivity extends BaseActivity implements
         int message = -1;
 
         try {
-            message = FormUtils.newValidateUser(user, true);
+            if(isSocialLogin){
+                message = FormUtils.validateUserSocialLogin(user);
+            }else {
+                message = FormUtils.newValidateUser(user, true);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -244,7 +249,10 @@ public class SignUpActivity extends BaseActivity implements
         String repeatPassword = user.password;
 
         user.gender = mRbGenderMale.isChecked() ? User.GENDER_MALE : User.GENDER_FEMALE;
-
+        if(isSocialLogin){
+            user.password = "";
+            repeatPassword = "";
+        }
         if (message == -1 && (user.password.equals(repeatPassword))) {
             if (isSocialLogin) {
                 createSocialUser(user);

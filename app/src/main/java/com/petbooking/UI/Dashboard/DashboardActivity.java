@@ -117,6 +117,23 @@ public class DashboardActivity extends AppCompatActivity implements
                 this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
+        toggle.setDrawerIndicatorEnabled(true);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String text = getResources().getString(R.string.dashboard_title);
+                if(!toolbarTitle.getText().toString().equals(text)){
+                    onBackPressed();
+                }else{
+                    if(!mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+                        mDrawerLayout.openDrawer(GravityCompat.START);
+                    }
+                }
+            }
+        });
+
 
         mNavView = (NavigationView) findViewById(R.id.nav_view);
         mNavView.setNavigationItemSelectedListener(this);
@@ -182,18 +199,16 @@ public class DashboardActivity extends AppCompatActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         menu.findItem(R.id.cart).setVisible(false);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(android.view.MenuItem item) {
-        if (item.getItemId() == R.id.schedules) {
-            Log.d("ITEM SELECTED", "CART");
-        } else if (item.getItemId() == R.id.notifications) {
-            Log.d("ITEM SELECTED", "NOTIFICATIONS");
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.i(getClass().getSimpleName(),"Passei aqui ");
+        if(item.getItemId() == android.R.id.home){
+            onBackPressed();
         }
-
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

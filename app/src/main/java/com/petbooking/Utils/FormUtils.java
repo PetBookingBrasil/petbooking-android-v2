@@ -58,6 +58,13 @@ public class FormUtils {
         return -1;
     }
 
+    public static int validateUserSocialLogin(User user){
+        if (!CommonUtils.isPhoneValid(user.phone)) {
+            return R.string.error_invalid_phone;
+        }
+        return -1;
+    }
+
     public static int validatePet(Pet pet) throws ParseException {
         Date today = new Date();
 

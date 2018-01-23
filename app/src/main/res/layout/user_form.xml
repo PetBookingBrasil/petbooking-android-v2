@@ -467,7 +467,6 @@
                     android:drawablePadding="@dimen/spacing_xmicro"
                     android:hint="@string/hint_phone"
                     android:inputType="phone"
-                    android:nextFocusDown="@+id/user_password"
                     android:paddingLeft="@dimen/spacing_xmicro"
                     android:text="@={user.phone}" />
             </android.support.design.widget.TextInputLayout>

@@ -48,6 +48,7 @@
     <color name="past_date_color">#9A9A9A</color>
     <color name="professional_list_background">#BABABA</color>
     <color name="date_list_background">#747474</color>
+    <color name="transparent_background">#33000000</color>
 
     <!-- schedule colors -->
     <color name="schedule_background">#F0F0F0</color>
@@ -55,5 +56,6 @@
     <color name="schedule_section_border_number">#AFAFAF</color>
     <color name="schedule_item_edit_icon">#3791BD</color>
     <color name="schedule_item_edit_background">#D8EBF5</color>
+    <color name="background_pet">#898989</color>
 
 </resources>

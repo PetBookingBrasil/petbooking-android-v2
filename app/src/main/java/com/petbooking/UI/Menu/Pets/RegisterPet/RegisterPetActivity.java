@@ -3,13 +3,17 @@ package com.petbooking.UI.Menu.Pets.RegisterPet;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -117,6 +121,7 @@ public class RegisterPetActivity extends BaseActivity implements
     StyledSwitch registerSwitch;
     StyledSwitch chipSwitch;
     EditText chipNumberText;
+    boolean schedule;
 
     AdapterView.OnItemSelectedListener typeListener = new AdapterView.OnItemSelectedListener() {
         @Override
@@ -170,9 +175,15 @@ public class RegisterPetActivity extends BaseActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        schedule = getIntent().getBooleanExtra("schedule",false);
 
+        super.onCreate(savedInstanceState);
+        if(schedule){
+            setTheme(R.style.registerBackground);
+        }
         mBinding = DataBindingUtil.setContentView(this, R.layout.pet_form);
+        getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+
         mSessionManager = SessionManager.getInstance();
         mPetService = new PetService();
 

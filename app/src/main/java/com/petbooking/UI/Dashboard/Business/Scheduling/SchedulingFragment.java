@@ -99,6 +99,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     boolean addToCart = false;
     boolean initial = true;
     boolean categoryConfig = false;
+    boolean complete = true;
 
 
     CategoryAdapter.OnSelectCategoryListener mSelectedCategory = new CategoryAdapter.OnSelectCategoryListener() {
@@ -268,8 +269,10 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     }
 
     public void notifyChanged(int position) {
-        String petId = mPetList.get(position).id;
-        this.petId = petId;
+        if(position >= 0) {
+            String petId = mPetList.get(position).id;
+            this.petId = petId;
+        }
         int sectionPosition = mAdapter.getSectionPosition(TAGCATEGORY);
         serviceAdapter.setPetId(petId);
         mAdapter.addSection(TAGSERVICES, serviceAdapter);
@@ -279,9 +282,37 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
             categoryAdapter.setCategory(category);
             serviceAdapter.setexpanded(true);
             if(categoryConfig){
+                if(position >=0) {
+                    listServices(getCategoryId(category), petId);
+                }else{
+                    listServices(getCategoryId(category),"2289");
+                }
+            }
+        }else {
+            categoryAdapter.setExpanable(true);
+        }
+        mAdapter.notifyDataSetChanged();
+        mRecyclerView.smoothScrollToPosition(sectionPosition);
+    }
+
+    public void notifyChanged(int position,boolean petOk) {
+        if(petOk) {
+            String petId = mPetList.get(position).id;
+            this.petId = petId;
+            serviceAdapter.setPetId(petId);
+        }
+        int sectionPosition = mAdapter.getSectionPosition(TAGCATEGORY);
+        mAdapter.addSection(TAGSERVICES, serviceAdapter);
+        if (categoryConfig){
+            categoryAdapter.setExpanable(false);
+            categoryAdapter.setTitle(category.categoryName);
+            categoryAdapter.setCategory(category);
+            serviceAdapter.setexpanded(true);
+            if(categoryConfig && petOk){
                 listServices(getCategoryId(category),petId);
             }
         }else {
+            if(petOk)
             categoryAdapter.setExpanable(true);
         }
         mAdapter.notifyDataSetChanged();
@@ -339,16 +370,24 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 mPetList = (ArrayList<Pet>) response;
                 serviceAdapter.setexpanded(true);
                 petAdapter.addPets(mPetList);
-                if(initial && mPetList.size() >0) {
-                    initial = false;
-                    petAdapter.setSelectedPosition(0);
-                    petAdapter.setExpanded(false);
-                    notifyChanged(0);
-                    placeHolderPet.setVisibility(View.GONE);
+                int petsSize = mPetList.size();
+                if(initial && petsSize >0) {
+                    if(petsSize == 1) {
+                        initial = false;
+                        petAdapter.setSelectedPosition(0);
+                        petAdapter.setExpanded(false);
+                        placeHolderPet.setVisibility(View.GONE);
+                        notifyChanged(0);
+                    }else
+                    notifyChanged(-1);
                 }else {
                     mAdapter.notifyDataSetChanged();
-                    if(mPetList.size() <= 0){
+                    if(petsSize <= 0){
                         placeHolderPet.setVisibility(View.VISIBLE);
+                        petAdapter.setExistPet(false);
+                        petAdapter.setTitle("Adicionar Pet");
+                        mAdapter.notifyDataSetChanged();
+                        notifyChanged(-1);
                     }
                 }
                 AppUtils.hideDialog();
@@ -367,7 +406,9 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         mAppointmentService.listServices(categoryId, petId, new APICallback() {
             @Override
             public void onSuccess(Object response) {
+
                 mServiceList = (ArrayList<BusinessServices>) response;
+                Log.i(getClass().getSimpleName(),"Qual o size " + mServiceList.size());
                 serviceAdapter.setServices(mServiceList, false);
                 mAdapter.addSection(TAGPROFESSIONALS, professionalAdapter);
                 final int sectionPosition = mAdapter.getSectionPosition(TAGCATEGORY);
@@ -388,6 +429,19 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
             @Override
             public void onError(Object error) {
                 AppUtils.hideDialog();
+                if(complete){
+                    if(mPetList.size() > 0) {
+                        if (mPetList.size() == 1) {
+                            notifyChanged(0);
+                            complete = false;
+                        } else {
+                            notifyChanged(-1);
+                            complete = false;
+                        }
+                    }
+
+                }
+
             }
         });
     }
@@ -399,6 +453,9 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 CategoryResp resp = (CategoryResp) response;
                 for (CategoryResp.Item item : resp.data) {
                     mCategoryList.add(APIUtils.parseCategory(getContext(), item));
+                }
+                if(mPetList.size() >=0 && !complete){
+
                 }
                 categoryAdapter.setServices(mCategoryList);
                 mAdapter.notifyDataSetChanged();
@@ -454,12 +511,15 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
 
     public String getCategoryId(Category categoryId){
         if(mCategoryList.size() > 0){
+            complete = true;
             Log.i(getClass().getSimpleName(), "Sou maior que 0 ");
             for (Category category : mCategoryList){
                 if(categoryId.categoryName.equals(category.categoryName)){
                     return category.id;
                 }
             }
+        }else{
+            complete = false;
         }
         return categoryId.id;
     }

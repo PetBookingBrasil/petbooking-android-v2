@@ -27,7 +27,7 @@ import com.petbooking.Constants.AppConstants;
 import com.petbooking.R;
 
 /**
- * Created by joice on 10/12/17.
+ * Created by victor on 10/12/17.
  */
 
 public class ConfirmDialogSchedule extends DialogFragment implements DialogInterface.OnCancelListener{

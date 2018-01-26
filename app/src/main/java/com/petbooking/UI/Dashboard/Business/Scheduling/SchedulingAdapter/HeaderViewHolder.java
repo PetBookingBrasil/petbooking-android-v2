@@ -1,5 +1,6 @@
 package com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter;
 
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -37,6 +38,10 @@ public class HeaderViewHolder extends RecyclerView.ViewHolder {
     LinearLayout headerSection;
     @BindView(R.id.custom_header)
     CardView cardHeader;
+    @BindView(R.id.img_circle)
+    CircleImageView circleImageViewEdit;
+    @BindView(R.id.img_edit)
+    AppCompatImageView imageView;
 
     public HeaderViewHolder(View itemView) {
         super(itemView);

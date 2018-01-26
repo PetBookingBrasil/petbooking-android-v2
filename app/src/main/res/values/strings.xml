@@ -151,6 +151,7 @@
     <string name="color_black">Preto</string>
     <string name="color_brown">Marron</string>
     <string name="color_gray">Cinza</string>
+    <string name="register_pet">Cadastrar Pet</string>
 
     <!-- Business -->
     <string name="business_street">%1$s, %2$s - %3$s</string>

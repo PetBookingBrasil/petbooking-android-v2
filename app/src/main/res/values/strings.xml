@@ -167,9 +167,9 @@
     <string name="business_tab_information">Informações</string>
     <string name="business_label_description">Descrição</string>
     <string name="business_label_contact">Contato</string>
-    <string name="business_label_website">Website</string>
-    <string name="business_label_social_network">Redes Sociais</string>
-    <string name="business_label_location">Localização</string>
+    <string name="business_label_website">site</string>
+    <string name="business_label_social_network">Redes sociais</string>
+    <string name="business_label_location">localização</string>
     <string name="business_label_reviews">Reviews</string>
     <string name="business_label_additional">Serviços Adicionais</string>
     <string name="business_service_price">R$ %1$s</string>
@@ -228,8 +228,8 @@
     <string name="favorites_empty_message">Marque seus estabelecimentos favoritos e acesse-os rapidamente nessa tela.</string>
     <string name="business_empty_title">Ops! Infelizmente não encontramos nenhum estabelecimento.</string>
     <string name="business_empty_message">Para facilitar o processo de pagamento, cadastre uma ou mais formas de pagamento.</string>
-    <string name="pets_empty_title">Você ainda não adicionou seus pets.</string>
-    <string name="pets_empty_message">Clique no botão de + logo acima para adicioná-los.</string>
+    <string name="pets_empty_title">Ops! Você ainda não tem</string>
+    <string name="pets_empty_message">nenhum pet adicionado.</string>
 
     <!-- Categories -->
     <string name="category_clinic">Clínicas</string>
@@ -296,5 +296,6 @@
     <string name="chip_number">Número do chip</string>
     <string name="complete_register">Complete as informações a seguir:</string>
     <string name="continue_register">Concluir cadastro</string>
+    <string name="add_pet">Adicionar pet</string>
 
 </resources>

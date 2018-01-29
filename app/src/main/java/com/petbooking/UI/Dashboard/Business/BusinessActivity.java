@@ -22,6 +22,7 @@ import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Cart.CartActivity;
 import com.petbooking.UI.Dashboard.Content.ContentTabsAdapter;
 import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
+import com.petbooking.UI.Menu.Search.SearchActivity;
 
 public class BusinessActivity extends AppCompatActivity implements ConfirmDialogFragment.FinishDialogListener {
 
@@ -110,7 +111,7 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
                     goToCartActivity();
                 }
             });
-            menu.findItem(R.id.schedules).setVisible(false);
+            menu.findItem(R.id.search).setVisible(false);
             menu.findItem(R.id.notifications).setVisible(false);
             item.setVisible(true);
         }
@@ -120,7 +121,7 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
         RelativeLayout notifCount = (RelativeLayout) MenuItemCompat.getActionView(item);
         TextView tv = (TextView) notifCount.findViewById(R.id.count_cart);
         tv.setVisibility(View.INVISIBLE);
-        menu.findItem(R.id.schedules).setVisible(true);
+        menu.findItem(R.id.search).setVisible(true);
         menu.findItem(R.id.notifications).setVisible(true);
         item.setVisible(false);
     }
@@ -130,7 +131,7 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
         TextView tv = (TextView) notifCount.findViewById(R.id.count_cart);
         tv.setVisibility(View.VISIBLE);
         tv.setText(String.valueOf(size));
-        menu.findItem(R.id.schedules).setVisible(false);
+        menu.findItem(R.id.search).setVisible(false);
         menu.findItem(R.id.notifications).setVisible(false);
         item.setVisible(true);
     }
@@ -140,8 +141,9 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
-        } else if (item.getItemId() == R.id.schedules) {
-            goToCartActivity();
+        } else if (item.getItemId() == R.id.search) {
+            //Intent activity = new Intent(this, SearchActivity.class);
+            //startActivity(activity);
         } else if (item.getItemId() == R.id.notifications) {
             Log.d("ITEM SELECTED", "NOTIFICATIONS");
         }else if(item.getItemId() == R.id.cart){

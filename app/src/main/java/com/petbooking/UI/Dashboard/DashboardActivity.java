@@ -204,8 +204,12 @@ public class DashboardActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i(getClass().getSimpleName(),"Passei aqui ");
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == R.id.search) {
+            Intent activity = new Intent(this, SearchActivity.class);
+            startActivityForResult(activity, SEARCH_REQUEST);
+        } else if (item.getItemId() == R.id.notifications) {
+            Log.d("ITEM SELECTED", "NOTIFICATIONS");
+        }else if(item.getItemId() == android.R.id.home){
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
@@ -219,9 +223,6 @@ public class DashboardActivity extends AppCompatActivity implements
         if (id == R.id.my_pets) {
             activity = new Intent(this, PetsActivity.class);
             startActivity(activity);
-        } else if (id == R.id.search) {
-            activity = new Intent(this, SearchActivity.class);
-            startActivityForResult(activity, SEARCH_REQUEST);
         } else if (id == R.id.payments) {
             Log.d("PAYMENTS", "PAYMENTS");
         } else if (id == R.id.favorites) {

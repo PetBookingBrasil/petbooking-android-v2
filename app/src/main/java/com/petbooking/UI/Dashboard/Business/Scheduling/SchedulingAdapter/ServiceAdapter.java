@@ -125,6 +125,7 @@ public class ServiceAdapter extends StatelessSection {
         if(position !=0){
             holder.headerTitle.setVisibility(View.GONE);
         }
+        Log.i(getClass().getSimpleName(),"Qual os itens ");
         mAdditionalServiceListAdapter.setPetId(petId);
         mAdditionalServiceListAdapter.setFromDetail(false);
         mAdditionalServiceListAdapter.updateList(service.additionalServices);

@@ -8,11 +8,6 @@
             android:title="@string/my_pets" />
 
         <item
-            android:id="@+id/search"
-            android:icon="@drawable/ic_menu_search"
-            android:title="@string/search" />
-
-        <item
             android:id="@+id/calendar"
             android:icon="@drawable/ic_menu_calendar"
             android:title="@string/calendar" />

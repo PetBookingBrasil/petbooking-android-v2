@@ -212,8 +212,8 @@
     <string name="favorites_empty_message">Marque seus estabelecimentos favoritos e acesse-os rapidamente nessa tela.</string>
     <string name="business_empty_title">Ops! Infelizmente não encontramos nenhum estabelecimento.</string>
     <string name="business_empty_message">Para facilitar o processo de pagamento, cadastre uma ou mais formas de pagamento.</string>
-    <string name="pets_empty_title">Você ainda não adicionou seus pets.</string>
-    <string name="pets_empty_message">Clique no botão de + logo acima para adicioná-los.</string>
+    <string name="pets_empty_title">Ops! Você ainda não tem</string>
+    <string name="pets_empty_message">nenhum pet adicionado.</string>
 
     <!-- Categories -->
     <string name="category_clinic">Clínicas</string>

@@ -317,6 +317,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 if(initial && mPetList.size() >0) {
                     initial = false;
                     petAdapter.setSelectedPosition(0);
+                    petAdapter.setTitle(mPetList.get(0).name);
                     petAdapter.setExpanded(false);
                     notifyChanged(0);
 

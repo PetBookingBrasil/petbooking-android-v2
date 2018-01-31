@@ -141,6 +141,7 @@ public class DashboardActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24px);
         toolbarTitle.setText(title);
+        contentFragment.setChangeNameTab(" "+getString(R.string.list_tab_name));
     }
 
     @Override
@@ -174,6 +175,7 @@ public class DashboardActivity extends AppCompatActivity implements
             getSupportActionBar().setHomeButtonEnabled(true);
             toggle.syncState();
             toolbarTitle.setText(R.string.dashboard_title);
+            contentFragment.setChangeNameTab("  " + getString(R.string.tab_category));
             super.onBackPressed();
         }
     }
@@ -191,6 +193,8 @@ public class DashboardActivity extends AppCompatActivity implements
             Log.d("ITEM SELECTED", "CART");
         } else if (item.getItemId() == R.id.notifications) {
             Log.d("ITEM SELECTED", "NOTIFICATIONS");
+        }else if(item.getItemId() == android.R.id.home){
+            onBackPressed();
         }
 
         return true;

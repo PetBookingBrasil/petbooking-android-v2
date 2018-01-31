@@ -32,26 +32,7 @@
 
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/business_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_xmicro"
-        android:layout_marginEnd="@dimen/spacing_xmicro"
-        android:layout_marginLeft="@dimen/spacing_xtiny"
-        android:layout_marginRight="@dimen/spacing_xtiny"
-        android:layout_marginStart="@dimen/spacing_xtiny"
-        android:layout_marginTop="@dimen/spacing_xmicro"
-        android:maxLines="2"
-        android:textColor="@color/white"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/business_cover"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/business_cover"
-        app:layout_constraintVertical_bias="0.959" />
+
 
     <ImageButton
         android:id="@+id/favorite_button"
@@ -118,11 +99,24 @@
         app:layout_constraintTop_toBottomOf="@+id/business_cover">
 
         <TextView
+            android:id="@+id/business_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_xmicro"
+            android:layout_marginRight="@dimen/spacing_xtiny"
+            android:layout_marginTop="@dimen/spacing_xmicro"
+            android:maxLines="2"
+            android:layout_alignParentTop="true"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
             android:id="@+id/business_street"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/business_name"
             android:layout_marginRight="@dimen/spacing_xmicro"
             android:layout_toLeftOf="@+id/business_distance"
             android:textSize="13sp" />

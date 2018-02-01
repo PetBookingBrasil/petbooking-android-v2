@@ -56,6 +56,7 @@ public class ServiceAdapter extends StatelessSection {
     boolean serviceAdd = false;
     int selectedPosition = -1;
 
+
     AdditionalServiceListAdapter.OnAdditionalSelect mAdditionalSelected = new AdditionalServiceListAdapter.OnAdditionalSelect() {
         @Override
         public void onSelect(boolean selected, String additionalId) {
@@ -169,6 +170,7 @@ public class ServiceAdapter extends StatelessSection {
                 }
             }
         });
+
         if(checked){
             holder.circleImageView.setBackground(colorGreen);
             holder.checkUnicode.setTextColor(ContextCompat.getColor(mContext,R.color.white));
@@ -226,6 +228,15 @@ public class ServiceAdapter extends StatelessSection {
             }
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             viewHolder.headerSection.setLayoutParams(params);
+            if(!expanded) {
+                viewHolder.headerEdit.setVisibility(View.VISIBLE);
+                viewHolder.headerEdit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        fragment.expandedService();
+                    }
+                });
+            }
         }else{
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
             viewHolder.headerSection.setLayoutParams(params);
@@ -233,6 +244,7 @@ public class ServiceAdapter extends StatelessSection {
             viewHolder.textCheckunicode.setTextColor(ContextCompat.getColor(mContext,R.color.gray));
             viewHolder.circleImageView.setImageResource(R.color.schedule_background);
             viewHolder.layoutAdditionas.setVisibility(View.GONE);
+            viewHolder.headerEdit.setVisibility(View.GONE);
         }
 
     }

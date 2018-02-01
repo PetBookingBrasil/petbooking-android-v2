@@ -25,6 +25,7 @@ import com.petbooking.Models.AppointmentDate;
 import com.petbooking.Models.Professional;
 import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingFragment;
 import com.petbooking.UI.Dashboard.Business.Scheduling.model.AppointmentDateChild;
 import com.petbooking.UI.Dashboard.Business.Scheduling.widget.MyLinearLayout;
 import com.petbooking.UI.Dashboard.Business.ServiceDetail.DateListAdapter;
@@ -55,6 +56,7 @@ public class ProfessionalAdapter extends StatelessSection {
     Professional professional = null;
     RecyclerView datesRecycler;
     OnProfessionalSelected onProfessionalSelected;
+    SchedulingFragment fragment;
 
     RecyclerView.OnItemTouchListener mScrollTouchListener = new RecyclerView.OnItemTouchListener() {
         @Override
@@ -92,6 +94,10 @@ public class ProfessionalAdapter extends StatelessSection {
         this.professionals = professionals;
     }
 
+    public void setFragment(SchedulingFragment fragment) {
+        this.fragment = fragment;
+    }
+
     public void setexpanded(boolean expanded) {
         this.expanded = expanded;
     }
@@ -115,6 +121,7 @@ public class ProfessionalAdapter extends StatelessSection {
         ItemViewHolder holder = (ItemViewHolder) item;
         holder.professionalList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         SnapHelper snapHelper = new PagerSnapHelper();
+        holder.professionalList.setOnFlingListener(null);
         snapHelper.attachToRecyclerView(holder.professionalList);
         holder.professionalList.setClipToPadding(false);
         holder.professionalList.setAdapter(new ProfessionalListAdapter(context, professionals));
@@ -126,6 +133,7 @@ public class ProfessionalAdapter extends StatelessSection {
         holder.datesAvaliableList.addOnItemTouchListener(mScrollTouchListener);
         holder.datesAvaliableList.setAdapter(dateListDayAdapter);
         SnapHelper snapHelperLinear = new LinearSnapHelper();
+        holder.datesAvaliableList.setOnFlingListener(null);
         snapHelperLinear.attachToRecyclerView(holder.datesAvaliableList);
         holder.datesAvaliableList.setClipToPadding(false);
     }
@@ -200,6 +208,13 @@ public class ProfessionalAdapter extends StatelessSection {
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             holder.headerSection.setLayoutParams(params);
             holder.image_header.setVisibility(View.VISIBLE);
+            holder.headerEdit.setVisibility(View.VISIBLE);
+            holder.headerEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    fragment.expandedProfessional();
+                }
+            });
         }else{
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
             holder.headerSection.setLayoutParams(params);
@@ -208,6 +223,7 @@ public class ProfessionalAdapter extends StatelessSection {
             holder.textCheckunicode.setVisibility(View.VISIBLE);
             holder.textCheckunicode.setTextColor(ContextCompat.getColor(context,R.color.gray));
             holder.circleImageView.setImageResource(R.color.schedule_background);
+            holder.headerEdit.setVisibility(View.GONE);
         }
 
     }

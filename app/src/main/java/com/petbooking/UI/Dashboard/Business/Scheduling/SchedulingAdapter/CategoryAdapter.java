@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.petbooking.Models.Category;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingFragment;
 import com.petbooking.Utils.AppUtils;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class CategoryAdapter extends StatelessSection {
     List<Category> services;
     OnSelectCategoryListener onSelectCategoryListener;
     int positionSelected = -1;
+    SchedulingFragment fragment;
 
     public CategoryAdapter(String title, Context context, List<Category> services) {
         super(new SectionParameters.Builder(R.layout.custom_pet_adapter)
@@ -45,6 +47,10 @@ public class CategoryAdapter extends StatelessSection {
         this.title = title;
         this.context = context;
         this.services = services;
+    }
+
+    public void setFragment(SchedulingFragment fragment) {
+        this.fragment = fragment;
     }
 
     public void setOnSelectCategoryListener(OnSelectCategoryListener onSelectCategoryListener) {
@@ -91,8 +97,9 @@ public class CategoryAdapter extends StatelessSection {
         viewHolder.image_header.setVisibility(View.VISIBLE);
 
 
-        if(positionSelected >=0){
 
+        if(positionSelected >=0){
+            viewHolder.headerEdit.setVisibility(View.VISIBLE);
             Category category = services.get(positionSelected);
             viewHolder.textCheckunicode.setVisibility(View.GONE);
             int color = AppUtils.getCategoryColor(context, category.categoryName);
@@ -102,7 +109,14 @@ public class CategoryAdapter extends StatelessSection {
             iconBackground.setColor(color);
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             viewHolder.headerSection.setLayoutParams(params);
+            viewHolder.headerEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    fragment.expandedCategory();
+                }
+            });
         }else{
+            viewHolder.headerEdit.setVisibility(View.GONE);
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
             viewHolder.headerSection.setLayoutParams(params);
             viewHolder.image_header.setVisibility(View.GONE);

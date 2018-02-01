@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.petbooking.Models.Category;
@@ -58,7 +59,7 @@ public class CategoryListAdapter extends  RecyclerView.Adapter<CategoryListAdapt
     public void onBindViewHolder(CategoryListAdapter.ViewHolder holder, final int position) {
         final Category category = categories.get(position);
         int color = AppUtils.getCategoryColor(context, category.categoryName);
-        GradientDrawable iconBackground = (GradientDrawable) holder.categoryIcon.getBackground();
+        GradientDrawable iconBackground = (GradientDrawable) holder.layoutBackGround.getBackground();
 
         holder.categoryName.setText(category.categoryName);
         holder.categoryIcon.setImageDrawable(category.icon);
@@ -99,6 +100,8 @@ public class CategoryListAdapter extends  RecyclerView.Adapter<CategoryListAdapt
         ImageView categoryIcon;
         @BindView(R.id.category_name)
         TextView categoryName;
+        @BindView(R.id.layoutCategory)
+        LinearLayout layoutBackGround;
         View v;
         public ViewHolder(View itemView) {
             super(itemView);

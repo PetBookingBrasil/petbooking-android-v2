@@ -20,7 +20,7 @@
     <!-- Screen Title -->
     <string name="dashboard_title">Estabelecimentos</string>
     <string name="recover_password_title">Esqueci a senha</string>
-    <string name="signup_title">Preencha seus dados</string>
+    <string name="signup_title">Cadastro</string>
     <string name="profile_title">Perfil</string>
     <string name="pets_title">Meus Pets</string>
     <string name="new_pet_title">Preencha os dados do pet</string>
@@ -297,5 +297,8 @@
     <string name="complete_register">Complete as informações a seguir:</string>
     <string name="continue_register">Concluir cadastro</string>
     <string name="add_pet">Adicionar pet</string>
+    <string name="tab_category">Categorias</string>
+    <string name="tab_map">Mapa</string>
+    <string name="list_tab_name">Lista</string>
 
 </resources>

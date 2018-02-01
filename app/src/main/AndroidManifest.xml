@@ -79,6 +79,7 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".UI.Dashboard.Business.BusinessActivity"
             android:configChanges="orientation"
@@ -107,6 +108,13 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Dashboard.Cart.CartActivity" />
+        </activity>
+        <activity
+            android:name=".UI.Dashboard.Business.BusinessInformation.BussinessSocialNetworkActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/RegisterTheme">
+
         </activity>
         <activity
             android:name=".UI.Dashboard.Business.ServiceDetail.ServiceDetailActivity"

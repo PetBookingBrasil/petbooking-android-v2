@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 import com.petbooking.Models.Category;
 import com.petbooking.UI.Dashboard.BusinessList.BusinessListFragment;
@@ -16,7 +17,7 @@ import com.petbooking.UI.Dashboard.BusinessMap.BusinessMap;
  * Created by Luciano José on 29/01/2017.
  */
 
-public class ContentTabsAdapter extends FragmentPagerAdapter {
+public class ContentTabsAdapter extends FragmentStatePagerAdapter {
 
     Context mContext;
     final int PAGES_COUNT = 2;

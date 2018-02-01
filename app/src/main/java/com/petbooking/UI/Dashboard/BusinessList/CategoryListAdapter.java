@@ -3,6 +3,7 @@ package com.petbooking.UI.Dashboard.BusinessList;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -80,9 +81,7 @@ public class CategoryListAdapter extends  RecyclerView.Adapter<CategoryListAdapt
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             iconBackground.setTint(color);
-            Log.i(getClass().getSimpleName(), "Qual a elevation " + holder.categoryIcon.getElevation());
             holder.categoryIcon.setElevation(50f);
-            Log.i(getClass().getSimpleName(), "Qual a elevation 2 " + holder.categoryIcon.getElevation());
         }else{
             iconBackground.setColor(color);
         }

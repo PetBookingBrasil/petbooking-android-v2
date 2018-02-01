@@ -28,6 +28,7 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
     private BusinessService mBusinessService;
 
     private EditText mEdtSearchName;
+    private EditText mEditLocation;
     private Button mBtnFilter;
 
     private ArrayList<Category> mCategoryList;
@@ -49,7 +50,11 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
         @Override
         public void afterTextChanged(Editable s) {
             if (currentCategory == -1 && s.length() == 0) {
-                mBtnFilter.setEnabled(false);
+                if(mEditLocation.getText().toString().isEmpty() && mEdtSearchName.getText().toString().isEmpty()) {
+                    mBtnFilter.setEnabled(false);
+                }else{
+                    mBtnFilter.setEnabled(true);
+                }
             } else {
                 mBtnFilter.setEnabled(true);
             }
@@ -60,7 +65,11 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
         @Override
         public void onClick(View v) {
             Intent resultIntent = new Intent();
-            resultIntent.putExtra("FILTER_TEXT", mEdtSearchName.getText().toString());
+            if(!mEdtSearchName.getText().toString().isEmpty()) {
+                resultIntent.putExtra("FILTER_TEXT", mEdtSearchName.getText().toString());
+            }else{
+                resultIntent.putExtra("FILTER_TEXT", mEditLocation.getText().toString());
+            }
             resultIntent.putExtra("CATEGORY_POSITION", currentCategory);
 
             if (currentCategory != -1) {
@@ -81,10 +90,12 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
         mBusinessService = new BusinessService();
 
         mCategoryList = new ArrayList<>();
-        getCategories();
+        //getCategories();
 
         mEdtSearchName = (EditText) findViewById(R.id.search_name);
         mEdtSearchName.addTextChangedListener(mFilterWatcher);
+        mEditLocation = (EditText) findViewById(R.id.search_location);
+        mEditLocation.addTextChangedListener(mFilterWatcher);
         mBtnFilter = (Button) findViewById(R.id.filter_button);
 
         mRvCategories = (RecyclerView) findViewById(R.id.category_list);
@@ -92,12 +103,12 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
 
         GridLayoutManager mLayoutManager = new GridLayoutManager(this, 2);
 
-        mAdapter = new FilterCategoryListAdapter(this, mCategoryList);
-        mAdapter.setOnSelectCategoryListener(this);
+        //mAdapter = new FilterCategoryListAdapter(this, mCategoryList);
+        //mAdapter.setOnSelectCategoryListener(this);
         mRvCategories.setLayoutManager(mLayoutManager);
 
         if (mAdapter != null) {
-            mRvCategories.setAdapter(mAdapter);
+            //mRvCategories.setAdapter(mAdapter);
         }
 
         if (getIntent().hasExtra("newSearch")) {

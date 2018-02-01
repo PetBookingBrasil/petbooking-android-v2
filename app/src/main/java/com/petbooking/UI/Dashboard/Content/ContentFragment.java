@@ -41,9 +41,11 @@ public class ContentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
 
         mAdapter = new ContentTabsAdapter(getFragmentManager(), getContext(), category);
+
         mTabLayout = (TabLayout) view.findViewById(R.id.tabs);
         mViewPager = (ViewPager) view.findViewById(R.id.pager);
         mViewPager.setAdapter(mAdapter);
+        mViewPager.setCurrentItem(0);
 
         mTabLayout.setBackgroundColor(getResources().getColor(R.color.brand_primary));
         mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));

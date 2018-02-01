@@ -167,7 +167,7 @@
     <string name="business_tab_information">Informações</string>
     <string name="business_label_description">Descrição</string>
     <string name="business_label_contact">Contato</string>
-    <string name="business_label_website">site</string>
+    <string name="business_label_website">Site</string>
     <string name="business_label_social_network">Redes sociais</string>
     <string name="business_label_location">localização</string>
     <string name="business_label_reviews">Reviews</string>
@@ -178,9 +178,11 @@
     <string name="bussines_category">Categoria do Serviço</string>
 
     <!-- Search -->
-    <string name="filter_hint">Filtrar por nome, local&#8230;</string>
+    <string name="filter_hint">Nome do estabelecimento ou serviços</string>
+    <string name="location_hint">Localização</string>
+    <string name="city_neighborhood">Cidade ou bairro</string>
     <string name="filter_label">Filtre por categoria</string>
-    <string name="filter">Filtrar</string>
+    <string name="filter">Buscar</string>
 
     <!-- Settings -->
     <string name="kilometers">Quilômetro</string>

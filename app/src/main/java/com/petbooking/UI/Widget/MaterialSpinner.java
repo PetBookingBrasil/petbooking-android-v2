@@ -2,7 +2,9 @@ package com.petbooking.UI.Widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -48,6 +50,7 @@ public class MaterialSpinner extends RelativeLayout {
             Drawable icon = null;
             boolean enableInfo = false;
             String hint = "";
+            int hintColor = -1;
             int entries = -1;
 
             try {
@@ -55,6 +58,8 @@ public class MaterialSpinner extends RelativeLayout {
                 icon = prop.getDrawable(R.styleable.MaterialSpinner_icon);
                 entries = prop.getResourceId(R.styleable.MaterialSpinner_entries, -1);
                 enableInfo = prop.getBoolean(R.styleable.MaterialSpinner_enableInfo, false);
+                hintColor = prop.getColor(R.styleable.MaterialSpinner_hintColor,-1);
+
             } catch (Exception e) {
                 Log.e("SPINNER", "There was an error loading attributes.");
             } finally {
@@ -69,6 +74,10 @@ public class MaterialSpinner extends RelativeLayout {
 
             if (icon != null) {
                 setIcon(icon);
+            }
+
+            if(hintColor != -1){
+                setHintColor(hintColor);
             }
 
             if (entries != -1) {
@@ -134,6 +143,9 @@ public class MaterialSpinner extends RelativeLayout {
         mIvSpinnerIcon.setImageDrawable(icon);
     }
 
+    public void setHintColor(int color){
+        mSpinner.setHintColor(ContextCompat.getColor(getContext(),android.R.color.white));
+    }
     /**
      * Listener for Item selected
      *

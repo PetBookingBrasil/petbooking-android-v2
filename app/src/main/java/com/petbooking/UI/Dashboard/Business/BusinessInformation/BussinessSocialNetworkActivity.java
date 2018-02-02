@@ -3,6 +3,7 @@ package com.petbooking.UI.Dashboard.Business.BusinessInformation;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.petbooking.BaseActivity;
 import com.petbooking.R;
@@ -25,6 +26,8 @@ public class BussinessSocialNetworkActivity extends BaseActivity {
         setContentView(R.layout.activity_bussiness_social_network);
         ButterKnife.bind(this);
         url = getIntent().getStringExtra("url");
+        webView.setWebViewClient(new WebViewClient());
+        webView.loadUrl(url);
         
     }
 }

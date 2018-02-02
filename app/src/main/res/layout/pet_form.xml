@@ -99,7 +99,8 @@
                     android:layout_weight="1"
                     app:entries="@array/type_array"
                     app:hint="@string/hint_type"
-                    app:icon="@drawable/ic_pet" />
+                    app:icon="@drawable/ic_pet"
+                    app:hintColor="@color/white"/>
 
 
                 <android.support.design.widget.TextInputLayout

@@ -379,6 +379,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 serviceAdapter.setexpanded(true);
                 petAdapter.addPets(mPetList);
                 int petsSize = mPetList.size();
+                petsSize = 0;
                 if(initial && petsSize >0) {
                     if(petsSize == 1) {
                         initial = false;
@@ -405,6 +406,11 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
             public void onError(Object error) {
                 placeHolderPet.setVisibility(View.VISIBLE);
                 AppUtils.hideDialog();
+                placeHolderPet.setVisibility(View.VISIBLE);
+                petAdapter.setExistPet(false);
+                petAdapter.setTitle("Adicionar Pet");
+                mAdapter.notifyDataSetChanged();
+                notifyChanged(-1);
             }
         });
     }

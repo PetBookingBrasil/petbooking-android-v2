@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -58,7 +59,7 @@ import java.util.List;
 import static android.view.View.GONE;
 
 
-public class RegisterPetActivity extends BaseActivity implements
+public class RegisterPetActivity extends AppCompatActivity implements
         PictureSelectDialogFragment.FinishDialogListener,
         FeedbackDialogFragment.FinishDialogListener,
         DatePickerFragment.DatePickerListener {
@@ -178,11 +179,11 @@ public class RegisterPetActivity extends BaseActivity implements
         schedule = getIntent().getBooleanExtra("schedule",false);
 
         super.onCreate(savedInstanceState);
-        if(schedule){
-            setTheme(R.style.registerBackground);
+        if(!schedule){
+            setTheme(R.style.AppTheme);
         }
         mBinding = DataBindingUtil.setContentView(this, R.layout.pet_form);
-        getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+
 
         mSessionManager = SessionManager.getInstance();
         mPetService = new PetService();

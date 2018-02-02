@@ -18,6 +18,8 @@
     <color name="presentation_2">#F68D2E</color>
     <color name="presentation_3">#9F5CC0</color>
 
+    <color name="gray_transparent">#8C000000</color>
+
     <!-- Login -->
     <color name="facebook_btn_login">#3B5998</color>
 

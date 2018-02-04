@@ -302,5 +302,14 @@
     <string name="tab_category">Categorias</string>
     <string name="tab_map">Mapa</string>
     <string name="list_tab_name">Lista</string>
+    <string name="title_activity_review_schedule">ReviewSchedule</string>
+    <string name="add_comment">Adicione seu comentário</string>
+    <string name="sendReview">Enviar avaliação</string>
+    <string name="environment">Ambiente</string>
+    <string name="bussines">Serviço</string>
+    <string name="attendance">Atendimento</string>
+    <string name="send_and_next">Enviar e ir ao proximo</string>
+    <string name="notificationsTitle">Notificações</string>
+    <string name="clear">Limpar</string>
 
 </resources>

@@ -58,8 +58,7 @@ public class MaterialSpinner extends RelativeLayout {
                 icon = prop.getDrawable(R.styleable.MaterialSpinner_icon);
                 entries = prop.getResourceId(R.styleable.MaterialSpinner_entries, -1);
                 enableInfo = prop.getBoolean(R.styleable.MaterialSpinner_enableInfo, false);
-                hintColor = prop.getColor(R.styleable.MaterialSpinner_hintColor,-1);
-
+                hintColor = prop.getResourceId(R.styleable.MaterialSpinner_hintColor,-1);
             } catch (Exception e) {
                 Log.e("SPINNER", "There was an error loading attributes.");
             } finally {
@@ -144,7 +143,7 @@ public class MaterialSpinner extends RelativeLayout {
     }
 
     public void setHintColor(int color){
-        mSpinner.setHintColor(ContextCompat.getColor(getContext(),android.R.color.white));
+        mSpinner.setHintColor(ContextCompat.getColor(getContext(), color));
     }
     /**
      * Listener for Item selected

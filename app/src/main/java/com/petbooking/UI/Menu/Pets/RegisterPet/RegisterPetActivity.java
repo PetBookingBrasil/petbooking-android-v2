@@ -35,6 +35,7 @@ import com.petbooking.Models.Breed;
 import com.petbooking.Models.Pet;
 import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.Scheduling.model.CreatePetPojo;
 import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.Dialogs.DatePickerFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
@@ -215,6 +216,17 @@ public class RegisterPetActivity extends AppCompatActivity implements
         mSpSize.setOnInfoClickListener(infoSizeListener);
         mSpColorPet = (MaterialSpinner) findViewById(R.id.color_pet);
 
+        if(schedule){
+            mSpColorPet.setHintColor(R.color.white);
+            mSpBreed.setHintColor(R.color.white);
+            mSpCoat.setHintColor(R.color.white);
+            mSpGender.setHintColor(R.color.white);
+            mSpSize.setHintColor(R.color.white);
+            mSpTemper.setHintColor(R.color.white);
+            mSpType.setHintColor(R.color.white);
+            chipSwitch.getmTvTitle().setTextColor(ContextCompat.getColor(this,R.color.white));
+        }
+
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
         mIBtnSelectPicture.setOnClickListener(mSelectListener);
         mEdtBirthday.setOnClickListener(mBirthdayListener);
@@ -324,7 +336,10 @@ public class RegisterPetActivity extends AppCompatActivity implements
         int message = -1;
 
         try {
-            message = FormUtils.validatePet(pet);
+            if(chipSwitch.isChecked())
+            message = FormUtils.validatePet(pet,true);
+            else
+                message = FormUtils.validatePet(pet,false);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -380,6 +395,7 @@ public class RegisterPetActivity extends AppCompatActivity implements
         pet.coatType = AppUtils.getCoatType(this, mSpCoat.getSelectedItem());
         pet.mood = AppUtils.getTemper(this, mSpTemper.getSelectedItem());
         pet.type = AppUtils.getType(this, mSpType.getSelectedItem());
+        pet.colorPet = mSpColorPet.getPosition();
 
         if (mBitmap != null) {
             pet.photo = CommonUtils.encodeBase64(mBitmap);
@@ -402,7 +418,12 @@ public class RegisterPetActivity extends AppCompatActivity implements
         } else if (action == AppConstants.TAKE_PHOTO) {
             openCamera();
         } else if (action == AppConstants.OK_ACTION) {
-            goToDashboard();
+            if(!schedule) {
+                goToDashboard();
+            }else {
+                EventBus.getDefault().post(new CreatePetPojo());
+                onBackPressed();
+            }
         } else if (action == AppConstants.ADD_PET) {
             resetForm();
             mEdtName.requestFocus();

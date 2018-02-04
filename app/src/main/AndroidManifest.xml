@@ -79,7 +79,6 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".UI.Dashboard.Business.BusinessActivity"
             android:configChanges="orientation"
@@ -110,12 +109,20 @@
                 android:value=".UI.Dashboard.Cart.CartActivity" />
         </activity>
         <activity
+            android:name=".UI.Dashboard.PaymentWebview.PaymentListActivity"
+            android:configChanges="orientation"
+            android:label="@string/payments"
+            android:parentActivityName=".UI.Dashboard.DashboardActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Dashboard.DashboardActivity" />
+        </activity>
+        <activity
             android:name=".UI.Dashboard.Business.BusinessInformation.BussinessSocialNetworkActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/RegisterTheme">
-
-        </activity>
+            android:theme="@style/RegisterTheme" />
         <activity
             android:name=".UI.Dashboard.Business.ServiceDetail.ServiceDetailActivity"
             android:configChanges="orientation"
@@ -210,8 +217,8 @@
             android:configChanges="orientation"
             android:label="@string/new_pet_title"
             android:parentActivityName=".UI.Menu.Pets.PetsActivity"
-            android:theme="@style/registerBackground"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/registerBackground">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Menu.Pets.PetsActivity" />
@@ -275,6 +282,15 @@
         <!-- Receivers -->
         <receiver android:name=".Managers.AlarmReceiver" />
 
+        <activity
+            android:name=".UI.Dashboard.Business.Scheduling.ReviewSchedule"
+            android:label="@string/title_activity_review_schedule"
+            android:theme="@style/registerBackgroundReview"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            />
+        <activity android:name=".UI.Dashboard.Notifications.NotificationsActivity"
+            android:label="@string/notificationsTitle"
+            ></activity>
     </application>
 
 </manifest>

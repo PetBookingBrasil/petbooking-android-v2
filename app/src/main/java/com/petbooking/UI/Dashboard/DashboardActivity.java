@@ -30,7 +30,10 @@ import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.Scheduling.ReviewSchedule;
 import com.petbooking.UI.Dashboard.Content.ContentFragment;
+import com.petbooking.UI.Dashboard.Notifications.NotificationsActivity;
+import com.petbooking.UI.Dashboard.PaymentWebview.PaymentListActivity;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Login.LoginActivity;
 import com.petbooking.UI.Menu.Agenda.AgendaActivity;
@@ -211,6 +214,8 @@ public class DashboardActivity extends AppCompatActivity implements
             startActivityForResult(activity, SEARCH_REQUEST);
         } else if (item.getItemId() == R.id.notifications) {
             Log.d("ITEM SELECTED", "NOTIFICATIONS");
+            Intent activity = new Intent(this, NotificationsActivity.class);
+            startActivity(activity);
         }else if(item.getItemId() == android.R.id.home){
             onBackPressed();
         }
@@ -226,7 +231,8 @@ public class DashboardActivity extends AppCompatActivity implements
             activity = new Intent(this, PetsActivity.class);
             startActivity(activity);
         } else if (id == R.id.payments) {
-            Log.d("PAYMENTS", "PAYMENTS");
+            activity = new Intent(this, PaymentListActivity.class);
+            startActivity(activity);
         } else if (id == R.id.favorites) {
             activity = new Intent(this, FavoritesActivity.class);
             startActivity(activity);

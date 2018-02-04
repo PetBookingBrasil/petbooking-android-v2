@@ -309,7 +309,10 @@ public class ProfilePetActivity extends BaseActivity implements
         int message = -1;
 
         try {
-            message = FormUtils.validatePet(pet);
+            //if(chipSwitch.isChecked())
+              //  message = FormUtils.validatePet(pet,true);
+            //else
+                message = FormUtils.validatePet(pet,false);
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -18,4 +18,5 @@ public class APIAppointmentConstants {
     public static final String CREATE_CART_ENDPOINT = "users/{" + APIConstants.PATH_PARAM + "}/carts";
 
     public static final String PAYMENT_WEBVIEW_URL = "%swebviews/payments/%s/%s/new";
+    public static final String PAYMENT_WEBVIEW_USER = "%s/webviews/credit_cards/%s";
 }

@@ -77,4 +77,8 @@ public class StyledSwitch extends RelativeLayout {
     public SwitchButton getmSwitch() {
         return mSwitch;
     }
+
+    public TextView getmTvTitle() {
+        return mTvTitle;
+    }
 }

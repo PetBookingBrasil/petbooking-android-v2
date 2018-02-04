@@ -23,6 +23,8 @@ public class Pet {
     public String photo;
     public String imageBase;
     public AvatarResp avatar;
+    public String chipNumber;
+    public int colorPet;
 
     public Pet() {
     }

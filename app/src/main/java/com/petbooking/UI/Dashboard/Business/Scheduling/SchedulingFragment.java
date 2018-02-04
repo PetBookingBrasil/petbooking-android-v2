@@ -35,6 +35,7 @@ import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.PetAdap
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.ProfessionalAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.ServiceAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.model.AppointmentDateChild;
+import com.petbooking.UI.Dashboard.Business.Scheduling.model.CreatePetPojo;
 import com.petbooking.UI.Dashboard.Business.Scheduling.widget.CustomLinearLayoutManager;
 import com.petbooking.UI.Dashboard.Business.Scheduling.widget.MyLinearLayout;
 import com.petbooking.UI.Dashboard.Cart.CartActivity;
@@ -43,6 +44,10 @@ import com.petbooking.UI.Menu.Pets.RegisterPet.RegisterPetActivity;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -186,6 +191,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
             mAppointmentManager.removeKey("businessId");
         }
         mConfirmDialogFragment = ConfirmDialogSchedule.newInstance();
+        EventBus.getDefault().register(this);
 
     }
 
@@ -534,5 +540,17 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
             complete = false;
         }
         return categoryId.id;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @SuppressWarnings("unused")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(CreatePetPojo response) {
+        getPets();
     }
 }

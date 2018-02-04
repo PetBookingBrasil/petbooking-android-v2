@@ -65,13 +65,17 @@ public class FormUtils {
         return -1;
     }
 
-    public static int validatePet(Pet pet) throws ParseException {
+    public static int validatePet(Pet pet, boolean checkChip) throws ParseException {
         Date today = new Date();
 
         if (CommonUtils.isEmpty(pet.name) || CommonUtils.isEmpty(pet.birthday) || CommonUtils.isEmpty(pet.gender)
                 || CommonUtils.isEmpty(pet.type) || CommonUtils.isEmpty(pet.size) || CommonUtils.isEmpty(pet.coatType)
                 || CommonUtils.isEmpty(pet.breedId) || CommonUtils.isEmpty(pet.mood)) {
             return R.string.error_fields_empty;
+        }else if(checkChip){
+            if(CommonUtils.isEmpty(pet.chipNumber)){
+                return R.string.error_fields_empty;
+            }
         }
 
         if (today.before(dateFormat.parse(pet.birthday))) {

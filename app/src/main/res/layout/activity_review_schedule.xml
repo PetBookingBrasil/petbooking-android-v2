@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.petbooking.UI.Dashboard.Business.Scheduling.ReviewSchedule">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_margin="@dimen/spacing_smallest"
+        android:background="@drawable/background_rounded"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_normal"
+            android:background="@drawable/background_rounded"
+            android:backgroundTint="@color/brand_primary"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/spacing_xmicro"
+            android:paddingRight="@dimen/spacing_xmicro"
+            android:orientation="horizontal">
+            
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="80"
+                android:text="Avaliar Serviço"
+                android:textColor="@color/white"
+                android:textSize="18dp"/>
+
+            <TextView
+                android:id="@+id/text_quant_bussines"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:text="3 de 3"/>
+
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/pet_photo"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    android:elevation="10dp"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/pet_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:maxEms="6"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="2"
+                    android:text="Banho e Tosa"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_color"  />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="18dp"
+                android:background="@color/gray"
+                android:layout_marginTop="1dp"
+                android:layout_marginLeft="20dp"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp">
+
+                <ImageView
+                    android:id="@+id/category_photo"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    android:elevation="10dp"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/category_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:maxEms="6"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="2"
+                    android:text="Banho e Tosa"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_color"  />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="18dp"
+                android:background="@color/gray"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="20dp"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp">
+
+                <ImageView
+                    android:id="@+id/bussines_photo"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    android:elevation="10dp"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/bussines_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:maxEms="6"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="2"
+                    android:text="Banho e Tosa"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_color"  />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="18dp"
+                android:background="@color/gray"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="2dp"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp">
+
+                <ImageView
+                    android:id="@+id/professional_photo"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    android:elevation="10dp"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/professional_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:maxEms="6"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="2"
+                    android:text="Banho e Tosa"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_color"  />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:text="@string/attendance"
+                        android:textColor="@color/text_color"
+                        android:textStyle="bold"
+                        android:textSize="18dp"/>
+
+                    <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                        android:layout_width="0dp"
+                        android:layout_weight="50"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rating"
+                        style="@style/Widget.MaterialRatingBar.RatingBar"
+                        android:layout_gravity="center_horizontal"
+                        android:numStars="5"
+                        android:maxHeight="23dp"
+                        android:maxWidth="20dp"
+                        android:max="5"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:text="@string/bussines"
+                        android:textColor="@color/text_color"
+                        android:textStyle="bold"
+                        android:textSize="18dp"/>
+
+                    <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                        android:layout_width="0dp"
+                        android:layout_weight="50"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ratingBarBussines"
+                        style="@style/Widget.MaterialRatingBar.RatingBar"
+                        android:layout_gravity="center_horizontal"
+                        android:numStars="5"
+                        android:maxHeight="23dp"
+                        android:maxWidth="50dp"
+                        android:max="5"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:text="@string/environment"
+                        android:textColor="@color/text_color"
+                        android:textStyle="bold"
+                        android:textSize="18dp"/>
+
+                    <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                        android:layout_width="0dp"
+                        android:layout_weight="50"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ratingBarEnvironment"
+                        style="@style/Widget.MaterialRatingBar.RatingBar"
+                        android:layout_gravity="center_horizontal"
+                        android:numStars="5"
+                        android:maxHeight="23dp"
+                        android:maxWidth="50dp"
+                        android:max="5"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edt_comment"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/add_comment"
+                android:padding="@dimen/spacing_xmicro"
+                android:background="@drawable/progress_rating"/>
+
+            <Button
+                android:id="@+id/button_send_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/primary_button"
+                android:text="@string/sendReview"
+                android:textColor="@color/white"
+                android:layout_marginBottom="20dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

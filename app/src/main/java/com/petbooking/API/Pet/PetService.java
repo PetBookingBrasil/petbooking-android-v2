@@ -1,6 +1,7 @@
 package com.petbooking.API.Pet;
 
 import com.petbooking.API.APIClient;
+import com.petbooking.API.Pet.Models.AttributesResponse;
 import com.petbooking.API.Pet.Models.BreedResp;
 import com.petbooking.API.Pet.Models.CreatePetRqt;
 import com.petbooking.API.Pet.Models.ListPetsResp;
@@ -8,6 +9,7 @@ import com.petbooking.API.Pet.Models.PetResp;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Pet;
 import com.petbooking.Utils.APIUtils;
+import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
 
@@ -127,6 +129,22 @@ public class PetService {
 
             @Override
             public void onFailure(Call<BreedResp> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getAtributtes(final APICallback callback){
+        Call<AttributesResponse> call = mPetInterface.getAtributtes();
+
+        call.enqueue(new Callback<AttributesResponse>() {
+            @Override
+            public void onResponse(Call<AttributesResponse> call, Response<AttributesResponse> response) {
+                APIUtils.handleResponse(response,callback);
+            }
+
+            @Override
+            public void onFailure(Call<AttributesResponse> call, Throwable t) {
 
             }
         });

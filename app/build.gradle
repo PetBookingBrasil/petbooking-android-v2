@@ -39,7 +39,7 @@ android {
 
 ext {
     androidVersion = "26.1.0"
-    playServicesVersion="11.0.4"
+    playServicesVersion = "11.0.4"
     retrofitVersion = "2.3.0"
 }
 
@@ -58,7 +58,9 @@ dependencies {
     compile("com.android.support:support-v4:${androidVersion}") { force true }
     compile('com.android.support.constraint:constraint-layout:1.0.2') { force true }
     compile 'com.kyleduo.switchbutton:library:1.4.6'
-    compile('com.github.ganfra:material-spinner:2.0.0') { exclude group: 'com.android.support', module: 'appcompat-v7' }
+    compile('com.github.ganfra:material-spinner:2.0.0') {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
 
     // Image Manipulation
     compile 'com.github.bumptech.glide:glide:3.7.0'
@@ -84,6 +86,9 @@ dependencies {
 
     //RecyclerView
     compile 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.1.3'
+
+    //Rating
+    compile 'me.zhanghai.android.materialratingbar:library:1.2.0'
 
     // Tests
     testCompile 'junit:junit:4.12'

@@ -385,7 +385,6 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 serviceAdapter.setexpanded(true);
                 petAdapter.addPets(mPetList);
                 int petsSize = mPetList.size();
-                petsSize = 0;
                 if(initial && petsSize >0) {
                     if(petsSize == 1) {
                         initial = false;

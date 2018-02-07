@@ -37,6 +37,7 @@ import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
 import com.petbooking.UI.Dialogs.TableDialogFragment;
 import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.UI.Widget.MaterialSpinner;
+import com.petbooking.UI.Widget.StyledSwitch;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
@@ -108,6 +109,7 @@ public class ProfilePetActivity extends BaseActivity implements
     private MaterialSpinner mSpBreed;
     private MaterialSpinner mSpCoat;
     private MaterialSpinner mSpTemper;
+    private StyledSwitch chipSwitch;
     private ImageView mIvPetPhoto;
     private EditText mEdtBirthday;
     private ImageButton mIBtnSelectPicture;
@@ -191,6 +193,7 @@ public class ProfilePetActivity extends BaseActivity implements
         mSpTemper = (MaterialSpinner) findViewById(R.id.pet_temper);
         mSpCoat = (MaterialSpinner) findViewById(R.id.pet_coat);
         mBtnSubmit = (Button) findViewById(R.id.submitButton);
+        chipSwitch = (StyledSwitch) findViewById(R.id.switch_chip);
 
         mSpType.setOnItemSelectedListener(typeListener);
         mSpSize.setOnInfoClickListener(infoSizeListener);
@@ -242,6 +245,10 @@ public class ProfilePetActivity extends BaseActivity implements
 
             }
         });
+    }
+
+    public void getAtributtes(){
+
     }
 
     /**
@@ -309,9 +316,9 @@ public class ProfilePetActivity extends BaseActivity implements
         int message = -1;
 
         try {
-            //if(chipSwitch.isChecked())
-              //  message = FormUtils.validatePet(pet,true);
-            //else
+            if(chipSwitch.isChecked())
+                message = FormUtils.validatePet(pet,true);
+            else
                 message = FormUtils.validatePet(pet,false);
         } catch (ParseException e) {
             e.printStackTrace();

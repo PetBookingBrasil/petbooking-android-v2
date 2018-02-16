@@ -24,6 +24,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.petbooking.API.Pet.APIPetConstants;
+import com.petbooking.API.Pet.Models.AttributesResponse;
 import com.petbooking.API.Pet.Models.BreedResp;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.BaseActivity;
@@ -124,6 +125,7 @@ public class RegisterPetActivity extends AppCompatActivity implements
     StyledSwitch chipSwitch;
     EditText chipNumberText;
     boolean schedule;
+    private String userId;
 
     AdapterView.OnItemSelectedListener typeListener = new AdapterView.OnItemSelectedListener() {
         @Override
@@ -215,6 +217,7 @@ public class RegisterPetActivity extends AppCompatActivity implements
         mSpType.setOnItemSelectedListener(typeListener);
         mSpSize.setOnInfoClickListener(infoSizeListener);
         mSpColorPet = (MaterialSpinner) findViewById(R.id.color_pet);
+        this.userId = SessionManager.getInstance().getUserLogged().id;
 
         if(schedule){
             mSpColorPet.setHintColor(R.color.white);
@@ -240,6 +243,7 @@ public class RegisterPetActivity extends AppCompatActivity implements
 
         listDogBreeds();
         listCatBreeds();
+        getAttributes();
         pet = new Pet();
         mBinding.setPet(pet);
 
@@ -266,6 +270,20 @@ public class RegisterPetActivity extends AppCompatActivity implements
                     dogBreedsString.add(breed.attributes.name);
                     dogBreeds.add(new Breed(breed.id, breed.attributes.name, breed.attributes.kind, breed.attributes.size));
                 }
+            }
+
+            @Override
+            public void onError(Object error) {
+
+            }
+        });
+    }
+
+    public void getAttributes(){
+        mPetService.getAtributtes(userId, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                AttributesResponse att = (AttributesResponse) response;
             }
 
             @Override

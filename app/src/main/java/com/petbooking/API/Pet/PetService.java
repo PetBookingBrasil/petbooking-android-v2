@@ -134,8 +134,8 @@ public class PetService {
         });
     }
 
-    public void getAtributtes(final APICallback callback){
-        Call<AttributesResponse> call = mPetInterface.getAtributtes();
+    public void getAtributtes(String userID, final APICallback callback){
+        Call<AttributesResponse> call = mPetInterface.getAtributtes(userID);
 
         call.enqueue(new Callback<AttributesResponse>() {
             @Override

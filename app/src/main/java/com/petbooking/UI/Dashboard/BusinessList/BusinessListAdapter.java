@@ -238,7 +238,6 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                             mBusinessList.get(position).setFavorited(false);
                             mBusinessList.get(position).setFavoritedId("");
                             holder.mBtnFavorite.setImageResource(R.drawable.ic_favorite_border_black);
-
                             if (isFavoriteList) {
                                 mBusinessList.remove(position);
                                 onFavoriteAction.onDelete(position);
@@ -256,7 +255,6 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         @Override
                         public void onSuccess(Object response) {
                             FavoriteResp resp = (FavoriteResp) response;
-
                             mBusinessList.get(position).setFavorited(true);
                             mBusinessList.get(position).setFavoritedId(resp.data.id);
                             holder.mBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
@@ -275,9 +273,9 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             @Override
             public void onClick(View v) {
                 callToBusiness(business.phone);
+
             }
         });
-
     }
 
     /**
@@ -289,7 +287,6 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         businessIntent.putExtra("businessName", businessName);
         businessIntent.putExtra("businessDistance", businessDistance);
         businessIntent.putExtra("category", category);
-
         mContext.startActivity(businessIntent);
     }
 

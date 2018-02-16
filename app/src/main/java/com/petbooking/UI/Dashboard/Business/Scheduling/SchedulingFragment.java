@@ -373,6 +373,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         ((BusinessActivity) getActivity()).hideCartMenu();
         category = null;
         categoryConfig = false;
+        categoryAdapter.setCategory(null);
 
     }
 
@@ -392,8 +393,10 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                         petAdapter.setExpanded(false);
                         placeHolderPet.setVisibility(View.GONE);
                         notifyChanged(0);
-                    }else
-                    notifyChanged(-1);
+                    }else {
+                        notifyChanged(-1);
+                        placeHolderPet.setVisibility(View.GONE);
+                    }
                 }else {
                     mAdapter.notifyDataSetChanged();
                     if(petsSize <= 0){

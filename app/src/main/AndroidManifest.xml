@@ -53,7 +53,8 @@
             android:configChanges="orientation"
             android:label="@string/signup_title"
             android:parentActivityName=".UI.Login.LoginActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Login.LoginActivity" />
@@ -218,7 +219,8 @@
             android:label="@string/new_pet_title"
             android:parentActivityName=".UI.Menu.Pets.PetsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/registerBackground">
+            android:theme="@style/registerBackground"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Menu.Pets.PetsActivity" />
@@ -228,7 +230,8 @@
             android:configChanges="orientation"
             android:label="@string/new_pet_title"
             android:parentActivityName=".UI.Menu.Pets.PetsActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Menu.Pets.PetsActivity" />
@@ -238,7 +241,8 @@
             android:configChanges="orientation"
             android:label="@string/profile_title"
             android:parentActivityName=".UI.Dashboard.DashboardActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Dashboard.DashboardActivity" />

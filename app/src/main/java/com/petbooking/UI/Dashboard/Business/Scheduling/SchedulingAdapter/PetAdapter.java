@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.Pet;
@@ -49,6 +50,8 @@ public class PetAdapter extends StatelessSection {
     int selectedPosition = -1;
     boolean initial = true;
     boolean existPet = true;
+    boolean imageLoaded = false;
+    RequestManager mGlide;
 
     public PetAdapter(String title, SchedulingFragment fragment, List<Pet> pet, Context context) {
         super(new SectionParameters.Builder(R.layout.custom_pet_adapter)
@@ -58,6 +61,7 @@ public class PetAdapter extends StatelessSection {
         this.fragment = fragment;
         this.pets = pet;
         this.context = context;
+        mGlide = Glide.with(context);
     }
 
     public void setExpanded(boolean expanded) {
@@ -124,6 +128,7 @@ public class PetAdapter extends StatelessSection {
                 @Override
                 public void onClick(View v) {
                     fragment.clearFields();
+                    imageLoaded = false;
                 }
             });
             if (selectedPosition >= 0) {
@@ -134,13 +139,15 @@ public class PetAdapter extends StatelessSection {
                 } else {
                     petAvatar = R.drawable.ic_placeholder_cat;
                 }
-                Glide.with(context)
-                        .load(APIUtils.getAssetEndpoint(pet.avatar.url))
-                        .error(petAvatar)
-                        .placeholder(petAvatar)
-                        .bitmapTransform(new CircleTransformation(context))
-                        .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                        .into(viewHolder.image_header);
+                if(!imageLoaded) {
+                    imageLoaded = true;
+                    mGlide.load(APIUtils.getAssetEndpoint(pet.avatar.url))
+                            .error(petAvatar)
+                            .placeholder(petAvatar)
+                            .bitmapTransform(new CircleTransformation(context))
+                            .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                            .into(viewHolder.image_header);
+                }
                 FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 viewHolder.headerSection.setLayoutParams(params);
 
@@ -257,8 +264,7 @@ public class PetAdapter extends StatelessSection {
                 }
             });
 
-            Glide.with(context)
-                    .load(APIUtils.getAssetEndpoint(pet.avatar.url))
+                    mGlide.load(APIUtils.getAssetEndpoint(pet.avatar.url))
                     .error(petAvatar)
                     .placeholder(petAvatar)
                     .bitmapTransform(new CircleTransformation(context))

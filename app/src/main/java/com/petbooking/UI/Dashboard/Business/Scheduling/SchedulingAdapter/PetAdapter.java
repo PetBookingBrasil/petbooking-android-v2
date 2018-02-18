@@ -4,11 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -77,12 +81,17 @@ public class PetAdapter extends StatelessSection {
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder item, final int position) {
         ItemViewHolder holder = (ItemViewHolder) item;
-        holder.titleNumber.setVisibility(View.GONE);
+        holder.titleNumber.setVisibility(View.VISIBLE);
         holder.circleLayout.setVisibility(View.GONE);
-        holder.pets.setLayoutManager(new GridLayoutManager(context, 3));
+        holder.pets.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        SnapHelper snapHelper = new PagerSnapHelper();
+        holder.pets.setOnFlingListener(null);
+        snapHelper.attachToRecyclerView(holder.pets);
         holder.pets.setAdapter(new CustomPetAdapter(context, pets));
         if(pets.size() <=0) {
             holder.placeHolderPet.setVisibility(View.GONE);
+        }else{
+            holder.placeHolderPet.setVisibility(View.VISIBLE);
         }
 
     }
@@ -219,7 +228,7 @@ public class PetAdapter extends StatelessSection {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, final int position) {
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
             final Pet pet = pets.get(position);
             holder.petName.setText(pet.name);
             int petAvatar;
@@ -240,6 +249,14 @@ public class PetAdapter extends StatelessSection {
 
                 }
             });
+
+            holder.addPet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    holder.view.performClick();
+                }
+            });
+
             Glide.with(context)
                     .load(APIUtils.getAssetEndpoint(pet.avatar.url))
                     .error(petAvatar)
@@ -275,6 +292,8 @@ public class PetAdapter extends StatelessSection {
             TextView totalServices;
             @BindView(R.id.pet_name)
             TextView petName;
+            @BindView(R.id.btn_add_pet)
+            Button addPet;
             View view;
 
             public ViewHolder(View itemView) {

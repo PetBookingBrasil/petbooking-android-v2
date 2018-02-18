@@ -166,7 +166,7 @@ public class CategoryAdapter extends StatelessSection {
         public void onBindViewHolder(ViewHolder holder, final int position) {
             Category category = services.get(position);
             int color = AppUtils.getCategoryColor(context, category.categoryName);
-            GradientDrawable iconBackground = (GradientDrawable) holder.categoryIcon.getBackground();
+            GradientDrawable iconBackground = (GradientDrawable) holder.layoutBackGround.getBackground();
 
             holder.categoryName.setText(category.categoryName);
             holder.categoryIcon.setImageDrawable(category.icon);
@@ -206,6 +206,8 @@ public class CategoryAdapter extends StatelessSection {
             ImageView categoryIcon;
             @BindView(R.id.category_name)
             TextView categoryName;
+            @BindView(R.id.layoutCategory)
+            LinearLayout layoutBackGround;
             View v;
             public ViewHolder(View itemView) {
                 super(itemView);

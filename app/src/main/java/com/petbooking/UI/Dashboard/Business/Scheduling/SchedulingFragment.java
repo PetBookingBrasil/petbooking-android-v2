@@ -371,9 +371,6 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         getPets();
         getCategories();
         ((BusinessActivity) getActivity()).hideCartMenu();
-        category = null;
-        categoryConfig = false;
-        categoryAdapter.setCategory(null);
 
     }
 

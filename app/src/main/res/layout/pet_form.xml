@@ -309,11 +309,12 @@
                 <EditText
                     android:id="@+id/pet_observation"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:drawableLeft="@drawable/ic_observation"
                     android:drawablePadding="@dimen/spacing_xmicro"
                     android:drawableStart="@drawable/ic_observation"
                     android:hint="@string/hint_observation"
+                    android:lines="2"
                     android:inputType="text"
                     android:paddingLeft="@dimen/spacing_xmicro"
                     android:text="@={pet.description}" />

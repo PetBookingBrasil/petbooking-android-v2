@@ -24,7 +24,7 @@
     <string name="profile_title">Perfil</string>
     <string name="pets_title">Meus Pets</string>
     <string name="new_pet_title">Preencha os dados do pet</string>
-    <string name="search_title">Filtre sua busca</string>
+    <string name="search_title">Busca</string>
     <string name="cart_title">Carrinho de Agendamentos</string>
     <string name="payment_title">Pagamento</string>
 
@@ -279,7 +279,7 @@
     <string name="permission_location">Sua localização é necessária para utilizar as nossas funcionalidades.</string>
 
     <!-- Schedule -->
-    <string name="select_pet">Selecione um pet</string>
+    <string name="select_pet">Selecionar pet</string>
     <string name="select_professional">Selecione um profissional</string>
     <string name="category">Categoria</string>
     <string name="service_additional">Serviço e adicionais</string>

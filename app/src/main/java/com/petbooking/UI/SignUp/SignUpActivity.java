@@ -257,7 +257,7 @@ public class SignUpActivity extends BaseActivity implements
             if (isSocialLogin) {
                 createSocialUser(user);
             } else {
-                createUser(user);
+                createUser(user,isSocialLogin);
             }
         } else if (message == -1 && (!user.password.equals(repeatPassword))) {
             EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_different_password, Snackbar.LENGTH_LONG));
@@ -333,9 +333,9 @@ public class SignUpActivity extends BaseActivity implements
      *
      * @param user
      */
-    public void createUser(final User user) {
+    public void createUser(final User user, boolean provider) {
         AppUtils.showLoadingDialog(this);
-        mUserService.createUser(user, new APICallback() {
+        mUserService.createUser(user,provider, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 AppUtils.hideDialog();

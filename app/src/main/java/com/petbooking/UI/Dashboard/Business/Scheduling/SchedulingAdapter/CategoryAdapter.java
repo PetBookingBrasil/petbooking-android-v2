@@ -77,8 +77,8 @@ public class CategoryAdapter extends StatelessSection {
         ItemViewHolder holder = (ItemViewHolder) item;
         holder.titleNumber.setText("2");
         holder.textTitle.setText(R.string.bussines_category);
-        holder.services.setLayoutManager(new GridLayoutManager(context,3));
-        holder.services.setAdapter(new CustomServiceAdapter(context,services));
+        holder.services.setLayoutManager(new GridLayoutManager(context, 3));
+        holder.services.setAdapter(new CustomServiceAdapter(context, services));
 
     }
 
@@ -109,34 +109,31 @@ public class CategoryAdapter extends StatelessSection {
             } else {
                 category = this.category;
             }
-            if (positionSelected >= 0) {
-                viewHolder.headerEdit.setVisibility(View.VISIBLE);
+            viewHolder.headerEdit.setVisibility(View.VISIBLE);
 
-                viewHolder.textCheckunicode.setVisibility(View.GONE);
-                int color = AppUtils.getCategoryColor(context, category.categoryName);
-                GradientDrawable iconBackground = (GradientDrawable) viewHolder.image_header.getBackground();
-                viewHolder.image_header.setImageDrawable(category.icon);
-                viewHolder.image_header.setPadding(18, 18, 18, 18);
-                iconBackground.setColor(color);
-                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                viewHolder.headerSection.setLayoutParams(params);
-                viewHolder.headerEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        fragment.expandedCategory();
-                    }
-                });
-            } else {
-                viewHolder.headerEdit.setVisibility(View.GONE);
-                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
-                viewHolder.headerSection.setLayoutParams(params);
-                viewHolder.image_header.setVisibility(View.GONE);
-                viewHolder.textCheckunicode.setText("2");
-                viewHolder.textCheckunicode.setVisibility(View.VISIBLE);
-                viewHolder.textCheckunicode.setTextColor(ContextCompat.getColor(context, R.color.gray));
-                viewHolder.circleImageView.setImageResource(R.color.schedule_background);
-            }
-
+            viewHolder.textCheckunicode.setVisibility(View.GONE);
+            int color = AppUtils.getCategoryColor(context, category.categoryName);
+            GradientDrawable iconBackground = (GradientDrawable) viewHolder.image_header.getBackground();
+            viewHolder.image_header.setImageDrawable(category.icon);
+            viewHolder.image_header.setPadding(18, 18, 18, 18);
+            iconBackground.setColor(color);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            viewHolder.headerSection.setLayoutParams(params);
+            viewHolder.headerEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    fragment.expandedCategory();
+                }
+            });
+        } else {
+            viewHolder.headerEdit.setVisibility(View.GONE);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
+            viewHolder.headerSection.setLayoutParams(params);
+            viewHolder.image_header.setVisibility(View.GONE);
+            viewHolder.textCheckunicode.setText("2");
+            viewHolder.textCheckunicode.setVisibility(View.VISIBLE);
+            viewHolder.textCheckunicode.setTextColor(ContextCompat.getColor(context, R.color.gray));
+            viewHolder.circleImageView.setImageResource(R.color.schedule_background);
         }
     }
 
@@ -162,7 +159,7 @@ public class CategoryAdapter extends StatelessSection {
         }
     }
 
-    class CustomServiceAdapter extends RecyclerView.Adapter<CustomServiceAdapter.ViewHolder>{
+    class CustomServiceAdapter extends RecyclerView.Adapter<CustomServiceAdapter.ViewHolder> {
         Context context;
         List<Category> services;
 
@@ -173,7 +170,7 @@ public class CategoryAdapter extends StatelessSection {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_list_category,parent,false);
+            View view = LayoutInflater.from(context).inflate(R.layout.item_list_category, parent, false);
             ViewHolder holder = new ViewHolder(view);
             return holder;
         }
@@ -187,8 +184,8 @@ public class CategoryAdapter extends StatelessSection {
             holder.categoryName.setText(category.categoryName);
             holder.categoryIcon.setImageDrawable(category.icon);
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    holder.categoryIcon.setClipToOutline(false);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                holder.categoryIcon.setClipToOutline(false);
 
             }
 
@@ -205,7 +202,7 @@ public class CategoryAdapter extends StatelessSection {
                 Log.i(getClass().getSimpleName(), "Qual a elevation " + holder.categoryIcon.getElevation());
                 holder.categoryIcon.setElevation(50f);
                 Log.i(getClass().getSimpleName(), "Qual a elevation 2 " + holder.categoryIcon.getElevation());
-            }else{
+            } else {
                 iconBackground.setColor(color);
             }
 
@@ -217,7 +214,7 @@ public class CategoryAdapter extends StatelessSection {
             return services.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder{
+        class ViewHolder extends RecyclerView.ViewHolder {
             @BindView(R.id.category_icon)
             ImageView categoryIcon;
             @BindView(R.id.category_name)
@@ -225,9 +222,10 @@ public class CategoryAdapter extends StatelessSection {
             @BindView(R.id.layoutCategory)
             LinearLayout layoutBackGround;
             View v;
+
             public ViewHolder(View itemView) {
                 super(itemView);
-                ButterKnife.bind(this,itemView);
+                ButterKnife.bind(this, itemView);
                 v = itemView;
             }
         }

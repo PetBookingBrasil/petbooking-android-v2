@@ -90,6 +90,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     AppointmentDateChild appointmentDateChild;
     Professional professional;
     Category category;
+    CartItem item;
 
 
     PetService mPetService;
@@ -254,6 +255,11 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                     BusinessServices businessServices = mServiceListCopy.get(0);
                     CartItem item = new CartItem(startDate, startTime, businessId, businessServices, categoryId, professional, getPet());
                     item.totalPrice += businessServices.price;
+                    if(SchedulingFragment.this.item == null)
+                        SchedulingFragment.this.item = item;
+                    else{
+                        item.id = SchedulingFragment.this.item.id;
+                    }
                     mAppointmentManager.addItem(item);
 
                     for(int i = 0; i< additionals.size(); i++){
@@ -406,6 +412,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                         initial = false;
                         petAdapter.setSelectedPosition(0);
                         petAdapter.setExpanded(false);
+                        petAdapter.setTitle(mPetList.get(0).name);
                         placeHolderPet.setVisibility(View.GONE);
                         notifyChanged(0);
                     }else {

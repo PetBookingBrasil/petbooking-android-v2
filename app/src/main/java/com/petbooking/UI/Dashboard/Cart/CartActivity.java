@@ -134,6 +134,15 @@ public class CartActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+
+        return true;
+    }
+
     /**
      * Go to Payment
      */

@@ -3,7 +3,6 @@
     android:id="@+id/item_layout"
     android:layout_width="match_parent"
     android:layout_height="220dp"
-    android:minWidth="60dp"
     android:background="@color/white"
     android:elevation="5dp"
     android:layout_marginLeft="10dp"

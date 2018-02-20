@@ -160,7 +160,10 @@ public class MaterialSpinner extends RelativeLayout {
      * @return
      */
     public String getSelectedItem() {
-        return mSpinner.getSelectedItem().toString();
+        if(mSpinner.getSelectedItem() !=null)
+            return mSpinner.getSelectedItem().toString();
+        else
+            return "";
     }
 
     /**

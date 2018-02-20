@@ -1,6 +1,7 @@
 package com.petbooking.Models;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by Luciano José on 08/08/2017.
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 
 public class CartItem {
 
+    public String id;
     public String startDate;
     public String startTime;
     public String businessId;
@@ -31,6 +33,7 @@ public class CartItem {
         this.pet = pet;
         this.withTransportation = false;
         this.additionalServices = new ArrayList<>();
+        this.id = generateId();
     }
 
     public void addAdditional(BusinessServices additional) {
@@ -51,5 +54,10 @@ public class CartItem {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    private String generateId() {
+        String id = UUID.randomUUID().toString();
+        return id;
     }
 }

@@ -42,6 +42,15 @@ public class AppointmentManager {
 
     public void addItem(CartItem item) {
         this.cart = getCart();
+        int i = 0;
+        for (CartItem itens : this.cart){
+            if(itens.id.equals(item.id)){
+                removeItemByIndex(i);
+                break;
+
+            }
+            i++;
+        }
         this.cart.add(item);
 
         if (!isServiceSelected(item.service.id, item.pet.id)) {

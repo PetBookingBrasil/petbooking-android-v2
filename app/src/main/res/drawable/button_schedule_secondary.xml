@@ -3,7 +3,7 @@
     <item android:state_enabled="true">
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
             <corners android:radius="30dp"></corners>
-            <solid android:color="@color/schedule_tab"></solid>
+            <solid android:color="@color/schedule_pet_button"></solid>
         </shape>
     </item>
     <item android:state_enabled="false">
@@ -16,7 +16,7 @@
     <item>
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
             <corners android:radius="30dp"></corners>
-            <solid android:color="@color/schedule_tab"></solid>
+            <solid android:color="@color/schedule_pet_button"></solid>
         </shape>
     </item>
 </selector>

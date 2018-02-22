@@ -56,8 +56,6 @@ public class CreateSocialUserRqt {
             this.email = email;
             this.provider = provider;
             this.providerToken = providerToken;
-            //this.cpf="null";
-            //this.password = "null";
         }
     }
 }

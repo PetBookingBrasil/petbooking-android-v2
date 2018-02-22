@@ -107,6 +107,7 @@ public class SignUpActivity extends BaseActivity implements
     private ImageButton mIBtnSelectPicture;
     private LinearLayout layoutHeader;
     private LinearLayout layoutPlaceHolder;
+    private TextInputLayout textInputPassword;
 
     private UserFormBinding mBinding;
     private User user;
@@ -184,6 +185,7 @@ public class SignUpActivity extends BaseActivity implements
         mUserPassword = (EditText) findViewById(R.id.user_password);
         layoutHeader = (LinearLayout) findViewById(R.id.layout_header);
         layoutPlaceHolder = (LinearLayout) findViewById(R.id.placeHolder_complete_register);
+        textInputPassword = (TextInputLayout) findViewById(R.id.text_input_password);
 
         mEdtBirthday.addTextChangedListener(MaskManager.insert("##/##/####", mEdtBirthday));
         mEdtBirthday.setOnClickListener(mBirthdayListener);
@@ -218,6 +220,7 @@ public class SignUpActivity extends BaseActivity implements
             mEdtCpf.setVisibility(GONE);
             emailTL.setVisibility(GONE);
             mUserPassword.setVisibility(GONE);
+            textInputPassword.setVisibility(GONE);
             mBtnSubmit.setText(R.string.continue_register);
 
 

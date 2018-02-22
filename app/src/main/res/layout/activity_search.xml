@@ -15,10 +15,20 @@
         android:focusableInTouchMode="true"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_tiny"
+            android:layout_marginLeft="@dimen/spacing_tiny"
+            android:layout_marginTop="24dp"
+            android:text="@string/filter_hint"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:textStyle="normal" />
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             app:hintEnabled="false">
 
             <EditText
@@ -27,7 +37,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_xmicro"
                 android:layout_marginRight="@dimen/spacing_xmicro"
-                android:hint="@string/filter_hint"
                 android:textColor="@color/text_color"
                 android:inputType="text"
                 android:textSize="14sp" />

@@ -19,8 +19,11 @@ import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.CartItem;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.Scheduling.model.ClearFieldsSchedule;
 import com.petbooking.UI.Dashboard.PaymentWebview.PaymentActivity;
 import com.petbooking.Utils.AppUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -63,6 +66,7 @@ public class CartActivity extends AppCompatActivity {
 
         @Override
         public void onEditItem() {
+            EventBus.getDefault().post(new ClearFieldsSchedule(true));
             onBackPressed();
         }
     };
@@ -137,6 +141,7 @@ public class CartActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
+            EventBus.getDefault().post(new ClearFieldsSchedule(false));
             onBackPressed();
         }
 

@@ -131,6 +131,7 @@ public class PetAdapter extends StatelessSection {
                     imageLoaded = false;
                 }
             });
+
             if (selectedPosition >= 0) {
                 Pet pet = pets.get(selectedPosition);
                 int petAvatar;
@@ -165,6 +166,11 @@ public class PetAdapter extends StatelessSection {
                     viewHolder.headerEdit.performClick();
                 }
             });
+            viewHolder.headerSection.setBackgroundColor(ContextCompat.getColor(context,R.color.white));
+            viewHolder.imageView.setImageResource(R.drawable.ic_edit);
+            viewHolder.imageView.setColorFilter(ContextCompat.getColor(context, R.color.schedule_item_edit_icon), android.graphics.PorterDuff.Mode.SRC_IN);
+            viewHolder.circleImageViewEdit.setCircleBackgroundColorResource(R.color.schedule_background);
+            viewHolder.headerTitle.setTextColor(ContextCompat.getColor(context,R.color.text_color));
 
         }else{
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

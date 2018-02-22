@@ -35,6 +35,7 @@ import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.PetAdap
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.ProfessionalAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.ServiceAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.model.AppointmentDateChild;
+import com.petbooking.UI.Dashboard.Business.Scheduling.model.ClearFieldsSchedule;
 import com.petbooking.UI.Dashboard.Business.Scheduling.model.CreatePetPojo;
 import com.petbooking.UI.Dashboard.Business.Scheduling.widget.CustomLinearLayoutManager;
 import com.petbooking.UI.Dashboard.Cart.CartActivity;
@@ -101,12 +102,14 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     String categoryId;
     String petId;
     private ConfirmDialogSchedule mConfirmDialogFragment;
+
+    //flags
     boolean addToCart = false;
     boolean initial = true;
     boolean categoryConfig = false;
     boolean complete = false;
     boolean hasService = false;
-
+    boolean finishService = false;
 
     CategoryAdapter.OnSelectCategoryListener mSelectedCategory = new CategoryAdapter.OnSelectCategoryListener() {
         @Override
@@ -413,11 +416,13 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                         petAdapter.setSelectedPosition(0);
                         petAdapter.setExpanded(false);
                         petAdapter.setTitle(mPetList.get(0).name);
+                        petAdapter.setExistPet(true);
                         placeHolderPet.setVisibility(View.GONE);
                         notifyChanged(0);
                     }else {
                         notifyChanged(-1);
                         placeHolderPet.setVisibility(View.GONE);
+                        petAdapter.setExistPet(true);
                     }
                 }else {
                     mAdapter.notifyDataSetChanged();
@@ -531,16 +536,22 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     public void onFinishDialog(int action) {
         if(action == AppConstants.CANCEL_ACTION){
             initial = true;
+            item = null;
             clearFields();
         }else if(action == AppConstants.NEWSCHEDULE_SERVICE) {
             if(mPetList.size() <=1) {
+                item = null;
+                clearFields();
                 Intent intent = new Intent(getContext(), RegisterPetActivity.class);
                 intent.putExtra("schedule", true);
                 getContext().startActivity(intent);
+
             }else{
+                item = null;
                 clearFields();
             }
         }else{
+            finishService = true;
             Intent intent = new Intent(getContext(), CartActivity.class);
             getContext().startActivity(intent);
         }
@@ -575,6 +586,16 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(CreatePetPojo response) {
         getPets();
+    }
+    @SuppressWarnings("unused")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(ClearFieldsSchedule response){
+        if(finishService && !response.clear) {
+            initial = true;
+            clearFields();
+        }else{
+            addToCart = false;
+        }
     }
     public void expandedCategory(){
         petAdapter.setExpanded(false);

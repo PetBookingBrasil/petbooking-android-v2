@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/presentationImagem"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/spacing_xmicro"
         android:layout_marginRight="@dimen/spacing_xmicro"
@@ -29,7 +29,7 @@
         android:text="@string/presentation_1_title"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"

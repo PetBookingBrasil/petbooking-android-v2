@@ -28,7 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Qui, 17 de ago"
-        android:textSize="18dp"/>
+        android:textSize="18dp"
+        android:visibility="gone"/>
 
         <TextView
             android:id="@+id/hour_avaliable"
@@ -36,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="09:00"
             android:layout_gravity="center_vertical"
-            android:gravity="right"
+            android:gravity="center_horizontal"
             android:layout_marginRight="10dp"
             android:textSize="18dp"/>
 

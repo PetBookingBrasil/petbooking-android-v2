@@ -34,18 +34,9 @@ public class CreateSocialUserRqt {
     public static class Attributes {
 
         public String name;
-        public String birthday;
         public String phone;
-        public String cpf;
         public String email;
-        public String zipcode;
-        public String street;
-        public String street_number;
-        public String complement;
-        public String neighborhood;
         public String password;
-        public String city;
-        public String state;
         public String provider;
         @SerializedName("provider_token")
         public String providerToken;
@@ -56,6 +47,7 @@ public class CreateSocialUserRqt {
             this.email = email;
             this.provider = provider;
             this.providerToken = providerToken;
+            this.password = "";
         }
     }
 }

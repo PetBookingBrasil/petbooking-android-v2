@@ -31,10 +31,12 @@ import com.petbooking.Models.Professional;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.BusinessActivity;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.CategoryAdapter;
+import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.DateSchedulingAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.PetAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.ProfessionalAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.ServiceAdapter;
 import com.petbooking.UI.Dashboard.Business.Scheduling.model.AppointmentDateChild;
+import com.petbooking.UI.Dashboard.Business.Scheduling.model.AppointmentDateSlot;
 import com.petbooking.UI.Dashboard.Business.Scheduling.model.ClearFieldsSchedule;
 import com.petbooking.UI.Dashboard.Business.Scheduling.model.CreatePetPojo;
 import com.petbooking.UI.Dashboard.Business.Scheduling.widget.CustomLinearLayoutManager;
@@ -50,6 +52,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
@@ -57,11 +60,12 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
  * Created by victorneves on 30/11/17.
  */
 
-public class SchedulingFragment extends Fragment implements ConfirmDialogSchedule.FinishDialogListener{
+public class SchedulingFragment extends Fragment implements ConfirmDialogSchedule.FinishDialogListener {
     private static final String TAGSERVICES = "services";
     private static final String TAGPROFESSIONALS = "professionals";
     private static final String TAGPET = "pet";
     private static final String TAGCATEGORY = "category";
+    private static final String TAGDATES = "dates";
 
     //View
     Button btnAddCart;
@@ -75,6 +79,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     CategoryAdapter categoryAdapter;
     ServiceAdapter serviceAdapter;
     ProfessionalAdapter professionalAdapter;
+    DateSchedulingAdapter dateAdapter;
 
     //Lists
     private ArrayList<Pet> mPetList;
@@ -83,12 +88,14 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     private ArrayList<BusinessServices> mServiceListCopy;
     private ArrayList<Professional> mProfessionalList;
     private ArrayList<BusinessServices> additionals;
+    private List<AppointmentDateSlot> days;
 
     //Models
     private AppointmentService mAppointmentService;
     private AppointmentManager mAppointmentManager;
     private com.petbooking.API.Business.BusinessService mBusinessService;
     AppointmentDateChild appointmentDateChild;
+    AppointmentDateSlot appointmentDateSlot;
     Professional professional;
     Category category;
     CartItem item;
@@ -117,9 +124,9 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
             categoryId = mCategoryList.get(position).id;
             categoryAdapter.setTitle(mCategoryList.get(position).categoryName);
             categoryAdapter.setExpanable(false);
-            if(!hasService) {
+            if (!hasService) {
                 listServices(categoryId, petId);
-            }else{
+            } else {
                 btnAddCart.setVisibility(View.GONE);
                 btnAddCart.setText(R.string.next_service);
                 btnAddCart.setCompoundDrawables(null, null, null, null);
@@ -160,14 +167,30 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     ProfessionalAdapter.OnProfessionalSelected mProfessionalSelected = new ProfessionalAdapter.OnProfessionalSelected() {
         @Override
         public void selectedProfessional(Professional professional, AppointmentDate appointmentDate, AppointmentDateChild child) {
+
+            dateAdapter.setDays(professionalAdapter.getAppointmentDateSlots());
+            dateAdapter.setExpanded(true);
+            mAdapter.addSection(TAGDATES, dateAdapter);
+            SchedulingFragment.this.professional = professional;
+            professionalAdapter.setTitle(professional.name);
+            professionalAdapter.setexpanded(false);
+            dateAdapter.setExpanded(true);
+            //SchedulingFragment.this.appointmentDateChild = child;
+            mAdapter.notifyDataSetChanged();
+        }
+    };
+
+    DateSchedulingAdapter.OnDateSelected mDataSelected = new DateSchedulingAdapter.OnDateSelected() {
+        @Override
+        public void onSelectDate(AppointmentDateSlot appointmentDateSlot, int selectedPosition) {
             if (btnAddCart.getVisibility() != View.VISIBLE) {
                 btnAddCart.setText(R.string.add_cart);
                 btnAddCart.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(getContext(), R.drawable.ic_add_shopping_cart_white), null);
                 btnAddCart.setVisibility(View.VISIBLE);
                 addToCart = true;
             }
-            SchedulingFragment.this.professional = professional;
-            SchedulingFragment.this.appointmentDateChild = child;
+            appointmentDateSlot.position = selectedPosition;
+            SchedulingFragment.this.appointmentDateSlot = appointmentDateSlot;
         }
     };
 
@@ -175,7 +198,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         SchedulingFragment fragment = new SchedulingFragment();
         Bundle bundle = new Bundle();
         bundle.putString("businessId", id);
-        bundle.putParcelable("category",category);
+        bundle.putParcelable("category", category);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -196,13 +219,14 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         mServiceListCopy = new ArrayList<>();
         mProfessionalList = new ArrayList<>();
         additionals = new ArrayList<>();
+        days = new ArrayList<>();
         mAppointmentService = new AppointmentService();
         mBusinessService = new com.petbooking.API.Business.BusinessService();
         this.businessId = getArguments().getString("businessId", "0");
         Category category = (Category) getArguments().getParcelable("category");
-        if(category !=null){
+        if (category != null) {
             setCategory(category);
-        }else{
+        } else {
 
         }
 
@@ -224,20 +248,22 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         btnAddCart = (Button) view.findViewById(R.id.btn_add_cart);
         placeHolderPet = (LinearLayout) view.findViewById(R.id.layout_header);
         mAdapter = new SectionedRecyclerViewAdapter();
-        CustomLinearLayoutManager linearLayoutManager = new CustomLinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
+        CustomLinearLayoutManager linearLayoutManager = new CustomLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         petAdapter = new PetAdapter("Pet", this, mPetList, getActivity());
-        categoryAdapter = new CategoryAdapter(getString(R.string.category),  getContext(), mCategoryList);
+        categoryAdapter = new CategoryAdapter(getString(R.string.category), getContext(), mCategoryList);
         categoryAdapter.setOnSelectCategoryListener(mSelectedCategory);
         categoryAdapter.setFragment(this);
-        serviceAdapter = new ServiceAdapter(getContext(), mServiceList, getString(R.string.service_additional), mSelectedService,this);
+        serviceAdapter = new ServiceAdapter(getContext(), mServiceList, getString(R.string.service_additional), mSelectedService, this);
         professionalAdapter = new ProfessionalAdapter(getContext(), mProfessionalList, getString(R.string.title_professionals));
         professionalAdapter.setOnProfessionalSelected(mProfessionalSelected);
         professionalAdapter.setFragment(this);
+        dateAdapter = new DateSchedulingAdapter(getActivity(),days);
+        dateAdapter.setOnDateSelected(mDataSelected);
         mAdapter.addSection(petAdapter);
-        mAdapter.addSection(TAGCATEGORY,categoryAdapter);
+        mAdapter.addSection(TAGCATEGORY, categoryAdapter);
         mRecyclerView.setAdapter(mAdapter);
-        Log.i(getClass().getSimpleName(),"inicio pets");
+        Log.i(getClass().getSimpleName(), "inicio pets");
         getPets();
         getCategories();
         placeHolderPet.setVisibility(View.VISIBLE);
@@ -253,28 +279,28 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 } else {
 
                     String businessId = mAppointmentManager.getCurrentBusinessId();
-                    String startDate = CommonUtils.formatDate(CommonUtils.DATEFORMATDEFAULT, appointmentDateChild.date);
-                    String startTime = appointmentDateChild.Time;
+                    String startDate = CommonUtils.formatDate(CommonUtils.DATEFORMATDEFAULT, appointmentDateSlot.date);
+                    String startTime = appointmentDateSlot.timer.get(appointmentDateSlot.position);
                     BusinessServices businessServices = mServiceListCopy.get(0);
                     CartItem item = new CartItem(startDate, startTime, businessId, businessServices, categoryId, professional, getPet());
                     item.totalPrice += businessServices.price;
-                    if(SchedulingFragment.this.item == null)
+                    if (SchedulingFragment.this.item == null)
                         SchedulingFragment.this.item = item;
-                    else{
+                    else {
                         item.id = SchedulingFragment.this.item.id;
                     }
                     mAppointmentManager.addItem(item);
 
-                    for(int i = 0; i< additionals.size(); i++){
+                    for (int i = 0; i < additionals.size(); i++) {
                         BusinessServices additional = additionals.get(i);
-                        mAppointmentManager.addNewAdditional(businessServices.id,additional,petId);
+                        mAppointmentManager.addNewAdditional(businessServices.id, additional, petId);
                     }
                     mConfirmDialogFragment.setDialogInfo(R.string.schedule_empty, R.string.sucess_schedule,
                             R.string.go_to_cart, R.string.other_schedule);
                     mConfirmDialogFragment.setCancelText(R.string.action_schedule);
                     mConfirmDialogFragment.setFinishDialogListener(SchedulingFragment.this);
                     mConfirmDialogFragment.animation();
-                    mConfirmDialogFragment.show(getFragmentManager(), "SHOW_CONFIRM",getContext());
+                    mConfirmDialogFragment.show(getFragmentManager(), "SHOW_CONFIRM", getContext());
 
                     ((BusinessActivity) getActivity()).updateCartCount(mAppointmentManager.getCountCartPetId(petId));
 
@@ -285,11 +311,11 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         return view;
     }
 
-    public void addServiceAdditional(BusinessServices additional){
+    public void addServiceAdditional(BusinessServices additional) {
         this.additionals.add(additional);
     }
 
-    public void removeAdditional(BusinessServices additional){
+    public void removeAdditional(BusinessServices additional) {
         this.additionals.remove(additional);
     }
 
@@ -304,62 +330,62 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
 
     public void notifyChanged(int position) {
 
-        if(position >= 0) {
+        if (position >= 0) {
             String petId = mPetList.get(position).id;
             this.petId = petId;
         }
         int sectionPosition = mAdapter.getSectionPosition(TAGCATEGORY);
         serviceAdapter.setPetId(petId);
         mAdapter.addSection(TAGSERVICES, serviceAdapter);
-        if (categoryConfig){
+        if (categoryConfig) {
             categoryAdapter.setExpanable(false);
             categoryAdapter.setTitle(category.categoryName);
             categoryAdapter.setCategory(category);
             serviceAdapter.setexpanded(true);
-            if(categoryConfig){
-                if(mCategoryList.size() > 0) {
+            if (categoryConfig) {
+                if (mCategoryList.size() > 0) {
                     if (position >= 0) {
                         listServices(getCategoryId(category), petId);
                     } else {
                         listServices(getCategoryId(category), "2289");
                     }
-                }else {
+                } else {
                     complete = false;
                 }
             }
-        }else {
+        } else {
             categoryAdapter.setExpanable(true);
         }
         mAdapter.notifyDataSetChanged();
         mRecyclerView.smoothScrollToPosition(sectionPosition);
     }
 
-    public void notifyChanged(int position,boolean petOk) {
-        if(petOk) {
+    public void notifyChanged(int position, boolean petOk) {
+        if (petOk) {
             String petId = mPetList.get(position).id;
             this.petId = petId;
             serviceAdapter.setPetId(petId);
         }
         int sectionPosition = mAdapter.getSectionPosition(TAGCATEGORY);
         mAdapter.addSection(TAGSERVICES, serviceAdapter);
-        if (categoryConfig){
+        if (categoryConfig) {
             categoryAdapter.setExpanable(false);
             categoryAdapter.setTitle(category.categoryName);
             categoryAdapter.setCategory(category);
             serviceAdapter.setexpanded(true);
-            if(categoryConfig && petOk){
-                listServices(getCategoryId(category),petId);
+            if (categoryConfig && petOk) {
+                listServices(getCategoryId(category), petId);
             }
-        }else {
-            if(petOk)
-            categoryAdapter.setExpanable(true);
+        } else {
+            if (petOk)
+                categoryAdapter.setExpanable(true);
         }
         mAdapter.notifyDataSetChanged();
         mRecyclerView.smoothScrollToPosition(sectionPosition);
     }
 
-    public int getCount(){
-        return additionals!=null? additionals.size() : 0;
+    public int getCount() {
+        return additionals != null ? additionals.size() : 0;
     }
 
     public void clearFields() {
@@ -389,15 +415,19 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         categoryId = "";
         petId = "";
         appointmentDateChild = null;
+        appointmentDateSlot = null;
         professional = null;
         btnAddCart.setVisibility(View.GONE);
         btnAddCart.setText(R.string.next_service);
         btnAddCart.setCompoundDrawables(null, null, null, null);
         addToCart = false;
+        dateAdapter.setExpanded(false);
+        professionalAdapter.setProfessional(null);
         mAdapter.notifyDataSetChanged();
         getPets();
         getCategories();
         ((BusinessActivity) getActivity()).hideCartMenu();
+
 
     }
 
@@ -410,8 +440,8 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 serviceAdapter.setexpanded(true);
                 petAdapter.addPets(mPetList);
                 int petsSize = mPetList.size();
-                if(initial && petsSize >0) {
-                    if(petsSize == 1) {
+                if (initial && petsSize > 0) {
+                    if (petsSize == 1) {
                         initial = false;
                         petAdapter.setSelectedPosition(0);
                         petAdapter.setExpanded(false);
@@ -419,14 +449,14 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                         petAdapter.setExistPet(true);
                         placeHolderPet.setVisibility(View.GONE);
                         notifyChanged(0);
-                    }else {
+                    } else {
                         notifyChanged(-1);
                         placeHolderPet.setVisibility(View.GONE);
                         petAdapter.setExistPet(true);
                     }
-                }else {
+                } else {
                     mAdapter.notifyDataSetChanged();
-                    if(petsSize <= 0){
+                    if (petsSize <= 0) {
                         placeHolderPet.setVisibility(View.VISIBLE);
                         petAdapter.setExistPet(false);
                         petAdapter.setTitle("Adicionar Pet");
@@ -458,7 +488,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
             public void onSuccess(Object response) {
 
                 mServiceList = (ArrayList<BusinessServices>) response;
-                Log.i(getClass().getSimpleName(),"Qual o size " + mServiceList.size());
+                Log.i(getClass().getSimpleName(), "Qual o size " + mServiceList.size());
                 serviceAdapter.setServices(mServiceList, false);
                 mAdapter.addSection(TAGPROFESSIONALS, professionalAdapter);
                 //final int sectionPosition = mAdapter.getSectionPosition(TAGCATEGORY);
@@ -468,7 +498,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                     public void run() {
                         //mRecyclerView.smoothScrollToPosition(sectionPosition);
                     }
-                },200);
+                }, 200);
                 serviceAdapter.setexpanded(true);
 
                 AppUtils.hideDialog();
@@ -480,7 +510,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
             public void onError(Object error) {
                 AppUtils.hideDialog();
 
-                    }
+            }
         });
     }
 
@@ -492,8 +522,8 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 for (CategoryResp.Item item : resp.data) {
                     mCategoryList.add(APIUtils.parseCategory(getContext(), item));
                 }
-                if(mPetList.size() >=0 && !complete){
-                    if(mPetList.size() ==1)
+                if (mPetList.size() >= 0 && !complete) {
+                    if (mPetList.size() == 1)
                         notifyChanged(0);
                     else
                         notifyChanged(-1);
@@ -534,43 +564,43 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
 
     @Override
     public void onFinishDialog(int action) {
-        if(action == AppConstants.CANCEL_ACTION){
+        if (action == AppConstants.CANCEL_ACTION) {
             initial = true;
             item = null;
             clearFields();
-        }else if(action == AppConstants.NEWSCHEDULE_SERVICE) {
-            if(mPetList.size() <=1) {
+        } else if (action == AppConstants.NEWSCHEDULE_SERVICE) {
+            if (mPetList.size() <= 1) {
                 item = null;
                 clearFields();
                 Intent intent = new Intent(getContext(), RegisterPetActivity.class);
                 intent.putExtra("schedule", true);
                 getContext().startActivity(intent);
 
-            }else{
+            } else {
                 item = null;
                 clearFields();
             }
-        }else{
+        } else {
             finishService = true;
             Intent intent = new Intent(getContext(), CartActivity.class);
             getContext().startActivity(intent);
         }
     }
 
-    public void setCategory(Category category){
+    public void setCategory(Category category) {
         this.category = category;
         this.categoryId = category.id;
         this.categoryConfig = true;
     }
 
-    public String getCategoryId(Category categoryId){
-        if(mCategoryList.size() > 0){
-            for (Category category : mCategoryList){
-                if(categoryId.categoryName.equals(category.categoryName)){
+    public String getCategoryId(Category categoryId) {
+        if (mCategoryList.size() > 0) {
+            for (Category category : mCategoryList) {
+                if (categoryId.categoryName.equals(category.categoryName)) {
                     return category.id;
                 }
             }
-        }else{
+        } else {
             complete = false;
         }
         return categoryId.id;
@@ -587,17 +617,19 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     public void onEvent(CreatePetPojo response) {
         getPets();
     }
+
     @SuppressWarnings("unused")
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(ClearFieldsSchedule response){
-        if(finishService && !response.clear) {
+    public void onEvent(ClearFieldsSchedule response) {
+        if (finishService && !response.clear) {
             initial = true;
             clearFields();
-        }else{
+        } else {
             addToCart = false;
         }
     }
-    public void expandedCategory(){
+
+    public void expandedCategory() {
         petAdapter.setExpanded(false);
         categoryAdapter.setExpanable(true);
         serviceAdapter.setexpanded(false);
@@ -605,7 +637,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         mAdapter.notifyDataSetChanged();
     }
 
-    public void expandedService(){
+    public void expandedService() {
         petAdapter.setExpanded(false);
         categoryAdapter.setExpanable(false);
         serviceAdapter.setexpanded(true);
@@ -617,7 +649,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         mAdapter.notifyDataSetChanged();
     }
 
-    public void expandedProfessional(){
+    public void expandedProfessional() {
         petAdapter.setExpanded(false);
         categoryAdapter.setExpanable(false);
         serviceAdapter.setexpanded(false);

@@ -27,6 +27,7 @@ import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingFragment;
 import com.petbooking.UI.Dashboard.Business.Scheduling.model.AppointmentDateChild;
+import com.petbooking.UI.Dashboard.Business.Scheduling.model.AppointmentDateSlot;
 import com.petbooking.UI.Dashboard.Business.Scheduling.widget.MyLinearLayout;
 import com.petbooking.UI.Dashboard.Business.ServiceDetail.DateListAdapter;
 import com.petbooking.UI.Widget.CircleTransformation;
@@ -57,6 +58,8 @@ public class ProfessionalAdapter extends StatelessSection {
     RecyclerView datesRecycler;
     OnProfessionalSelected onProfessionalSelected;
     SchedulingFragment fragment;
+    private List<AppointmentDateChild> days;
+    List<AppointmentDateSlot> appointmentDateSlots;
 
     RecyclerView.OnItemTouchListener mScrollTouchListener = new RecyclerView.OnItemTouchListener() {
         @Override
@@ -138,9 +141,22 @@ public class ProfessionalAdapter extends StatelessSection {
         holder.datesAvaliableList.setClipToPadding(false);
     }
 
+    public void setDays(List<AppointmentDateSlot> days) {
+        this.appointmentDateSlots = days;
+    }
+
+    public List<AppointmentDateChild> getDays() {
+        return days;
+    }
+
+    public List<AppointmentDateSlot> getAppointmentDateSlots() {
+        return appointmentDateSlots;
+    }
+
     public void updateProfissionals(final int position) {
-        new AsyncTask<Void,Void,Void>(){
+        new AsyncTask<Void, Void, Void>() {
             List<AppointmentDateChild> childs = new ArrayList<>();
+            List<AppointmentDateSlot> slots = new ArrayList<>();
 
             @Override
             protected Void doInBackground(Void... voids) {
@@ -150,7 +166,11 @@ public class ProfessionalAdapter extends StatelessSection {
 
                     for (int i = 0; i < professionals.get(position).availableDates.get(j).days.size(); i++) {
                         monthName = professionals.get(position).availableDates.get(j).monthName;
+                        Date date = professionals.get(position).availableDates.get(j).days.get(i).date;
+                        ArrayList<String> times = professionals.get(position).availableDates.get(j).days.get(i).times;
+                        AppointmentDateSlot slot = new AppointmentDateSlot(date,times);
 
+                        slots.add(slot);
                         for (int x = 0; x < professionals.get(position).availableDates.get(j).days.get(i).times.size(); x++) {
                             String time = professionals.get(position).availableDates.get(j).days.get(i).times.get(x);
                             AppointmentDateChild dateChild =
@@ -166,13 +186,15 @@ public class ProfessionalAdapter extends StatelessSection {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                Log.i(getClass().getSimpleName(),"Qual o professional " + position);
-                dateListDayAdapter.selectedPosition(0);
-                dateListDayAdapter.setDays(childs);
-                dateListDayAdapter.notifyDataSetChanged();
+                Log.i(getClass().getSimpleName(), "Qual o professional " + position);
+                //dateListDayAdapter.selectedPosition(0);
+                //dateListDayAdapter.setDays(childs);
+                //dateListDayAdapter.notifyDataSetChanged();
+                setDays(slots);
+                onProfessionalSelected.selectedProfessional(professionals.get(position), null, null);
+
             }
         }.execute();
-
 
 
     }
@@ -182,11 +204,17 @@ public class ProfessionalAdapter extends StatelessSection {
         return new HeaderViewHolder(view);
     }
 
+    public void setProfessional(Professional professional) {
+        this.professional = professional;
+    }
+
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder item) {
         HeaderViewHolder holder = (HeaderViewHolder) item;
         holder.headerTitle.setText(title);
-        if(professional !=null && expanded) {
+        holder.headerEdit.setVisibility(View.VISIBLE);
+        holder.image_header.setVisibility(View.VISIBLE);
+        if (professional != null && !expanded) {
             int professionalAvatar;
             if (professional.gender == null || professional.gender.equals(User.GENDER_MALE)) {
                 professionalAvatar = R.drawable.ic_placeholder_man;
@@ -215,13 +243,13 @@ public class ProfessionalAdapter extends StatelessSection {
                     fragment.expandedProfessional();
                 }
             });
-        }else{
+        } else {
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
             holder.headerSection.setLayoutParams(params);
             holder.image_header.setVisibility(View.GONE);
             holder.textCheckunicode.setText("4");
-            holder.textCheckunicode.setVisibility(View.VISIBLE);
-            holder.textCheckunicode.setTextColor(ContextCompat.getColor(context,R.color.gray));
+            holder.textCheckunicode.setVisibility(View.GONE);
+            holder.textCheckunicode.setTextColor(ContextCompat.getColor(context, R.color.gray));
             holder.circleImageView.setImageResource(R.color.schedule_background);
             holder.headerEdit.setVisibility(View.GONE);
         }
@@ -303,17 +331,17 @@ public class ProfessionalAdapter extends StatelessSection {
                 }
             });
 
-            if (position == 0 && selected) {
+           /* if (position == 0 && selected) {
                 setSelectedPosition(position);
                 updateProfissionals(position);
                 ProfessionalAdapter.this.professional = professionals.get(position);
-            }
+            }*/
 
-            if(selectedPosition == position){
+            if (selectedPosition == position) {
                 holder.professionalPhoto.setAlpha(1.0f);
-                holder.professionalPhoto.setBackground(ContextCompat.getDrawable(context,R.drawable.imageview_border));
-            }else{
-                holder.professionalPhoto.setBackground(ContextCompat.getDrawable(context,R.drawable.circle_background));
+                holder.professionalPhoto.setBackground(ContextCompat.getDrawable(context, R.drawable.imageview_border));
+            } else {
+                holder.professionalPhoto.setBackground(ContextCompat.getDrawable(context, R.drawable.circle_background));
                 holder.professionalPhoto.setAlpha(0.1f);
             }
 

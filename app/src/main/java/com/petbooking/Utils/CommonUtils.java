@@ -36,6 +36,7 @@ public class CommonUtils {
     final public static String DAY_FORMAT = "dd";
     final public static String DAY_FORMAT_DESCRIOTION = "EE";
     final public static String MONTH_NUMBER_FORMAT = "MM";
+    final public static String YEAR_FORMAT = "yyyy";
     public static void hideKeyboard(Activity activity) {
         if (activity == null || activity.getCurrentFocus() == null) {
             return;

@@ -311,5 +311,6 @@
     <string name="send_and_next">Enviar e ir ao proximo</string>
     <string name="notificationsTitle">Notificações</string>
     <string name="clear">Limpar</string>
+    <string name="date_and_hour">Dia e horário</string>
 
 </resources>

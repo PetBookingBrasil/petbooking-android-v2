@@ -28,7 +28,8 @@
     android:layout_marginTop="10dp"
     android:layout_below="@+id/layout_header"
     android:nestedScrollingEnabled="true"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="50dp">
 
 </android.support.v7.widget.RecyclerView>
 

@@ -53,6 +53,8 @@ public interface BusinessInterface {
     Call<ReviewResp> listBusinessReviews(@Path(APIBusinessConstants.PATH_BUSINESS_ID) String businessID,
                                          @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex);
 
+    @GET(APIBusinessConstants.ENDPOINT_GET_REVIEWS)
+    Call<ReviewResp> getReviews (@Path(APIConstants.PATH_PARAM) String userId,@Path(APIConstants.CURRENT_DATE) String currentDate);
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @GET(APIBusinessConstants.BUSINESS_INFO_ENDPOINT)

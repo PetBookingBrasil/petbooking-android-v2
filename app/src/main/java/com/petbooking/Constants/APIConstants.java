@@ -38,6 +38,7 @@ public class APIConstants {
     public static final String QUERY_CATEGORY_TEMPLATE = "category_template_id";
     public static final String PAYMENT_OK_TAG = "ok";
     public static final String FALLBACK_TAG = "fallbacks";
+    public static final String CURRENT_DATE = "current_date";
 
     /**
      * Headers

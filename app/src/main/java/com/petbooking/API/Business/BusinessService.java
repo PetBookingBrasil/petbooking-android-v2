@@ -14,8 +14,10 @@ import com.petbooking.Models.Category;
 import com.petbooking.Models.Review;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
+import com.petbooking.Utils.CommonUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -135,6 +137,32 @@ public class BusinessService {
         });
     }
 
+
+    public void getReviews(String userId, final APICallback callback) {
+       String date = CommonUtils.formatDate(CommonUtils.DATEFORMATDEFAULT,new Date());
+        Call<ReviewResp> call = mBusinessInterface.getReviews(userId, date);
+        call.enqueue(new Callback<ReviewResp>() {
+            @Override
+            public void onResponse(Call<ReviewResp> call, Response<ReviewResp> response) {
+                if (response.isSuccessful()) {
+                    ArrayList<Review> reviewList = new ArrayList<Review>();
+                    ReviewResp responseList = response.body();
+                    for (ReviewResp.Item item : responseList.data) {
+                        reviewList.add(APIUtils.parseReview(item.id, item.attributes));
+                    }
+
+                    callback.onSuccess(reviewList);
+                } else {
+                    callback.onError(APIUtils.handleError(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReviewResp> call, Throwable t) {
+
+            }
+        });
+    }
 
     public void getBusiness(String businessId, String userId, final APICallback callback) {
         Call<BusinessResp> call = mBusinessInterface.getBusiness(businessId, userId);

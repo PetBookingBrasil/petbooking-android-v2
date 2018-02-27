@@ -24,8 +24,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.petbooking.API.Business.BusinessService;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
+import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
@@ -93,6 +95,7 @@ public class DashboardActivity extends AppCompatActivity implements
             mTvSideMenuAddress.setText(locationCityState);
         }
     };
+    private BusinessService mBusinessService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +106,8 @@ public class DashboardActivity extends AppCompatActivity implements
         mLocationManager = LocationManager.getInstance();
         mLocationManager.setCallback(locationCallback);
         mFragmentManager = getSupportFragmentManager();
+
+        mBusinessService = new BusinessService();
 
         mFeedbackDialogFragment = FeedbackDialogFragment.newInstance();
 
@@ -154,6 +159,17 @@ public class DashboardActivity extends AppCompatActivity implements
         mIBtnProfile.setOnClickListener(btnProfileListener);
 
         inflateBusinessFragment();
+        /*mBusinessService.getReviews("1", new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                Log.i(getClass().getSimpleName(),"On Sucess");
+            }
+
+            @Override
+            public void onError(Object error) {
+                Log.i(getClass().getSimpleName(),"On error");
+            }
+        });*/
         //inflateSearchResultFragment();
     }
 

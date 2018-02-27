@@ -78,4 +78,6 @@ public class APIBusinessConstants {
 
     public static final String ENDPOINT_BUSINESS_REVIEWS = "businesses/{" + PATH_BUSINESS_ID + "}/reviews" + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 
+    public static final String ENDPOINT_GET_REVIEWS = "users/{" + APIConstants.PATH_PARAM + "}/events?filter[scheduling_ref]=past&filter[current_date]{"+APIConstants.CURRENT_DATE+"&filter[reviewable]=true&include=business,service.service_category,employment&fields[businesses]=name,slug,street,street_number,neighborhood,location,city,state,user_favorite&fields[services]=price,bitmask_values,service_category";
+
 }

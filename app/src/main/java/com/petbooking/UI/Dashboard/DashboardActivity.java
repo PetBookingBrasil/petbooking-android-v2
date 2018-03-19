@@ -159,7 +159,7 @@ public class DashboardActivity extends AppCompatActivity implements
         mIBtnProfile.setOnClickListener(btnProfileListener);
 
         inflateBusinessFragment();
-        /*mBusinessService.getReviews("1", new APICallback() {
+        mBusinessService.getReviews(SessionManager.getInstance().getUserLogged().id, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 Log.i(getClass().getSimpleName(),"On Sucess");
@@ -169,7 +169,7 @@ public class DashboardActivity extends AppCompatActivity implements
             public void onError(Object error) {
                 Log.i(getClass().getSimpleName(),"On error");
             }
-        });*/
+        });
         //inflateSearchResultFragment();
     }
 
@@ -177,7 +177,7 @@ public class DashboardActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24px);
         toolbarTitle.setText(title);
-        contentFragment.setChangeNameTab(" "+getString(R.string.list_tab_name));
+        contentFragment.setChangeNameTab(" "+getString(R.string.list_tab_name),true);
     }
 
     @Override
@@ -211,7 +211,8 @@ public class DashboardActivity extends AppCompatActivity implements
             getSupportActionBar().setHomeButtonEnabled(true);
             toggle.syncState();
             toolbarTitle.setText(R.string.dashboard_title);
-            contentFragment.setChangeNameTab("  " + getString(R.string.tab_category));
+            contentFragment.setChangeNameTab("  " + getString(R.string.tab_category),false);
+            contentFragment.addTab();
             super.onBackPressed();
         }
     }
@@ -248,9 +249,6 @@ public class DashboardActivity extends AppCompatActivity implements
             startActivity(activity);
         } else if (id == R.id.payments) {
             activity = new Intent(this, PaymentListActivity.class);
-            startActivity(activity);
-        } else if (id == R.id.favorites) {
-            activity = new Intent(this, FavoritesActivity.class);
             startActivity(activity);
         } else if (id == R.id.settings) {
             activity = new Intent(this, SettingsActivity.class);

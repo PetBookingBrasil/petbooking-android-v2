@@ -54,6 +54,6 @@ public interface PetInterface {
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
     @GET(APIPetConstants.GET_PET_ATRIBUTTES)
-    Call<AttributesResponse> getAtributtes(@Path(APIConstants.PATH_PARAM) String userID);
+    Call<AttributesResponse> getAtributtes(@Path(APIConstants.PATH_PARAM) String userID, @Path(APIConstants.PET_TYPE) String petType);
 }
 

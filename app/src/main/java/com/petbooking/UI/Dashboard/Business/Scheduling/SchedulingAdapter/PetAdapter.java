@@ -84,7 +84,7 @@ public class PetAdapter extends StatelessSection {
 
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder item, final int position) {
-        ItemViewHolder holder = (ItemViewHolder) item;
+        final ItemViewHolder holder = (ItemViewHolder) item;
         holder.titleNumber.setVisibility(View.VISIBLE);
         holder.circleLayout.setVisibility(View.GONE);
         holder.pets.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
@@ -94,9 +94,19 @@ public class PetAdapter extends StatelessSection {
         holder.pets.setAdapter(new CustomPetAdapter(context, pets));
         if(pets.size() <=0) {
             holder.placeHolderPet.setVisibility(View.GONE);
+            holder.addPet.setVisibility(View.GONE);
         }else{
             holder.placeHolderPet.setVisibility(View.VISIBLE);
+            holder.addPet.setVisibility(View.VISIBLE);
         }
+        holder.addPet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, RegisterPetActivity.class);
+                intent.putExtra("schedule",true);
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -214,6 +224,8 @@ public class PetAdapter extends StatelessSection {
         LinearLayout circleLayout;
         @BindView(R.id.placeholder_select_pet)
         LinearLayout placeHolderPet;
+         @BindView(R.id.btn_add_pet)
+         Button addPet;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -263,12 +275,7 @@ public class PetAdapter extends StatelessSection {
                 }
             });
 
-            holder.addPet.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    holder.view.performClick();
-                }
-            });
+
 
                     mGlide.load(APIUtils.getAssetEndpoint(pet.avatar.url))
                     .error(petAvatar)
@@ -304,8 +311,6 @@ public class PetAdapter extends StatelessSection {
             TextView totalServices;
             @BindView(R.id.pet_name)
             TextView petName;
-            @BindView(R.id.btn_add_pet)
-            Button addPet;
             View view;
 
             public ViewHolder(View itemView) {

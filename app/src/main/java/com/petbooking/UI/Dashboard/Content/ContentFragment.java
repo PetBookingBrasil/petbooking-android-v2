@@ -26,6 +26,8 @@ public class ContentFragment extends Fragment {
     private TabLayout mTabLayout;
     private Category category;
     TextView tabContent;
+    TextView tabTreeText;
+    TabLayout.Tab tabTree;
 
     public ContentFragment() {
         // Required empty public constructor
@@ -58,10 +60,18 @@ public class ContentFragment extends Fragment {
 
         LinearLayout tabLinearLayoutTwo = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.tab_item_layout, null);
         TextView textView = (TextView) tabLinearLayoutTwo.findViewById(R.id.tabContent);
-        textView.setText(" " +getContext().getString(R.string.tab_map));
+        textView.setText(" " + getContext().getString(R.string.tab_map));
         textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_location_on_white_24px, 0, 0, 0);
+
+        LinearLayout tabLinearLayoutTree = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.tab_item_layout, null);
+        tabTreeText = (TextView) tabLinearLayoutTree.findViewById(R.id.tabContent);
+        tabTreeText.setText(" " + getContext().getString(R.string.favorites));
+        tabTreeText.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_menu_favorite, 0, 0, 0);
+
         mTabLayout.getTabAt(0).setCustomView(tabContent);
         mTabLayout.getTabAt(1).setCustomView(textView);
+        mTabLayout.getTabAt(2).setCustomView(tabTreeText);
+        tabTree = mTabLayout.getTabAt(2);
         //mTabLayout.getTabAt(0).setIcon(R.drawable.ic_menu_list).setText("Categorias");
         //mTabLayout.getTabAt(1).setIcon(R.drawable.ic_menu_map).setText("Mapa");
 
@@ -70,8 +80,19 @@ public class ContentFragment extends Fragment {
     }
 
 
-    public void setChangeNameTab(String nameTab){
+    public void setChangeNameTab(String nameTab,boolean removeTab) {
         tabContent.setText(nameTab);
+        if(removeTab) {
+            TabLayout.Tab hasTab = mTabLayout.getTabAt(2);
+            if (hasTab != null)
+                mTabLayout.removeTabAt(2);
+        }
+    }
+
+    public void addTab() {
+        if (tabTree != null) {
+            mTabLayout.addTab(mTabLayout.newTab().setCustomView(tabTreeText));
+        }
     }
 
     public void backToList() {

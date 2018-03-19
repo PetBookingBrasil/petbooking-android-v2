@@ -134,18 +134,20 @@ public class PetService {
         });
     }
 
-    public void getAtributtes(String userID, final APICallback callback){
-        Call<AttributesResponse> call = mPetInterface.getAtributtes(userID);
+    public void getAtributtes(String type,String userID, final APICallback callback){
+        Call<AttributesResponse> call = mPetInterface.getAtributtes(userID,type);
 
         call.enqueue(new Callback<AttributesResponse>() {
             @Override
             public void onResponse(Call<AttributesResponse> call, Response<AttributesResponse> response) {
                 APIUtils.handleResponse(response,callback);
+                callback.onSuccess(response.body());
             }
 
             @Override
             public void onFailure(Call<AttributesResponse> call, Throwable t) {
-
+                t.printStackTrace();
+                callback.onError(t);
             }
         });
     }

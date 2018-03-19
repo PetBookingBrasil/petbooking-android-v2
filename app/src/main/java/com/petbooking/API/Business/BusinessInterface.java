@@ -12,6 +12,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -53,8 +54,9 @@ public interface BusinessInterface {
     Call<ReviewResp> listBusinessReviews(@Path(APIBusinessConstants.PATH_BUSINESS_ID) String businessID,
                                          @Query(APIConstants.QUERY_PAGE_INDEX) int pageIndex);
 
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED,APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
     @GET(APIBusinessConstants.ENDPOINT_GET_REVIEWS)
-    Call<ReviewResp> getReviews (@Path(APIConstants.PATH_PARAM) String userId,@Path(APIConstants.CURRENT_DATE) String currentDate);
+    Call<ReviewResp> getReviews (@Path(APIConstants.PATH_PARAM) String userId);
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @GET(APIBusinessConstants.BUSINESS_INFO_ENDPOINT)
@@ -77,5 +79,9 @@ public interface BusinessInterface {
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
     @DELETE(APIBusinessConstants.FAVORITES_DELETE_ENDPOINT)
     Call<FavoriteResp> deleteFavorite(@Path(APIConstants.PATH_PARAM) String favoriteId);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
+    @POST(APIBusinessConstants.ENDPOINT_BUSSINESS_SLUG)
+    Call<Void> listBussinesSlug(@Path((APIConstants.PATH_PARAM)) String bussinesSlug);
 }
 

@@ -40,7 +40,7 @@ public abstract class AppUtils {
             return APIPetConstants.DATA_GENDER_FEMALE;
         }
 
-        return "";
+        return APIPetConstants.DATA_GENDER_MALE;
     }
 
     public static String getSize(Context context, String size) {
@@ -57,7 +57,7 @@ public abstract class AppUtils {
             return APIPetConstants.DATA_SIZE_GIANT;
         }
 
-        return "";
+        return APIPetConstants.DATA_SIZE_GIANT;
     }
 
     public static String getCoatType(Context context, String coatType) {
@@ -75,7 +75,7 @@ public abstract class AppUtils {
             return APIPetConstants.DATA_TYPE_SHORT;
         }
 
-        return "";
+        return APIPetConstants.DATA_TYPE_SHORT;
     }
 
     public static String getType(Context context, String type) {
@@ -87,7 +87,7 @@ public abstract class AppUtils {
             return APIPetConstants.DATA_TYPE_DOG;
         }
 
-        return "";
+        return APIPetConstants.DATA_TYPE_CAT;
     }
 
     public static String getTemper(Context context, String temper) {
@@ -122,7 +122,7 @@ public abstract class AppUtils {
             return APIPetConstants.DATA_TEMPER_BRAVE;
         }
 
-        return "";
+        return APIPetConstants.DATA_TEMPER_BRAVE;
     }
 
     public static String getDisplayTemper(Context context, String temper) {
@@ -156,7 +156,7 @@ public abstract class AppUtils {
         if (TextUtils.equals(temper, APIPetConstants.DATA_TEMPER_BRAVE)) {
             return context.getString(R.string.temper_brave);
         }
-        return "";
+        return context.getString(R.string.temper_brave);
     }
 
     public static String getColorPet(Context context, String color){
@@ -184,33 +184,20 @@ public abstract class AppUtils {
     }
 
     public static String getDisplayGender(Context context, String gender) {
-        if (TextUtils.equals(gender.toLowerCase(), APIPetConstants.DATA_GENDER_FEMALE)) {
             return context.getString(R.string.gender_female);
-        } else {
-            return context.getString(R.string.gender_male);
-        }
+
     }
 
     public static String getDisplaySize(Context context, String size) {
-        if (TextUtils.equals(size.toLowerCase(), APIPetConstants.DATA_SIZE_MEDIUM)) {
-            return context.getString(R.string.size_medium);
-        } else if (TextUtils.equals(size.toLowerCase(), APIPetConstants.DATA_SIZE_BIG)) {
-            return context.getString(R.string.size_big);
-        } else if (TextUtils.equals(size.toLowerCase(), APIPetConstants.DATA_SIZE_GIANT)) {
-            return context.getString(R.string.size_giant);
-        } else {
-            return context.getString(R.string.size_small);
-        }
+
+
+        return context.getString(R.string.size_small);
     }
 
     public static String getDisplayCoatType(Context context, String coatType) {
-        if (TextUtils.equals(coatType.toLowerCase(), APIPetConstants.DATA_TYPE_MEDIUM)) {
-            return context.getString(R.string.coat_medium);
-        } else if (TextUtils.equals(coatType.toLowerCase(), APIPetConstants.DATA_TYPE_LONG)) {
-            return context.getString(R.string.coat_long);
-        } else {
+
             return context.getString(R.string.coat_short);
-        }
+
     }
     
     //TODO: Trocar ícone do programa da prefeitura

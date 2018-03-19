@@ -60,7 +60,7 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_scheduling, container, false);
+        View view = inflater.inflate(R.layout.list_categories, container, false);
         ButterKnife.bind(this, view);
         categoryAdapter = new CategoryListAdapter(getActivity(),mCategoryList);
         categoryAdapter.setFragment(this);

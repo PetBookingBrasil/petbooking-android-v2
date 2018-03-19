@@ -114,6 +114,7 @@
     <string name="search">Pesquisar</string>
     <string name="calendar">Agenda</string>
     <string name="payments">Pagamentos</string>
+    <string name="payments_forms">Formas de pagamento</string>
     <string name="favorites">Favoritos</string>
     <string name="settings">Configurações</string>
     <string name="logout">Sair</string>
@@ -293,7 +294,7 @@
     <string name="schedule_empty"></string>
     <string name="header_pets">Atenção! Os preços exibidos são médios. Cadastre seu pet para visualizar os valores condizentes as raças.</string>
     <string name="other_schedule">Agendar serviço para outro pet</string>
-    <string name="question_register">Cadastrado?</string>
+    <string name="question_register">Castrado?</string>
     <string name="chip_question">Possui chip?</string>
     <string name="chip_number">Número do chip</string>
     <string name="complete_register">Complete as informações a seguir:</string>

@@ -82,7 +82,7 @@ public class APIUtils {
                 attr.ratingAverage, attr.ratingCount, attr.distance, attr.businesstype,
                 latitude, longitude, attr.website, attr.phone, attr.facebook, attr.instagram,
                 attr.twitter, attr.googlePlus, attr.snapchat, attr.coverImage, attr.avatar, attr.userFavorite, attr.favorited,
-                attr.imported, favoritedId);
+                attr.imported, favoritedId,attr.slug);
 
         return business;
     }

@@ -1,5 +1,7 @@
 package com.petbooking.API.Business;
 
+import android.util.Log;
+
 import com.petbooking.API.APIClient;
 import com.petbooking.API.Business.Models.BusinessResp;
 import com.petbooking.API.Business.Models.BusinessesResp;
@@ -140,7 +142,7 @@ public class BusinessService {
 
     public void getReviews(String userId, final APICallback callback) {
        String date = CommonUtils.formatDate(CommonUtils.DATEFORMATDEFAULT,new Date());
-        Call<ReviewResp> call = mBusinessInterface.getReviews(userId, date);
+        Call<ReviewResp> call = mBusinessInterface.getReviews(userId);
         call.enqueue(new Callback<ReviewResp>() {
             @Override
             public void onResponse(Call<ReviewResp> call, Response<ReviewResp> response) {
@@ -244,6 +246,21 @@ public class BusinessService {
             @Override
             public void onFailure(Call<FavoriteResp> call, Throwable t) {
 
+            }
+        });
+    }
+
+    public void callForBussinesSlug(String bussinesSlug){
+        Call<Void> call = mBusinessInterface.listBussinesSlug(bussinesSlug);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Log.i(getClass().getSimpleName(),"Call button ok");
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                t.printStackTrace();
             }
         });
     }

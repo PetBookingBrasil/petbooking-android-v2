@@ -99,8 +99,7 @@
                     android:layout_weight="1"
                     app:entries="@array/type_array"
                     app:hint="@string/hint_type"
-                    app:icon="@drawable/ic_pet"
-                    />
+                    app:icon="@drawable/ic_pet" />
 
 
                 <android.support.design.widget.TextInputLayout
@@ -149,14 +148,16 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     app:entries="@array/gender_array"
+                    android:layout_marginRight="10dp"
                     app:hint="@string/hint_gender"
                     app:icon="@drawable/ic_paw" />
 
 
                 <com.petbooking.UI.Widget.StyledSwitch
-                    android:id="@+id/switch_register"
+                    android:id="@+id/switch_castrated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="15px"
                     android:layout_weight="1"
                     app:title="@string/question_register"></com.petbooking.UI.Widget.StyledSwitch>
 
@@ -194,6 +195,7 @@
                     android:id="@+id/pet_size"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     app:enableInfo="true"
                     app:entries="@array/size_dog_array"
@@ -242,7 +244,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     app:entries="@array/colors_array"
-                    app:hint="@string/color_pet"/>
+                    app:hint="@string/color_pet" />
 
 
             </LinearLayout>
@@ -266,8 +268,8 @@
                     android:id="@+id/switch_chip"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginTop="25dp"
+                    android:layout_weight="1"
                     app:title="@string/chip_question">
 
                 </com.petbooking.UI.Widget.StyledSwitch>
@@ -277,8 +279,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:visibility="invisible"
-                    >
+                    android:visibility="invisible">
 
                     <EditText
                         android:id="@+id/pet_chip_number"
@@ -314,12 +315,11 @@
                     android:drawablePadding="@dimen/spacing_xmicro"
                     android:drawableStart="@drawable/ic_observation"
                     android:hint="@string/hint_observation"
-                    android:lines="2"
                     android:inputType="text"
+                    android:lines="2"
                     android:paddingLeft="@dimen/spacing_xmicro"
                     android:text="@={pet.description}" />
             </android.support.design.widget.TextInputLayout>
-
 
 
             <Button

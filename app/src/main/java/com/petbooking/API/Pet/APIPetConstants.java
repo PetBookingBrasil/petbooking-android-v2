@@ -52,5 +52,5 @@ public class APIPetConstants {
 
     public static final String REMOVE_PET_ENDPOINT = UPDATE_PET_ENDPOINT;
 
-    public static final  String GET_PET_ATRIBUTTES = "users/{" + APIConstants.PATH_PARAM + "}/pets/dog/options";
+    public static final  String GET_PET_ATRIBUTTES = "users/{" + APIConstants.PATH_PARAM + "}/pets/{"+APIConstants.PET_TYPE+"}/options";
 }

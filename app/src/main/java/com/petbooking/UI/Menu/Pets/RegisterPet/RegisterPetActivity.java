@@ -3,7 +3,6 @@ package com.petbooking.UI.Menu.Pets.RegisterPet;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,9 +11,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -27,7 +24,6 @@ import com.petbooking.API.Pet.APIPetConstants;
 import com.petbooking.API.Pet.Models.AttributesResponse;
 import com.petbooking.API.Pet.Models.BreedResp;
 import com.petbooking.API.Pet.PetService;
-import com.petbooking.BaseActivity;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
@@ -56,6 +52,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.view.View.GONE;
@@ -121,11 +118,13 @@ public class RegisterPetActivity extends AppCompatActivity implements
     private ImageButton mIBtnSelectPicture;
     private Button mBtnSubmit;
     private TextInputLayout textLayoutChip;
-    StyledSwitch registerSwitch;
+    StyledSwitch castratedSwitch;
     StyledSwitch chipSwitch;
     EditText chipNumberText;
+    EditText petDescription;
     boolean schedule;
     private String userId;
+    HashMap<String,Integer> colorsType;
 
     AdapterView.OnItemSelectedListener typeListener = new AdapterView.OnItemSelectedListener() {
         @Override
@@ -133,9 +132,11 @@ public class RegisterPetActivity extends AppCompatActivity implements
             if (position == 0) {
                 mSpBreed.setItems(dogBreedsString);
                 mSpSize.setItems(R.array.size_dog_array);
+                getAttributes("dog");
             } else if (position == 1) {
                 mSpBreed.setItems(catBreedsString);
                 mSpSize.setItems(R.array.size_cat_array);
+                getAttributes("cat");
             } else {
                 mSpBreed.setItems(R.array.empty_array);
             }
@@ -202,6 +203,7 @@ public class RegisterPetActivity extends AppCompatActivity implements
         mIvPetPhoto = (ImageView) findViewById(R.id.pet_photo);
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
         mEdtName = (EditText) findViewById(R.id.pet_name);
+        petDescription = (EditText) findViewById(R.id.pet_observation);
         mEdtBirthday = (EditText) findViewById(R.id.pet_birthday);
         mSpGender = (MaterialSpinner) findViewById(R.id.pet_gender);
         mSpType = (MaterialSpinner) findViewById(R.id.pet_type);
@@ -213,7 +215,7 @@ public class RegisterPetActivity extends AppCompatActivity implements
         chipNumberText = (EditText) findViewById(R.id.pet_chip_number);
         chipSwitch = (StyledSwitch) findViewById(R.id.switch_chip);
         textLayoutChip = (TextInputLayout) findViewById(R.id.chip_number_tl);
-        registerSwitch = (StyledSwitch) findViewById(R.id.switch_register);
+        castratedSwitch = (StyledSwitch) findViewById(R.id.switch_castrated);
         mSpType.setOnItemSelectedListener(typeListener);
         mSpSize.setOnInfoClickListener(infoSizeListener);
         mSpColorPet = (MaterialSpinner) findViewById(R.id.color_pet);
@@ -228,6 +230,17 @@ public class RegisterPetActivity extends AppCompatActivity implements
             mSpTemper.setHintColor(R.color.white);
             mSpType.setHintColor(R.color.white);
             chipSwitch.getmTvTitle().setTextColor(ContextCompat.getColor(this,R.color.white));
+            castratedSwitch.getmTvTitle().setTextColor(ContextCompat.getColor(this,R.color.white));
+            mSpColorPet.setIcon(null);
+            mSpBreed.setIcon(null);
+            mSpCoat.setIcon(null);
+            mSpGender.setIcon(null);
+            mSpSize.setIcon(null);
+            mSpTemper.setIcon(null);
+            mSpType.setIcon(null);
+            mEdtName.setCompoundDrawables(null,null,null,null);
+            mEdtBirthday.setCompoundDrawables(null,null,null,null);
+            petDescription.setCompoundDrawables(null,null,null,null);
         }
 
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
@@ -243,7 +256,7 @@ public class RegisterPetActivity extends AppCompatActivity implements
 
         listDogBreeds();
         listCatBreeds();
-        getAttributes();
+        getAttributes("dog");
         pet = new Pet();
         mBinding.setPet(pet);
 
@@ -279,11 +292,18 @@ public class RegisterPetActivity extends AppCompatActivity implements
         });
     }
 
-    public void getAttributes(){
-        mPetService.getAtributtes(userId, new APICallback() {
+    public void getAttributes(String typePet){
+        mPetService.getAtributtes(typePet,userId, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 AttributesResponse att = (AttributesResponse) response;
+                RegisterPetActivity.this.mSpGender.setItems(att.data.attributes.genders);
+                RegisterPetActivity.this.mSpSize.setItems(att.data.attributes.sizes);
+                RegisterPetActivity.this.mSpCoat.setItems(att.data.attributes.coat_types);
+                RegisterPetActivity.this.mSpColorPet.setItems(getColorPet(att.data.attributes.coat_colors));
+                RegisterPetActivity.this.colorsType = att.data.attributes.coat_colors;
+
+
             }
 
             @Override
@@ -468,6 +488,7 @@ public class RegisterPetActivity extends AppCompatActivity implements
         mSpBreed.selectItem(0);
         mSpCoat.selectItem(0);
         mSpTemper.selectItem(0);
+        mSpColorPet.selectItem(0);
     }
 
     /**
@@ -509,6 +530,15 @@ public class RegisterPetActivity extends AppCompatActivity implements
     @Override
     public void onDateSet(String date) {
         mEdtBirthday.setText(date);
+    }
+
+    public ArrayList<String> getColorPet(HashMap<String,Integer> hashMap){
+        int i = 0;
+        ArrayList<String> colors = new ArrayList<>();
+        for ( String key : hashMap.keySet() ) {
+            colors.add(key);
+        }
+        return colors;
     }
 
 }

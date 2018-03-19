@@ -124,7 +124,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber, business.neighborhood);
         String city = mContext.getResources().getString(R.string.business_city, business.city, business.state);
         String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", business.distance));
-//        String ratingCount = mContext.getResources().getQuantityString(R.plurals.business_rating_count, business.ratingCount, business.ratingCount);
+        String ratingCount = mContext.getResources().getQuantityString(R.plurals.business_rating_count, business.ratingCount, business.ratingCount);
         String average = String.format("%.1f", business.ratingAverage);
 
         if (business.favorited) {
@@ -138,8 +138,11 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.mTvRatingCount.setVisibility(View.GONE);
             holder.mIvRatingStar.setVisibility(View.GONE);
         } else {
+            holder.mTvRate.setVisibility(View.VISIBLE);
+            holder.mTvRatingCount.setVisibility(View.VISIBLE);
+            holder.mIvRatingStar.setVisibility(View.VISIBLE);
             holder.mTvRate.setText(average);
-            holder.mTvRatingCount.setText("");
+            holder.mTvRatingCount.setText(ratingCount);
         }
 
         holder.mTvName.setText(business.name);
@@ -272,6 +275,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         holder.mBtnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mBusinessService.callForBussinesSlug(business.slug);
                 callToBusiness(business.phone);
 
             }

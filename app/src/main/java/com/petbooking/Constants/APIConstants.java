@@ -39,6 +39,7 @@ public class APIConstants {
     public static final String PAYMENT_OK_TAG = "ok";
     public static final String FALLBACK_TAG = "fallbacks";
     public static final String CURRENT_DATE = "current_date";
+    public static final String PET_TYPE = "pet_type";
 
     /**
      * Headers

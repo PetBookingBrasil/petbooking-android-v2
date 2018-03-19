@@ -1,5 +1,8 @@
 package com.petbooking.API.Pet.Models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,21 +11,26 @@ import java.util.List;
  */
 
 public class AttributesResponse {
-    public List<BreedResp.Item> data;
+    public Item data;
 
     public static class Item {
-
-
         public Attributes attributes;
 
     }
 
-    public static class Attributes {
+    public class Attributes {
 
+        @SerializedName("genders")
+        @Expose
         public List<String> genders;
         public List<String> sizes;
         public List<String> coat_types;
         public HashMap<String,Integer> coat_colors;
 
+    }
+
+    public class ColorPet {
+        String name;
+        int position;
     }
 }

@@ -136,7 +136,20 @@ public class ServiceAdapter extends StatelessSection {
 
         final Drawable colorGreen = ContextCompat.getDrawable(mContext, R.drawable.circle_background_green);
         final Drawable colorGray = ContextCompat.getDrawable(mContext, R.drawable.circle_background);
-        String price = mContext.getResources().getString(R.string.business_service_price, String.format("%.2f", service.price));
+        String price;
+        if(fragment.hasPet()){
+           price = mContext.getResources().getString(R.string.business_service_price, String.format("%.2f", service.price));
+           holder.circleImageView.setEnabled(true);
+            holder.v.setEnabled(true);
+        }else{
+            price = mContext.getResources()
+                    .getString(R.string.business_service_price,
+                            String.format("%.2f", service.minPrice)) + " ate " + mContext.getResources()
+                    .getString(R.string.business_service_price,
+                            String.format("%.2f", service.maxPrice));
+            holder.circleImageView.setEnabled(false);
+            holder.v.setEnabled(false);
+        }
         holder.serviceName.setText(service.name);
         holder.servicePrice.setText(price);
         if (TextUtils.isEmpty(service.description)) {

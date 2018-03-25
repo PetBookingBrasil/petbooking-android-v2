@@ -9,6 +9,7 @@ import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.kingfisher.easyviewindicator.RecyclerViewIndicator;
 import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
@@ -85,28 +87,40 @@ public class PetAdapter extends StatelessSection {
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder item, final int position) {
         final ItemViewHolder holder = (ItemViewHolder) item;
-        holder.titleNumber.setVisibility(View.VISIBLE);
-        holder.circleLayout.setVisibility(View.GONE);
-        holder.pets.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        SnapHelper snapHelper = new PagerSnapHelper();
-        holder.pets.setOnFlingListener(null);
-        snapHelper.attachToRecyclerView(holder.pets);
-        holder.pets.setAdapter(new CustomPetAdapter(context, pets));
-        if(pets.size() <=0) {
-            holder.placeHolderPet.setVisibility(View.GONE);
+        if (!existPet) {
+            holder.pets.setVisibility(View.GONE);
+            holder.titleNumber.setVisibility(View.GONE);
             holder.addPet.setVisibility(View.GONE);
-        }else{
-            holder.placeHolderPet.setVisibility(View.VISIBLE);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
+            holder.view.setLayoutParams(params);
+        } else {
+            holder.pets.setVisibility(View.VISIBLE);
+            holder.titleNumber.setVisibility(View.VISIBLE);
             holder.addPet.setVisibility(View.VISIBLE);
-        }
-        holder.addPet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, RegisterPetActivity.class);
-                intent.putExtra("schedule",true);
-                context.startActivity(intent);
+            int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 280, context.getResources().getDisplayMetrics());
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
+            holder.view.setLayoutParams(params);
+
+            holder.circleLayout.setVisibility(View.GONE);
+            holder.pets.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+
+            holder.pets.setAdapter(new CustomPetAdapter(context, pets));
+            if (pets.size() <= 0) {
+                holder.placeHolderPet.setVisibility(View.GONE);
+                holder.addPet.setVisibility(View.GONE);
+            } else {
+                holder.placeHolderPet.setVisibility(View.VISIBLE);
+                holder.addPet.setVisibility(View.VISIBLE);
             }
-        });
+            holder.addPet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, RegisterPetActivity.class);
+                    intent.putExtra("schedule", true);
+                    context.startActivity(intent);
+                }
+            });
+        }
 
     }
 
@@ -133,7 +147,7 @@ public class PetAdapter extends StatelessSection {
         viewHolder.headerTitle.setText(title);
         viewHolder.headerEdit.setVisibility(View.VISIBLE);
         viewHolder.image_header.setVisibility(View.VISIBLE);
-        if(existPet) {
+        if (existPet) {
             viewHolder.headerEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -150,7 +164,7 @@ public class PetAdapter extends StatelessSection {
                 } else {
                     petAvatar = R.drawable.ic_placeholder_cat;
                 }
-                if(!imageLoaded) {
+                if (!imageLoaded) {
                     imageLoaded = true;
                     mGlide.load(APIUtils.getAssetEndpoint(pet.avatar.url))
                             .error(petAvatar)
@@ -176,26 +190,26 @@ public class PetAdapter extends StatelessSection {
                     viewHolder.headerEdit.performClick();
                 }
             });
-            viewHolder.headerSection.setBackgroundColor(ContextCompat.getColor(context,R.color.white));
+            viewHolder.headerSection.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
             viewHolder.imageView.setImageResource(R.drawable.ic_edit);
             viewHolder.imageView.setColorFilter(ContextCompat.getColor(context, R.color.schedule_item_edit_icon), android.graphics.PorterDuff.Mode.SRC_IN);
             viewHolder.circleImageViewEdit.setCircleBackgroundColorResource(R.color.schedule_background);
-            viewHolder.headerTitle.setTextColor(ContextCompat.getColor(context,R.color.text_color));
+            viewHolder.headerTitle.setTextColor(ContextCompat.getColor(context, R.color.text_color));
 
-        }else{
+        } else {
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             viewHolder.headerSection.setLayoutParams(params);
-            viewHolder.headerSection.setBackgroundColor(ContextCompat.getColor(context,R.color.brand_primary));
+            viewHolder.headerSection.setBackgroundColor(ContextCompat.getColor(context, R.color.brand_primary));
             viewHolder.image_header.setImageResource(R.drawable.ic_placeholder_dog);
             viewHolder.imageView.setImageResource(R.drawable.ic_add_white_24px);
             viewHolder.imageView.setColorFilter(ContextCompat.getColor(context, R.color.brand_primary), android.graphics.PorterDuff.Mode.SRC_IN);
-            viewHolder.headerTitle.setTextColor(ContextCompat.getColor(context,R.color.white));
+            viewHolder.headerTitle.setTextColor(ContextCompat.getColor(context, R.color.white));
             viewHolder.circleImageViewEdit.setCircleBackgroundColorResource(R.color.white);
             viewHolder.headerEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, RegisterPetActivity.class);
-                    intent.putExtra("schedule",true);
+                    intent.putExtra("schedule", true);
                     context.startActivity(intent);
                 }
             });
@@ -224,12 +238,15 @@ public class PetAdapter extends StatelessSection {
         LinearLayout circleLayout;
         @BindView(R.id.placeholder_select_pet)
         LinearLayout placeHolderPet;
-         @BindView(R.id.btn_add_pet)
-         Button addPet;
+        @BindView(R.id.btn_add_pet)
+        Button addPet;
+        View view;
+
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            view = itemView;
         }
     }
 
@@ -276,8 +293,7 @@ public class PetAdapter extends StatelessSection {
             });
 
 
-
-                    mGlide.load(APIUtils.getAssetEndpoint(pet.avatar.url))
+            mGlide.load(APIUtils.getAssetEndpoint(pet.avatar.url))
                     .error(petAvatar)
                     .placeholder(petAvatar)
                     .bitmapTransform(new CircleTransformation(context))
@@ -296,7 +312,6 @@ public class PetAdapter extends StatelessSection {
             } else {
                 holder.totalServices.setVisibility(View.INVISIBLE);
             }
-
         }
 
         @Override

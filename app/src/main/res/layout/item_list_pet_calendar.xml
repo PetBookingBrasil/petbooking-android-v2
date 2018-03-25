@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/item_layout"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="220dp"
     android:orientation="vertical"
     android:paddingBottom="@dimen/spacing_tiny"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
     android:paddingLeft="@dimen/spacing_xmicro"
     android:paddingRight="@dimen/spacing_xmicro"
-    android:paddingTop="@dimen/spacing_tiny">
+    android:paddingTop="@dimen/spacing_tiny"
+   >
 
     <RelativeLayout
         android:layout_width="120dp"
@@ -18,7 +23,10 @@
             android:id="@+id/pet_photo"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:background="@drawable/image_shadow"
+            android:padding="3dp"
+            android:elevation="19dp"/>
 
         <TextView
             android:id="@+id/total_appointments"

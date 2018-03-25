@@ -229,6 +229,13 @@ public class RegisterPetActivity extends AppCompatActivity implements
             mSpSize.setHintColor(R.color.white);
             mSpTemper.setHintColor(R.color.white);
             mSpType.setHintColor(R.color.white);
+            mSpType.getmSpinner().setPaddingSafe(0,0,0,0);
+            mSpColorPet.getmSpinner().setPaddingSafe(0,0,0,0);
+            mSpBreed.getmSpinner().setPaddingSafe(0,0,0,0);
+            mSpCoat.getmSpinner().setPaddingSafe(0,0,0,0);
+            mSpGender.getmSpinner().setPaddingSafe(0,0,0,0);
+            mSpSize.getmSpinner().setPaddingSafe(0,0,0,0);
+            mSpTemper.getmSpinner().setPaddingSafe(0,0,0,0);
             chipSwitch.getmTvTitle().setTextColor(ContextCompat.getColor(this,R.color.white));
             castratedSwitch.getmTvTitle().setTextColor(ContextCompat.getColor(this,R.color.white));
             mSpColorPet.setIcon(null);

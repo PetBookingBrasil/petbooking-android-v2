@@ -130,7 +130,8 @@ public class APIUtils {
                 service.attributes.name,
                 service.attributes.duration,
                 service.attributes.description,
-                service.attributes.price);
+                service.attributes.price.service_price,service.attributes.price.max_service_price
+                ,service.attributes.price.min_service_price);
         return businessService;
     }
 

@@ -42,12 +42,14 @@ public class AppointmentService {
     }
 
     public void listServices(String categoryId, String petId, final APICallback callback) {
-        String finalPetId = petId + APIAppointmentConstants.FIELDS_SERVICES;
-        Map<String,String> map = new HashMap();
-        map.put(APIAppointmentConstants.FIELDS_QUERY,APIAppointmentConstants.FIELDS_SERVICES);
-        map.put(APIAppointmentConstants.PET_QUERY,petId);
-        //151 categoryID
-        Call<ServiceResp> call = mAppointmentInterface.listCategoryServices(categoryId, map);
+        Map<String, String> map = new HashMap();
+        Call<ServiceResp> call;
+        map.put(APIAppointmentConstants.FIELDS_QUERY, APIAppointmentConstants.FIELDS_SERVICES);
+        if (!petId.isEmpty())
+            map.put(APIAppointmentConstants.PET_QUERY, petId);
+        call = mAppointmentInterface.listCategoryServices(categoryId, map);
+
+
         call.enqueue(new Callback<ServiceResp>() {
             @Override
             public void onResponse(Call<ServiceResp> call, Response<ServiceResp> response) {

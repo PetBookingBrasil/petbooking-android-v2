@@ -30,6 +30,10 @@ public interface AppointmentInterface {
                                            @QueryMap Map<String,String> petId);
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
+    @GET(APIAppointmentConstants.CATEGORY_SERVICES_ENDPOINT)
+    Call<ServiceResp> listCategoryServices(@Path(APIConstants.PATH_PARAM) String categoryId);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
     @GET(APIAppointmentConstants.PROFESSIONAL_LIST_ENDPOINT)
     Call<ProfessionalResp> listProfessional(@Path(APIConstants.PATH_PARAM) String serviceId);
 

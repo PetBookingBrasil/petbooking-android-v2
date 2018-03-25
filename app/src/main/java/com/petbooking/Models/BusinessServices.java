@@ -17,6 +17,8 @@ public class BusinessServices {
     public int duration;
     public String description;
     public double price;
+    public double maxPrice;
+    public double minPrice;
     public String businessName;
     public String professionalName;
     public AvatarResp professionalAvatar;
@@ -28,6 +30,17 @@ public class BusinessServices {
         this.duration = duration;
         this.description = description;
         this.price = price;
+        this.additionalServices = new ArrayList<>();
+    }
+
+    public BusinessServices(String id, String name, int duration, String description, double price, double maxPrice, double minPrice) {
+        this.id = id;
+        this.name = name;
+        this.duration = duration;
+        this.description = description;
+        this.price = price;
+        this.maxPrice = maxPrice;
+        this.minPrice = minPrice;
         this.additionalServices = new ArrayList<>();
     }
 

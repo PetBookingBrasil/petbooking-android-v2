@@ -202,4 +202,8 @@ public class MaterialSpinner extends RelativeLayout {
     public void selectItem(int position) {
         mSpinner.setSelection(position);
     }
+
+    public fr.ganfra.materialspinner.MaterialSpinner getmSpinner() {
+        return mSpinner;
+    }
 }

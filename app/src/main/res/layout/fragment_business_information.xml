@@ -27,10 +27,6 @@
                 android:layout_height="match_parent"
                 android:scaleType="fitXY" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/gradient_background" />
 
         </FrameLayout>
 
@@ -44,7 +40,7 @@
             android:layout_marginRight="@dimen/business_fragment_spacing"
             android:layout_marginStart="@dimen/spacing_xmicro"
             android:layout_marginTop="@dimen/spacing_xmicro"
-            android:background="@null"
+            android:background="@color/gray_transparent_pet"
             app:layout_constraintBottom_toBottomOf="@+id/business_cover"
             app:layout_constraintHorizontal_bias="0.95"
             app:layout_constraintLeft_toLeftOf="@+id/business_cover"

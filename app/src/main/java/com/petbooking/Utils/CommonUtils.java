@@ -16,6 +16,7 @@ import com.petbooking.Models.CalendarItem;
 import com.petbooking.Models.UserAddress;
 
 import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,7 +31,7 @@ import java.util.regex.Pattern;
 public class CommonUtils {
 
     public static final int PASSWORD_LENGTH = 6;
-    private static final Locale BRAZIL = new Locale("pt","BR");
+    public static final Locale BRAZIL = new Locale("pt","BR");
     final public static String DATEFORMATDEFAULT = "yyyy-MM-dd";
     final public static String MONTH_DESCRIPTION_FORMAT = "MMMM";
     final public static String DAY_FORMAT = "dd";
@@ -154,6 +155,18 @@ public class CommonUtils {
     public static String formatDate(final String formatType, final Date date) {
         final SimpleDateFormat dateFormatterInstance = new SimpleDateFormat(formatType, BRAZIL);
         return dateFormatterInstance.format(date);
+    }
+
+    public static Date parseDate(String dateFormat,String dateParser){
+        SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+        try {
+            Date date = format.parse(dateParser);
+            System.out.println(date);
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new Date();
+        }
     }
 
     public static UserAddress parseAddress(Address address) {

@@ -3,17 +3,22 @@ package com.petbooking.API.Business;
 import android.util.Log;
 
 import com.petbooking.API.APIClient;
+import com.petbooking.API.Appointment.Models.ServiceResp;
 import com.petbooking.API.Business.Models.BusinessResp;
 import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.API.Business.Models.FavoriteRqt;
 import com.petbooking.API.Business.Models.ReviewResp;
+import com.petbooking.API.Business.Models.ReviewableResp;
+import com.petbooking.API.Review.ReviewRequest;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Models.Business;
+import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Category;
 import com.petbooking.Models.Review;
+import com.petbooking.Models.ReviewServices;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
@@ -142,25 +147,50 @@ public class BusinessService {
 
     public void getReviews(String userId, final APICallback callback) {
        String date = CommonUtils.formatDate(CommonUtils.DATEFORMATDEFAULT,new Date());
-        Call<ReviewResp> call = mBusinessInterface.getReviews(userId);
-        call.enqueue(new Callback<ReviewResp>() {
+        Call<ReviewableResp> call = mBusinessInterface.getReviews(userId);
+        call.enqueue(new Callback<ReviewableResp>() {
             @Override
-            public void onResponse(Call<ReviewResp> call, Response<ReviewResp> response) {
+            public void onResponse(Call<ReviewableResp> call, Response<ReviewableResp> response) {
                 if (response.isSuccessful()) {
-                    ArrayList<Review> reviewList = new ArrayList<Review>();
-                    ReviewResp responseList = response.body();
-                    for (ReviewResp.Item item : responseList.data) {
-                        reviewList.add(APIUtils.parseReview(item.id, item.attributes));
+                    if (response.body().data.size() > 0){
+                        callback.onError(null);
+                    }
+                    Log.i(getClass().getSimpleName(),"Qual o review success" + response.body().data.size());
+                    ArrayList<ReviewServices> services = new ArrayList<ReviewServices>();
+                    ReviewableResp serviceResp = response.body();
+                    for (ReviewableResp.Item item : serviceResp.data) {
+                        ReviewServices service = APIUtils.parseReviewServices(item,serviceResp);
+
+                        services.add(service);
                     }
 
-                    callback.onSuccess(reviewList);
+                    callback.onSuccess(services);
                 } else {
                     callback.onError(APIUtils.handleError(response));
                 }
             }
 
             @Override
-            public void onFailure(Call<ReviewResp> call, Throwable t) {
+            public void onFailure(Call<ReviewableResp> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void sendReviews(ReviewRequest request, String userId, final APICallback callback) {
+
+        Call<Void> call = mBusinessInterface.sendReviews(userId,request);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response);
+                } else {
+                    callback.onError(APIUtils.handleError(null));
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
 
             }
         });

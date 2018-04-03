@@ -22,6 +22,7 @@ public class APIConstants {
     public static final String DATA_SESSIONS = "sessions";
     public static final String DATA_FAVORITES = "favorites";
     public static final String DATA_FAVORITES_TYPE_BUSINESS = "Business";
+    public static final String DATA_REVIEW_TYPE_REVIEWS = "reviews";
 
 
     /**

@@ -30,6 +30,7 @@ import com.petbooking.Constants.AppConstants;
 import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
+import com.petbooking.Models.ReviewServices;
 import com.petbooking.Models.User;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.Scheduling.ReviewSchedule;
@@ -47,6 +48,8 @@ import com.petbooking.UI.Menu.Search.SearchResultFragment;
 import com.petbooking.UI.Menu.Settings.SettingsActivity;
 import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.Utils.APIUtils;
+
+import java.util.ArrayList;
 
 public class DashboardActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -162,7 +165,12 @@ public class DashboardActivity extends AppCompatActivity implements
         mBusinessService.getReviews(SessionManager.getInstance().getUserLogged().id, new APICallback() {
             @Override
             public void onSuccess(Object response) {
-                Log.i(getClass().getSimpleName(),"On Sucess");
+                ArrayList<ReviewServices> service = (ArrayList<ReviewServices>) response;
+                if(service !=null && service.size() > 0) {
+                    Intent intent = new Intent(DashboardActivity.this, ReviewSchedule.class);
+                    intent.putParcelableArrayListExtra("services", service);
+                    startActivity(intent);
+                }
             }
 
             @Override

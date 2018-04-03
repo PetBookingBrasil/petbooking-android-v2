@@ -1,11 +1,14 @@
 package com.petbooking.API.Business;
 
+import com.petbooking.API.Appointment.Models.ServiceResp;
 import com.petbooking.API.Business.Models.BusinessResp;
 import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Business.Models.FavoriteResp;
 import com.petbooking.API.Business.Models.FavoriteRqt;
 import com.petbooking.API.Business.Models.ReviewResp;
+import com.petbooking.API.Business.Models.ReviewableResp;
+import com.petbooking.API.Review.ReviewRequest;
 import com.petbooking.Constants.APIConstants;
 
 import retrofit2.Call;
@@ -56,7 +59,12 @@ public interface BusinessInterface {
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED,APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
     @GET(APIBusinessConstants.ENDPOINT_GET_REVIEWS)
-    Call<ReviewResp> getReviews (@Path(APIConstants.PATH_PARAM) String userId);
+    Call<ReviewableResp> getReviews (@Path(APIConstants.PATH_PARAM) String userId);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED,APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
+    @POST(APIBusinessConstants.ENDPOINT_SEND_REVIEW)
+    Call<Void> sendReviews(@Path(APIConstants.PATH_PARAM) String userID,
+                                                   @Body ReviewRequest reviewRequest);
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @GET(APIBusinessConstants.BUSINESS_INFO_ENDPOINT)

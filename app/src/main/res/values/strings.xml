@@ -14,7 +14,7 @@
     <!--  Third-party Apps ID -->
     <string name="fabric_app_id" translatable="false">fe0c61a27b92b4a7f90ab0fc8f69e3a4326250e5</string>
     <string name="facebook_app_id" translatable="false">1799017433691061</string>
-    <string name="google_maps_key" translatable="false">AIzaSyAH5EPkWMPgU0zuL1y9ePlEusxOZ_y1Zx0</string>
+    <string name="google_maps_key" translatable="false">AIzaSyBnnn32f_DTJWeClZRgjqHOQY08lyhTZH0</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb1799017433691061</string>
 
     <!-- Screen Title -->

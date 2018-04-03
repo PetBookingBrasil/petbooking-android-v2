@@ -121,12 +121,14 @@ public class ReviewSchedule extends AppCompatActivity {
         if (quantity == 1) {
             quantBussines.setVisibility(View.INVISIBLE);
             send.setText(R.string.sendReview);
-        } else if (position < quantity) {
+        } else if (hasNext()) {
             send.setText(R.string.send_and_next);
         } else {
             send.setText(R.string.sendReview);
         }
-        quantBussines.setText(String.valueOf(position) + " de " + quantity);
+        editComment.getText().clear();
+        int currentPosition = position +1;
+        quantBussines.setText(String.valueOf(currentPosition) + " de " + quantity);
         ratingBarAttendance.setRating(0);
         ratingBarBussines.setRating(0);
         ratingBarEnvironment.setRating(0);
@@ -176,7 +178,7 @@ public class ReviewSchedule extends AppCompatActivity {
         if (quantity == 1) {
             return false;
         }
-        if ((position + 1) > quantity) {
+        if ((position + 1) >= quantity) {
             return false;
         }
         return true;

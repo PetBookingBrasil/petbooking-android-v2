@@ -55,17 +55,17 @@ public class ContentFragment extends Fragment {
 
         LinearLayout tabLinearLayout = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.tab_item_layout, null);
         tabContent = (TextView) tabLinearLayout.findViewById(R.id.tabContent);
-        tabContent.setText(" " + getContext().getString(R.string.tab_category));
+        tabContent.setText(getContext().getString(R.string.tab_category));
         tabContent.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_menu_list, 0, 0, 0);
 
         LinearLayout tabLinearLayoutTwo = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.tab_item_layout, null);
         TextView textView = (TextView) tabLinearLayoutTwo.findViewById(R.id.tabContent);
-        textView.setText(" " + getContext().getString(R.string.tab_map));
-        textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_location_on_white_24px, 0, 0, 0);
+        textView.setText(getContext().getString(R.string.tab_map));
+        textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_my_location, 0, 0, 0);
 
         LinearLayout tabLinearLayoutTree = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.tab_item_layout, null);
         tabTreeText = (TextView) tabLinearLayoutTree.findViewById(R.id.tabContent);
-        tabTreeText.setText(" " + getContext().getString(R.string.favorites));
+        tabTreeText.setText(getContext().getString(R.string.favorites));
         tabTreeText.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_menu_favorite, 0, 0, 0);
 
         mTabLayout.getTabAt(0).setCustomView(tabContent);

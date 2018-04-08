@@ -2,6 +2,7 @@ package com.petbooking.UI.Dashboard.PaymentWebview;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
@@ -17,6 +18,7 @@ import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
+import com.petbooking.UI.Menu.Agenda.AgendaActivity;
 import com.petbooking.Utils.AppUtils;
 
 public class PaymentActivity extends AppCompatActivity {
@@ -63,8 +65,14 @@ public class PaymentActivity extends AppCompatActivity {
         mPaymentWebview.setWebChromeClient(new WebChromeClient() {
             public boolean onConsoleMessage(ConsoleMessage cm) {
                 if (cm.message().equals(APIConstants.PAYMENT_OK_TAG)) {
-                    mAppointmentManager.reset();
-                    goToDashboard();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mAppointmentManager.reset();
+                            goToDashboard();
+                        }
+                    },4000);
+
                 }
 
                 return true;
@@ -78,7 +86,7 @@ public class PaymentActivity extends AppCompatActivity {
      * Go to dashboard
      */
     private void goToDashboard() {
-        Intent dashboardIntent = new Intent(this, DashboardActivity.class);
+        Intent dashboardIntent = new Intent(this, AgendaActivity.class);
         startActivity(dashboardIntent);
     }
 }

@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.petbooking.Models.Category;
@@ -79,6 +81,9 @@ public class CategoryAdapter extends StatelessSection {
         holder.textTitle.setText(R.string.bussines_category);
         holder.services.setLayoutManager(new GridLayoutManager(context, 3));
         holder.services.setAdapter(new CustomServiceAdapter(context, services));
+        holder.conteinerLayout.setBackgroundColor(ContextCompat.getColor(context,android.R.color.transparent));
+        holder.btnAddPet.setVisibility(View.INVISIBLE);
+        holder.circleLayout.setVisibility(View.GONE);
 
     }
 
@@ -152,6 +157,12 @@ public class CategoryAdapter extends StatelessSection {
         TextView titleNumber;
         @BindView(R.id.text_title)
         TextView textTitle;
+        @BindView(R.id.containerLayout)
+        RelativeLayout conteinerLayout;
+        @BindView(R.id.btn_add_pet)
+        Button btnAddPet;
+        @BindView(R.id.circle_text)
+        LinearLayout circleLayout;
 
         public ItemViewHolder(View itemView) {
             super(itemView);

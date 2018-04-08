@@ -3,12 +3,8 @@ package com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +18,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.kingfisher.easyviewindicator.RecyclerViewIndicator;
 import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
@@ -286,7 +281,7 @@ public class PetAdapter extends StatelessSection {
                 public void onClick(View v) {
                     PetAdapter.this.expanded = false;
                     setTitle(pet.name);
-                    fragment.notifyChanged(position);
+                    fragment.changeItens(position);
                     setSelectedPosition(position);
 
                 }
@@ -303,7 +298,7 @@ public class PetAdapter extends StatelessSection {
             if (initial && position == pets.size()) {
                 PetAdapter.this.expanded = false;
                 setTitle(pet.name);
-                fragment.notifyChanged(position);
+                fragment.changeItens(position);
                 setSelectedPosition(position);
             }
             if (mAppointmentManager.getCountCartPetId(pet.id) > 0) {

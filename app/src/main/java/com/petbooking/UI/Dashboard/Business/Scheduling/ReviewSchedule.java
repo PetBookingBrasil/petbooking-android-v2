@@ -75,7 +75,6 @@ public class ReviewSchedule extends AppCompatActivity {
 
     @OnClick(R.id.button_send_review)
     void sendReview() {
-
         //Send Review
         int attendance = Math.round(ratingBarAttendance.getRating());
         int bussisnes = Math.round(ratingBarBussines.getRating());
@@ -117,7 +116,6 @@ public class ReviewSchedule extends AppCompatActivity {
     }
 
     private void updateFields() {
-
         if (quantity == 1) {
             quantBussines.setVisibility(View.INVISIBLE);
             send.setText(R.string.sendReview);
@@ -144,7 +142,6 @@ public class ReviewSchedule extends AppCompatActivity {
         GradientDrawable iconBackground = (GradientDrawable) layoutBackGround.getBackground();
         categoryPhoto.setImageDrawable(AppUtils.getBusinessIcon(this, services.get(position).serviceName));
         iconBackground.setColor(color);
-
         int petAvatar;
         if (pet == null) {
             petAvatar = R.drawable.ic_placeholder_dog;
@@ -169,7 +166,6 @@ public class ReviewSchedule extends AppCompatActivity {
                 .bitmapTransform(new CircleTransformation(this))
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(professionalPhoto);
-
     }
 
     private boolean hasNext() {

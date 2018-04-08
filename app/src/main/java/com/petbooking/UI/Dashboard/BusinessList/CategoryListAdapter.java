@@ -62,7 +62,7 @@ public class CategoryListAdapter extends  RecyclerView.Adapter<CategoryListAdapt
         int color = AppUtils.getCategoryColor(context, category.categoryName);
         GradientDrawable iconBackground = (GradientDrawable) holder.layoutBackGround.getBackground();
 
-        holder.categoryName.setText(category.categoryName);
+        holder.categoryName.setText(category.categoryName.toUpperCase());
         holder.categoryIcon.setImageDrawable(category.icon);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

@@ -185,7 +185,7 @@ public class DashboardActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24px);
         toolbarTitle.setText(title);
-        contentFragment.setChangeNameTab(" "+getString(R.string.list_tab_name),true);
+        contentFragment.setChangeNameTab(getString(R.string.list_tab_name),true);
     }
 
     @Override
@@ -219,7 +219,7 @@ public class DashboardActivity extends AppCompatActivity implements
             getSupportActionBar().setHomeButtonEnabled(true);
             toggle.syncState();
             toolbarTitle.setText(R.string.dashboard_title);
-            contentFragment.setChangeNameTab("  " + getString(R.string.tab_category),false);
+            contentFragment.setChangeNameTab(getString(R.string.tab_category),false);
             contentFragment.addTab();
             super.onBackPressed();
         }

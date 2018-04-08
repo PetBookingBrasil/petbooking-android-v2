@@ -72,9 +72,6 @@ public class ContentFragment extends Fragment {
         mTabLayout.getTabAt(1).setCustomView(textView);
         mTabLayout.getTabAt(2).setCustomView(tabTreeText);
         tabTree = mTabLayout.getTabAt(2);
-        //mTabLayout.getTabAt(0).setIcon(R.drawable.ic_menu_list).setText("Categorias");
-        //mTabLayout.getTabAt(1).setIcon(R.drawable.ic_menu_map).setText("Mapa");
-
 
         return view;
     }
@@ -84,11 +81,10 @@ public class ContentFragment extends Fragment {
         tabContent.setText(nameTab);
         if(removeTab) {
             TabLayout.Tab hasTab = mTabLayout.getTabAt(2);
-            if (hasTab != null)
+            if (hasTab != null);
                 mTabLayout.removeTabAt(2);
         }
     }
-
     public void addTab() {
         if (tabTree != null) {
             mTabLayout.addTab(mTabLayout.newTab().setCustomView(tabTreeText));

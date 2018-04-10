@@ -1,4 +1,5 @@
 ﻿<resources>
+
     <string name="app_slogan">Esse app é animal</string>
 
     <string name="navigation_drawer_open">Abrir Menu Lateral</string>
@@ -6,8 +7,10 @@
 
     <!-- Common -->
     <string name="edit_text">Editar</string>
-    <string name="observations_text">Observações&#8230;</string>
     <string name="additional_label">Adicionais</string>
+    <string name="observations_text">Observações&#8230;</string>
+
+
 
     <!-- Screen Title -->
     <string name="dashboard_title">Estabelecimentos</string>
@@ -18,6 +21,7 @@
     <string name="new_pet_title">Preencha os dados do pet</string>
     <string name="search_title">Busca</string>
     <string name="cart_title">Carrinho de Agendamentos</string>
+    <string name="payment_title">Pagamento</string>
 
     <!-- Pet -->
     <string name="gender_male">Macho</string>
@@ -66,7 +70,7 @@
     <string name="sign_up">Cadastro</string>
     <string name="login">Entrar</string>
     <string name="login_facebook">Entrar com <b>Facebook</b></string>
-    <string name="app_terms_info">Utilizando o app, você concorda com os <u>Termos de uso</u>
+    <string name="app_terms_info">Utilizando o app, você concorda com os <b><u>Termos de uso</u></b>
         \n e com a <u>Política de Privacidade.</u></string>
     <string name="forgot_password">Esqueceu a senha ?</string>
 
@@ -105,6 +109,7 @@
     <string name="search">Pesquisar</string>
     <string name="calendar">Agenda</string>
     <string name="payments">Pagamentos</string>
+    <string name="payments_forms">Formas de pagamento</string>
     <string name="favorites">Favoritos</string>
     <string name="settings">Configurações</string>
     <string name="logout">Sair</string>
@@ -135,8 +140,14 @@
     <string name="hint_size">Porte</string>
     <string name="hint_breed">Raça</string>
     <string name="hint_coat">Pelagem</string>
+    <string name="color_pet">Cor da pelagem</string>
     <string name="hint_temper">Temperamento</string>
     <string name="hint_observation">Observação</string>
+    <string name="color_white">Branco</string>
+    <string name="color_black">Preto</string>
+    <string name="color_brown">Marron</string>
+    <string name="color_gray">Cinza</string>
+    <string name="register_pet">Cadastrar Pet</string>
 
     <!-- Business -->
     <string name="business_street">%1$s, %2$s - %3$s</string>
@@ -147,24 +158,27 @@
         <item quantity="other">%d Avaliações</item>
     </plurals>
     <string name="business_distance">%1$s Km</string>
-    <string name="business_phone">Telefone:</string>
+    <string name="business_phone">Telefone: </string>
     <string name="business_tab_services">Serviços</string>
     <string name="business_tab_information">Informações</string>
     <string name="business_label_description">Descrição</string>
     <string name="business_label_contact">Contato</string>
     <string name="business_label_website">Site</string>
-    <string name="business_label_social_network">Redes Sociais</string>
-    <string name="business_label_location">Localização</string>
+    <string name="business_label_social_network">Redes sociais</string>
+    <string name="business_label_location">localização</string>
     <string name="business_label_reviews">Reviews</string>
     <string name="business_label_additional">Serviços Adicionais</string>
     <string name="business_service_price">R$ %1$s</string>
     <string name="business_service_finish">Finalizar Agendamento</string>
     <string name="call_button">Ligar</string>
+    <string name="bussines_category">Categoria do Serviço</string>
 
     <!-- Search -->
     <string name="filter_hint">Nome do estabelecimento ou serviços</string>
+    <string name="location_hint">Localização</string>
+    <string name="city_neighborhood">Cidade ou bairro</string>
     <string name="filter_label">Filtre por categoria</string>
-    <string name="filter">Filtrar</string>
+    <string name="filter">Buscar</string>
 
     <!-- Settings -->
     <string name="kilometers">Quilômetro</string>
@@ -203,8 +217,8 @@
     <string name="dialog_button_add_pet">Adicionar outro pet</string>
     <string name="dialog_button_start">Começar a usar</string>
     <string name="dialog_button_check_info">Verificar informações</string>
-    <string name="dialog_back">Voltar</string>
     <string name="dialog_back_screen">Voltar à Tela</string>
+    <string name="dialog_back">Voltar</string>
     <string name="dialog_cancel">Cancelar</string>
 
     <!-- Info -->
@@ -259,4 +273,42 @@
     <!-- Permissions -->
     <string name="permission_location_title">Ativar Localização</string>
     <string name="permission_location">Sua localização é necessária para utilizar as nossas funcionalidades.</string>
+
+    <!-- Schedule -->
+    <string name="select_pet">Selecionar pet</string>
+    <string name="select_professional">Selecione um profissional</string>
+    <string name="category">Categoria</string>
+    <string name="service_additional">Serviço e adicionais</string>
+    <string name="next_service">Continuar agendando</string>
+    <string name="title_professionals">Profissional e horário</string>
+    <string name="add_cart">Adicionar ao carrinho</string>
+    <string name="check">\u2713</string>
+    <string name="sucess_schedule">O agendamento foi adicionado ao carrinho com sucesso.</string>
+    <string name="action_schedule">Agendar mais um serviço</string>
+    <string name="go_to_cart">Ir para o carrinho</string>
+    <string name="schedule_empty"></string>
+    <string name="header_pets">Atenção! Os preços exibidos são médios. Cadastre seu pet para visualizar os valores condizentes as raças.</string>
+    <string name="other_schedule">Agendar serviço para outro pet</string>
+    <string name="question_register">Castrado?</string>
+    <string name="chip_question">Possui chip?</string>
+    <string name="chip_number">Número do chip</string>
+    <string name="complete_register">Complete as informações a seguir:</string>
+    <string name="continue_register">Concluir cadastro</string>
+    <string name="add_pet">Adicionar pet</string>
+    <string name="tab_category">Categorias</string>
+    <string name="tab_map">Mapa</string>
+    <string name="list_tab_name">Lista</string>
+    <string name="title_activity_review_schedule">ReviewSchedule</string>
+    <string name="add_comment">Adicione seu comentário</string>
+    <string name="sendReview">Enviar avaliação</string>
+    <string name="environment">Ambiente</string>
+    <string name="bussines">Serviço</string>
+    <string name="attendance">Atendimento</string>
+    <string name="send_and_next">Enviar e ir ao proximo</string>
+    <string name="notificationsTitle">Notificações</string>
+    <string name="clear">Limpar</string>
+    <string name="date_and_hour">Dia e horário</string>
+    <string name="select_pet_place_holder">Selecione um Pet</string>
+    <string name="go_to_payment">Ir para pagamento</string>
+
 </resources>

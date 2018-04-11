@@ -63,6 +63,8 @@ public class SettingsActivity extends AppCompatActivity {
             if (id == mTvContact.getId()) {
                 goToContact();
             } else if (id == mTvTerms.getId()) {
+                goToPrivacy();
+            }else if(id == mTvPrivacy.getId()){
                 goToTerms();
             }
         }
@@ -87,7 +89,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         mTvContact = (TextView) findViewById(R.id.contact);
         mTvTerms = (TextView) findViewById(R.id.terms);
+        mTvPrivacy = (TextView) findViewById(R.id.support);
 
+        mTvPrivacy.setOnClickListener(clickListener);
         mTvContact.setOnClickListener(clickListener);
         mTvTerms.setOnClickListener(clickListener);
 

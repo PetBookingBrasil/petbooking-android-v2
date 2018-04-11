@@ -191,8 +191,8 @@
     <string name="email">Email</string>
     <string name="sms">SMS</string>
     <string name="about">Sobre o app</string>
-    <string name="support">Suporte</string>
-    <string name="terms">Legal</string>
+    <string name="support">Termos de uso</string>
+    <string name="terms">Politicas de privacidade</string>
 
     <!-- Agenda -->
     <string name="reschedule">Reagendar</string>

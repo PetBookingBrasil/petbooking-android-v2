@@ -11,6 +11,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -303,6 +304,7 @@ public class RegisterPetActivity extends AppCompatActivity implements
         mPetService.getAtributtes(typePet,userId, new APICallback() {
             @Override
             public void onSuccess(Object response) {
+                Log.i(getClass().getSimpleName(), " Sucees");
                 AttributesResponse att = (AttributesResponse) response;
                 RegisterPetActivity.this.mSpGender.setItems(att.data.attributes.genders);
                 RegisterPetActivity.this.mSpSize.setItems(att.data.attributes.sizes);
@@ -315,7 +317,6 @@ public class RegisterPetActivity extends AppCompatActivity implements
 
             @Override
             public void onError(Object error) {
-
             }
         });
     }

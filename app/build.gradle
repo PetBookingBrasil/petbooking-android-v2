@@ -13,17 +13,17 @@ android {
         applicationId "com.petbooking"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 2
+        versionCode 20
         versionName "2.0"
     }
 
     buildTypes {
         debug {
             ext.enableCrashlytics = false
-            //buildConfigField("String", "BASE_URL", '"https://petbooking.com.br/api/v2/"')
-            //buildConfigField("String", "ASSET_URL", '"https://petbooking.com.br/"')
-            buildConfigField("String", "BASE_URL", '"https://beta.petbooking.com.br/api/v2/"')
-            buildConfigField("String", "ASSET_URL", '"https://beta.petbooking.com.br/"')
+            buildConfigField("String", "BASE_URL", '"https://petbooking.com.br/api/v2/"')
+            buildConfigField("String", "ASSET_URL", '"https://petbooking.com.br/"')
+            //buildConfigField("String", "BASE_URL", '"https://beta.petbooking.com.br/api/v2/"')
+            //buildConfigField("String", "ASSET_URL", '"https://beta.petbooking.com.br/"')
             buildConfigField("String", "BUILD_UIDD", '"fe2e0261-2cac-440d-8027-c8cfc4720940"')
         }
 

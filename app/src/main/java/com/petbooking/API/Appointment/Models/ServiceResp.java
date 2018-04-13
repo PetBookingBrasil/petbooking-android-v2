@@ -36,7 +36,7 @@ public class ServiceResp {
         public String slug;
         public String description;
         public int duration;
-        public Price price;
+        public float price;
 
         @SerializedName("price_range")
         public Price priceRange;
@@ -55,7 +55,7 @@ public class ServiceResp {
             this.slug = slug;
             this.description = description;
             this.duration = duration;
-            this.price = price;
+            this.priceRange = price;
             this.priceRange = priceRange;
         }
 

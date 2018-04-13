@@ -140,8 +140,12 @@ public class PetService {
         call.enqueue(new Callback<AttributesResponse>() {
             @Override
             public void onResponse(Call<AttributesResponse> call, Response<AttributesResponse> response) {
-                APIUtils.handleResponse(response,callback);
-                callback.onSuccess(response.body());
+                if(response.isSuccessful()) {
+                    APIUtils.handleResponse(response, callback);
+                    callback.onSuccess(response.body());
+                }else{
+                    callback.onError(null);
+                }
             }
 
             @Override

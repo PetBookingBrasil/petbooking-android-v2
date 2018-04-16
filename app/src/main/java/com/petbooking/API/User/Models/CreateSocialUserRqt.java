@@ -19,8 +19,8 @@ public class CreateSocialUserRqt {
 
     public static class Data {
 
-        public String type = APIConstants.DATA_USERS;
         public Attributes attributes;
+        public String type = APIConstants.DATA_USERS;
 
         public Data() {
         }
@@ -36,7 +36,6 @@ public class CreateSocialUserRqt {
         public String name;
         public String phone;
         public String email;
-        public String password;
         public String provider;
         @SerializedName("provider_token")
         public String providerToken;
@@ -47,7 +46,6 @@ public class CreateSocialUserRqt {
             this.email = email;
             this.provider = provider;
             this.providerToken = providerToken;
-            this.password = "";
         }
     }
 }

@@ -19,10 +19,9 @@ public class FormUtils {
     public static int validateUser(User user, boolean checkPassword) throws ParseException {
         Date today = new Date();
 
-        if (CommonUtils.isEmpty(user.name) || CommonUtils.isEmpty(user.birthday) || CommonUtils.isEmpty(user.cpf)
-                || CommonUtils.isEmpty(user.email) || CommonUtils.isEmpty(user.zipcode) || CommonUtils.isEmpty(user.street)
-                || CommonUtils.isEmpty(user.city) || CommonUtils.isEmpty(user.neighborhood)
-                || CommonUtils.isEmpty(user.state) || CommonUtils.isEmpty(user.streetNumber)) {
+        if (CommonUtils.isEmpty(user.name)  || CommonUtils.isEmpty(user.cpf)
+                || CommonUtils.isEmpty(user.email)
+                ) {
             return R.string.error_fields_empty;
         } else if (!CommonUtils.isValidEmail(user.email)) {
             return R.string.error_invalid_email;

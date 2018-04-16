@@ -12,11 +12,11 @@ public class CreateUserRqt {
 
     public CreateUserRqt(User user, boolean socialLogin) {
         if(!socialLogin) {
-            Log.i(getClass().getSimpleName(),"Qual o nome dos atributos 2");
+
             this.attributes = new Attributes(user.name, user.phone, user.cpf,
                     user.email, user.password);
         }else {
-            Log.i(getClass().getSimpleName(),"Qual o nome dos atributos");
+
             this.attributes = new Attributes(user.name, user.phone,
                     user.email);
         }

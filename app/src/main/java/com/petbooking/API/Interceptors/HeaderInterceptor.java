@@ -41,10 +41,11 @@ public class HeaderInterceptor implements Interceptor {
         if (headers.contains(APIConstants.HEADER_SESSION_TOKEN)) {
             String sessionToken = String.format(APIConstants.HEADER_SESSION_TOKEN_FORMAT, SessionManager.getInstance().getSessionToken());
             newRequestBuilder.header(APIConstants.HEADER_SESSION_TOKEN, sessionToken);
-            Log.i(getClass().getSimpleName()," Qual o token " + sessionToken);
         }
 
-        newRequestBuilder.header(APIConstants.HEADER_LANGUAGE, Locale.getDefault().toString());
+        if(headers.contains(APIConstants.HEADER_LANGUAGE)) {
+            newRequestBuilder.header(APIConstants.HEADER_LANGUAGE, Locale.getDefault().toString());
+        }
 
         Response response = chain.proceed(newRequestBuilder.build());
         return response;

@@ -45,7 +45,7 @@ public class APIConstants {
     /**
      * Headers
      */
-    public static final String HEADER_LANGUAGE = "X-PB-language";
+    public static final String HEADER_LANGUAGE = "X-PB-language: required";
     public static final String HEADER_CONTENT_TYPE = "Content-Type";
     public static final String HEADER_CONTENT_TYPE_VALUE = "application/vnd.api+json";
     public static final String HEADER_AUTHORIZATION_REQUIRED = "Authorization: required";

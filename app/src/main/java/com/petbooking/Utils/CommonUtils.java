@@ -2,9 +2,12 @@ package com.petbooking.Utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -14,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Models.CalendarItem;
 import com.petbooking.Models.UserAddress;
+import com.petbooking.UI.Login.LoginActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
@@ -267,5 +271,20 @@ public class CommonUtils {
         windowmanager.getDefaultDisplay().getMetrics(displayMetrics);
         int deviceWidth = displayMetrics.widthPixels;
         return deviceWidth;
+    }
+
+    public static void redirectLogin(final Context context){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Ops!");
+        builder.setMessage("Sua autenticação expirou. Por favor, entre novamente");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(context, LoginActivity.class);
+                context.startActivity(intent);
+            }
+        });
+        builder.show();
     }
 }

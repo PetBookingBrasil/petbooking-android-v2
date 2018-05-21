@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
+import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.Pet.Models.ListPetsResp;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.App;
@@ -19,10 +20,12 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Pet;
 import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Menu.Pets.RegisterPet.RegisterPetActivity;
 import com.petbooking.Utils.AppUtils;
+import com.petbooking.Utils.CommonUtils;
 
 import java.util.ArrayList;
 
@@ -143,6 +146,12 @@ public class PetsActivity extends BaseActivity implements
 
             @Override
             public void onError(Object error) {
+                if(error !=null){
+                    APIError apiError = (APIError) error;
+                    if(apiError.status.equals("401")){
+                        CommonUtils.redirectLogin(PetsActivity.this);
+                    }
+                }
                 mPetsPlaceholder.setVisibility(View.VISIBLE);
                 mRvPets.setVisibility(View.GONE);
                 AppUtils.hideDialog();

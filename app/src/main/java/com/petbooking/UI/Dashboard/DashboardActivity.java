@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.API.Business.BusinessService;
+import com.petbooking.API.Generic.APIError;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Interfaces.APICallback;
@@ -48,6 +49,7 @@ import com.petbooking.UI.Menu.Search.SearchResultFragment;
 import com.petbooking.UI.Menu.Settings.SettingsActivity;
 import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.Utils.APIUtils;
+import com.petbooking.Utils.CommonUtils;
 
 import java.util.ArrayList;
 
@@ -175,6 +177,12 @@ public class DashboardActivity extends AppCompatActivity implements
 
             @Override
             public void onError(Object error) {
+                if(error !=null){
+                    APIError apiError = (APIError) error;
+                    if(apiError.status.equals("401")){
+                        CommonUtils.redirectLogin(DashboardActivity.this);
+                    }
+                }
                 Log.i(getClass().getSimpleName(),"On error");
             }
         });

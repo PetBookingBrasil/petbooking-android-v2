@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 
 import com.petbooking.API.Appointment.AppointmentService;
 import com.petbooking.API.Business.Models.CategoryResp;
+import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Events.ShowSnackbarEvt;
@@ -43,6 +44,7 @@ import com.petbooking.UI.Dashboard.Business.Scheduling.model.ClearFieldsSchedule
 import com.petbooking.UI.Dashboard.Business.Scheduling.model.CreatePetPojo;
 import com.petbooking.UI.Dashboard.Business.Scheduling.widget.CustomLinearLayoutManager;
 import com.petbooking.UI.Dashboard.Cart.CartActivity;
+import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.Dialogs.ConfirmDialogSchedule;
 import com.petbooking.UI.Menu.Pets.RegisterPet.RegisterPetActivity;
 import com.petbooking.Utils.APIUtils;
@@ -479,6 +481,13 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
 
             @Override
             public void onError(Object error) {
+                Log.i(getClass().getSimpleName(),"Qual a parada aqui " + error);
+                if(error !=null){
+                    APIError apiError = (APIError) error;
+                    if(apiError.status.equals("401")){
+                        CommonUtils.redirectLogin(getActivity());
+                    }
+                }
                 placeHolderPet.setVisibility(View.VISIBLE);
                 AppUtils.hideDialog();
                 placeHolderPet.setVisibility(View.VISIBLE);

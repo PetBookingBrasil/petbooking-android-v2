@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.petbooking.API.Auth.Models.AuthUserResp;
+import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.User.UserService;
 import com.petbooking.BaseActivity;
 import com.petbooking.Constants.APIConstants;
@@ -357,6 +358,12 @@ public class SignUpActivity extends BaseActivity implements
             @Override
             public void onError(Object error) {
                 AppUtils.hideDialog();
+                if(error != null){
+                    APIError apiError = (APIError) error;
+                    if(apiError !=null){
+                        Log.i(getClass().getSimpleName(),"Qual o texto aqui " + apiError.detail);
+                    }
+                }
                 mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.error_create_user,
                         R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
                 mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");

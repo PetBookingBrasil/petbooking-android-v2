@@ -19,14 +19,14 @@
 
     <TextView
         android:id="@+id/professional_name"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/spacing_xmicro"
-        android:maxEms="6"
-        android:maxLines="2"
+        android:lines="2"
+        android:paddingRight="10dp"
         android:text="Banho e Tosa"
         android:textAlignment="center"
-        android:textColor="@color/text_color"  />
+        android:textColor="@color/curious_blue"  />
 
 </LinearLayout>

@@ -24,9 +24,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/spacing_xmicro"
         android:lines="2"
-        android:paddingRight="10dp"
         android:text="Banho e Tosa"
         android:textAlignment="center"
-        android:textColor="@color/curious_blue"  />
+        android:textColor="@color/text_color"  />
 
 </LinearLayout>

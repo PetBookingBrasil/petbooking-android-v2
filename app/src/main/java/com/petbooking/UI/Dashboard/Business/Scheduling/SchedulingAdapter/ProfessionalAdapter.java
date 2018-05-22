@@ -299,8 +299,7 @@ public class ProfessionalAdapter extends StatelessSection {
         public void onBindViewHolder(final ProfessionalViewHolder holder, final int position) {
             Professional professional = professionals.get(position);
             int professionalAvatar;
-            String name = "Adebayoor mariano fernandes da silva";
-            holder.professionalName.setText(name);
+            holder.professionalName.setText(professional.name);
 
             if (professional.gender == null || professional.gender.equals(User.GENDER_MALE)) {
                 professionalAvatar = R.drawable.ic_placeholder_man;

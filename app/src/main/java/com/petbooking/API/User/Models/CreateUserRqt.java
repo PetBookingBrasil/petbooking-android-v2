@@ -37,7 +37,7 @@ public class CreateUserRqt {
 
         public String name;
         public String phone;
-        public String cpf;
+        //public String cpf;
         public String email;
         public String password;
 
@@ -51,7 +51,7 @@ public class CreateUserRqt {
         public Attributes(String name, String phone, String cpf, String email, String password) {
             this.name = name;
             this.phone = phone;
-            this.cpf = cpf;
+//            this.cpf = cpf;
             this.email = email;
             this.password = password;
         }

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +19,7 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.BusinessesResp;
+import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.API.Review.ReviewRequest;
 import com.petbooking.Interfaces.APICallback;
@@ -26,6 +28,7 @@ import com.petbooking.Models.Pet;
 import com.petbooking.Models.ReviewServices;
 import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
@@ -192,6 +195,12 @@ public class ReviewSchedule extends AppCompatActivity {
 
             @Override
             public void onError(Object error) {
+                if(error !=null){
+                    APIError apiError = (APIError) error;
+                    if(apiError.status.equals("401")){
+                        CommonUtils.redirectLogin(ReviewSchedule.this);
+                    }
+                }
                 AppUtils.hideDialog();
                 updateFields();
             }

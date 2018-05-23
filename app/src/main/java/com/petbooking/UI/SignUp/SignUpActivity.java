@@ -20,7 +20,10 @@ import android.widget.ImageButton;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.petbooking.API.Auth.Models.AuthUserResp;
+import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.User.UserService;
 import com.petbooking.BaseActivity;
 import com.petbooking.Constants.APIConstants;
@@ -47,9 +50,14 @@ import com.petbooking.Utils.ImageUtils;
 import com.petbooking.databinding.UserFormBinding;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -227,6 +235,7 @@ public class SignUpActivity extends BaseActivity implements
         } else {
             user = new User();
             mEdtPhone.setNextFocusDownId(R.id.user_password);
+            mEdtCpf.setVisibility(GONE);
         }
 
 
@@ -357,8 +366,22 @@ public class SignUpActivity extends BaseActivity implements
             @Override
             public void onError(Object error) {
                 AppUtils.hideDialog();
-                mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.error_create_user,
-                        R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
+
+                    APIError apiError = (APIError) error;
+                    try{
+                        mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title,apiError.detail
+                                        .replace("=","").replace("{","").replace("}","")
+                                .replace("[","").replace("]","").replace("user","")
+                                        .split("identity")[0].replace(",","."),
+                                R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.error_create_user,
+                                R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
+                    }
+
+
+
                 mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
             }
         });

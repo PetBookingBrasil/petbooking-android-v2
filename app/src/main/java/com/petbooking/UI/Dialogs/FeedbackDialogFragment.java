@@ -33,6 +33,7 @@ public class FeedbackDialogFragment extends DialogFragment implements DialogInte
     boolean showSecond;
     private int mTitle;
     private int mText;
+    private String mTextDialog;
     private int mSecondText;
     private int mButtonText;
 
@@ -112,9 +113,19 @@ public class FeedbackDialogFragment extends DialogFragment implements DialogInte
         this.mAction = action;
     }
 
+    public void setDialogInfo(int title, String text, int buttonText, int action) {
+        this.mTitle = title;
+        this.mTextDialog = text;
+        this.mButtonText = buttonText;
+        this.mAction = action;
+    }
+
     public void updateInfo() {
         mTvTitle.setText(mTitle);
-        mTvText.setText(mText);
+        if(mTextDialog !=null)
+            mTvText.setText(mTextDialog);
+        else
+            mTvText.setText(mText);
         mBtnDialog.setText(mButtonText);
 
         if (showSecond) {

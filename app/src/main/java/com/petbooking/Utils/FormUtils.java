@@ -41,13 +41,11 @@ public class FormUtils {
     public static int newValidateUser(User user, boolean checkPassword) throws ParseException {
         Date today = new Date();
 
-        if (CommonUtils.isEmpty(user.name) || CommonUtils.isEmpty(user.cpf)
+        if (CommonUtils.isEmpty(user.name)
                 || CommonUtils.isEmpty(user.email)) {
             return R.string.error_fields_empty;
         } else if (!CommonUtils.isValidEmail(user.email)) {
             return R.string.error_invalid_email;
-        } else if (!CommonUtils.isCPFValid(user.cpf)) {
-            return R.string.error_invalid_cpf;
         } else if (!CommonUtils.isPhoneValid(user.phone)) {
             return R.string.error_invalid_phone;
         } else if (checkPassword && !CommonUtils.isValidPassword(user.password)) {

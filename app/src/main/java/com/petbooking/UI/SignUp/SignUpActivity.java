@@ -249,9 +249,9 @@ public class SignUpActivity extends BaseActivity implements
         int message = -1;
 
         try {
-            if(isSocialLogin){
+            if (isSocialLogin) {
                 message = FormUtils.validateUserSocialLogin(user);
-            }else {
+            } else {
                 message = FormUtils.newValidateUser(user, true);
             }
         } catch (ParseException e) {
@@ -261,7 +261,7 @@ public class SignUpActivity extends BaseActivity implements
         String repeatPassword = user.password;
 
         user.gender = mRbGenderMale.isChecked() ? User.GENDER_MALE : User.GENDER_FEMALE;
-        if(isSocialLogin){
+        if (isSocialLogin) {
             user.password = "";
             repeatPassword = "";
         }
@@ -269,7 +269,7 @@ public class SignUpActivity extends BaseActivity implements
             if (isSocialLogin) {
                 createSocialUser(user);
             } else {
-                createUser(user,isSocialLogin);
+                createUser(user, isSocialLogin);
             }
         } else if (message == -1 && (!user.password.equals(repeatPassword))) {
             EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_different_password, Snackbar.LENGTH_LONG));
@@ -347,7 +347,7 @@ public class SignUpActivity extends BaseActivity implements
      */
     public void createUser(final User user, boolean provider) {
         AppUtils.showLoadingDialog(this);
-        mUserService.createUser(user,provider, new APICallback() {
+        mUserService.createUser(user, provider, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 AppUtils.hideDialog();
@@ -366,23 +366,18 @@ public class SignUpActivity extends BaseActivity implements
             @Override
             public void onError(Object error) {
                 AppUtils.hideDialog();
-
-                    APIError apiError = (APIError) error;
-                    try{
-                        mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title,apiError.detail
-                                        .replace("=","").replace("{","").replace("}","")
-                                .replace("[","").replace("]","").replace("user","")
-                                        .split("identity")[0].replace(",","."),
-                                R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                        mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.error_create_user,
-                                R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
-                    }
-
-
-
-                mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
+                APIError apiError = (APIError) error;
+                try {
+                    mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, apiError.detail
+                                    .replace("=", "").replace("{", "").replace("}", "")
+                                    .replace("[", "").replace("]", "").replace("user", "")
+                                    .split("identity")[0].replace(",", "."),
+                            R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.error_create_user,
+                            R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
+                }
             }
         });
     }

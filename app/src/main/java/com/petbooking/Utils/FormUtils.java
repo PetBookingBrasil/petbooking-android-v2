@@ -19,14 +19,12 @@ public class FormUtils {
     public static int validateUser(User user, boolean checkPassword) throws ParseException {
         Date today = new Date();
 
-        if (CommonUtils.isEmpty(user.name)  || CommonUtils.isEmpty(user.cpf)
-                || CommonUtils.isEmpty(user.email)
+        if (CommonUtils.isEmpty(user.name)
+                || CommonUtils.isEmpty(user.email) || CommonUtils.isEmpty(user.phone)
                 ) {
             return R.string.error_fields_empty;
         } else if (!CommonUtils.isValidEmail(user.email)) {
             return R.string.error_invalid_email;
-        } else if (!CommonUtils.isCPFValid(user.cpf)) {
-            return R.string.error_invalid_cpf;
         } else if (!CommonUtils.isPhoneValid(user.phone)) {
             return R.string.error_invalid_phone;
         } else if (checkPassword && !CommonUtils.isValidPassword(user.password)) {
@@ -46,9 +44,9 @@ public class FormUtils {
             return R.string.error_fields_empty;
         } else if (!CommonUtils.isValidEmail(user.email)) {
             return R.string.error_invalid_email;
-        } else if (!CommonUtils.isPhoneValid(user.phone)) {
+        } else if (!CommonUtils.isEmpty(user.phone) && !CommonUtils.isPhoneValid(user.phone)) {
             return R.string.error_invalid_phone;
-        } else if (checkPassword && !CommonUtils.isValidPassword(user.password)) {
+        } else if (checkPassword && !CommonUtils.isEmpty(user.password) && !CommonUtils.isValidPassword(user.password)) {
             return R.string.error_invalid_password;
         }
 

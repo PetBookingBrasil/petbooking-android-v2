@@ -3,6 +3,7 @@ package com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.PagerSnapHelper;
@@ -122,10 +123,10 @@ public class ProfessionalAdapter extends StatelessSection {
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder item, int position) {
         ItemViewHolder holder = (ItemViewHolder) item;
-        holder.professionalList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        SnapHelper snapHelper = new PagerSnapHelper();
-        holder.professionalList.setOnFlingListener(null);
-        snapHelper.attachToRecyclerView(holder.professionalList);
+        holder.professionalList.setLayoutManager(new GridLayoutManager(context, 3));
+        //SnapHelper snapHelper = new PagerSnapHelper();
+        //holder.professionalList.setOnFlingListener(null);
+        //snapHelper.attachToRecyclerView(holder.professionalList);
         holder.professionalList.setClipToPadding(false);
         holder.professionalList.setAdapter(new ProfessionalListAdapter(context, professionals));
 

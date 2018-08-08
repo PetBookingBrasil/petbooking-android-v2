@@ -78,6 +78,7 @@
             android:layout_alignParentTop="true"
             android:textSize="17sp"
             android:textStyle="bold"
+            android:fontFamily="@font/corporativesansrdblack"
             />
 
         <LinearLayout

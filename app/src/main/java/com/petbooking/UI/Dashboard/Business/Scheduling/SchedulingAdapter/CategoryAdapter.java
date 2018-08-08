@@ -17,10 +17,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.Models.Category;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingFragment;
+import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.Utils.AppUtils;
+import com.petbooking.Utils.CommonUtils;
 
 import java.util.List;
 
@@ -118,10 +122,18 @@ public class CategoryAdapter extends StatelessSection {
 
             viewHolder.textCheckunicode.setVisibility(View.GONE);
             int color = AppUtils.getCategoryColor(context, category.categoryName);
-            GradientDrawable iconBackground = (GradientDrawable) viewHolder.image_header.getBackground();
-            viewHolder.image_header.setImageDrawable(category.icon);
-            viewHolder.image_header.setPadding(18, 18, 18, 18);
-            iconBackground.setColor(color);
+            //GradientDrawable iconBackground = (GradientDrawable) viewHolder.image_header.getBackground();
+
+            Glide.with(context)
+                    .load(getCategoryUrl(category.categoryName))
+                    .error(category.icon)
+                    .placeholder(category.icon)
+                    .bitmapTransform(new CircleTransformation(context))
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .into(viewHolder.image_header);
+            //viewHolder.image_header.setImageDrawable(category.icon);
+
+            //iconBackground.setColor(color);
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             viewHolder.headerSection.setLayoutParams(params);
             viewHolder.headerEdit.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +156,13 @@ public class CategoryAdapter extends StatelessSection {
 
     public void setPositionSelected(int positionSelected) {
         this.positionSelected = positionSelected;
+    }
+
+    private String getCategoryUrl(String categoryName){
+        if(CommonUtils.icons !=null){
+            return CommonUtils.icons.get(categoryName);
+        }
+        return "";
     }
 
     public void setExpanable(boolean expanded) {
@@ -190,10 +209,17 @@ public class CategoryAdapter extends StatelessSection {
         public void onBindViewHolder(ViewHolder holder, final int position) {
             Category category = services.get(position);
             int color = AppUtils.getCategoryColor(context, category.categoryName);
-            GradientDrawable iconBackground = (GradientDrawable) holder.layoutBackGround.getBackground();
+            //GradientDrawable iconBackground = (GradientDrawable) holder.layoutBackGround.getBackground();
 
             holder.categoryName.setText(category.categoryName);
-            holder.categoryIcon.setImageDrawable(category.icon);
+            Glide.with(context)
+                    .load(getCategoryUrl(category.categoryName))
+                    .error(category.icon)
+                    .placeholder(category.icon)
+                    .bitmapTransform(new CircleTransformation(context))
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .into(holder.categoryIcon);
+            //holder.categoryIcon.setImageDrawable(category.icon);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 holder.categoryIcon.setClipToOutline(false);
@@ -209,12 +235,12 @@ public class CategoryAdapter extends StatelessSection {
             });
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                iconBackground.setTint(color);
+               // iconBackground.setTint(color);
                 Log.i(getClass().getSimpleName(), "Qual a elevation " + holder.categoryIcon.getElevation());
                 holder.categoryIcon.setElevation(50f);
                 Log.i(getClass().getSimpleName(), "Qual a elevation 2 " + holder.categoryIcon.getElevation());
             } else {
-                iconBackground.setColor(color);
+             //   iconBackground.setColor(color);
             }
 
 

@@ -3,6 +3,7 @@ package com.petbooking.UI.Dashboard;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.UserManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -50,6 +51,8 @@ import com.petbooking.UI.Menu.Settings.SettingsActivity;
 import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.CommonUtils;
+import com.salesforce.marketingcloud.MarketingCloudSdk;
+import com.salesforce.marketingcloud.registration.RegistrationManager;
 
 import java.util.ArrayList;
 
@@ -124,7 +127,7 @@ public class DashboardActivity extends AppCompatActivity implements
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+        configureContact();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -357,6 +360,9 @@ public class DashboardActivity extends AppCompatActivity implements
             userAvatar = R.drawable.ic_placeholder_woman;
         }
 
+        if(currentUser.name.length() > 16){
+            mTvSideMenuName.setText(currentUser.name.substring(0,12) + "...");
+        }else
         mTvSideMenuName.setText(currentUser.name);
         mUserAddress = mLocationManager.getLocationCityState();
 
@@ -412,4 +418,24 @@ public class DashboardActivity extends AppCompatActivity implements
         activity.putExtra("categoryId", categoryId);
         startActivityForResult(activity, SEARCH_REQUEST);
     }
+
+    private void configureContact(){
+        MarketingCloudSdk.requestSdk(new MarketingCloudSdk.WhenReadyListener() {
+            @Override public void ready(MarketingCloudSdk marketingCloudSdk) {
+                RegistrationManager registrationManager = marketingCloudSdk.getRegistrationManager();
+
+                //Set contact key
+
+                registrationManager
+                        .edit()
+                        .setContactKey(mSessionManager.getLastEmail())
+                        .commit();
+
+                //Get contact key
+                String contactKey = registrationManager.getContactKey();
+            }
+        });
+    }
 }
+
+

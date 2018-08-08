@@ -194,6 +194,7 @@ public class ProfilePetActivity extends BaseActivity implements
         mSpCoat = (MaterialSpinner) findViewById(R.id.pet_coat);
         mBtnSubmit = (Button) findViewById(R.id.submitButton);
         chipSwitch = (StyledSwitch) findViewById(R.id.switch_chip);
+        mBtnSubmit.setText(R.string.register);
 
         mSpType.setOnItemSelectedListener(typeListener);
         mSpSize.setOnInfoClickListener(infoSizeListener);

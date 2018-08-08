@@ -43,6 +43,21 @@ public abstract class AppUtils {
         return APIPetConstants.DATA_GENDER_MALE;
     }
 
+    public static ArrayList<String> getGenders(Context context,ArrayList<String> genders){
+        ArrayList<String> genders1 = new ArrayList<>();
+        for(String gender: genders){
+            if(TextUtils.equals(gender,APIPetConstants.DATA_GENDER_MALE)){
+                genders1.add(context.getString(R.string.gender_male));
+            }else if(TextUtils.equals(gender,APIPetConstants.DATA_GENDER_FEMALE)){
+                genders1.add(context.getString(R.string.gender_female));
+            }
+        }
+        if(genders1.size() > 0)
+            return genders1;
+        else
+            return genders;
+    }
+
     public static String getSize(Context context, String size) {
         if (TextUtils.equals(size, context.getString(R.string.size_small))) {
             return APIPetConstants.DATA_SIZE_SMALL;
@@ -58,6 +73,30 @@ public abstract class AppUtils {
         }
 
         return APIPetConstants.DATA_SIZE_GIANT;
+    }
+
+    public static ArrayList<String> getSizes(Context context, ArrayList<String> sizes){
+        ArrayList<String> sizes1 = new ArrayList<>();
+        for(String size: sizes){
+            if (TextUtils.equals(size,APIPetConstants.DATA_SIZE_SMALL )) {
+                sizes1.add(context.getString(R.string.size_small));
+            }
+            if (TextUtils.equals(size,APIPetConstants.DATA_SIZE_MEDIUM )) {
+                sizes1.add(context.getString(R.string.size_medium));
+            }
+            if (TextUtils.equals(size,APIPetConstants.DATA_SIZE_BIG )) {
+                sizes1.add(context.getString(R.string.size_big));
+            }
+            if (TextUtils.equals(size, APIPetConstants.DATA_SIZE_GIANT)) {
+                sizes1.add(context.getString(R.string.size_giant));
+            }
+        }
+
+        if(sizes1.size() >0){
+            return sizes1;
+        }else{
+            return sizes;
+        }
     }
 
     public static String getCoatType(Context context, String coatType) {
@@ -76,6 +115,27 @@ public abstract class AppUtils {
         }
 
         return APIPetConstants.DATA_TYPE_SHORT;
+    }
+
+    public static ArrayList<String> getCoatTypes(Context context, ArrayList<String> coatTypes){
+        ArrayList<String> types = new ArrayList<>();
+        for(String coatType: coatTypes){
+            if (TextUtils.equals(coatType, APIPetConstants.DATA_TYPE_SHORT)) {
+                types.add(context.getString(R.string.coat_short));
+            }
+            if (TextUtils.equals(coatType, APIPetConstants.DATA_TYPE_MEDIUM)) {
+                types.add(context.getString(R.string.coat_medium));
+            }
+            if (TextUtils.equals(coatType, APIPetConstants.DATA_TYPE_LONG)) {
+                types.add( context.getString(R.string.coat_long));
+            }
+        }
+
+        if(types.size() > 0){
+            return types;
+        }else{
+            return coatTypes;
+        }
     }
 
     public static String getType(Context context, String type) {

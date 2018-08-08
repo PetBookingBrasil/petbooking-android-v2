@@ -21,6 +21,7 @@ public class CategoryResp {
     public static class CoverImage {
 
         public String url;
+        @SerializedName("mobile_thumb")
         public Listing listing;
 
     }

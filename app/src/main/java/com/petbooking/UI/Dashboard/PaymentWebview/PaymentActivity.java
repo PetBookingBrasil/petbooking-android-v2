@@ -1,11 +1,14 @@
 package com.petbooking.UI.Dashboard.PaymentWebview;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.webkit.ConsoleMessage;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
+import android.webkit.WebMessage;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -54,16 +57,20 @@ public class PaymentActivity extends AppCompatActivity {
         AppUtils.showLoadingDialog(this);
         WebSettings webSettings = mPaymentWebview.getSettings();
         webSettings.setJavaScriptEnabled(true);
-
+        mPaymentWebview.loadUrl(url);
+        mPaymentWebview.addJavascriptInterface(this,"ok");
         mPaymentWebview.setWebViewClient(new WebViewClient() {
             public void onPageFinished(WebView view, String url) {
                 AppUtils.hideDialog();
             }
+
         });
 
-        mPaymentWebview.loadUrl(url);
+
+
         mPaymentWebview.setWebChromeClient(new WebChromeClient() {
             public boolean onConsoleMessage(ConsoleMessage cm) {
+                cm.messageLevel();
                 if (cm.message().equals(APIConstants.PAYMENT_OK_TAG)) {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -71,14 +78,11 @@ public class PaymentActivity extends AppCompatActivity {
                             mAppointmentManager.reset();
                             goToDashboard();
                         }
-                    },4000);
-
+                    },8000);
                 }
 
                 return true;
             }
-
-
         });
     }
 
@@ -89,4 +93,9 @@ public class PaymentActivity extends AppCompatActivity {
         Intent dashboardIntent = new Intent(this, AgendaActivity.class);
         startActivity(dashboardIntent);
     }
+
+   @JavascriptInterface
+    public void postMessage(String ok){
+        goToDashboard();
+   }
 }

@@ -1,6 +1,7 @@
 package com.petbooking.UI.Dashboard.Business;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
@@ -55,6 +56,7 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
         businessName = getIntent().getStringExtra("businessName");
         businessDistance = getIntent().getFloatExtra("businessDistance", 0);
         category = (Category) getIntent().getParcelableExtra("category");
+
 
         if (!getIntent().hasExtra("businessId")) {
             businessId = mAppointmentManager.getCurrentBusinessId();
@@ -156,6 +158,7 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
     @Override
     public void onBackPressed() {
         if (alreadyShow) {
+            mAppointmentManager.reset();
             super.onBackPressed();
         } else {
             alreadyShow = true;

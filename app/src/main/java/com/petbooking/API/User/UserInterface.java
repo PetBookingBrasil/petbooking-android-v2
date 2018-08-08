@@ -26,7 +26,7 @@ import retrofit2.http.Query;
 
 public interface UserInterface {
 
-    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_LANGUAGE})
     @POST(APIUserConstants.USER_ENDPOINT)
     Call<AuthUserResp> createUser(@Body CreateUserRqt createUserRqt);
 

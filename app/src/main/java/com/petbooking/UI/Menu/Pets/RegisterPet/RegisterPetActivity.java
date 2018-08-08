@@ -25,6 +25,7 @@ import com.petbooking.API.Pet.APIPetConstants;
 import com.petbooking.API.Pet.Models.AttributesResponse;
 import com.petbooking.API.Pet.Models.BreedResp;
 import com.petbooking.API.Pet.PetService;
+import com.petbooking.App;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
@@ -304,14 +305,12 @@ public class RegisterPetActivity extends AppCompatActivity implements
         mPetService.getAtributtes(typePet,userId, new APICallback() {
             @Override
             public void onSuccess(Object response) {
-                Log.i(getClass().getSimpleName(), " Sucees");
                 AttributesResponse att = (AttributesResponse) response;
-                RegisterPetActivity.this.mSpGender.setItems(att.data.attributes.genders);
-                RegisterPetActivity.this.mSpSize.setItems(att.data.attributes.sizes);
-                RegisterPetActivity.this.mSpCoat.setItems(att.data.attributes.coat_types);
+                RegisterPetActivity.this.mSpGender.setItems(AppUtils.getGenders(RegisterPetActivity.this,(ArrayList<String>)att.data.attributes.genders));
+                RegisterPetActivity.this.mSpSize.setItems(AppUtils.getSizes(RegisterPetActivity.this, (ArrayList<String>) att.data.attributes.sizes));
+                RegisterPetActivity.this.mSpCoat.setItems(AppUtils.getCoatTypes(RegisterPetActivity.this,(ArrayList<String>) att.data.attributes.coat_types));
                 RegisterPetActivity.this.mSpColorPet.setItems(getColorPet(att.data.attributes.coat_colors));
                 RegisterPetActivity.this.colorsType = att.data.attributes.coat_colors;
-
 
             }
 

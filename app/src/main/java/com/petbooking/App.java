@@ -5,11 +5,14 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.appevents.AppEventsLogger;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.petbooking.API.Auth.AuthService;
 import com.petbooking.API.Auth.Models.AuthConsumerResp;
 import com.petbooking.API.Auth.Models.SessionResp;
@@ -21,6 +24,9 @@ import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.PreferenceManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Utils.CommonUtils;
+import com.salesforce.marketingcloud.InitializationStatus;
+import com.salesforce.marketingcloud.MarketingCloudConfig;
+import com.salesforce.marketingcloud.MarketingCloudSdk;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -28,8 +34,13 @@ import io.fabric.sdk.android.Fabric;
  * Created by Luciano José on 13/04/2017.
  */
 
-public class App extends Application {
+public class App extends MultiDexApplication {
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
     @Override
     public void onCreate() {
@@ -37,6 +48,7 @@ public class App extends Application {
 
         initManagers();
         initDependencies();
+        initSalesForceConfiguration();
 
         checkTokens();
     }
@@ -154,5 +166,36 @@ public class App extends Application {
         mIntent.putExtra(type, true);
         mAlarmIntent = PendingIntent.getBroadcast(context, 0, mIntent, 0);
         mAlarmManager.set(AlarmManager.RTC_WAKEUP, dateMillis, mAlarmIntent);
+    }
+
+    public void initSalesForceConfiguration() {
+        MarketingCloudSdk.init(this, MarketingCloudConfig.builder()
+                .setApplicationId("6cbf4f6b-cf41-42d4-b105-8880e52d81d7")
+                .setAccessToken("c2bpggs2bsxx8bathf9uw8f4")
+                .setGcmSenderId("599738167963")
+                .setNotificationSmallIconResId(R.drawable.ic_logo_pet_booking)
+                .setNotificationChannelName("petbooking-android")
+                .build(), new MarketingCloudSdk.InitializationListener() {
+            @Override
+            public void complete(InitializationStatus status) {
+                if (status.isUsable()) {
+                    if (status.status() == InitializationStatus.Status.COMPLETED_WITH_DEGRADED_FUNCTIONALITY) {
+                        // While the SDK is usable, something happened during init that you should address.
+                        // This could include:
+                        if (GoogleApiAvailability.getInstance().isUserResolvableError(status.locationPlayServicesStatus())) {
+                            //Google play services encountered a recoverable error
+                            GoogleApiAvailability.getInstance().showErrorNotification(App.this, status.locationPlayServicesStatus());
+                        } else if (status.messagingPermissionError()) {
+              /* The user had previously provided the location permission, but it has now been revoked.
+                 Geofence and Beacon messages have been disabled.  You will need to request the location
+                 permission again and re-enable Geofence and/or Beacon messaging again. */
+                        }
+                    }
+                } else {
+                    //Something went wrong with init that makes the SDK unusable.
+                }
+            }
+        });// Required if Android target API is >= 26
+        //Enable any other feature desired.);
     }
 }

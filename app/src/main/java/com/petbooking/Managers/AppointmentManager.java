@@ -310,6 +310,24 @@ public class AppointmentManager {
 
     }
 
+    public int getCountCartCount(){
+        int i = 0;
+
+        ArrayList<CartItem> cart = new ArrayList<>();
+        String cartStr = pref.getString("CART", null);
+
+        if (cartStr != null) {
+            cart = mJsonManager.fromJson(cartStr, new TypeToken<ArrayList<CartItem>>() {
+            }.getType());
+        }
+        for (CartItem item : cart) {
+                i++;
+
+        }
+        return i;
+
+    }
+
     public ArrayList<CartItem> getCart() {
         ArrayList<CartItem> cart = new ArrayList<>();
         String cartStr = pref.getString("CART", null);

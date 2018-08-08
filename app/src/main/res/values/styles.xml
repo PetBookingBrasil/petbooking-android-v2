@@ -6,11 +6,23 @@
         <item name="colorAccent">@color/brand_primary</item>
         <item name="android:editTextColor">@color/text_color</item>
         <item name="android:textColorHint">@color/text_color</item>
+        <item name="android:textAppearance">@style/AppFontStyle</item>
+        <item name="android:textViewStyle">@style/CustomFont</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:textViewStyle">@style/CustomFont</item>
+    </style>
+
+    <style name="AppFontStyle" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/corporativesansrdaltregular</item>
+    </style>
+
+    <style name="CustomFont" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/corporativesansrdaltregular</item>
     </style>
 
     <style name="AppTheme.NoActionBar.NoTitle" parent="AppTheme">
@@ -41,6 +53,7 @@
         <item name="android:paddingRight">@dimen/spacing_normal</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:minHeight">48dp</item>
+        <item name="android:fontFamily">@font/corporativesansrdaltregular</item>
     </style>
 
     <style name="AppTheme.PrimaryButton" parent="Widget.AppCompat.Button.Colored">
@@ -49,6 +62,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:radius">2dp</item>
+        <item name="android:fontFamily">@font/corporativesansrdaltregular</item>
     </style>
 
     <style name="AppTheme.SecondaryButton" parent="Widget.AppCompat.Button.Borderless.Colored">
@@ -57,6 +71,7 @@
         <item name="android:textColor">@color/brand_primary</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:radius">2dp</item>
+        <item name="android:fontFamily">@font/corporativesansrdaltregular</item>
     </style>
 
     <style name="AppTheme.SecondaryButtonSchedule" parent="Widget.AppCompat.Button.Borderless.Colored">
@@ -65,6 +80,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:radius">2dp</item>
+        <item name="android:fontFamily">@font/corporativesansrdaltregular</item>
     </style>
 
     <style name="AppTheme.TransparentButton" parent="Widget.AppCompat.Button.Colored">
@@ -73,6 +89,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:radius">2dp</item>
+        <item name="android:fontFamily">@font/corporativesansrdaltregular</item>
     </style>
 
     <style name="AppTheme.CallButton" parent="Widget.AppCompat.Button.Colored">
@@ -81,11 +98,13 @@
         <item name="android:textColor">@color/curious_blue</item>
         <item name="android:minHeight">30dp</item>
         <item name="android:radius">2dp</item>
+        <item name="android:fontFamily">@font/corporativesansrdaltregular</item>
     </style>
 
     <style name="AppTheme.RatingBar" parent="Widget.AppCompat.RatingBar.Small">
         <item name="colorControlNormal">@color/white</item>
         <item name="colorControlActivated">@color/yellow</item>
+        <item name="android:fontFamily">@font/corporativesansrdaltregular</item>
     </style>
 
     <style name="LoginTheme" parent="AppTheme">
@@ -97,6 +116,7 @@
         <item name="colorControlHighlight">@color/white</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+
     </style>
 
     <style name="RegisterTheme" parent="AppTheme">
@@ -108,12 +128,16 @@
         <item name="colorControlNormal">@color/text_color</item>
         <item name="colorControlActivated">@color/text_color</item>
         <item name="colorControlHighlight">@color/text_color</item>
+        <item name="android:textAppearance">@style/AppFontStyle</item>
+        <item name="android:textViewStyle">@style/CustomFont</item>
     </style>
 
     <style name="BusinessTheme" parent="AppTheme">
         <item name="android:editTextColor">@color/text_color</item>
         <item name="android:textColorHint">@color/text_color</item>
         <item name="colorControlNormal">@color/white</item>
+        <item name="android:textAppearance">@style/AppFontStyle</item>
+        <item name="android:textViewStyle">@style/CustomFont</item>
     </style>
 
     <style name="AppTheme.BrandAccent">
@@ -135,6 +159,8 @@
         <item name="colorControlNormal">@color/white</item>
         <item name="colorControlActivated">@color/white</item>
         <item name="colorControlHighlight">@color/white</item>
+        <item name="android:textViewStyle">@style/CustomFont</item>
+        <item name="android:textAppearance">@style/AppFontStyle</item>
     </style>
 
     <style name="registerBackgroundReview" parent="Theme.AppCompat.NoActionBar">
@@ -147,6 +173,8 @@
         <item name="colorControlNormal">@color/text_gray</item>
         <item name="colorControlActivated">@color/yellow</item>
         <item name="colorControlHighlight">@color/brand_primary</item>
+        <item name="android:textViewStyle">@style/CustomFont</item>
+        <item name="android:textAppearance">@style/AppFontStyle</item>
     </style>
 
 </resources>

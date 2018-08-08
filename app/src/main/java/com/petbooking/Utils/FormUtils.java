@@ -54,8 +54,10 @@ public class FormUtils {
     }
 
     public static int validateUserSocialLogin(User user){
-        if (!CommonUtils.isPhoneValid(user.phone)) {
-            return R.string.error_invalid_phone;
+        if(!CommonUtils.isEmpty(user.email)) {
+            if (!CommonUtils.isValidEmail(user.email)) {
+                return R.string.error_invalid_email;
+            }
         }
         return -1;
     }

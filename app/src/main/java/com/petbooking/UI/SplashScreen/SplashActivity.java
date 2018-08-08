@@ -76,11 +76,9 @@ public class SplashActivity extends AppCompatActivity {
         if (!hasValidAuthToken) {
             authConsumer();
         } else if (hasValidAuthToken && !hasValidSessionToken) {
-            scheduleRefreshAuth();
-            goToLogin();
+            authConsumer();
         } else if (hasValidAuthToken && hasValidSessionToken) {
-            scheduleRefreshAuth();
-            goToDashboard();
+            authConsumer();
         }
     }
 
@@ -115,7 +113,10 @@ public class SplashActivity extends AppCompatActivity {
                 boolean alreadyLogged = mSessionManager.alreadyLogged();
                 scheduleRefreshAuth();
 
-                if (alreadyLogged) {
+                if (hasValidSessionToken) {
+                    scheduleRefreshAuth();
+                    goToDashboard();
+                } else if (alreadyLogged) {
                     goToLogin();
                 } else {
                     mSessionManager.setAlreadyLogged(true);

@@ -85,7 +85,7 @@ public class APIUtils {
                 attr.ratingAverage, attr.ratingCount, attr.distance, attr.businesstype,
                 latitude, longitude, attr.website, attr.phone, attr.facebook, attr.instagram,
                 attr.twitter, attr.googlePlus, attr.snapchat, attr.coverImage, attr.avatar, attr.userFavorite, attr.favorited,
-                attr.imported, favoritedId,attr.slug);
+                attr.imported, favoritedId, attr.slug);
 
         return business;
     }
@@ -133,32 +133,32 @@ public class APIUtils {
                 service.attributes.name,
                 service.attributes.duration,
                 service.attributes.description,
-                service.attributes.priceRange.service_price,service.attributes.priceRange.max_service_price
-                ,service.attributes.priceRange.min_service_price);
+                service.attributes.priceRange.service_price, service.attributes.priceRange.max_service_price
+                , service.attributes.priceRange.min_service_price);
         return businessService;
     }
 
-    public static ReviewServices parseReviewServices(ReviewableResp.Item service, ReviewableResp reviewableResp){
+    public static ReviewServices parseReviewServices(ReviewableResp.Item service, ReviewableResp reviewableResp) {
         String bussinesName = "";
         String professionalAvatar = "";
         String categoryName = "";
-        for(int i = 0; i< reviewableResp.included.size(); i++){
-            if(reviewableResp.included.get(i).type.equals("employments")){
+        for (int i = 0; i < reviewableResp.included.size(); i++) {
+            if (reviewableResp.included.get(i).type.equals("employments")) {
                 professionalAvatar = reviewableResp.included.get(i).attributes.avatar.url;
-                Log.i("Teste","Qual o professional avatar " + professionalAvatar);
+                Log.i("Teste", "Qual o professional avatar " + professionalAvatar);
                 continue;
             }
-            if(reviewableResp.included.get(i).type.equals("service_categories")){
+            if (reviewableResp.included.get(i).type.equals("service_categories")) {
                 categoryName = reviewableResp.included.get(i).attributes.name;
             }
-            if(reviewableResp.included.get(i).type.equals("businesses")){
+            if (reviewableResp.included.get(i).type.equals("businesses")) {
                 bussinesName = reviewableResp.included.get(i).attributes.name;
-                Log.i("Teste","Qual o bussines name " + bussinesName);
+                Log.i("Teste", "Qual o bussines name " + bussinesName);
                 continue;
             }
         }
-        ReviewServices reviewServices = new ReviewServices(service.attributes.pet_id,categoryName,
-                bussinesName,service.attributes.professional_name,professionalAvatar,service.attributes.date,service.id);
+        ReviewServices reviewServices = new ReviewServices(service.attributes.pet_id, categoryName,
+                bussinesName, service.attributes.professional_name, professionalAvatar, service.attributes.date, service.id);
         return reviewServices;
     }
 
@@ -171,8 +171,15 @@ public class APIUtils {
      * @return
      */
     public static Category parseCategory(Context context, CategoryResp.Item item) {
-        Category category = new Category(item.id, AppUtils.getCategoryText(item.attributes.name),
-                item.attributes.name, AppUtils.getBusinessIcon(context, item.attributes.name));
+        Category category;
+        if (item.attributes.coverImage != null) {
+            category = new Category(item.id, AppUtils.getCategoryText(item.attributes.name),
+                    item.attributes.name, AppUtils.getBusinessIcon(context, item.attributes.name),
+                    item.attributes.coverImage.listing.url);
+        } else {
+            category = new Category(item.id, AppUtils.getCategoryText(item.attributes.name),
+                    item.attributes.name, AppUtils.getBusinessIcon(context, item.attributes.name));
+        }
 
         return category;
     }

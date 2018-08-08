@@ -76,7 +76,10 @@
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
         android:text="@string/add_pet"
+        android:fontFamily="@font/corporativesansrdaltregular"
+        android:textAppearance="@font/corporativesansrdaltregular"
         android:layout_alignParentBottom="true"
+        android:textSize="18sp"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:textColor="@color/brand_primary"/>

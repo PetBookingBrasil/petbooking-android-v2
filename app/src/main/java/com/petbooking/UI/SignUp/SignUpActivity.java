@@ -1,5 +1,8 @@
 package com.petbooking.UI.SignUp;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
@@ -22,7 +25,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.petbooking.API.Auth.AuthService;
 import com.petbooking.API.Auth.Models.AuthUserResp;
+import com.petbooking.API.Auth.Models.SessionResp;
 import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.User.UserService;
 import com.petbooking.BaseActivity;
@@ -32,6 +37,7 @@ import com.petbooking.Events.HideLoadingEvt;
 import com.petbooking.Events.ShowLoadingEvt;
 import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Managers.AlarmReceiver;
 import com.petbooking.Managers.MaskManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.User;
@@ -72,8 +78,9 @@ public class SignUpActivity extends BaseActivity implements
 
     private FragmentManager mFragmentManager;
     private UserService mUserService;
+    private AuthService mAuthService;
     private SessionManager mSessionManager;
-
+    private AlarmManager mAlarmManager;
     private boolean isSocialLogin;
 
     /**
@@ -171,6 +178,7 @@ public class SignUpActivity extends BaseActivity implements
 
         mFragmentManager = getSupportFragmentManager();
         mUserService = new UserService();
+        mAuthService = new AuthService();
         mSessionManager = SessionManager.getInstance();
         mDialogFragmentPictureSelect = PictureSelectDialogFragment.newInstance();
         mDialogFragmentFeedback = FeedbackDialogFragment.newInstance();
@@ -226,11 +234,14 @@ public class SignUpActivity extends BaseActivity implements
             layoutHeader.setVisibility(View.VISIBLE);
             fulNameTL.setVisibility(View.INVISIBLE);
             mEdtCpf.setVisibility(GONE);
-            emailTL.setVisibility(GONE);
+            emailTL.setVisibility(View.VISIBLE);
+            mEdtPhone.setVisibility(GONE);
             mUserPassword.setVisibility(GONE);
             textInputPassword.setVisibility(GONE);
             mBtnSubmit.setText(R.string.continue_register);
-
+            if(user.email !=null){
+                mBtnSubmit.performClick();
+            }
 
         } else {
             user = new User();
@@ -267,7 +278,12 @@ public class SignUpActivity extends BaseActivity implements
         }
         if (message == -1 && (user.password.equals(repeatPassword))) {
             if (isSocialLogin) {
-                createSocialUser(user);
+                if(user.email != null) {
+                    createSocialUser(user);
+                }else{
+                    EventBus.getDefault().post(new ShowSnackbarEvt(R.string.error_fields_empty, Snackbar.LENGTH_LONG));
+                }
+
             } else {
                 createUser(user, isSocialLogin);
             }
@@ -350,7 +366,7 @@ public class SignUpActivity extends BaseActivity implements
         mUserService.createUser(user, provider, new APICallback() {
             @Override
             public void onSuccess(Object response) {
-                AppUtils.hideDialog();
+                /*AppUtils.hideDialog();
                 AuthUserResp authUserResp = (AuthUserResp) response;
                 User registeredUser = APIUtils.parseUser(authUserResp);
                 mSessionManager.setSessionToken(registeredUser.authToken);
@@ -360,7 +376,8 @@ public class SignUpActivity extends BaseActivity implements
                 mSessionManager.setUserLogged(registeredUser);
                 mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.success_create_user,
                         R.string.dialog_button_ok, AppConstants.OK_ACTION);
-                mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
+                mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");*/
+                login(user.email,user.password);
             }
 
             @Override
@@ -378,6 +395,60 @@ public class SignUpActivity extends BaseActivity implements
                     mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.error_create_user,
                             R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
                 }
+            }
+        });
+    }
+
+    private void login(final String email, final String password){
+        mAuthService.authUser(email, password, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                SessionResp sessionResp = (SessionResp) response;
+                mSessionManager.setSessionToken(sessionResp.data.attributes.token);
+                mSessionManager.setSessionExpirationDate(sessionResp.data.attributes.expiresAt);
+                mSessionManager.setLastLogin(email, password);
+                scheduleRefreshToken(AppConstants.SESSION_TOKEN);
+                requestData(sessionResp.data.attributes.userID);
+            }
+
+            @Override
+            public void onError(Object error) {
+                APIError apiError = (APIError) error;
+                if (apiError.code == APIConstants.ERROR_CODE_INVALID_LOGIN) {
+                    mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.error_create_user,
+                            R.string.dialog_button_ok, AppConstants.BACK_SCREEN_ACTION);
+                }
+            }
+        });
+    }
+
+    public void scheduleRefreshToken(String type) {
+        Intent mIntent;
+        PendingIntent mAlarmIntent;
+        long dateMillis = CommonUtils.getRefreshDate(mSessionManager.getSessionExpirationDate());
+
+        mAlarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        mIntent = new Intent(this, AlarmReceiver.class);
+        mIntent.putExtra(type, true);
+        mAlarmIntent = PendingIntent.getBroadcast(this, AppConstants.REFRESH_SESSION, mIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        mAlarmManager.set(AlarmManager.RTC_WAKEUP, dateMillis, mAlarmIntent);
+    }
+
+    public void requestData(String id) {
+        mUserService.getUser(id, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                AuthUserResp authUserResp = (AuthUserResp) response;
+                User user = APIUtils.parseUser(authUserResp);
+                mSessionManager.setUserLogged(user);
+                AppUtils.hideDialog();
+                mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.success_create_user,
+                        R.string.dialog_button_ok, AppConstants.OK_ACTION);
+                mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
+            }
+
+            @Override
+            public void onError(Object error) {
             }
         });
     }
@@ -403,6 +474,7 @@ public class SignUpActivity extends BaseActivity implements
                 mDialogFragmentFeedback.setDialogInfo(R.string.register_dialog_title, R.string.success_create_user,
                         R.string.dialog_button_ok, AppConstants.OK_ACTION);
                 mDialogFragmentFeedback.show(mFragmentManager, "FEEDBACK");
+
             }
 
             @Override

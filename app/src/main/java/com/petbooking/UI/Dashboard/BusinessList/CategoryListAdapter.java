@@ -13,10 +13,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.Models.Category;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter.CategoryAdapter;
 import com.petbooking.UI.Dashboard.Content.ContentTabsAdapter;
+import com.petbooking.UI.Widget.CircleTransformation;
+import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by joice on 15/01/18.
+ * Created by Victor on 15/01/18.
  */
 
 public class CategoryListAdapter extends  RecyclerView.Adapter<CategoryListAdapter.ViewHolder>{
@@ -60,10 +64,17 @@ public class CategoryListAdapter extends  RecyclerView.Adapter<CategoryListAdapt
     public void onBindViewHolder(CategoryListAdapter.ViewHolder holder, final int position) {
         final Category category = categories.get(position);
         int color = AppUtils.getCategoryColor(context, category.categoryName);
-        GradientDrawable iconBackground = (GradientDrawable) holder.layoutBackGround.getBackground();
+        //GradientDrawable iconBackground = (GradientDrawable) holder.categoryIcon.getBackground();
 
         holder.categoryName.setText(category.categoryName.toUpperCase());
-        holder.categoryIcon.setImageDrawable(category.icon);
+        Log.i(getClass().getSimpleName(), "Qual o url da category " + category.iconUrl);
+        Glide.with(context)
+                .load(category.iconUrl)
+                .bitmapTransform(new CircleTransformation(context))
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .into(holder.categoryIcon);
+
+        //holder.categoryIcon.setImageDrawable(category.icon);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             holder.categoryIcon.setClipToOutline(false);
@@ -80,10 +91,10 @@ public class CategoryListAdapter extends  RecyclerView.Adapter<CategoryListAdapt
         });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            iconBackground.setTint(color);
+          //  iconBackground.setTint(color);
             holder.categoryIcon.setElevation(50f);
         }else{
-            iconBackground.setColor(color);
+            //iconBackground.setColor(color);
         }
 
 

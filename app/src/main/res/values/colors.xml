@@ -26,6 +26,7 @@
 
     <!-- Brand Colors -->
     <color name="brand_primary">#E4002B</color>
+    <color name="background_brand">#1AE4002B</color>
     <color name="secondary_red">#B00021</color>
     <color name="default_gray">#F6F6F6</color>
     <color name="text_color">#545454</color>

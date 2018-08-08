@@ -315,7 +315,7 @@
                 android:layout_marginRight="@dimen/business_fragment_spacing"
                 android:layout_marginStart="@dimen/business_fragment_spacing"
                 android:layout_marginTop="@dimen/spacing_tiny"
-                android:text="@string/business_label_location"
+                android:text="@string/business_label_location_max"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

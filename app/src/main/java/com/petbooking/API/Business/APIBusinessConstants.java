@@ -54,7 +54,7 @@ public class APIBusinessConstants {
     public static final String FIELDS_CATEGORIES = "?fields[category_templates]=id,name,slug,cover_image";
     public static final String FIELDS_FAVORITES = "?fields[favorites]=favorable_id,favorable_type,favorite_count";
     public static final String FIELDS_REVIEW_PART_ONE = "?filter[scheduling_ref]=past&";
-    public static final String FIELDS_REVIEW = "&filter[reviewable]=true&include=business,service.service_category,employment&fields[businesses]=name,slug,street,street_number,neighborhood,location,city,state,user_favorite&fields[services]=price,bitmask_values,service_category";
+    public static final String FIELDS_REVIEW = "/reviewable?include=business&fields[business]=name,slug,street,street_number,neighborhood,location,city,state,user_favorite&fields[services]=price,bitmask_values,service_category";
 
     /**
      * APIs
@@ -80,7 +80,7 @@ public class APIBusinessConstants {
 
     public static final String ENDPOINT_BUSINESS_REVIEWS = "businesses/{" + PATH_BUSINESS_ID + "}/reviews" + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
 
-    public static final String ENDPOINT_GET_REVIEWS = "users/{" + APIConstants.PATH_PARAM + "}/events"+ FIELDS_REVIEW_PART_ONE +  FIELDS_REVIEW;
+    public static final String ENDPOINT_GET_REVIEWS = "users/{" + APIConstants.PATH_PARAM + "}/events"+ FIELDS_REVIEW;
 
     public static final String ENDPOINT_BUSSINESS_SLUG = "count_phone_click_for/{"+APIConstants.PATH_PARAM + "}";
 

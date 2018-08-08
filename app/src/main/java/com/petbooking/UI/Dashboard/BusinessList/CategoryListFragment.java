@@ -6,12 +6,14 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.Interfaces.APICallback;
@@ -21,8 +23,10 @@ import com.petbooking.UI.Dashboard.Content.ContentTabsAdapter;
 import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
+import com.petbooking.Utils.CommonUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +39,9 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
     //List
     @BindView(R.id.listCategorys)
     RecyclerView categorys;
+
+    @BindView(R.id.container)
+    RelativeLayout container;
 
     Context context;
     //List
@@ -68,6 +75,7 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
         categorys.setAdapter(categoryAdapter);
         mCategoryList.clear();
         getCategories();
+        container.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.white));
         return view;
     }
 
@@ -82,6 +90,7 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
                 }
 
                 categoryAdapter.setCategories(mCategoryList);
+                configureCategoriesIcons();
                 categoryAdapter.notifyDataSetChanged();
                 AppUtils.hideDialog();
             }
@@ -91,6 +100,14 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
                 AppUtils.hideDialog();
             }
         });
+    }
+
+    private void configureCategoriesIcons(){
+        HashMap<String,String> icons = new HashMap<>();
+        for (int i = 0; i < mCategoryList.size(); i++){
+            icons.put(mCategoryList.get(i).categoryName,mCategoryList.get(i).iconUrl);
+        }
+        CommonUtils.icons = icons;
     }
 
     public void replaceFragment(String categoryId, String categoryName,Category category){

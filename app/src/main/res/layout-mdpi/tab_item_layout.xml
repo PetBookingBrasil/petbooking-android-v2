@@ -11,9 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:textAlignment="center"
-        android:drawablePadding="1dp"
+        android:drawablePadding="0.5dp"
+        android:fontFamily="@font/font_family"
         android:lines="1"
-        android:textSize="14sp"
+        android:textSize="9sp"
         android:textColor="@android:color/white"
         android:gravity="center"/>
 </LinearLayout>

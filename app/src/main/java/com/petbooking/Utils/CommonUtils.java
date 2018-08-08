@@ -24,6 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,6 +43,7 @@ public class CommonUtils {
     final public static String DAY_FORMAT_DESCRIOTION = "EE";
     final public static String MONTH_NUMBER_FORMAT = "MM";
     final public static String YEAR_FORMAT = "yyyy";
+    public static HashMap<String, String> icons;
     public static void hideKeyboard(Activity activity) {
         if (activity == null || activity.getCurrentFocus() == null) {
             return;

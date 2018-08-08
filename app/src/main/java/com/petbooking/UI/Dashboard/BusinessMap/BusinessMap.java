@@ -118,7 +118,7 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
     View.OnClickListener businessListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            goToBusiness(selectedBusiness.id);
+            goToBusiness(selectedBusiness.id,selectedBusiness.name);
         }
     };
 
@@ -452,9 +452,10 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
     /**
      * Go to Business
      */
-    public void goToBusiness(String businessId) {
+    public void goToBusiness(String businessId, String businessName) {
         Intent businessIntent = new Intent(mContext, BusinessActivity.class);
         businessIntent.putExtra("businessId", businessId);
+        businessIntent.putExtra("businessName", businessName);
         mContext.startActivity(businessIntent);
     }
 

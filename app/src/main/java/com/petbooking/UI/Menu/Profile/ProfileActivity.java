@@ -178,6 +178,7 @@ public class ProfileActivity extends BaseActivity implements
         mEdtCpf.addTextChangedListener(MaskManager.insert("###.###.###-##", mEdtCpf));
         mEdtZipcode.addTextChangedListener(MaskManager.insert("##.###-###", mEdtZipcode));
         mEdtPhone.addTextChangedListener(MaskManager.insert("(##) #####.####", mEdtPhone));
+        mBtnSubmit.setText(getString(R.string.profile_dialog_title));
 
         mEdtZipcode.addTextChangedListener(mTextWatcher);
         mEdtBirthday.setOnClickListener(mBirthdayListener);

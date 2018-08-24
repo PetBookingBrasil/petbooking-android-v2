@@ -2,6 +2,7 @@ package com.petbooking.UI.Dashboard.PaymentWebview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
 
 import com.petbooking.API.Appointment.APIAppointmentConstants;
@@ -26,6 +27,9 @@ public class PaymentListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mAppointmentManager = AppointmentManager.getInstance();
         mAppointmentService = new AppointmentService();
 

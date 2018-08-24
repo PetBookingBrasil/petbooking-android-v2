@@ -6,11 +6,14 @@
     android:layout_height="match_parent"
     tools:context="com.petbooking.UI.Dashboard.Business.BusinessActivity">
 
+    <include
+        layout="@layout/toolbar_main"/>
+
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/toolbar_main"
         app:tabGravity="fill"
         app:tabSelectedTextColor="@color/white"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"

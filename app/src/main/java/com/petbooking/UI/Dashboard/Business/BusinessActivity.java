@@ -47,6 +47,10 @@ public class BusinessActivity extends AppCompatActivity implements ConfirmDialog
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mAppointmentManager = AppointmentManager.getInstance();
 
         mTabLayout = (TabLayout) findViewById(R.id.tabs);

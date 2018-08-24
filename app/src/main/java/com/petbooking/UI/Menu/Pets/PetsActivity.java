@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -56,6 +57,10 @@ public class PetsActivity extends BaseActivity implements
         mSessionManager = SessionManager.getInstance();
         mPetService = new PetService();
         currentUser = mSessionManager.getUserLogged();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setElevation(0);

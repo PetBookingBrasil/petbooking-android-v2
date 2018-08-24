@@ -16,6 +16,9 @@ public class CategoryResp {
         @SerializedName("cover_image")
         public CoverImage coverImage;
 
+        @SerializedName("category_template_icon")
+        public CategoryIcon categoryIcon;
+
     }
 
     public static class CoverImage {
@@ -23,6 +26,13 @@ public class CategoryResp {
         public String url;
         @SerializedName("mobile_thumb")
         public Listing listing;
+
+    }
+
+    public static class CategoryIcon {
+
+        @SerializedName("icon")
+        public Icon icon;
 
     }
 
@@ -38,6 +48,10 @@ public class CategoryResp {
 
         public String url;
 
+    }
+
+    public static class Icon {
+        public String url;
     }
 
 }

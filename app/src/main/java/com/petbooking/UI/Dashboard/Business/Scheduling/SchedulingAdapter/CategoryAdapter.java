@@ -124,13 +124,23 @@ public class CategoryAdapter extends StatelessSection {
             int color = AppUtils.getCategoryColor(context, category.categoryName);
             //GradientDrawable iconBackground = (GradientDrawable) viewHolder.image_header.getBackground();
 
-            Glide.with(context)
-                    .load(getCategoryUrl(category.categoryName))
-                    .error(category.icon)
-                    .placeholder(category.icon)
-                    .bitmapTransform(new CircleTransformation(context))
-                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                    .into(viewHolder.image_header);
+            if(category.iconUrl !=null){
+                Glide.with(context)
+                        .load(category.iconUrl)
+                        .error(category.icon)
+                        .placeholder(category.icon)
+                        .bitmapTransform(new CircleTransformation(context))
+                        .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                        .into(viewHolder.image_header);
+            }else {
+                Glide.with(context)
+                        .load(getCategoryUrl(category.categoryName))
+                        .error(category.icon)
+                        .placeholder(category.icon)
+                        .bitmapTransform(new CircleTransformation(context))
+                        .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                        .into(viewHolder.image_header);
+            }
             //viewHolder.image_header.setImageDrawable(category.icon);
 
             //iconBackground.setColor(color);
@@ -212,13 +222,23 @@ public class CategoryAdapter extends StatelessSection {
             //GradientDrawable iconBackground = (GradientDrawable) holder.layoutBackGround.getBackground();
 
             holder.categoryName.setText(category.categoryName);
-            Glide.with(context)
-                    .load(getCategoryUrl(category.categoryName))
-                    .error(category.icon)
-                    .placeholder(category.icon)
-                    .bitmapTransform(new CircleTransformation(context))
-                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                    .into(holder.categoryIcon);
+            if(category.iconUrl !=null){
+                Glide.with(context)
+                        .load(category.iconUrl)
+                        .error(category.icon)
+                        .placeholder(category.icon)
+                        .bitmapTransform(new CircleTransformation(context))
+                        .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                        .into(holder.categoryIcon);
+            }else {
+                Glide.with(context)
+                        .load(getCategoryUrl(category.categoryName))
+                        .error(category.icon)
+                        .placeholder(category.icon)
+                        .bitmapTransform(new CircleTransformation(context))
+                        .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                        .into(holder.categoryIcon);
+            }
             //holder.categoryIcon.setImageDrawable(category.icon);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

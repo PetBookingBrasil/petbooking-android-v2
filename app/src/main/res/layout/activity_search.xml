@@ -37,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_xmicro"
                 android:layout_marginRight="@dimen/spacing_xmicro"
+                android:fontFamily="@font/corporativesansrdaltregular"
                 android:textColor="@color/text_color"
                 android:inputType="text"
                 android:textSize="14sp" />
@@ -67,6 +68,7 @@
                 android:drawablePadding="@dimen/spacing_xmicro"
                 android:hint="@string/city_neighborhood"
                 android:inputType="text"
+                android:fontFamily="@font/corporativesansrdaltregular"
                 android:textColorHint="@color/professional_list_background"
                 android:textSize="14sp" />
         </android.support.design.widget.TextInputLayout>

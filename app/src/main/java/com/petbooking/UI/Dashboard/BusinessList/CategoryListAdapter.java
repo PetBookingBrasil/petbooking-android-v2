@@ -67,7 +67,6 @@ public class CategoryListAdapter extends  RecyclerView.Adapter<CategoryListAdapt
         //GradientDrawable iconBackground = (GradientDrawable) holder.categoryIcon.getBackground();
 
         holder.categoryName.setText(category.categoryName.toUpperCase());
-        Log.i(getClass().getSimpleName(), "Qual o url da category " + category.iconUrl);
         Glide.with(context)
                 .load(category.iconUrl)
                 .bitmapTransform(new CircleTransformation(context))

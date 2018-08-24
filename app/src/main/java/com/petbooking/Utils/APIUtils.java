@@ -176,7 +176,11 @@ public class APIUtils {
             category = new Category(item.id, AppUtils.getCategoryText(item.attributes.name),
                     item.attributes.name, AppUtils.getBusinessIcon(context, item.attributes.name),
                     item.attributes.coverImage.listing.url);
-        } else {
+        } else if(item.attributes.categoryIcon !=null){
+            category = new Category(item.id, AppUtils.getCategoryText(item.attributes.name),
+                    item.attributes.name, AppUtils.getBusinessIcon(context, item.attributes.name),
+                    item.attributes.categoryIcon.icon.url);
+        }else{
             category = new Category(item.id, AppUtils.getCategoryText(item.attributes.name),
                     item.attributes.name, AppUtils.getBusinessIcon(context, item.attributes.name));
         }

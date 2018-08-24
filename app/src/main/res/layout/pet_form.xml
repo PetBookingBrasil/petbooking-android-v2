@@ -11,6 +11,16 @@
             type="com.petbooking.Models.Pet" />
     </data>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar_main"
+        android:visibility="visible"
+        />
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,6 +30,7 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
 
             <LinearLayout
                 android:id="@+id/pictureLayout"
@@ -69,6 +80,7 @@
                         android:drawableLeft="@drawable/ic_pet"
                         android:drawablePadding="@dimen/spacing_xmicro"
                         android:drawableStart="@drawable/ic_pet"
+                        android:fontFamily="@font/corporativesansrdaltregular"
                         android:hint="@string/hint_pet_name"
                         android:inputType="textPersonName"
                         android:paddingLeft="@dimen/spacing_xmicro"
@@ -118,6 +130,7 @@
                         android:drawablePadding="@dimen/spacing_xmicro"
                         android:drawableStart="@drawable/ic_calendar_black"
                         android:focusable="false"
+                        android:fontFamily="@font/corporativesansrdaltregular"
                         android:hint="@string/hint_pet_birthday"
                         android:inputType="number"
                         android:nextFocusDown="@+id/pet_gender"
@@ -286,6 +299,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/chip_number"
+                        android:fontFamily="@font/corporativesansrdaltregular"
                         android:inputType="text"
                         android:paddingLeft="@dimen/spacing_xmicro"
                         android:text="@={pet.chipNumber}" />
@@ -313,6 +327,7 @@
                     android:layout_height="70dp"
                     android:drawableLeft="@drawable/ic_observation"
                     android:drawablePadding="@dimen/spacing_xmicro"
+                    android:fontFamily="@font/corporativesansrdaltregular"
                     android:drawableStart="@drawable/ic_observation"
                     android:hint="@string/hint_observation"
                     android:inputType="text"
@@ -342,5 +357,6 @@
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
+    </LinearLayout>
 
 </layout>

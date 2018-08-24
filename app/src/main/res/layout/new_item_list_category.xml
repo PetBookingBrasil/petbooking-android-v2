@@ -9,34 +9,28 @@
     android:layout_marginLeft="@dimen/spacing_xmicro"
     android:gravity="center_horizontal"
     android:layout_marginRight="@dimen/spacing_xmicro"
-    android:layout_marginTop="@dimen/spacing_tiny"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
-        android:padding="10dp"
         android:layout_gravity="center">
 
         <LinearLayout
             android:id="@+id/layoutCategory"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:padding="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:orientation="vertical"
             android:elevation="8dp">
 
 
             <ImageView
                 android:id="@+id/category_icon"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
                 android:layout_gravity="center"
                 android:elevation="10dp"
                 app:srcCompat="@drawable/ic_category_transport"
@@ -77,8 +71,5 @@
             android:visibility="gone"/>
 
     </RelativeLayout>
-
-
-
 
 </LinearLayout>

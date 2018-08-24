@@ -11,6 +11,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -223,6 +224,17 @@ public class RegisterPetActivity extends AppCompatActivity implements
         mSpColorPet = (MaterialSpinner) findViewById(R.id.color_pet);
         this.userId = SessionManager.getInstance().getUserLogged().id;
 
+        if(!schedule){
+
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+            toolbar.setVisibility(View.VISIBLE);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }else{
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+            toolbar.setVisibility(View.GONE);
+        }
+
         if(schedule){
             mSpColorPet.setHintColor(R.color.white);
             mSpBreed.setHintColor(R.color.white);
@@ -392,7 +404,8 @@ public class RegisterPetActivity extends AppCompatActivity implements
         if (message == -1) {
             createRequest(pet);
         } else {
-            EventBus.getDefault().post(new ShowSnackbarEvt(message, Snackbar.LENGTH_LONG));
+            View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
+            Snackbar.make(rootView, message, Snackbar.LENGTH_LONG).show();
         }
     }
 

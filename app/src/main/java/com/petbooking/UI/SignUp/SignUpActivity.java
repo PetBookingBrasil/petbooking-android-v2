@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -175,7 +176,9 @@ public class SignUpActivity extends BaseActivity implements
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.user_form);
         isSocialLogin = getIntent().getBooleanExtra(AppConstants.SOCIAL_LOGIN, false);
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mFragmentManager = getSupportFragmentManager();
         mUserService = new UserService();
         mAuthService = new AuthService();

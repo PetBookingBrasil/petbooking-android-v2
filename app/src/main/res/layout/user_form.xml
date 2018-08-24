@@ -11,6 +11,14 @@
             type="com.petbooking.Models.User" />
     </data>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/toolbar_main"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -131,6 +139,7 @@
                     android:hint="@string/hint_name"
                     android:inputType="textPersonName"
                     android:paddingLeft="@dimen/spacing_xmicro"
+                    android:fontFamily="@font/corporativesansrdaltregular"
                     android:text="@={user.name}" />
             </android.support.design.widget.TextInputLayout>
 
@@ -208,6 +217,7 @@
                         android:layout_marginRight="@dimen/spacing_xmicro"
                         android:layout_marginTop="@dimen/spacing_xmicro"
                         android:drawablePadding="@dimen/spacing_xmicro"
+                        android:fontFamily="@font/corporativesansrdaltregular"
                         android:hint="@string/hint_cpf"
                         android:inputType="number"
                         android:nextFocusDown="@+id/user_birthday"
@@ -229,6 +239,7 @@
                         android:layout_marginTop="@dimen/spacing_xmicro"
                         android:drawableLeft="@drawable/ic_calendar_black"
                         android:drawablePadding="@dimen/spacing_xmicro"
+                        android:fontFamily="@font/corporativesansrdaltregular"
                         android:drawableStart="@drawable/ic_calendar_black"
                         android:focusable="false"
                         android:hint="@string/hint_birthday"
@@ -257,6 +268,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/spacing_xmicro"
                     android:hint="@string/hint_email"
+                    android:fontFamily="@font/corporativesansrdaltregular"
                     android:inputType="textEmailAddress|textNoSuggestions"
                     android:paddingBottom="@dimen/spacing_xtiny"
                     android:paddingLeft="@dimen/spacing_xmicro"
@@ -283,6 +295,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_zipcode"
                     android:drawablePadding="@dimen/spacing_xmicro"
+                    android:fontFamily="@font/corporativesansrdaltregular"
                     android:drawableStart="@drawable/ic_zipcode"
                     android:hint="@string/hint_zipcode"
                     android:inputType="number"
@@ -316,6 +329,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_point"
                         android:drawablePadding="@dimen/spacing_xmicro"
+                        android:fontFamily="@font/corporativesansrdaltregular"
                         android:drawableStart="@drawable/ic_point"
                         android:hint="@string/hint_street"
                         android:inputType="text"
@@ -337,6 +351,7 @@
                         android:drawablePadding="@dimen/spacing_xmicro"
                         android:drawableStart="@drawable/ic_point"
                         android:hint="@string/hint_street_number"
+                        android:fontFamily="@font/corporativesansrdaltregular"
                         android:inputType="number"
                         android:paddingLeft="@dimen/spacing_xmicro"
                         android:text="@={user.streetNumber}" />
@@ -361,6 +376,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_point"
                     android:drawablePadding="@dimen/spacing_xmicro"
+                    android:fontFamily="@font/corporativesansrdaltregular"
                     android:drawableStart="@drawable/ic_point"
                     android:hint="@string/hint_complement"
                     android:inputType="text"
@@ -386,6 +402,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_point"
                     android:drawablePadding="@dimen/spacing_xmicro"
+                    android:fontFamily="@font/corporativesansrdaltregular"
                     android:drawableStart="@drawable/ic_point"
                     android:hint="@string/hint_neighborhood"
                     android:inputType="text"
@@ -419,6 +436,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_city"
                         android:drawablePadding="@dimen/spacing_xmicro"
+                        android:fontFamily="@font/corporativesansrdaltregular"
                         android:drawableStart="@drawable/ic_city"
                         android:hint="@string/hint_city"
                         android:inputType="text"
@@ -438,6 +456,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_state"
                         android:drawablePadding="@dimen/spacing_xmicro"
+                        android:fontFamily="@font/corporativesansrdaltregular"
                         android:drawableStart="@drawable/ic_state"
                         android:hint="@string/hint_state"
                         android:inputType="text|textCapCharacters"
@@ -466,6 +485,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/spacing_xmicro"
                     android:hint="@string/hint_phone"
+                    android:fontFamily="@font/corporativesansrdaltregular"
                     android:inputType="phone"
                     android:paddingLeft="@dimen/spacing_xmicro"
                     android:text="@={user.phone}" />
@@ -500,6 +520,7 @@
                         android:layout_marginTop="@dimen/spacing_xmicro"
                         android:drawablePadding="@dimen/spacing_xmicro"
                         android:hint="@string/hint_password"
+                        android:fontFamily="@font/corporativesansrdaltregular"
                         android:inputType="textPassword"
                         android:nextFocusDown="@+id/repeat_password"
                         android:paddingLeft="@dimen/spacing_xmicro"
@@ -519,6 +540,7 @@
                         android:layout_marginTop="@dimen/spacing_xmicro"
                         android:drawableLeft="@drawable/ic_password_black"
                         android:drawablePadding="@dimen/spacing_xmicro"
+                        android:fontFamily="@font/corporativesansrdaltregular"
                         android:drawableStart="@drawable/ic_password_black"
                         android:hint="@string/hint_repeat_password"
                         android:inputType="textPassword"
@@ -546,5 +568,7 @@
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
+
+    </LinearLayout>
 
 </layout>

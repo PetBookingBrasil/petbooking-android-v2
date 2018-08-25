@@ -125,6 +125,8 @@ public class ServiceAdapter extends StatelessSection {
         final ServiceViewHolder holder = (ServiceViewHolder) item;
         if (position != 0) {
             holder.headerTitle.setVisibility(View.GONE);
+        }else{
+            holder.headerTitle.setVisibility(View.VISIBLE);
         }
         Log.i(getClass().getSimpleName(), "Qual os itens ");
         mAdditionalServiceListAdapter.setPetId(petId);

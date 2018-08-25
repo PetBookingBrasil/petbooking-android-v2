@@ -20,6 +20,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.petbooking.API.Pet.APIPetConstants;
@@ -233,6 +234,15 @@ public class RegisterPetActivity extends AppCompatActivity implements
         }else{
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
             toolbar.setVisibility(View.GONE);
+            RelativeLayout appPetToolbar = (RelativeLayout) findViewById(R.id.add_pet_toolbar);
+            appPetToolbar.setVisibility(View.VISIBLE);
+            ImageButton closePetForm = (ImageButton) findViewById(R.id.close_pet_form);
+            closePetForm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
         }
 
         if(schedule){

@@ -135,6 +135,7 @@ public class DashboardActivity extends AppCompatActivity implements
         toggle.syncState();
         toggle.setDrawerIndicatorEnabled(true);
 
+
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -301,8 +302,9 @@ public class DashboardActivity extends AppCompatActivity implements
                 categoryName = data.getStringExtra("CATEGORY_NAME");
                 categoryId = data.getStringExtra("CATEGORY_ID");
             }
+            boolean location = data.getBooleanExtra("location",false);
 
-            inflateSearchResultFragment(filterText, categoryId, categoryName);
+            inflateSearchResultFragment(filterText, categoryId, categoryName,location);
         }
     }
 
@@ -399,8 +401,8 @@ public class DashboardActivity extends AppCompatActivity implements
     /**
      * Inflate Search Result List
      */
-    private void inflateSearchResultFragment(String filterText, String categoryId, String categoryName) {
-        searchResultFragment = SearchResultFragment.newInstance(filterText, categoryId, categoryName);
+    private void inflateSearchResultFragment(String filterText, String categoryId, String categoryName, boolean location) {
+        searchResultFragment = SearchResultFragment.newInstance(filterText, categoryId, categoryName,location);
         mFragmentManager.beginTransaction().replace(R.id.content_main, searchResultFragment).commit();
     }
 
@@ -411,11 +413,12 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onNewSearch(String filterText, String categoryId) {
+    public void onNewSearch(String filterText, String categoryId, boolean location) {
         Intent activity = new Intent(this, SearchActivity.class);
         activity.putExtra("newSearch", true);
         activity.putExtra("filterText", filterText);
         activity.putExtra("categoryId", categoryId);
+        activity.putExtra("location",location);
         startActivityForResult(activity, SEARCH_REQUEST);
     }
 

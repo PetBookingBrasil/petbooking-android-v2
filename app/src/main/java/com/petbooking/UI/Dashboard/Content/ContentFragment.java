@@ -49,7 +49,7 @@ public class ContentFragment extends Fragment {
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(0);
 
-        mTabLayout.setBackgroundColor(getResources().getColor(R.color.brand_primary));
+        mTabLayout.setBackgroundColor(getResources().getColor(R.color.secondary_red));
         mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
         mTabLayout.setupWithViewPager(mViewPager);
 

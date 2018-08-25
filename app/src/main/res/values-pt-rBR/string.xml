@@ -98,7 +98,7 @@
 
     <!-- Forgot Password -->
     <string name="recover_password_text">Informe abaixo o email de cadastro \n associado à sua conta no Pet Booking.</string>
-    <string name="recover_password_result">Após a solicitação, você deverá receber em \n instantes um email com instruções para \n resetar sua senha.</string>
+    <string name="recover_password_result">Verifique sua caixa de entrada. Você receberá \n instruções para \n recuperar sua senha.</string>
     <string name="email_empty">Informe o email.</string>
     <string name="recover_email_title">Recuperar Senha</string>
     <string name="recover_email_text">As instruções para recuperação foram enviadas para seu email.</string>
@@ -276,7 +276,7 @@
 
     <!-- Schedule -->
     <string name="select_pet">Selecionar pet</string>
-    <string name="select_professional">Selecione um profissional</string>
+    <string name="select_professional">Profissional</string>
     <string name="category">Categoria</string>
     <string name="service_additional">Serviço e adicionais</string>
     <string name="next_service">Continuar agendando</string>

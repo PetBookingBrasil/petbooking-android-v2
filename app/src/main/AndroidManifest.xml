@@ -216,7 +216,7 @@
         <activity
             android:name=".UI.Menu.Pets.RegisterPet.RegisterPetActivity"
             android:configChanges="orientation"
-            android:label="@string/new_pet_title"
+            android:label="@string/register_pet_label"
             android:parentActivityName=".UI.Menu.Pets.PetsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/registerBackground"

@@ -88,6 +88,7 @@
     <string name="hint_cpf">CPF</string>
     <string name="hint_birthday">Data Nasc.</string>
     <string name="hint_email">Email</string>
+    <string name="hint_email_cadastrado">Email cadstrado no Pet Booking</string>
     <string name="hint_zipcode">CEP</string>
     <string name="hint_city">Cidade</string>
     <string name="hint_state">UF</string>
@@ -103,7 +104,7 @@
 
     <!-- Forgot Password -->
     <string name="recover_password_text">Informe abaixo o email de cadastro \n associado à sua conta no Pet Booking.</string>
-    <string name="recover_password_result">Após a solicitação, você deverá receber em \n instantes um email com instruções para \n resetar sua senha.</string>
+    <string name="recover_password_result">Verifique sua caixa de entrada. Você receberá \n instruções para \n recuperar sua senha.</string>
     <string name="email_empty">Informe o email.</string>
     <string name="recover_email_title">Recuperar Senha</string>
     <string name="recover_email_text">As instruções para recuperação foram enviadas para seu email.</string>
@@ -282,7 +283,7 @@
 
     <!-- Schedule -->
     <string name="select_pet">Selecionar pet</string>
-    <string name="select_professional">Selecione um profissional</string>
+    <string name="select_professional">Profissional</string>
     <string name="category">Categoria</string>
     <string name="service_additional">Serviço e adicionais</string>
     <string name="next_service">Continuar agendando</string>
@@ -316,5 +317,9 @@
     <string name="date_and_hour">Dia e horário</string>
     <string name="select_pet_place_holder">Selecione um Pet</string>
     <string name="go_to_payment">Ir para pagamento</string>
+    <string name="not_notifications">No momento não há novas notificações para serem exibidas.</string>
+    <string name="register_pet_label">Cadastro de Pet</string>
+    <string name="view_bussines">Ver Estabelecimentos</string>
+    <string name="enviar">Enviar</string>
 
 </resources>

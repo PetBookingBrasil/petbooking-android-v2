@@ -8,6 +8,7 @@
         <item name="android:textColorHint">@color/text_color</item>
         <item name="android:textAppearance">@style/AppFontStyle</item>
         <item name="android:textViewStyle">@style/CustomFont</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -22,6 +23,12 @@
 
     <style name="NavigationText" parent="Base.TextAppearance.AppCompat">
         <item name="android:fontFamily">@font/corporativesansrdaltregular</item>
+    </style>
+
+    <style name="MyActionButtonOverflow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/icon_overflow</item>
+
+        <item name="android:background">?android:attr/actionBarItemBackground</item>
     </style>
 
     <style name="CustomFont" parent="android:Widget.TextView">

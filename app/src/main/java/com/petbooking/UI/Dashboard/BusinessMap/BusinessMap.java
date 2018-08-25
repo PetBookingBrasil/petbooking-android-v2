@@ -284,8 +284,10 @@ public class BusinessMap extends Fragment implements OnMapReadyCallback {
             mIvRatingStar.setVisibility(View.GONE);
         } else {
             mTvRate.setText(average);
+            mTvRate.setVisibility(View.VISIBLE);
             mTvRatingCount.setText(ratingCount);
-            mIvRatingStar.setVisibility(View.GONE);
+            mTvRatingCount.setVisibility(View.VISIBLE);
+            mIvRatingStar.setVisibility(View.VISIBLE);
         }
 
         mTvName.setText(business.name);

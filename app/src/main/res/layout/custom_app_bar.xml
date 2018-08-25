@@ -22,8 +22,10 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:text="@string/clear"
+            android:fontFamily="@font/corporativesansrdaltregular"
             android:textColor="@color/white"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:visibility="invisible"/>
 
 
 </RelativeLayout>

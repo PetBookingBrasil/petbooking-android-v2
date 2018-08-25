@@ -21,6 +21,27 @@
         android:visibility="visible"
         />
 
+        <RelativeLayout
+            android:id="@+id/add_pet_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/register_pet_label"/>
+
+            <ImageButton
+                android:id="@+id/close_pet_form"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:background="?selectableItemBackground"
+                android:src="@drawable/ic_close"/>
+        </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"

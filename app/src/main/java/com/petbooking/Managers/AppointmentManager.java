@@ -45,8 +45,8 @@ public class AppointmentManager {
         int i = 0;
         for (CartItem itens : this.cart){
             if(itens.id.equals(item.id)){
-                removeItemByIndex(i);
-                break;
+                //removeItemByIndex(i);
+                //break;
 
             }
             i++;

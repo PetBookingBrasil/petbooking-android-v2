@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -67,8 +68,10 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
             Intent resultIntent = new Intent();
             if(!mEdtSearchName.getText().toString().isEmpty()) {
                 resultIntent.putExtra("FILTER_TEXT", mEdtSearchName.getText().toString());
+                resultIntent.putExtra("location",false);
             }else{
                 resultIntent.putExtra("FILTER_TEXT", mEditLocation.getText().toString());
+                resultIntent.putExtra("location",true);
             }
             resultIntent.putExtra("CATEGORY_POSITION", currentCategory);
 
@@ -86,6 +89,10 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mBusinessService = new BusinessService();
 
@@ -112,6 +119,9 @@ public class SearchActivity extends AppCompatActivity implements FilterCategoryL
         }
 
         if (getIntent().hasExtra("newSearch")) {
+            if(getIntent().getBooleanExtra("location",false)){
+                mEditLocation.setText(getIntent().getStringExtra("filterText"));
+            }else
             mEdtSearchName.setText(getIntent().getStringExtra("filterText"));
         }
 

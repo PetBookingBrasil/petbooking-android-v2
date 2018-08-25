@@ -129,7 +129,9 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
         @Override
         public void onSelect(int position) {
             if (petId == null || petId.equals("")) {
-                EventBus.getDefault().post(new ShowSnackbarEvt(R.string.select_pet_place_holder, Snackbar.LENGTH_LONG));
+                //EventBus.getDefault().post(new ShowSnackbarEvt(R.string.select_pet_place_holder, Snackbar.LENGTH_LONG));
+                View rootView = getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+                Snackbar.make(rootView, R.string.select_pet_place_holder, Snackbar.LENGTH_LONG).show();
                 return;
             }
             categoryId = mCategoryList.get(position).id;
@@ -540,7 +542,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 serviceAdapter.setexpanded(true);
 
                 AppUtils.hideDialog();
-                ((BusinessActivity) getActivity()).showCartMenu();
+                //((BusinessActivity) getActivity()).showCartMenu();
 
             }
 

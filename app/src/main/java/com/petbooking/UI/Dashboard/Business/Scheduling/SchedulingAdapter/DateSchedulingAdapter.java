@@ -197,10 +197,12 @@ public class DateSchedulingAdapter extends StatelessSection {
                 holder.layoutDate.setBackground(ContextCompat.getDrawable(context, R.drawable.background_date_red));
                 holder.textDay.setTextColor(ContextCompat.getColor(context, R.color.white));
                 holder.textDayNumber.setTextColor(ContextCompat.getColor(context, R.color.white));
+                holder.dayPoynt.setVisibility(View.VISIBLE);
             } else {
                 holder.layoutDate.setBackground(ContextCompat.getDrawable(context, R.drawable.background_date));
                 holder.textDay.setTextColor(ContextCompat.getColor(context, R.color.text_color));
                 holder.textDayNumber.setTextColor(ContextCompat.getColor(context, R.color.text_color));
+                holder.dayPoynt.setVisibility(View.GONE);
             }
         }
 
@@ -279,6 +281,9 @@ public class DateSchedulingAdapter extends StatelessSection {
         TextView textDay;
         @BindView(R.id.textDayNumber)
         TextView textDayNumber;
+
+        @BindView(R.id.textDayPoint)
+        TextView dayPoynt;
 
         View v;
 

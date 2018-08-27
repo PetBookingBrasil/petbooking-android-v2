@@ -191,8 +191,6 @@
                     android:id="@+id/switch_castrated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="7dp"
-                    android:layout_gravity="bottom"
                     android:layout_marginLeft="15px"
                     android:layout_weight="1"
                     app:title="@string/question_register"></com.petbooking.UI.Widget.StyledSwitch>

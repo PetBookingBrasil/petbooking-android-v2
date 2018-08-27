@@ -44,6 +44,7 @@ public class DateSchedulingAdapter extends StatelessSection {
     Context context;
     AppointmentDateSlot dateSlot;
     int selectedHour = 0;
+    int selectedDate = -1;
     HourListAdapter hourListAdapter;
     OnDateSelected onDateSelected;
 
@@ -70,6 +71,21 @@ public class DateSchedulingAdapter extends StatelessSection {
         }
     };
 
+    public int getSelectedHour() {
+        return selectedHour;
+    }
+
+    public void setSelectedHour(int selectedHour) {
+        this.selectedHour = selectedHour;
+    }
+
+    public int getSelectedDate() {
+        return selectedDate;
+    }
+
+    public void setSelectedDate(int selectedDate) {
+        this.selectedDate = selectedDate;
+    }
 
     public void setOnDateSelected(OnDateSelected onDateSelected) {
         this.onDateSelected = onDateSelected;
@@ -113,7 +129,9 @@ public class DateSchedulingAdapter extends StatelessSection {
         ItemViewHolder holder = (ItemViewHolder) item;
         holder.date.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         SnapHelper snapHelper = new PagerSnapHelper();
-        holder.date.setAdapter(new DateListDayAdapter());
+        DateListDayAdapter adapterDate = new DateListDayAdapter();
+        adapterDate.setSelectedPosition(selectedDate);
+        holder.date.setAdapter(adapterDate);
         MyLinearLayout managerDate = new MyLinearLayout(context, LinearLayoutManager.VERTICAL, false);
         holder.hours.setLayoutManager(managerDate);
         holder.hours.addOnItemTouchListener(mScrollTouchListener);
@@ -160,7 +178,15 @@ public class DateSchedulingAdapter extends StatelessSection {
 
     class DateListDayAdapter extends RecyclerView.Adapter<DateListViewHolder> {
         int selectedPosition = -1;
+        boolean edit;
 
+        public void setSelectedPosition(int position){
+            this.selectedPosition = position;
+            if (position > -1) {
+                edit = true;
+            }
+
+        }
         @Override
         public DateListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(context).inflate(R.layout.item_list_date, parent, false);
@@ -175,8 +201,9 @@ public class DateSchedulingAdapter extends StatelessSection {
             if (selectedPosition == -1) {
                 selectedPosition = 0;
                 dateSlot = date;
-                hourListAdapter.setTimers(date.timer,date.date);
+                hourListAdapter.setTimers(date.timer,date.date,false,position);
                 hourListAdapter.notifyDataSetChanged();
+                edit = false;
             }
             holder.textDay.setText(CommonUtils.formatDate(CommonUtils.DAY_FORMAT_DESCRIOTION, date.date).toUpperCase());
             holder.textDayNumber.setText(CommonUtils.formatDate(CommonUtils.DAY_FORMAT, date.date));
@@ -184,10 +211,11 @@ public class DateSchedulingAdapter extends StatelessSection {
                 @Override
                 public void onClick(View view) {
                     selectedPosition = position;
-                    hourListAdapter.setTimers(date.timer,date.date);
+                    hourListAdapter.setTimers(date.timer,date.date,false,position);
                     hourListAdapter.setSelectedDate(-1);
                     hourListAdapter.notifyDataSetChanged();
                     dateSlot = date;
+                    edit = false;
                     notifyDataSetChanged();
 
                 }
@@ -198,6 +226,11 @@ public class DateSchedulingAdapter extends StatelessSection {
                 holder.textDay.setTextColor(ContextCompat.getColor(context, R.color.white));
                 holder.textDayNumber.setTextColor(ContextCompat.getColor(context, R.color.white));
                 holder.dayPoynt.setVisibility(View.VISIBLE);
+                if(edit){
+                    dateSlot = date;
+                    hourListAdapter.setTimers(date.timer,date.date,true,position);
+                    hourListAdapter.setSelectedDate(selectedHour);
+                }
             } else {
                 holder.layoutDate.setBackground(ContextCompat.getDrawable(context, R.drawable.background_date));
                 holder.textDay.setTextColor(ContextCompat.getColor(context, R.color.text_color));
@@ -215,6 +248,8 @@ public class DateSchedulingAdapter extends StatelessSection {
     class HourListAdapter extends RecyclerView.Adapter<HourListViewHolder> {
         ArrayList<String> timers;
         int selectedDate = -1;
+        int positionDate;
+
 
         public HourListAdapter(ArrayList<String> times) {
             this.timers = times;
@@ -226,7 +261,12 @@ public class DateSchedulingAdapter extends StatelessSection {
             return new HourListViewHolder(view);
         }
 
-        public void setTimers(ArrayList<String> timers,Date date) {
+        public void setTimers(ArrayList<String> timers,Date date, boolean edit, int positiondate) {
+            this.positionDate = positiondate;
+            if(edit){
+                this.timers = timers;
+                return;
+            }
             ArrayList<String> newTimers = new ArrayList<>();
             for (int i = 0; i < timers.size(); i++) {
                 if (!hasDate(CommonUtils.formatDate(CommonUtils.DATEFORMATDEFAULT, date), timers.get(i))) {
@@ -247,7 +287,7 @@ public class DateSchedulingAdapter extends StatelessSection {
                 @Override
                 public void onClick(View view) {
                     selectedDate = position;
-                    onDateSelected.onSelectDate(dateSlot, selectedDate);
+                    onDateSelected.onSelectDate(dateSlot, selectedDate, position,positionDate);
                     notifyDataSetChanged();
                 }
             });
@@ -255,7 +295,7 @@ public class DateSchedulingAdapter extends StatelessSection {
 
             if (selectedDate == position) {
                 holder.hourAvaliable.setTextColor(ContextCompat.getColor(context, R.color.brand_primary));
-                DateSchedulingAdapter.this.onDateSelected.onSelectDate(dateSlot, selectedDate);
+                DateSchedulingAdapter.this.onDateSelected.onSelectDate(dateSlot, selectedDate,position,positionDate);
                 holder.itemHourLayout.setBackground(ContextCompat.getDrawable(context,R.drawable.item_hour_background_brand));
 
             } else {
@@ -314,7 +354,7 @@ public class DateSchedulingAdapter extends StatelessSection {
     }
 
     public interface OnDateSelected {
-        void onSelectDate(AppointmentDateSlot appointmentDateSlot, int selectedPosition);
+        void onSelectDate(AppointmentDateSlot appointmentDateSlot, int selectedPosition, int hourSelected,int datePosition);
     }
 
     private boolean hasDate(String date, String timer) {

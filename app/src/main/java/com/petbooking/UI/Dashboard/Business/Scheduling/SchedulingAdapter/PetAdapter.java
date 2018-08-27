@@ -136,6 +136,11 @@ public class PetAdapter extends StatelessSection {
         this.existPet = existPet;
     }
 
+    public void setPet(Pet pet){
+
+    }
+
+
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
         final HeaderViewHolder viewHolder = (HeaderViewHolder) holder;

@@ -319,7 +319,7 @@
     <string name="go_to_payment">Ir para pagamento</string>
     <string name="not_notifications">No momento não há novas notificações para serem exibidas.</string>
     <string name="register_pet_label">Cadastro de Pet</string>
-    <string name="view_bussines">Ver Estabelecimentos</string>
+    <string name="view_bussines">Visualizar Estabelecimentos</string>
     <string name="enviar">Enviar</string>
 
 </resources>

@@ -88,6 +88,10 @@ public class ServiceAdapter extends StatelessSection {
         this.selectedPosition = selectedPosition;
     }
 
+    public int getPositionSelected(){
+        return this.selectedPosition;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }

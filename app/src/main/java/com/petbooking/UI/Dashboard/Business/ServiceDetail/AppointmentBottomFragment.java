@@ -290,7 +290,7 @@ public class AppointmentBottomFragment extends BottomSheetDialogFragment {
         String startDate = dateFormat.format(mDateList.get(selectedMonth).days.get(selectedDay).date);
         String startTime = mDateList.get(selectedMonth).days.get(selectedDay).times.get(selectedTime);
 
-        CartItem item = new CartItem(startDate, startTime, businessId, service, categoryId,
+        CartItem item = new CartItem(startDate, startTime, businessId, service, categoryId,"",
                 mProfessionalList.get(selectedProfessional), pet);
 
         item.totalPrice += service.price;

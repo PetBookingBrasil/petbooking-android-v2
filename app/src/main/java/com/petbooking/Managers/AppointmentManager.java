@@ -262,12 +262,14 @@ public class AppointmentManager {
     }
 
     private void saveCart(ArrayList<CartItem> cart) {
-        editor.putString("CART", mJsonManager.toJson(cart));
+       String json = mJsonManager.toJson(cart);
+        editor.putString("CART", json);
         editor.apply();
     }
 
     private void saveItem(CartItem item) {
-        editor.putString(item.service.id + "_" + item.pet.id + "_ITEM", mJsonManager.toJson(item));
+        String json = mJsonManager.toJson(item);
+        editor.putString(item.service.id + "_" + item.pet.id + "_ITEM", json);
         editor.apply();
     }
 

@@ -1,5 +1,7 @@
 package com.petbooking.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -21,14 +23,17 @@ public class CartItem {
     public double totalPrice;
     public boolean withTransportation;
     public ArrayList<BusinessServices> additionalServices;
+    public Scheduling scheduling;
+    public String categoryName;
 
     public CartItem(String startDate, String startTime, String businessId, BusinessServices service,
-                    String categoryId, Professional professional, Pet pet) {
+                    String categoryId,String categoryName, Professional professional, Pet pet) {
         this.startDate = startDate;
         this.startTime = startTime;
         this.businessId = businessId;
         this.service = service;
         this.categoryId = categoryId;
+        this.categoryName = categoryName;
         this.professional = professional;
         this.pet = pet;
         this.withTransportation = false;
@@ -50,6 +55,14 @@ public class CartItem {
 
             index++;
         }
+    }
+
+    public Scheduling getScheduling() {
+        return scheduling;
+    }
+
+    public void setScheduling(Scheduling scheduling) {
+        this.scheduling = scheduling;
     }
 
     public void setNotes(String notes) {

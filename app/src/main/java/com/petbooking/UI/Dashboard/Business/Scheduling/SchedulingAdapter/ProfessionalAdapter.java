@@ -154,7 +154,20 @@ public class ProfessionalAdapter extends StatelessSection {
         return appointmentDateSlots;
     }
 
-    public void updateProfissionals(final int position) {
+    public void checkProfessional(){
+        int i = 0;
+        if(professionals.size() > 0){
+            for(Professional professional: professionals){
+                if(professional.id.equals(this.professional.id)){
+                    updateProfissionals(i, true);
+                    break;
+                }
+                i++;
+            }
+        }
+    }
+
+    public void updateProfissionals(final int position, final boolean edit) {
         new AsyncTask<Void, Void, Void>() {
             List<AppointmentDateChild> childs = new ArrayList<>();
             List<AppointmentDateSlot> slots = new ArrayList<>();
@@ -192,7 +205,11 @@ public class ProfessionalAdapter extends StatelessSection {
                 //dateListDayAdapter.setDays(childs);
                 //dateListDayAdapter.notifyDataSetChanged();
                 setDays(slots);
-                onProfessionalSelected.selectedProfessional(professionals.get(position), null, null);
+                if(edit) {
+                    onProfessionalSelected.selectedProfessional(professionals.get(position), null, null, position,true);
+                }else{
+                    onProfessionalSelected.selectedProfessional(professionals.get(position), null, null, position,false);
+                }
 
             }
         }.execute();
@@ -324,7 +341,7 @@ public class ProfessionalAdapter extends StatelessSection {
             holder.v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    updateProfissionals(position);
+                    updateProfissionals(position,false);
                     ProfessionalAdapter.this.professional = professionals.get(position);
                     setSelectedPosition(position);
                     selected = false;
@@ -415,7 +432,7 @@ public class ProfessionalAdapter extends StatelessSection {
                 holder.dateAvaliable.setTextColor(ContextCompat.getColor(context, R.color.brand_primary));
                 holder.hourAvaliable.setTextColor(ContextCompat.getColor(context, R.color.brand_primary));
                 appointmentDate = professional.availableDates.get(date.position);
-                onProfessionalSelected.selectedProfessional(professional, appointmentDate, date);
+                onProfessionalSelected.selectedProfessional(professional, appointmentDate, date,position,false);
             } else {
                 holder.dateAvaliable.setTextColor(ContextCompat.getColor(context, R.color.text_gray));
                 holder.hourAvaliable.setTextColor(ContextCompat.getColor(context, R.color.text_gray));
@@ -445,6 +462,6 @@ public class ProfessionalAdapter extends StatelessSection {
     }
 
     public interface OnProfessionalSelected {
-        void selectedProfessional(Professional professional, AppointmentDate appointmentDate, AppointmentDateChild chil);
+        void selectedProfessional(Professional professional, AppointmentDate appointmentDate, AppointmentDateChild chil,int position, boolean edit);
     }
 }

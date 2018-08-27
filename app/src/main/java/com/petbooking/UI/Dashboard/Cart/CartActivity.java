@@ -66,8 +66,8 @@ public class CartActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onEditItem() {
-            EventBus.getDefault().post(new ClearFieldsSchedule(true));
+        public void onEditItem(CartItem cartItem, int position) {
+            EventBus.getDefault().post(new ClearFieldsSchedule(true,cartItem,position));
             onBackPressed();
         }
     };
@@ -146,7 +146,7 @@ public class CartActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            EventBus.getDefault().post(new ClearFieldsSchedule(false));
+            EventBus.getDefault().post(new ClearFieldsSchedule(false,null,0));
             onBackPressed();
         }
 

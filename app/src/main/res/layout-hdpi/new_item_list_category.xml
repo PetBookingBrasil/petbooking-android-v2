@@ -5,18 +5,15 @@
     android:id="@+id/category_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/spacing_xmicro"
     android:layout_marginLeft="@dimen/spacing_xmicro"
     android:gravity="center_horizontal"
     android:layout_marginRight="@dimen/spacing_xmicro"
-    android:layout_marginTop="@dimen/spacing_tiny"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
-        android:padding="10dp"
         android:layout_gravity="center">
 
         <LinearLayout
@@ -31,8 +28,8 @@
 
             <ImageView
                 android:id="@+id/category_icon"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:elevation="10dp"
                 app:srcCompat="@drawable/ic_category_transport"

@@ -168,6 +168,10 @@ public class CategoryAdapter extends StatelessSection {
         this.positionSelected = positionSelected;
     }
 
+    public int getPositionSelected(){
+        return this.positionSelected;
+    }
+
     private String getCategoryUrl(String categoryName){
         if(CommonUtils.icons !=null){
             return CommonUtils.icons.get(categoryName);

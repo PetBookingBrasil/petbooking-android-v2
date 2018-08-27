@@ -150,11 +150,13 @@ public class SignUpActivity extends BaseActivity implements
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            String zipcode = s.toString();
+            /*String zipcode = s.toString();
             if (zipcode.length() == 10) {
                 zipcode = zipcode.replace(".", "").replace("-", "");
                 getAdress(zipcode);
-            }
+            }*/
+
+
         }
 
         @Override

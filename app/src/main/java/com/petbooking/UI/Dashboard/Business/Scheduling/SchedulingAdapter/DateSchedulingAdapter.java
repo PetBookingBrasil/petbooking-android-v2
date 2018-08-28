@@ -247,8 +247,10 @@ public class DateSchedulingAdapter extends StatelessSection {
 
     class HourListAdapter extends RecyclerView.Adapter<HourListViewHolder> {
         ArrayList<String> timers;
+        ArrayList<String> correctTimers;
         int selectedDate = -1;
         int positionDate;
+        Date date;
 
 
         public HourListAdapter(ArrayList<String> times) {
@@ -263,6 +265,7 @@ public class DateSchedulingAdapter extends StatelessSection {
 
         public void setTimers(ArrayList<String> timers,Date date, boolean edit, int positiondate) {
             this.positionDate = positiondate;
+            this.correctTimers = timers;
             if(edit){
                 this.timers = timers;
                 return;
@@ -278,7 +281,7 @@ public class DateSchedulingAdapter extends StatelessSection {
 
         @Override
         public void onBindViewHolder(HourListViewHolder holder, final int position) {
-            String timers = this.timers.get(position);
+            final String timers = this.timers.get(position);
             holder.hourAvaliable.setText(timers);
             if (selectedDate == -1) {
                 selectedDate = 0;
@@ -287,7 +290,8 @@ public class DateSchedulingAdapter extends StatelessSection {
                 @Override
                 public void onClick(View view) {
                     selectedDate = position;
-                    onDateSelected.onSelectDate(dateSlot, selectedDate, position,positionDate);
+                    int positionTimer = correctTimers.indexOf(timers);
+                    onDateSelected.onSelectDate(dateSlot, positionTimer, position,positionDate);
                     notifyDataSetChanged();
                 }
             });
@@ -295,7 +299,8 @@ public class DateSchedulingAdapter extends StatelessSection {
 
             if (selectedDate == position) {
                 holder.hourAvaliable.setTextColor(ContextCompat.getColor(context, R.color.brand_primary));
-                DateSchedulingAdapter.this.onDateSelected.onSelectDate(dateSlot, selectedDate,position,positionDate);
+                int positionTimer = correctTimers.indexOf(timers);
+                DateSchedulingAdapter.this.onDateSelected.onSelectDate(dateSlot, positionTimer, position,positionDate);
                 holder.itemHourLayout.setBackground(ContextCompat.getDrawable(context,R.drawable.item_hour_background_brand));
 
             } else {
@@ -312,7 +317,16 @@ public class DateSchedulingAdapter extends StatelessSection {
         public void setSelectedDate(int selectedDate) {
             this.selectedDate = selectedDate;
         }
+
+
     }
+
+
+    public static int getPositionTimer(String timer, ArrayList<String> timers){
+        int index = timers.indexOf(timer);
+        return index;
+    }
+
 
     class DateListViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.layoutDate)

@@ -315,14 +315,15 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                     scheduling.setProfessionalSelected(professionalSelected);
                     scheduling.setDateSlotselected(dateSelected);
                     scheduling.setTimerSelected(timerSelected);
-                    CartItem item = new CartItem(startDate, startTime, businessId, businessServices, categoryId, category.categoryName, professional, getPet());
+                    CartItem item = new CartItem(startDate, startTime, SchedulingFragment.this.businessId, businessServices, categoryId, category.categoryName, professional, getPet());
                     //
                     item.setScheduling(scheduling);
                     item.totalPrice += businessServices.price;
                     if (SchedulingFragment.this.item == null)
                         SchedulingFragment.this.item = item;
                     else {
-                        item.id = SchedulingFragment.this.item.id;
+                        if (!edit)
+                            item.id = SchedulingFragment.this.item.id;
                     }
                     if (edit) {
                         mAppointmentManager.removeItemByIndex(positionRemove);
@@ -331,7 +332,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
 
                     for (int i = 0; i < additionals.size(); i++) {
                         BusinessServices additional = additionals.get(i);
-                        mAppointmentManager.addNewAdditional(businessServices.id, additional, petId);
+                        mAppointmentManager.addNewAdditional(businessServices.id, additional, petId,item.id);
                     }
                     mConfirmDialogFragment.setDialogInfo(R.string.schedule_empty, R.string.sucess_schedule,
                             R.string.go_to_cart, R.string.other_schedule);
@@ -360,7 +361,16 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
     }
 
     public void removeAdditional(BusinessServices additional) {
-        this.additionals.remove(additional);
+        if(!edit)
+            this.additionals.remove(additional);
+        else{
+            for (BusinessServices businessServices : this.additionals){
+                if(additional.id.equals(businessServices.id)){
+                    this.additionals.remove(businessServices);
+                }
+            }
+        }
+
     }
 
     private Pet getPet() {
@@ -855,6 +865,9 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 professionalAdapter.setTitle(response.cartItem.professional.name);
                 mServiceList.clear();
                 mServiceListCopy.clear();
+                additionals.clear();
+                additionals = response.cartItem.additionalServices;
+                serviceAdapter.setServicesAddicionais(response.cartItem.additionalServices);
                 edit = true;
                 positionRemove = response.position;
                 dateSelected = response.cartItem.scheduling.getDateSlotselected();

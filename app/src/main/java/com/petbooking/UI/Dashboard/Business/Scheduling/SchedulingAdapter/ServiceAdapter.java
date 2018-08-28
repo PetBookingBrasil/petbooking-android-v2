@@ -219,7 +219,13 @@ public class ServiceAdapter extends StatelessSection {
 
     public void setChecked(boolean checked) {
         this.checked = checked;
-        mAdditionalServiceListAdapter.clearServices();
+        if(!checked)
+            mAdditionalServiceListAdapter.clearServices();
+    }
+
+    public void setServicesAddicionais(ArrayList<BusinessServices> servicesAddicionais){
+        mAdditionalServiceListAdapter.setServicesInsert(servicesAddicionais);
+
     }
 
     public void setServiceAdd(boolean serviceAdd) {
@@ -245,6 +251,8 @@ public class ServiceAdapter extends StatelessSection {
             if (fragment.getCount() > 0) {
                 viewHolder.layoutAdditionas.setVisibility(View.VISIBLE);
                 viewHolder.quantAdditional.setText(MessageFormat.format("+{0}", fragment.getCount()));
+            }else{
+                viewHolder.layoutAdditionas.setVisibility(View.GONE);
             }
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             viewHolder.headerSection.setLayoutParams(params);

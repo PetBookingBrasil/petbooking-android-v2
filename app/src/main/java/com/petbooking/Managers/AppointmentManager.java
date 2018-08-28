@@ -121,7 +121,19 @@ public class AppointmentManager {
 
     public void addNewAdditional(String serviceId, BusinessServices additional, String petId) {
         cart = getCart();
-        CartItem item = getCartItem(serviceId, petId);
+        CartItem item = getCartItem(serviceId, petId,"");
+
+        item.addAdditional(additional);
+        item.totalPrice += additional.price;
+
+        setAdditionalSelected(additional.id, petId, true);
+        saveItem(item);
+        saveCart(cart);
+    }
+
+    public void addNewAdditional(String serviceId, BusinessServices additional, String petId,String cartId) {
+        cart = getCart();
+        CartItem item = getCartItem(serviceId, petId,cartId);
 
         item.addAdditional(additional);
         item.totalPrice += additional.price;
@@ -278,11 +290,15 @@ public class AppointmentManager {
         editor.apply();
     }
 
-    public CartItem getCartItem(String serviceId, String petId) {
+    public CartItem getCartItem(String serviceId, String petId,String cartId) {
         int index = 0;
 
         for (CartItem item : cart) {
-            if (item.service.id.equals(serviceId) && item.pet.id.equals(petId)) {
+            if(cartId.isEmpty()) {
+                if (item.service.id.equals(serviceId) && item.pet.id.equals(petId)) {
+                    return cart.get(index);
+                }
+            }else if(item.service.id.equals(serviceId) && item.pet.id.equals(petId) && item.id.equals(cartId)){
                 return cart.get(index);
             }
 

@@ -3,6 +3,7 @@ package com.petbooking.Models;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -70,7 +71,7 @@ public class CartItem {
     }
 
     private String generateId() {
-        String id = UUID.randomUUID().toString();
+        String id = String.valueOf(new Date().getTime());
         return id;
     }
 }

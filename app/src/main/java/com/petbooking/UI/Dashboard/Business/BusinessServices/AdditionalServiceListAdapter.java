@@ -38,6 +38,8 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
     private Context mContext;
     int positionSelected = -1;
 
+
+
     public AdditionalServiceListAdapter(Context context, ArrayList<BusinessServices> reviewList, OnAdditionalSelect onAdditionalSelect) {
         this.mServiceList = reviewList;
         this.mContext = context;
@@ -48,6 +50,10 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
 
     public void updateList(ArrayList<BusinessServices> serviceList) {
         this.mServiceList = serviceList;
+    }
+
+    public void setServicesInsert(ArrayList<BusinessServices> servicesInsert) {
+        this.servicesInsert = servicesInsert;
     }
 
     @Override

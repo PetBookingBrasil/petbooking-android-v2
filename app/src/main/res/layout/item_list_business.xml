@@ -25,13 +25,12 @@
             android:scaleType="fitXY"
             app:srcCompat="@drawable/side_nav_bar" />
 
-     <!--   <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/gradient_background" />-->
+        <!--   <View
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:background="@drawable/gradient_background" />-->
 
     </FrameLayout>
-
 
 
     <ImageButton
@@ -39,13 +38,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_xmicro"
-        android:layout_marginEnd="@dimen/spacing_xmicro"
         android:layout_marginLeft="@dimen/spacing_xmicro"
         android:layout_marginRight="@dimen/spacing_xmicro"
-        android:layout_marginStart="@dimen/spacing_xmicro"
         android:layout_marginTop="@dimen/spacing_xmicro"
+        android:background="@null"
         android:elevation="10dp"
-        android:background="@color/gray_transparent_pet"
         app:layout_constraintBottom_toBottomOf="@+id/business_cover"
         app:layout_constraintHorizontal_bias="0.97"
         app:layout_constraintLeft_toLeftOf="@+id/business_cover"

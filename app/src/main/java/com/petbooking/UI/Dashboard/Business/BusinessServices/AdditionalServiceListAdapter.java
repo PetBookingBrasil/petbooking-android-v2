@@ -135,6 +135,10 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
     public void clearServices() {
         this.servicesInsert.clear();
     }
+    
+    public ArrayList<BusinessServices> getAdditionals(){
+        return this.servicesInsert;
+    }
 
     public void setPositionSelected(int positionSelected) {
         this.positionSelected = positionSelected;

@@ -229,7 +229,7 @@ public class ServiceAdapter extends StatelessSection {
     }
     
     public ArrayList<BusinessServices> getAdditionals(){
-        mAdditionalServiceListAdapter.getAdditionals();
+      return mAdditionalServiceListAdapter.getAdditionals();
     }
 
     public void setServiceAdd(boolean serviceAdd) {

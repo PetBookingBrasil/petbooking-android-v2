@@ -302,6 +302,9 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                 if (!addToCart) {
                     serviceAdapter.setexpanded(false);
                     serviceAdapter.setTitle(mServiceListCopy.get(0).name);
+                    if(edit){
+                        this.additionals = serviceAdapter.getAdditionals();
+                    }
                     listProfessional(true);
                 } else {
                     String businessId = mAppointmentManager.getCurrentBusinessId();

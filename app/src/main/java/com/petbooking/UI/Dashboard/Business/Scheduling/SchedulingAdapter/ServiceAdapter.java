@@ -227,6 +227,10 @@ public class ServiceAdapter extends StatelessSection {
         mAdditionalServiceListAdapter.setServicesInsert(servicesAddicionais);
 
     }
+    
+    public ArrayList<BusinessServices> getAdditionals(){
+        mAdditionalServiceListAdapter.getAdditionals();
+    }
 
     public void setServiceAdd(boolean serviceAdd) {
         this.serviceAdd = serviceAdd;

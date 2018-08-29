@@ -303,7 +303,7 @@ public class SchedulingFragment extends Fragment implements ConfirmDialogSchedul
                     serviceAdapter.setexpanded(false);
                     serviceAdapter.setTitle(mServiceListCopy.get(0).name);
                     if(edit){
-                        this.additionals = serviceAdapter.getAdditionals();
+                      SchedulingFragment.this.additionals = serviceAdapter.getAdditionals();
                     }
                     listProfessional(true);
                 } else {

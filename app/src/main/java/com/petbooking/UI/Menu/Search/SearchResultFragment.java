@@ -60,6 +60,7 @@ public class SearchResultFragment extends Fragment {
     private int currentPage = 1;
     private boolean isLoading = false;
     private boolean isLastPage = false;
+    private boolean location;
 
     View.OnClickListener mBtnResetListener = new View.OnClickListener() {
         @Override
@@ -70,7 +71,7 @@ public class SearchResultFragment extends Fragment {
     View.OnClickListener mBtnNewSearchListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mCallback.onNewSearch(filterText, categoryId);
+            mCallback.onNewSearch(filterText, categoryId,location);
         }
     };
 
@@ -100,12 +101,13 @@ public class SearchResultFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static SearchResultFragment newInstance(String filterText, String categoryId, String categoryName) {
+    public static SearchResultFragment newInstance(String filterText, String categoryId, String categoryName, boolean location) {
         SearchResultFragment fragment = new SearchResultFragment();
         Bundle bundle = new Bundle();
         bundle.putString("filterText", filterText);
         bundle.putString("categoryId", categoryId);
         bundle.putString("categoryName", categoryName);
+        bundle.putBoolean("location", location);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -119,6 +121,7 @@ public class SearchResultFragment extends Fragment {
         this.filterText = getArguments().getString("filterText");
         this.categoryId = getArguments().getString("categoryId");
         this.categoryName = getArguments().getString("categoryName");
+        this.location = getArguments().getBoolean("location",false);
     }
 
 
@@ -258,7 +261,7 @@ public class SearchResultFragment extends Fragment {
 
         void onReset();
 
-        void onNewSearch(String filterText, String categoryId);
+        void onNewSearch(String filterText, String categoryId, boolean location);
     }
 
 }

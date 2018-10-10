@@ -1,5 +1,6 @@
 package com.petbooking.UI.Dashboard.BusinessList;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Business;
+import com.petbooking.Models.Category;
 import com.petbooking.R;
 import com.petbooking.UI.Menu.Search.SearchActivity;
 import com.petbooking.Utils.AppUtils;
@@ -51,6 +53,10 @@ public class BusinessListFragment extends Fragment {
     private boolean isLoading = false;
     private boolean isLastPage = false;
     private int currentPage = 1;
+    String categoryId;
+
+    //Model
+    Category category;
 
     View.OnClickListener filterButtonListener = new View.OnClickListener() {
         @Override
@@ -86,6 +92,14 @@ public class BusinessListFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @SuppressLint("ValidFragment")
+    public BusinessListFragment(Category category){
+        this.category = category;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -111,6 +125,7 @@ public class BusinessListFragment extends Fragment {
 
         if (mAdapter != null) {
             mRvBusinessList.setAdapter(mAdapter);
+            mAdapter.setCategory(category);
         }
 
         mRvBusinessList.addOnScrollListener(scrollListener);
@@ -131,7 +146,7 @@ public class BusinessListFragment extends Fragment {
     public void listBusiness() {
         currentPage = 1;
         AppUtils.showLoadingDialog(getContext());
-        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, PAGE_SIZE, new APICallback() {
+        mBusinessService.listBussinesByCategory(mLocationManager.getLocationCoords(), userId, currentPage, PAGE_SIZE, categoryId, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 mBusinessList = (ArrayList<Business>) response;
@@ -155,7 +170,7 @@ public class BusinessListFragment extends Fragment {
         AppUtils.showLoadingDialog(getContext());
         currentPage++;
         isLoading = true;
-        mBusinessService.listBusiness(mLocationManager.getLocationCoords(), userId, currentPage, PAGE_SIZE, new APICallback() {
+        mBusinessService.listBussinesByCategory(mLocationManager.getLocationCoords(), userId, currentPage, PAGE_SIZE, categoryId, new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 ArrayList<Business> nextPage = (ArrayList<Business>) response;

@@ -2,9 +2,12 @@ package com.petbooking.Utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -14,11 +17,14 @@ import android.view.inputmethod.InputMethodManager;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Models.CalendarItem;
 import com.petbooking.Models.UserAddress;
+import com.petbooking.UI.Login.LoginActivity;
 
 import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,12 +36,14 @@ import java.util.regex.Pattern;
 public class CommonUtils {
 
     public static final int PASSWORD_LENGTH = 6;
-    private static final Locale BRAZIL = new Locale("pt","BR");
+    public static final Locale BRAZIL = new Locale("pt","BR");
     final public static String DATEFORMATDEFAULT = "yyyy-MM-dd";
     final public static String MONTH_DESCRIPTION_FORMAT = "MMMM";
     final public static String DAY_FORMAT = "dd";
     final public static String DAY_FORMAT_DESCRIOTION = "EE";
     final public static String MONTH_NUMBER_FORMAT = "MM";
+    final public static String YEAR_FORMAT = "yyyy";
+    public static HashMap<String, String> icons;
     public static void hideKeyboard(Activity activity) {
         if (activity == null || activity.getCurrentFocus() == null) {
             return;
@@ -155,6 +163,18 @@ public class CommonUtils {
         return dateFormatterInstance.format(date);
     }
 
+    public static Date parseDate(String dateFormat,String dateParser){
+        SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+        try {
+            Date date = format.parse(dateParser);
+            System.out.println(date);
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new Date();
+        }
+    }
+
     public static UserAddress parseAddress(Address address) {
         UserAddress userAddress = null;
         String state = address.getAdminArea().substring(0, 2);
@@ -253,5 +273,20 @@ public class CommonUtils {
         windowmanager.getDefaultDisplay().getMetrics(displayMetrics);
         int deviceWidth = displayMetrics.widthPixels;
         return deviceWidth;
+    }
+
+    public static void redirectLogin(final Context context){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Ops!");
+        builder.setMessage("Sua autenticação expirou. Por favor, entre novamente");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(context, LoginActivity.class);
+                context.startActivity(intent);
+            }
+        });
+        builder.show();
     }
 }

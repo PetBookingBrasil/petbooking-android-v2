@@ -5,6 +5,7 @@
         <attr name="icon" format="reference" />
         <attr name="entries" format="reference" />
         <attr name="enableInfo" format="boolean" />
+        <attr name="hintColor" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="StyledSwitch">

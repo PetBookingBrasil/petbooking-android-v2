@@ -52,7 +52,10 @@ public class APIBusinessConstants {
     public static final String FIELDS_BUSINESS = "?" + FIELDS_BUSINESS_CONTENT;
     public static final String FIELDS_BUSINESS_REVIEWS = "?fields[reviews]=id,comment,rating,business_id,user_id";
     public static final String FIELDS_CATEGORIES = "?fields[category_templates]=id,name,slug,cover_image";
+    public static final String FIELDS_CATEGORIES_BUSINESS = "?fields[service_categories]=id,name,category_template_icon";
     public static final String FIELDS_FAVORITES = "?fields[favorites]=favorable_id,favorable_type,favorite_count";
+    public static final String FIELDS_REVIEW_PART_ONE = "?filter[scheduling_ref]=past&";
+    public static final String FIELDS_REVIEW = "/reviewable?include=business&fields[business]=name,slug,street,street_number,neighborhood,location,city,state,user_favorite&fields[services]=price,bitmask_values,service_category";
 
     /**
      * APIs
@@ -67,7 +70,7 @@ public class APIBusinessConstants {
 
     public static final String SERVICES_CATEGORIES_ENDPOINT = "category-templates" + FIELDS_CATEGORIES;
 
-    public static final String BUSINESS_CATEGORIES_ENDPOINT = "businesses/{" + PATH_BUSINESS_ID + "}/service-categories" + FIELDS_CATEGORIES;
+    public static final String BUSINESS_CATEGORIES_ENDPOINT = "businesses/{" + PATH_BUSINESS_ID + "}/service-categories" + FIELDS_CATEGORIES_BUSINESS;
 
 
     public static final String BUSINESS_INFO_ENDPOINT = "businesses/{" + PATH_BUSINESS_ID + "}";
@@ -77,5 +80,11 @@ public class APIBusinessConstants {
     public static final String FAVORITES_DELETE_ENDPOINT = "favorites/{" + APIConstants.PATH_PARAM + "}" + FIELDS_FAVORITES;
 
     public static final String ENDPOINT_BUSINESS_REVIEWS = "businesses/{" + PATH_BUSINESS_ID + "}/reviews" + APIConstants.QUERY_PAGE_SIZE_DEAFULT;
+
+    public static final String ENDPOINT_GET_REVIEWS = "users/{" + APIConstants.PATH_PARAM + "}/events"+ FIELDS_REVIEW;
+
+    public static final String ENDPOINT_BUSSINESS_SLUG = "count_phone_click_for/{"+APIConstants.PATH_PARAM + "}";
+
+    public static final String ENDPOINT_SEND_REVIEW = "businesses/{" + APIConstants.PATH_PARAM  + "}/reviews";
 
 }

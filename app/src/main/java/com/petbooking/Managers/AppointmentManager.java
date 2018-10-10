@@ -42,6 +42,15 @@ public class AppointmentManager {
 
     public void addItem(CartItem item) {
         this.cart = getCart();
+        int i = 0;
+        for (CartItem itens : this.cart){
+            if(itens.id.equals(item.id)){
+                //removeItemByIndex(i);
+                //break;
+
+            }
+            i++;
+        }
         this.cart.add(item);
 
         if (!isServiceSelected(item.service.id, item.pet.id)) {
@@ -112,7 +121,19 @@ public class AppointmentManager {
 
     public void addNewAdditional(String serviceId, BusinessServices additional, String petId) {
         cart = getCart();
-        CartItem item = getCartItem(serviceId, petId);
+        CartItem item = getCartItem(serviceId, petId,"");
+
+        item.addAdditional(additional);
+        item.totalPrice += additional.price;
+
+        setAdditionalSelected(additional.id, petId, true);
+        saveItem(item);
+        saveCart(cart);
+    }
+
+    public void addNewAdditional(String serviceId, BusinessServices additional, String petId,String cartId) {
+        cart = getCart();
+        CartItem item = getCartItem(serviceId, petId,cartId);
 
         item.addAdditional(additional);
         item.totalPrice += additional.price;
@@ -253,12 +274,14 @@ public class AppointmentManager {
     }
 
     private void saveCart(ArrayList<CartItem> cart) {
-        editor.putString("CART", mJsonManager.toJson(cart));
+       String json = mJsonManager.toJson(cart);
+        editor.putString("CART", json);
         editor.apply();
     }
 
     private void saveItem(CartItem item) {
-        editor.putString(item.service.id + "_" + item.pet.id + "_ITEM", mJsonManager.toJson(item));
+        String json = mJsonManager.toJson(item);
+        editor.putString(item.service.id + "_" + item.pet.id + "_ITEM", json);
         editor.apply();
     }
 
@@ -267,11 +290,15 @@ public class AppointmentManager {
         editor.apply();
     }
 
-    public CartItem getCartItem(String serviceId, String petId) {
+    public CartItem getCartItem(String serviceId, String petId,String cartId) {
         int index = 0;
 
         for (CartItem item : cart) {
-            if (item.service.id.equals(serviceId) && item.pet.id.equals(petId)) {
+            if(cartId.isEmpty()) {
+                if (item.service.id.equals(serviceId) && item.pet.id.equals(petId)) {
+                    return cart.get(index);
+                }
+            }else if(item.service.id.equals(serviceId) && item.pet.id.equals(petId) && item.id.equals(cartId)){
                 return cart.get(index);
             }
 
@@ -295,6 +322,24 @@ public class AppointmentManager {
                 if (item.pet.id.equals(petId)) {
                     i++;
                 }
+
+        }
+        return i;
+
+    }
+
+    public int getCountCartCount(){
+        int i = 0;
+
+        ArrayList<CartItem> cart = new ArrayList<>();
+        String cartStr = pref.getString("CART", null);
+
+        if (cartStr != null) {
+            cart = mJsonManager.fromJson(cartStr, new TypeToken<ArrayList<CartItem>>() {
+            }.getType());
+        }
+        for (CartItem item : cart) {
+                i++;
 
         }
         return i;

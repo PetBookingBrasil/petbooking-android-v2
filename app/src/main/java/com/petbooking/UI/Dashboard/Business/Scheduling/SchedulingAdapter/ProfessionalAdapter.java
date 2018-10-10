@@ -3,6 +3,7 @@ package com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingAdapter;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.PagerSnapHelper;
@@ -25,7 +26,9 @@ import com.petbooking.Models.AppointmentDate;
 import com.petbooking.Models.Professional;
 import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.Scheduling.SchedulingFragment;
 import com.petbooking.UI.Dashboard.Business.Scheduling.model.AppointmentDateChild;
+import com.petbooking.UI.Dashboard.Business.Scheduling.model.AppointmentDateSlot;
 import com.petbooking.UI.Dashboard.Business.Scheduling.widget.MyLinearLayout;
 import com.petbooking.UI.Dashboard.Business.ServiceDetail.DateListAdapter;
 import com.petbooking.UI.Widget.CircleTransformation;
@@ -55,6 +58,9 @@ public class ProfessionalAdapter extends StatelessSection {
     Professional professional = null;
     RecyclerView datesRecycler;
     OnProfessionalSelected onProfessionalSelected;
+    SchedulingFragment fragment;
+    private List<AppointmentDateChild> days;
+    List<AppointmentDateSlot> appointmentDateSlots;
 
     RecyclerView.OnItemTouchListener mScrollTouchListener = new RecyclerView.OnItemTouchListener() {
         @Override
@@ -92,6 +98,10 @@ public class ProfessionalAdapter extends StatelessSection {
         this.professionals = professionals;
     }
 
+    public void setFragment(SchedulingFragment fragment) {
+        this.fragment = fragment;
+    }
+
     public void setexpanded(boolean expanded) {
         this.expanded = expanded;
     }
@@ -113,9 +123,10 @@ public class ProfessionalAdapter extends StatelessSection {
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder item, int position) {
         ItemViewHolder holder = (ItemViewHolder) item;
-        holder.professionalList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(holder.professionalList);
+        holder.professionalList.setLayoutManager(new GridLayoutManager(context, 3));
+        //SnapHelper snapHelper = new PagerSnapHelper();
+        //holder.professionalList.setOnFlingListener(null);
+        //snapHelper.attachToRecyclerView(holder.professionalList);
         holder.professionalList.setClipToPadding(false);
         holder.professionalList.setAdapter(new ProfessionalListAdapter(context, professionals));
 
@@ -126,13 +137,40 @@ public class ProfessionalAdapter extends StatelessSection {
         holder.datesAvaliableList.addOnItemTouchListener(mScrollTouchListener);
         holder.datesAvaliableList.setAdapter(dateListDayAdapter);
         SnapHelper snapHelperLinear = new LinearSnapHelper();
+        holder.datesAvaliableList.setOnFlingListener(null);
         snapHelperLinear.attachToRecyclerView(holder.datesAvaliableList);
         holder.datesAvaliableList.setClipToPadding(false);
     }
 
-    public void updateProfissionals(final int position) {
-        new AsyncTask<Void,Void,Void>(){
+    public void setDays(List<AppointmentDateSlot> days) {
+        this.appointmentDateSlots = days;
+    }
+
+    public List<AppointmentDateChild> getDays() {
+        return days;
+    }
+
+    public List<AppointmentDateSlot> getAppointmentDateSlots() {
+        return appointmentDateSlots;
+    }
+
+    public void checkProfessional(){
+        int i = 0;
+        if(professionals.size() > 0){
+            for(Professional professional: professionals){
+                if(professional.id.equals(this.professional.id)){
+                    updateProfissionals(i, true);
+                    break;
+                }
+                i++;
+            }
+        }
+    }
+
+    public void updateProfissionals(final int position, final boolean edit) {
+        new AsyncTask<Void, Void, Void>() {
             List<AppointmentDateChild> childs = new ArrayList<>();
+            List<AppointmentDateSlot> slots = new ArrayList<>();
 
             @Override
             protected Void doInBackground(Void... voids) {
@@ -142,7 +180,11 @@ public class ProfessionalAdapter extends StatelessSection {
 
                     for (int i = 0; i < professionals.get(position).availableDates.get(j).days.size(); i++) {
                         monthName = professionals.get(position).availableDates.get(j).monthName;
+                        Date date = professionals.get(position).availableDates.get(j).days.get(i).date;
+                        ArrayList<String> times = professionals.get(position).availableDates.get(j).days.get(i).times;
+                        AppointmentDateSlot slot = new AppointmentDateSlot(date,times);
 
+                        slots.add(slot);
                         for (int x = 0; x < professionals.get(position).availableDates.get(j).days.get(i).times.size(); x++) {
                             String time = professionals.get(position).availableDates.get(j).days.get(i).times.get(x);
                             AppointmentDateChild dateChild =
@@ -158,13 +200,19 @@ public class ProfessionalAdapter extends StatelessSection {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                Log.i(getClass().getSimpleName(),"Qual o professional " + position);
-                dateListDayAdapter.selectedPosition(0);
-                dateListDayAdapter.setDays(childs);
-                dateListDayAdapter.notifyDataSetChanged();
+                Log.i(getClass().getSimpleName(), "Qual o professional " + position);
+                //dateListDayAdapter.selectedPosition(0);
+                //dateListDayAdapter.setDays(childs);
+                //dateListDayAdapter.notifyDataSetChanged();
+                setDays(slots);
+                if(edit) {
+                    onProfessionalSelected.selectedProfessional(professionals.get(position), null, null, position,true);
+                }else{
+                    onProfessionalSelected.selectedProfessional(professionals.get(position), null, null, position,false);
+                }
+
             }
         }.execute();
-
 
 
     }
@@ -174,11 +222,17 @@ public class ProfessionalAdapter extends StatelessSection {
         return new HeaderViewHolder(view);
     }
 
+    public void setProfessional(Professional professional) {
+        this.professional = professional;
+    }
+
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder item) {
         HeaderViewHolder holder = (HeaderViewHolder) item;
         holder.headerTitle.setText(title);
-        if(professional !=null && expanded) {
+        holder.headerEdit.setVisibility(View.VISIBLE);
+        holder.image_header.setVisibility(View.VISIBLE);
+        if (professional != null && !expanded) {
             int professionalAvatar;
             if (professional.gender == null || professional.gender.equals(User.GENDER_MALE)) {
                 professionalAvatar = R.drawable.ic_placeholder_man;
@@ -200,14 +254,22 @@ public class ProfessionalAdapter extends StatelessSection {
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             holder.headerSection.setLayoutParams(params);
             holder.image_header.setVisibility(View.VISIBLE);
-        }else{
+            holder.headerEdit.setVisibility(View.VISIBLE);
+            holder.headerEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    fragment.expandedProfessional();
+                }
+            });
+        } else {
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
             holder.headerSection.setLayoutParams(params);
             holder.image_header.setVisibility(View.GONE);
             holder.textCheckunicode.setText("4");
-            holder.textCheckunicode.setVisibility(View.VISIBLE);
-            holder.textCheckunicode.setTextColor(ContextCompat.getColor(context,R.color.gray));
+            holder.textCheckunicode.setVisibility(View.GONE);
+            holder.textCheckunicode.setTextColor(ContextCompat.getColor(context, R.color.gray));
             holder.circleImageView.setImageResource(R.color.schedule_background);
+            holder.headerEdit.setVisibility(View.GONE);
         }
 
     }
@@ -279,7 +341,7 @@ public class ProfessionalAdapter extends StatelessSection {
             holder.v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    updateProfissionals(position);
+                    updateProfissionals(position,false);
                     ProfessionalAdapter.this.professional = professionals.get(position);
                     setSelectedPosition(position);
                     selected = false;
@@ -287,17 +349,17 @@ public class ProfessionalAdapter extends StatelessSection {
                 }
             });
 
-            if (position == 0 && selected) {
+           /* if (position == 0 && selected) {
                 setSelectedPosition(position);
                 updateProfissionals(position);
                 ProfessionalAdapter.this.professional = professionals.get(position);
-            }
+            }*/
 
-            if(selectedPosition == position){
+            if (selectedPosition == position) {
                 holder.professionalPhoto.setAlpha(1.0f);
-                holder.professionalPhoto.setBackground(ContextCompat.getDrawable(context,R.drawable.imageview_border));
-            }else{
-                holder.professionalPhoto.setBackground(ContextCompat.getDrawable(context,R.drawable.circle_background));
+                holder.professionalPhoto.setBackground(ContextCompat.getDrawable(context, R.drawable.imageview_border));
+            } else {
+                holder.professionalPhoto.setBackground(ContextCompat.getDrawable(context, R.drawable.circle_background));
                 holder.professionalPhoto.setAlpha(0.1f);
             }
 
@@ -370,7 +432,7 @@ public class ProfessionalAdapter extends StatelessSection {
                 holder.dateAvaliable.setTextColor(ContextCompat.getColor(context, R.color.brand_primary));
                 holder.hourAvaliable.setTextColor(ContextCompat.getColor(context, R.color.brand_primary));
                 appointmentDate = professional.availableDates.get(date.position);
-                onProfessionalSelected.selectedProfessional(professional, appointmentDate, date);
+                onProfessionalSelected.selectedProfessional(professional, appointmentDate, date,position,false);
             } else {
                 holder.dateAvaliable.setTextColor(ContextCompat.getColor(context, R.color.text_gray));
                 holder.hourAvaliable.setTextColor(ContextCompat.getColor(context, R.color.text_gray));
@@ -400,6 +462,6 @@ public class ProfessionalAdapter extends StatelessSection {
     }
 
     public interface OnProfessionalSelected {
-        void selectedProfessional(Professional professional, AppointmentDate appointmentDate, AppointmentDateChild chil);
+        void selectedProfessional(Professional professional, AppointmentDate appointmentDate, AppointmentDateChild chil,int position, boolean edit);
     }
 }

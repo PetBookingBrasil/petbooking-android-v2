@@ -22,6 +22,7 @@ public class APIConstants {
     public static final String DATA_SESSIONS = "sessions";
     public static final String DATA_FAVORITES = "favorites";
     public static final String DATA_FAVORITES_TYPE_BUSINESS = "Business";
+    public static final String DATA_REVIEW_TYPE_REVIEWS = "reviews";
 
 
     /**
@@ -38,11 +39,13 @@ public class APIConstants {
     public static final String QUERY_CATEGORY_TEMPLATE = "category_template_id";
     public static final String PAYMENT_OK_TAG = "ok";
     public static final String FALLBACK_TAG = "fallbacks";
+    public static final String CURRENT_DATE = "current_date";
+    public static final String PET_TYPE = "pet_type";
 
     /**
      * Headers
      */
-    public static final String HEADER_LANGUAGE = "X-PB-language";
+    public static final String HEADER_LANGUAGE = "X-PB-language: required";
     public static final String HEADER_CONTENT_TYPE = "Content-Type";
     public static final String HEADER_CONTENT_TYPE_VALUE = "application/vnd.api+json";
     public static final String HEADER_AUTHORIZATION_REQUIRED = "Authorization: required";

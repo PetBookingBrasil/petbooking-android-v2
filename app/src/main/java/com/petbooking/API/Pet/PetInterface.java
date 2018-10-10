@@ -1,5 +1,6 @@
 package com.petbooking.API.Pet;
 
+import com.petbooking.API.Pet.Models.AttributesResponse;
 import com.petbooking.API.Pet.Models.BreedResp;
 import com.petbooking.API.Pet.Models.CreatePetRqt;
 import com.petbooking.API.Pet.Models.ListPetsResp;
@@ -50,5 +51,9 @@ public interface PetInterface {
     @DELETE(APIPetConstants.REMOVE_PET_ENDPOINT)
     Call<Void> removePet(@Path(APIConstants.PATH_PARAM) String userID,
                          @Path(APIPetConstants.PATH_PET_ID) String petID);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
+    @GET(APIPetConstants.GET_PET_ATRIBUTTES)
+    Call<AttributesResponse> getAtributtes(@Path(APIConstants.PATH_PARAM) String userID, @Path(APIConstants.PET_TYPE) String petType);
 }
 

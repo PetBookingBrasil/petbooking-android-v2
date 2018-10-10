@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -37,6 +38,7 @@ import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
 import com.petbooking.UI.Dialogs.TableDialogFragment;
 import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.UI.Widget.MaterialSpinner;
+import com.petbooking.UI.Widget.StyledSwitch;
 import com.petbooking.Utils.APIUtils;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
@@ -108,6 +110,7 @@ public class ProfilePetActivity extends BaseActivity implements
     private MaterialSpinner mSpBreed;
     private MaterialSpinner mSpCoat;
     private MaterialSpinner mSpTemper;
+    private StyledSwitch chipSwitch;
     private ImageView mIvPetPhoto;
     private EditText mEdtBirthday;
     private ImageButton mIBtnSelectPicture;
@@ -175,6 +178,10 @@ public class ProfilePetActivity extends BaseActivity implements
         mGson = new Gson();
         mUser = mSessionManager.getUserLogged();
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mFragmentManager = getSupportFragmentManager();
         mDialogFragmentPictureSelect = PictureSelectDialogFragment.newInstance();
         mDialogFragmentFeedback = FeedbackDialogFragment.newInstance();
@@ -191,6 +198,8 @@ public class ProfilePetActivity extends BaseActivity implements
         mSpTemper = (MaterialSpinner) findViewById(R.id.pet_temper);
         mSpCoat = (MaterialSpinner) findViewById(R.id.pet_coat);
         mBtnSubmit = (Button) findViewById(R.id.submitButton);
+        chipSwitch = (StyledSwitch) findViewById(R.id.switch_chip);
+        mBtnSubmit.setText(R.string.register);
 
         mSpType.setOnItemSelectedListener(typeListener);
         mSpSize.setOnInfoClickListener(infoSizeListener);
@@ -242,6 +251,10 @@ public class ProfilePetActivity extends BaseActivity implements
 
             }
         });
+    }
+
+    public void getAtributtes(){
+
     }
 
     /**
@@ -309,7 +322,10 @@ public class ProfilePetActivity extends BaseActivity implements
         int message = -1;
 
         try {
-            message = FormUtils.validatePet(pet);
+            if(chipSwitch.isChecked())
+                message = FormUtils.validatePet(pet,true);
+            else
+                message = FormUtils.validatePet(pet,false);
         } catch (ParseException e) {
             e.printStackTrace();
         }

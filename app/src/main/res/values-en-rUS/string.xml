@@ -81,7 +81,7 @@
     <!-- Sidemenu and Toolbar Options-->
     <string name="my_pets">My Pets</string>
     <string name="search">Search</string>
-    <string name="search_title">Filtre your search</string>
+    <string name="search_title">Search</string>
     <string name="calendar">Calendar</string>
     <string name="payments">Payments</string>
     <string name="favorites">Favorites</string>
@@ -131,7 +131,7 @@
     <string name="business_tab_information">Information</string>
     <string name="business_label_description">Description</string>
     <string name="business_label_contact">Contact</string>
-    <string name="business_label_website">Website</string>
+    <string name="business_label_website">Site</string>
     <string name="business_label_social_network">Social Network</string>
     <string name="business_label_location">Location</string>
     <string name="business_label_reviews">Reviews</string>
@@ -151,7 +151,7 @@
     <string name="email">Email</string>
     <string name="sms">SMS</string>
     <string name="about">About</string>
-    <string name="support">Support</string>
+    <string name="support">Terms of use</string>
     <string name="terms">Terms</string>
 
     <!-- Agenda -->

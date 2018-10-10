@@ -7,19 +7,27 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.petbooking.API.Pet.APIPetConstants;
+import com.petbooking.API.Pet.Models.AttributesResponse;
 import com.petbooking.API.Pet.Models.BreedResp;
 import com.petbooking.API.Pet.PetService;
-import com.petbooking.BaseActivity;
+import com.petbooking.App;
 import com.petbooking.Constants.AppConstants;
 import com.petbooking.Events.ShowSnackbarEvt;
 import com.petbooking.Interfaces.APICallback;
@@ -28,6 +36,7 @@ import com.petbooking.Models.Breed;
 import com.petbooking.Models.Pet;
 import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.Scheduling.model.CreatePetPojo;
 import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.Dialogs.DatePickerFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
@@ -35,6 +44,7 @@ import com.petbooking.UI.Dialogs.PictureSelectDialogFragment;
 import com.petbooking.UI.Dialogs.TableDialogFragment;
 import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.UI.Widget.MaterialSpinner;
+import com.petbooking.UI.Widget.StyledSwitch;
 import com.petbooking.Utils.AppUtils;
 import com.petbooking.Utils.CommonUtils;
 import com.petbooking.Utils.FormUtils;
@@ -46,12 +56,13 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.view.View.GONE;
 
 
-public class RegisterPetActivity extends BaseActivity implements
+public class RegisterPetActivity extends AppCompatActivity implements
         PictureSelectDialogFragment.FinishDialogListener,
         FeedbackDialogFragment.FinishDialogListener,
         DatePickerFragment.DatePickerListener {
@@ -105,10 +116,19 @@ public class RegisterPetActivity extends BaseActivity implements
     private MaterialSpinner mSpBreed;
     private MaterialSpinner mSpCoat;
     private MaterialSpinner mSpTemper;
+    private MaterialSpinner mSpColorPet;
     private ImageView mIvPetPhoto;
     private EditText mEdtBirthday;
     private ImageButton mIBtnSelectPicture;
     private Button mBtnSubmit;
+    private TextInputLayout textLayoutChip;
+    StyledSwitch castratedSwitch;
+    StyledSwitch chipSwitch;
+    EditText chipNumberText;
+    EditText petDescription;
+    boolean schedule;
+    private String userId;
+    HashMap<String,Integer> colorsType;
 
     AdapterView.OnItemSelectedListener typeListener = new AdapterView.OnItemSelectedListener() {
         @Override
@@ -116,9 +136,11 @@ public class RegisterPetActivity extends BaseActivity implements
             if (position == 0) {
                 mSpBreed.setItems(dogBreedsString);
                 mSpSize.setItems(R.array.size_dog_array);
+                getAttributes("dog");
             } else if (position == 1) {
                 mSpBreed.setItems(catBreedsString);
                 mSpSize.setItems(R.array.size_cat_array);
+                getAttributes("cat");
             } else {
                 mSpBreed.setItems(R.array.empty_array);
             }
@@ -162,9 +184,15 @@ public class RegisterPetActivity extends BaseActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        schedule = getIntent().getBooleanExtra("schedule",false);
 
+        super.onCreate(savedInstanceState);
+        if(!schedule){
+            setTheme(R.style.AppTheme);
+        }
         mBinding = DataBindingUtil.setContentView(this, R.layout.pet_form);
+
+
         mSessionManager = SessionManager.getInstance();
         mPetService = new PetService();
 
@@ -179,6 +207,7 @@ public class RegisterPetActivity extends BaseActivity implements
         mIvPetPhoto = (ImageView) findViewById(R.id.pet_photo);
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
         mEdtName = (EditText) findViewById(R.id.pet_name);
+        petDescription = (EditText) findViewById(R.id.pet_observation);
         mEdtBirthday = (EditText) findViewById(R.id.pet_birthday);
         mSpGender = (MaterialSpinner) findViewById(R.id.pet_gender);
         mSpType = (MaterialSpinner) findViewById(R.id.pet_type);
@@ -187,9 +216,63 @@ public class RegisterPetActivity extends BaseActivity implements
         mSpTemper = (MaterialSpinner) findViewById(R.id.pet_temper);
         mSpCoat = (MaterialSpinner) findViewById(R.id.pet_coat);
         mBtnSubmit = (Button) findViewById(R.id.submitButton);
-
+        chipNumberText = (EditText) findViewById(R.id.pet_chip_number);
+        chipSwitch = (StyledSwitch) findViewById(R.id.switch_chip);
+        textLayoutChip = (TextInputLayout) findViewById(R.id.chip_number_tl);
+        castratedSwitch = (StyledSwitch) findViewById(R.id.switch_castrated);
         mSpType.setOnItemSelectedListener(typeListener);
         mSpSize.setOnInfoClickListener(infoSizeListener);
+        mSpColorPet = (MaterialSpinner) findViewById(R.id.color_pet);
+        this.userId = SessionManager.getInstance().getUserLogged().id;
+
+        if(!schedule){
+
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+            toolbar.setVisibility(View.VISIBLE);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }else{
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+            toolbar.setVisibility(View.GONE);
+            RelativeLayout appPetToolbar = (RelativeLayout) findViewById(R.id.add_pet_toolbar);
+            appPetToolbar.setVisibility(View.VISIBLE);
+            ImageButton closePetForm = (ImageButton) findViewById(R.id.close_pet_form);
+            closePetForm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
+        }
+
+        if(schedule){
+            mSpColorPet.setHintColor(R.color.white);
+            mSpBreed.setHintColor(R.color.white);
+            mSpCoat.setHintColor(R.color.white);
+            mSpGender.setHintColor(R.color.white);
+            mSpSize.setHintColor(R.color.white);
+            mSpTemper.setHintColor(R.color.white);
+            mSpType.setHintColor(R.color.white);
+            mSpType.getmSpinner().setPaddingSafe(0,0,0,0);
+            mSpColorPet.getmSpinner().setPaddingSafe(0,0,0,0);
+            mSpBreed.getmSpinner().setPaddingSafe(0,0,0,0);
+            mSpCoat.getmSpinner().setPaddingSafe(0,0,0,0);
+            mSpGender.getmSpinner().setPaddingSafe(0,0,0,0);
+            mSpSize.getmSpinner().setPaddingSafe(0,0,0,0);
+            mSpTemper.getmSpinner().setPaddingSafe(0,0,0,0);
+            chipSwitch.getmTvTitle().setTextColor(ContextCompat.getColor(this,R.color.white));
+            castratedSwitch.getmTvTitle().setTextColor(ContextCompat.getColor(this,R.color.white));
+            mSpColorPet.setIcon(null);
+            mSpBreed.setIcon(null);
+            mSpCoat.setIcon(null);
+            mSpGender.setIcon(null);
+            mSpSize.setIcon(null);
+            mSpTemper.setIcon(null);
+            mSpType.setIcon(null);
+            mEdtName.setCompoundDrawables(null,null,null,null);
+            mEdtBirthday.setCompoundDrawables(null,null,null,null);
+            petDescription.setCompoundDrawables(null,null,null,null);
+        }
 
         mIBtnSelectPicture = (ImageButton) findViewById(R.id.select_picture);
         mIBtnSelectPicture.setOnClickListener(mSelectListener);
@@ -204,11 +287,21 @@ public class RegisterPetActivity extends BaseActivity implements
 
         listDogBreeds();
         listCatBreeds();
-
+        getAttributes("dog");
         pet = new Pet();
         mBinding.setPet(pet);
-    }
 
+       chipSwitch.getmSwitch().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+           @Override
+           public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               if(isChecked){
+                   textLayoutChip.setVisibility(View.VISIBLE);
+               }else{
+                   textLayoutChip.setVisibility(View.INVISIBLE);
+               }
+           }
+       });
+    }
     /**
      * List All Dog Breeds
      */
@@ -221,12 +314,30 @@ public class RegisterPetActivity extends BaseActivity implements
                     dogBreedsString.add(breed.attributes.name);
                     dogBreeds.add(new Breed(breed.id, breed.attributes.name, breed.attributes.kind, breed.attributes.size));
                 }
-
             }
 
             @Override
             public void onError(Object error) {
 
+            }
+        });
+    }
+
+    public void getAttributes(String typePet){
+        mPetService.getAtributtes(typePet,userId, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                AttributesResponse att = (AttributesResponse) response;
+                RegisterPetActivity.this.mSpGender.setItems(AppUtils.getGenders(RegisterPetActivity.this,(ArrayList<String>)att.data.attributes.genders));
+                RegisterPetActivity.this.mSpSize.setItems(AppUtils.getSizes(RegisterPetActivity.this, (ArrayList<String>) att.data.attributes.sizes));
+                RegisterPetActivity.this.mSpCoat.setItems(AppUtils.getCoatTypes(RegisterPetActivity.this,(ArrayList<String>) att.data.attributes.coat_types));
+                RegisterPetActivity.this.mSpColorPet.setItems(getColorPet(att.data.attributes.coat_colors));
+                RegisterPetActivity.this.colorsType = att.data.attributes.coat_colors;
+
+            }
+
+            @Override
+            public void onError(Object error) {
             }
         });
     }
@@ -292,7 +403,10 @@ public class RegisterPetActivity extends BaseActivity implements
         int message = -1;
 
         try {
-            message = FormUtils.validatePet(pet);
+            if(chipSwitch.isChecked())
+            message = FormUtils.validatePet(pet,true);
+            else
+                message = FormUtils.validatePet(pet,false);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -300,7 +414,8 @@ public class RegisterPetActivity extends BaseActivity implements
         if (message == -1) {
             createRequest(pet);
         } else {
-            EventBus.getDefault().post(new ShowSnackbarEvt(message, Snackbar.LENGTH_LONG));
+            View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
+            Snackbar.make(rootView, message, Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -348,6 +463,7 @@ public class RegisterPetActivity extends BaseActivity implements
         pet.coatType = AppUtils.getCoatType(this, mSpCoat.getSelectedItem());
         pet.mood = AppUtils.getTemper(this, mSpTemper.getSelectedItem());
         pet.type = AppUtils.getType(this, mSpType.getSelectedItem());
+        pet.colorPet = mSpColorPet.getPosition();
 
         if (mBitmap != null) {
             pet.photo = CommonUtils.encodeBase64(mBitmap);
@@ -370,7 +486,12 @@ public class RegisterPetActivity extends BaseActivity implements
         } else if (action == AppConstants.TAKE_PHOTO) {
             openCamera();
         } else if (action == AppConstants.OK_ACTION) {
-            goToDashboard();
+            if(!schedule) {
+                goToDashboard();
+            }else {
+                EventBus.getDefault().post(new CreatePetPojo());
+                onBackPressed();
+            }
         } else if (action == AppConstants.ADD_PET) {
             resetForm();
             mEdtName.requestFocus();
@@ -397,6 +518,7 @@ public class RegisterPetActivity extends BaseActivity implements
         mSpBreed.selectItem(0);
         mSpCoat.selectItem(0);
         mSpTemper.selectItem(0);
+        mSpColorPet.selectItem(0);
     }
 
     /**
@@ -438,6 +560,15 @@ public class RegisterPetActivity extends BaseActivity implements
     @Override
     public void onDateSet(String date) {
         mEdtBirthday.setText(date);
+    }
+
+    public ArrayList<String> getColorPet(HashMap<String,Integer> hashMap){
+        int i = 0;
+        ArrayList<String> colors = new ArrayList<>();
+        for ( String key : hashMap.keySet() ) {
+            colors.add(key);
+        }
+        return colors;
     }
 
 }

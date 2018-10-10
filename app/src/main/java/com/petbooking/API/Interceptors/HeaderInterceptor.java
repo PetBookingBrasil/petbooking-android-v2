@@ -35,6 +35,7 @@ public class HeaderInterceptor implements Interceptor {
             String authorization = String.format(APIConstants.HEADER_AUTHORIZATION_FORMAT,
                     SessionManager.getInstance().getConsumerToken());
             newRequestBuilder.header(APIConstants.HEADER_AUTHORIZATION, authorization);
+
         }
 
         if (headers.contains(APIConstants.HEADER_SESSION_TOKEN)) {
@@ -42,7 +43,9 @@ public class HeaderInterceptor implements Interceptor {
             newRequestBuilder.header(APIConstants.HEADER_SESSION_TOKEN, sessionToken);
         }
 
-        newRequestBuilder.header(APIConstants.HEADER_LANGUAGE, Locale.getDefault().toString());
+        if(headers.contains(APIConstants.HEADER_LANGUAGE)) {
+            newRequestBuilder.header(APIConstants.HEADER_LANGUAGE, Locale.getDefault().toString());
+        }
 
         Response response = chain.proceed(newRequestBuilder.build());
         return response;

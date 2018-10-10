@@ -41,25 +41,28 @@ public class ServiceResp {
         @SerializedName("price_range")
         public Price priceRange;
 
+        //@SerializedName("service_price")
+
         @SerializedName("childs")
         public List<Additional> additionalServices;
 
         public Attributes() {
         }
 
-        Attributes(String name, String slug, String description, int duration, float price,
+        Attributes(String name, String slug, String description, int duration, Price price,
                    Price priceRange) {
             this.name = name;
             this.slug = slug;
             this.description = description;
             this.duration = duration;
-            this.price = price;
+            this.priceRange = price;
             this.priceRange = priceRange;
         }
 
         public static class Price {
-            public float min;
-            public float max;
+            public float min_service_price;
+            public float max_service_price;
+            public float service_price;
         }
     }
 

@@ -38,6 +38,8 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
     private Context mContext;
     int positionSelected = -1;
 
+
+
     public AdditionalServiceListAdapter(Context context, ArrayList<BusinessServices> reviewList, OnAdditionalSelect onAdditionalSelect) {
         this.mServiceList = reviewList;
         this.mContext = context;
@@ -48,6 +50,10 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
 
     public void updateList(ArrayList<BusinessServices> serviceList) {
         this.mServiceList = serviceList;
+    }
+
+    public void setServicesInsert(ArrayList<BusinessServices> servicesInsert) {
+        this.servicesInsert = servicesInsert;
     }
 
     @Override
@@ -91,7 +97,7 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
         holder.mCbServiceCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!existsAdditional(service,servicesInsert)) {
+                if (!existsAdditional(service, servicesInsert)) {
                     onAdditionalSelect.onSelect(true, service.id);
                     setPositionSelected(position);
                     servicesInsert.add(service);
@@ -126,8 +132,12 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
         return false;
     }
 
-    public void clearServices(){
+    public void clearServices() {
         this.servicesInsert.clear();
+    }
+    
+    public ArrayList<BusinessServices> getAdditionals(){
+        return this.servicesInsert;
     }
 
     public void setPositionSelected(int positionSelected) {
@@ -136,7 +146,10 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
 
     @Override
     public int getItemCount() {
-        return mServiceList.size();
+        if (mServiceList != null)
+            return mServiceList.size();
+        else
+            return 0;
     }
 
     public class AdditionalViewHolder extends RecyclerView.ViewHolder {
@@ -150,7 +163,7 @@ public class AdditionalServiceListAdapter extends RecyclerView.Adapter<Additiona
 
         public AdditionalViewHolder(View view) {
             super(view);
-            v= view;
+            v = view;
             mCbServiceCheck = (RelativeLayout) view.findViewById(R.id.additional_checkbox);
             mTvAdditionalPrice = (TextView) view.findViewById(R.id.additional_price);
             mServiceName = (TextView) view.findViewById(R.id.service_additional_name);

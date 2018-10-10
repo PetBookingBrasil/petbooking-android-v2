@@ -159,6 +159,7 @@
         android:gravity="top|left"
         android:hint="@string/observations_text"
         android:inputType="textMultiLine"
+        android:fontFamily="@font/corporativesansrdaltregular"
         android:lines="3"
         android:overScrollMode="always"
         android:paddingLeft="@dimen/spacing_xmicro"

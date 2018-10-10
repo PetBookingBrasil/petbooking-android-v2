@@ -1,10 +1,15 @@
 package com.petbooking.UI.Dashboard.PaymentWebview;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.webkit.ConsoleMessage;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
+import android.webkit.WebMessage;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -17,6 +22,7 @@ import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.R;
 import com.petbooking.UI.Dashboard.DashboardActivity;
+import com.petbooking.UI.Menu.Agenda.AgendaActivity;
 import com.petbooking.Utils.AppUtils;
 
 public class PaymentActivity extends AppCompatActivity {
@@ -31,6 +37,10 @@ public class PaymentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mAppointmentManager = AppointmentManager.getInstance();
         mAppointmentService = new AppointmentService();
@@ -52,25 +62,32 @@ public class PaymentActivity extends AppCompatActivity {
         AppUtils.showLoadingDialog(this);
         WebSettings webSettings = mPaymentWebview.getSettings();
         webSettings.setJavaScriptEnabled(true);
-
+        mPaymentWebview.loadUrl(url);
+        mPaymentWebview.addJavascriptInterface(this,"ok");
         mPaymentWebview.setWebViewClient(new WebViewClient() {
             public void onPageFinished(WebView view, String url) {
                 AppUtils.hideDialog();
             }
+
         });
 
-        mPaymentWebview.loadUrl(url);
+
+
         mPaymentWebview.setWebChromeClient(new WebChromeClient() {
             public boolean onConsoleMessage(ConsoleMessage cm) {
+                cm.messageLevel();
                 if (cm.message().equals(APIConstants.PAYMENT_OK_TAG)) {
-                    mAppointmentManager.reset();
-                    goToDashboard();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mAppointmentManager.reset();
+                            goToDashboard();
+                        }
+                    },8000);
                 }
 
                 return true;
             }
-
-
         });
     }
 
@@ -78,7 +95,12 @@ public class PaymentActivity extends AppCompatActivity {
      * Go to dashboard
      */
     private void goToDashboard() {
-        Intent dashboardIntent = new Intent(this, DashboardActivity.class);
+        Intent dashboardIntent = new Intent(this, AgendaActivity.class);
         startActivity(dashboardIntent);
     }
+
+   @JavascriptInterface
+    public void postMessage(String ok){
+        goToDashboard();
+   }
 }

@@ -19,15 +19,12 @@ public class FormUtils {
     public static int validateUser(User user, boolean checkPassword) throws ParseException {
         Date today = new Date();
 
-        if (CommonUtils.isEmpty(user.name) || CommonUtils.isEmpty(user.birthday) || CommonUtils.isEmpty(user.cpf)
-                || CommonUtils.isEmpty(user.email) || CommonUtils.isEmpty(user.zipcode) || CommonUtils.isEmpty(user.street)
-                || CommonUtils.isEmpty(user.city) || CommonUtils.isEmpty(user.neighborhood)
-                || CommonUtils.isEmpty(user.state) || CommonUtils.isEmpty(user.streetNumber)) {
+        if (CommonUtils.isEmpty(user.name)
+                || CommonUtils.isEmpty(user.email) || CommonUtils.isEmpty(user.phone)
+                ) {
             return R.string.error_fields_empty;
         } else if (!CommonUtils.isValidEmail(user.email)) {
             return R.string.error_invalid_email;
-        } else if (!CommonUtils.isCPFValid(user.cpf)) {
-            return R.string.error_invalid_cpf;
         } else if (!CommonUtils.isPhoneValid(user.phone)) {
             return R.string.error_invalid_phone;
         } else if (checkPassword && !CommonUtils.isValidPassword(user.password)) {
@@ -39,13 +36,43 @@ public class FormUtils {
         return -1;
     }
 
-    public static int validatePet(Pet pet) throws ParseException {
+    public static int newValidateUser(User user, boolean checkPassword) throws ParseException {
+        Date today = new Date();
+
+        if (CommonUtils.isEmpty(user.name)
+                || CommonUtils.isEmpty(user.email)) {
+            return R.string.error_fields_empty;
+        } else if (!CommonUtils.isValidEmail(user.email)) {
+            return R.string.error_invalid_email;
+        } else if (!CommonUtils.isEmpty(user.phone) && !CommonUtils.isPhoneValid(user.phone)) {
+            return R.string.error_invalid_phone;
+        } else if (checkPassword && !CommonUtils.isEmpty(user.password) && !CommonUtils.isValidPassword(user.password)) {
+            return R.string.error_invalid_password;
+        }
+
+        return -1;
+    }
+
+    public static int validateUserSocialLogin(User user){
+        if(!CommonUtils.isEmpty(user.email)) {
+            if (!CommonUtils.isValidEmail(user.email)) {
+                return R.string.error_invalid_email;
+            }
+        }
+        return -1;
+    }
+
+    public static int validatePet(Pet pet, boolean checkChip) throws ParseException {
         Date today = new Date();
 
         if (CommonUtils.isEmpty(pet.name) || CommonUtils.isEmpty(pet.birthday) || CommonUtils.isEmpty(pet.gender)
                 || CommonUtils.isEmpty(pet.type) || CommonUtils.isEmpty(pet.size) || CommonUtils.isEmpty(pet.coatType)
                 || CommonUtils.isEmpty(pet.breedId) || CommonUtils.isEmpty(pet.mood)) {
             return R.string.error_fields_empty;
+        }else if(checkChip){
+            if(CommonUtils.isEmpty(pet.chipNumber)){
+                return R.string.error_fields_empty;
+            }
         }
 
         if (today.before(dateFormat.parse(pet.birthday))) {

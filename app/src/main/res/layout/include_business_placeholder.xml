@@ -30,6 +30,7 @@
         android:layout_marginTop="@dimen/spacing_xtiny"
         android:text="@string/business_empty_message"
         android:textAlignment="center"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="invisible"/>
 
 </LinearLayout>

@@ -4,6 +4,7 @@
     <!-- Basic -->
     <color name="white">#FFFFFF</color>
     <color name="gray">#AFB4B7</color>
+    <color name="gray_transparent_pet">#26AFB4B7</color>
     <color name="green">#18B45C</color>
     <color name="green_017a0a">#017a0a</color>
     <color name="light_gray">#E8E8E8</color>
@@ -18,11 +19,15 @@
     <color name="presentation_2">#F68D2E</color>
     <color name="presentation_3">#9F5CC0</color>
 
+
+    <color name="gray_transparent">#E6000000</color>
+
     <!-- Login -->
     <color name="facebook_btn_login">#3B5998</color>
 
     <!-- Brand Colors -->
     <color name="brand_primary">#E4002B</color>
+    <color name="background_brand">#1AE4002B</color>
     <color name="secondary_red">#B00021</color>
     <color name="default_gray">#F6F6F6</color>
     <color name="text_color">#545454</color>
@@ -48,6 +53,7 @@
     <color name="past_date_color">#9A9A9A</color>
     <color name="professional_list_background">#BABABA</color>
     <color name="date_list_background">#747474</color>
+    <color name="transparent_background">#33000000</color>
 
     <!-- schedule colors -->
     <color name="schedule_background">#F0F0F0</color>
@@ -55,5 +61,7 @@
     <color name="schedule_section_border_number">#AFAFAF</color>
     <color name="schedule_item_edit_icon">#3791BD</color>
     <color name="schedule_item_edit_background">#D8EBF5</color>
+    <color name="background_pet">#898989</color>
+    <color name="schedule_pet_button">#73EB8C92</color>
 
 </resources>

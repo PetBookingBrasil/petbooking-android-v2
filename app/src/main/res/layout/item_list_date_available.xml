@@ -11,16 +11,14 @@
         android:id="@+id/separator_line_top"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="@dimen/spacing_xmicro"
-        android:layout_marginTop="@dimen/spacing_xmicro"
         android:background="@color/light_gray"
         android:visibility="visible"/>
 
     <LinearLayout
+        android:id="@+id/item_hour_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/item_hour_background_brand"
         android:layout_gravity="center_vertical">
 
     <TextView
@@ -28,7 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Qui, 17 de ago"
-        android:textSize="18dp"/>
+        android:textSize="18dp"
+        android:visibility="gone"/>
 
         <TextView
             android:id="@+id/hour_avaliable"
@@ -36,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="09:00"
             android:layout_gravity="center_vertical"
-            android:gravity="right"
+            android:gravity="center_horizontal"
             android:layout_marginRight="10dp"
             android:textSize="18dp"/>
 

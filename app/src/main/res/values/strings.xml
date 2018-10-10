@@ -13,18 +13,18 @@
 
     <!--  Third-party Apps ID -->
     <string name="fabric_app_id" translatable="false">fe0c61a27b92b4a7f90ab0fc8f69e3a4326250e5</string>
-    <string name="facebook_app_id" translatable="false">1799017433691061</string>
-    <string name="google_maps_key" translatable="false">AIzaSyAH5EPkWMPgU0zuL1y9ePlEusxOZ_y1Zx0</string>
+    <string name="facebook_app_id" translatable="false">1579605499022071</string>
+    <string name="google_maps_key" translatable="false">AIzaSyBnnn32f_DTJWeClZRgjqHOQY08lyhTZH0</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb1799017433691061</string>
 
     <!-- Screen Title -->
     <string name="dashboard_title">Estabelecimentos</string>
     <string name="recover_password_title">Esqueci a senha</string>
-    <string name="signup_title">Preencha seus dados</string>
+    <string name="signup_title">Cadastro</string>
     <string name="profile_title">Perfil</string>
     <string name="pets_title">Meus Pets</string>
     <string name="new_pet_title">Preencha os dados do pet</string>
-    <string name="search_title">Filtre sua busca</string>
+    <string name="search_title">Busca</string>
     <string name="cart_title">Carrinho de Agendamentos</string>
     <string name="payment_title">Pagamento</string>
 
@@ -66,7 +66,7 @@
     <string name="presentation_3_title">Cuidar dos seus Pets nunca foi tão prático!</string>
     <string name="presentation_1_text">Banho, tosa, consultas veterinárias e muito mais!</string>
     <string name="presentation_2_text"></string>
-    <string name="presentation_3_text">Simples, rápido e seguro.</string>
+    <string name="presentation_3_text">Seguro, Simples e rápido.</string>
     <string name="next">Próximo</string>
     <string name="skip">Pular</string>
 
@@ -88,6 +88,7 @@
     <string name="hint_cpf">CPF</string>
     <string name="hint_birthday">Data Nasc.</string>
     <string name="hint_email">Email</string>
+    <string name="hint_email_cadastrado">Email cadstrado no Pet Booking</string>
     <string name="hint_zipcode">CEP</string>
     <string name="hint_city">Cidade</string>
     <string name="hint_state">UF</string>
@@ -99,10 +100,11 @@
     <string name="hint_password">Senha</string>
     <string name="hint_repeat_password">Conf. senha</string>
     <string name="register">Salvar</string>
+    <string name="save">Cadastre-se</string>
 
     <!-- Forgot Password -->
     <string name="recover_password_text">Informe abaixo o email de cadastro \n associado à sua conta no Pet Booking.</string>
-    <string name="recover_password_result">Após a solicitação, você deverá receber em \n instantes um email com instruções para \n resetar sua senha.</string>
+    <string name="recover_password_result">Verifique sua caixa de entrada. Você receberá \n instruções para \n recuperar sua senha.</string>
     <string name="email_empty">Informe o email.</string>
     <string name="recover_email_title">Recuperar Senha</string>
     <string name="recover_email_text">As instruções para recuperação foram enviadas para seu email.</string>
@@ -113,6 +115,7 @@
     <string name="search">Pesquisar</string>
     <string name="calendar">Agenda</string>
     <string name="payments">Pagamentos</string>
+    <string name="payments_forms">Formas de pagamento</string>
     <string name="favorites">Favoritos</string>
     <string name="settings">Configurações</string>
     <string name="logout">Sair</string>
@@ -143,8 +146,14 @@
     <string name="hint_size">Porte</string>
     <string name="hint_breed">Raça</string>
     <string name="hint_coat">Pelagem</string>
+    <string name="color_pet">Cor da pelagem</string>
     <string name="hint_temper">Temperamento</string>
     <string name="hint_observation">Observação</string>
+    <string name="color_white">Branco</string>
+    <string name="color_black">Preto</string>
+    <string name="color_brown">Marron</string>
+    <string name="color_gray">Cinza</string>
+    <string name="register_pet">Cadastrar Pet</string>
 
     <!-- Business -->
     <string name="business_street">%1$s, %2$s - %3$s</string>
@@ -160,9 +169,10 @@
     <string name="business_tab_information">Informações</string>
     <string name="business_label_description">Descrição</string>
     <string name="business_label_contact">Contato</string>
-    <string name="business_label_website">Website</string>
-    <string name="business_label_social_network">Redes Sociais</string>
-    <string name="business_label_location">Localização</string>
+    <string name="business_label_website">Site</string>
+    <string name="business_label_social_network">Redes sociais</string>
+    <string name="business_label_location">localização</string>
+    <string name="business_label_location_max">Localização</string>
     <string name="business_label_reviews">Reviews</string>
     <string name="business_label_additional">Serviços Adicionais</string>
     <string name="business_service_price">R$ %1$s</string>
@@ -171,9 +181,11 @@
     <string name="bussines_category">Categoria do Serviço</string>
 
     <!-- Search -->
-    <string name="filter_hint">Filtrar por nome, local&#8230;</string>
+    <string name="filter_hint">Nome do estabelecimento ou serviços</string>
+    <string name="location_hint">Localização</string>
+    <string name="city_neighborhood">Cidade ou bairro</string>
     <string name="filter_label">Filtre por categoria</string>
-    <string name="filter">Filtrar</string>
+    <string name="filter">Buscar</string>
 
     <!-- Settings -->
     <string name="kilometers">Quilômetro</string>
@@ -181,8 +193,8 @@
     <string name="email">Email</string>
     <string name="sms">SMS</string>
     <string name="about">Sobre o app</string>
-    <string name="support">Suporte</string>
-    <string name="terms">Legal</string>
+    <string name="support">Termos de uso</string>
+    <string name="terms">Politicas de privacidade</string>
 
     <!-- Agenda -->
     <string name="reschedule">Reagendar</string>
@@ -221,8 +233,8 @@
     <string name="favorites_empty_message">Marque seus estabelecimentos favoritos e acesse-os rapidamente nessa tela.</string>
     <string name="business_empty_title">Ops! Infelizmente não encontramos nenhum estabelecimento.</string>
     <string name="business_empty_message">Para facilitar o processo de pagamento, cadastre uma ou mais formas de pagamento.</string>
-    <string name="pets_empty_title">Você ainda não adicionou seus pets.</string>
-    <string name="pets_empty_message">Clique no botão de + logo acima para adicioná-los.</string>
+    <string name="pets_empty_title">Ops! Você ainda não tem</string>
+    <string name="pets_empty_message">nenhum pet adicionado.</string>
 
     <!-- Categories -->
     <string name="category_clinic">Clínicas</string>
@@ -270,8 +282,8 @@
     <string name="permission_location">Sua localização é necessária para utilizar as nossas funcionalidades.</string>
 
     <!-- Schedule -->
-    <string name="select_pet">Selecione um pet</string>
-    <string name="select_professional">Selecione um profissional</string>
+    <string name="select_pet">Selecionar pet</string>
+    <string name="select_professional">Profissional</string>
     <string name="category">Categoria</string>
     <string name="service_additional">Serviço e adicionais</string>
     <string name="next_service">Continuar agendando</string>
@@ -282,5 +294,32 @@
     <string name="action_schedule">Agendar mais um serviço</string>
     <string name="go_to_cart">Ir para o carrinho</string>
     <string name="schedule_empty"></string>
+    <string name="header_pets">Atenção! Os preços exibidos são médios. Cadastre seu pet para visualizar os valores condizentes as raças.</string>
+    <string name="other_schedule">Agendar serviço para outro pet</string>
+    <string name="question_register">Castrado?</string>
+    <string name="chip_question">Possui chip?</string>
+    <string name="chip_number">Número do chip</string>
+    <string name="complete_register">Complete as informações a seguir:</string>
+    <string name="continue_register">Concluir cadastro</string>
+    <string name="add_pet">Adicionar pet</string>
+    <string name="tab_category">Categorias</string>
+    <string name="tab_map">Mapa</string>
+    <string name="list_tab_name">Lista</string>
+    <string name="title_activity_review_schedule">ReviewSchedule</string>
+    <string name="add_comment">Adicione seu comentário</string>
+    <string name="sendReview">Enviar avaliação</string>
+    <string name="environment">Ambiente</string>
+    <string name="bussines">Serviço</string>
+    <string name="attendance">Atendimento</string>
+    <string name="send_and_next">Enviar e ir ao proximo</string>
+    <string name="notificationsTitle">Notificações</string>
+    <string name="clear">Limpar</string>
+    <string name="date_and_hour">Dia e horário</string>
+    <string name="select_pet_place_holder">Selecione um Pet</string>
+    <string name="go_to_payment">Ir para pagamento</string>
+    <string name="not_notifications">No momento não há novas notificações para serem exibidas.</string>
+    <string name="register_pet_label">Cadastro de Pet</string>
+    <string name="view_bussines">Visualizar Estabelecimentos</string>
+    <string name="enviar">Enviar</string>
 
 </resources>

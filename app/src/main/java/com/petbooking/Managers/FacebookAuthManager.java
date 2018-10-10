@@ -90,6 +90,7 @@ public class FacebookAuthManager implements com.facebook.FacebookCallback {
                             User user = new User();
 
                             user.providerToken = loginResult.getAccessToken().getToken();
+                            if(object.has("email"))
                             user.email = object.getString("email").toString();
                             user.name = object.getString("name").toString();
                             user.avatar.url = String.format(Locale.getDefault(), AppConstants.USER_PICTURE_URL, object.getString("id").toString());

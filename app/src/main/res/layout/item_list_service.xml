@@ -38,6 +38,7 @@
             android:layout_height="28dp"
             android:layout_gravity="center_vertical"
             android:gravity="center"
+            android:visibility="gone"
             android:background="@drawable/circle_layout">
 
             <TextView
@@ -73,6 +74,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
+            android:background="@drawable/circle_background"
             android:layout_marginLeft="@dimen/spacing_nano"
             android:layout_marginTop="@dimen/spacing_xmicro">
 

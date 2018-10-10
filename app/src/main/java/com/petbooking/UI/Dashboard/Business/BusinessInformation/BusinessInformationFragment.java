@@ -508,7 +508,9 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
      * @param url
      */
     public void openPage(String url) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        Intent browserIntent = new Intent(getContext(),BussinessSocialNetworkActivity.class);
+        browserIntent.putExtra("url",url);
         startActivity(browserIntent);
     }
 

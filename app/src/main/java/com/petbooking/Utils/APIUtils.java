@@ -1,6 +1,7 @@
 package com.petbooking.Utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.petbooking.API.Appointment.Models.CartRqt;
@@ -10,6 +11,7 @@ import com.petbooking.API.Business.BusinessService;
 import com.petbooking.API.Business.Models.BusinessesRspAttributes;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.API.Business.Models.ReviewResp;
+import com.petbooking.API.Business.Models.ReviewableResp;
 import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.Generic.ErrorResp;
 import com.petbooking.API.User.Models.ScheduleResp;
@@ -20,6 +22,7 @@ import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.CartItem;
 import com.petbooking.Models.Category;
 import com.petbooking.Models.Review;
+import com.petbooking.Models.ReviewServices;
 import com.petbooking.Models.User;
 
 import java.io.IOException;
@@ -82,7 +85,7 @@ public class APIUtils {
                 attr.ratingAverage, attr.ratingCount, attr.distance, attr.businesstype,
                 latitude, longitude, attr.website, attr.phone, attr.facebook, attr.instagram,
                 attr.twitter, attr.googlePlus, attr.snapchat, attr.coverImage, attr.avatar, attr.userFavorite, attr.favorited,
-                attr.imported, favoritedId);
+                attr.imported, favoritedId, attr.slug);
 
         return business;
     }
@@ -130,8 +133,33 @@ public class APIUtils {
                 service.attributes.name,
                 service.attributes.duration,
                 service.attributes.description,
-                service.attributes.price);
+                service.attributes.priceRange.service_price, service.attributes.priceRange.max_service_price
+                , service.attributes.priceRange.min_service_price);
         return businessService;
+    }
+
+    public static ReviewServices parseReviewServices(ReviewableResp.Item service, ReviewableResp reviewableResp) {
+        String bussinesName = "";
+        String professionalAvatar = "";
+        String categoryName = "";
+        for (int i = 0; i < reviewableResp.included.size(); i++) {
+            if (reviewableResp.included.get(i).type.equals("employments")) {
+                professionalAvatar = reviewableResp.included.get(i).attributes.avatar.url;
+                Log.i("Teste", "Qual o professional avatar " + professionalAvatar);
+                continue;
+            }
+            if (reviewableResp.included.get(i).type.equals("service_categories")) {
+                categoryName = reviewableResp.included.get(i).attributes.name;
+            }
+            if (reviewableResp.included.get(i).type.equals("businesses")) {
+                bussinesName = reviewableResp.included.get(i).attributes.name;
+                Log.i("Teste", "Qual o bussines name " + bussinesName);
+                continue;
+            }
+        }
+        ReviewServices reviewServices = new ReviewServices(service.attributes.pet_id, categoryName,
+                bussinesName, service.attributes.professional_name, professionalAvatar, service.attributes.date, service.id);
+        return reviewServices;
     }
 
 
@@ -143,14 +171,25 @@ public class APIUtils {
      * @return
      */
     public static Category parseCategory(Context context, CategoryResp.Item item) {
-        Category category = new Category(item.id, AppUtils.getCategoryText(item.attributes.name),
-                item.attributes.name, AppUtils.getBusinessIcon(context, item.attributes.name));
+        Category category;
+        if (item.attributes.coverImage != null) {
+            category = new Category(item.id, AppUtils.getCategoryText(item.attributes.name),
+                    item.attributes.name, AppUtils.getBusinessIcon(context, item.attributes.name),
+                    item.attributes.coverImage.listing.url);
+        } else if(item.attributes.categoryIcon !=null){
+            category = new Category(item.id, AppUtils.getCategoryText(item.attributes.name),
+                    item.attributes.name, AppUtils.getBusinessIcon(context, item.attributes.name),
+                    item.attributes.categoryIcon.icon.url);
+        }else{
+            category = new Category(item.id, AppUtils.getCategoryText(item.attributes.name),
+                    item.attributes.name, AppUtils.getBusinessIcon(context, item.attributes.name));
+        }
 
         return category;
     }
 
-    public static ArrayList<CartRqt.Item> getCartReqItens(ArrayList<CartItem> cartItens) {
-        ArrayList<CartRqt.Item> itens = new ArrayList<>();
+    public static ArrayList<CartRqt.Item> getCartReqItems(ArrayList<CartItem> cartItens) {
+        ArrayList<CartRqt.Item> items = new ArrayList<>();
         CartRqt.Item item = null;
 
         for (CartItem cartItem : cartItens) {
@@ -165,10 +204,10 @@ public class APIUtils {
             item = new CartRqt.Item(cartItem.startDate, cartItem.startTime, cartItem.businessId,
                     cartItem.service.id, cartItem.professional.id, cartItem.pet.id, cartItem.notes,
                     false, additionals);
-            itens.add(item);
+            items.add(item);
         }
 
-        return itens;
+        return items;
     }
 
     /**

@@ -82,8 +82,8 @@ public class UserService {
         });
     }
 
-    public void createUser(User user, final APICallback callback) {
-        CreateUserRqt userRqt = new CreateUserRqt(user);
+    public void createUser(User user,boolean socialLogin, final APICallback callback) {
+        CreateUserRqt userRqt = new CreateUserRqt(user, socialLogin);
         Call<AuthUserResp> call = mUserInterface.createUser(userRqt);
         call.enqueue(new Callback<AuthUserResp>() {
             @Override

@@ -3,7 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.petbooking.UI.Dashboard.PaymentWebview.PaymentActivity">
+
+    <include
+        layout="@layout/toolbar_main"
+        android:visibility="visible"
+        />
 
     <WebView
         android:id="@+id/payment_webview"

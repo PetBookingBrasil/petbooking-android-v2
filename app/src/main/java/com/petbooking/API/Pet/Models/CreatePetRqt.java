@@ -13,8 +13,11 @@ public class CreatePetRqt {
     public transient Attributes attributes;
 
     public CreatePetRqt(Pet pet) {
+        int[] petColor = new int[1];
+        petColor[0] = pet.colorPet;
+
         this.attributes = new Attributes(pet.userId, pet.photo, pet.name, pet.gender,
-                pet.mood, pet.description, pet.size, pet.breedId, pet.birthday, pet.coatType);
+                pet.mood, pet.description, pet.size, pet.breedId, pet.birthday, pet.coatType,petColor,pet.chipNumber);
         this.data = new Data(pet.id, this.attributes);
     }
 
@@ -40,6 +43,8 @@ public class CreatePetRqt {
         public String mood;
         public String description;
         public String size;
+        public int[] coat_colors;
+        public String chip_id;
 
         @SerializedName("breed_id")
         public String breedID;
@@ -54,7 +59,7 @@ public class CreatePetRqt {
         public String coatType;
 
         public Attributes(String userID, String photo, String name, String gender, String mood,
-                          String description, String size, String breedID, String birth, String coatType) {
+                          String description, String size, String breedID, String birth, String coatType , int[] coat_colors, String chip_id) {
             this.photo = photo;
             this.name = name;
             this.gender = gender;
@@ -65,8 +70,9 @@ public class CreatePetRqt {
             this.userID = userID;
             this.birth = birth;
             this.coatType = coatType;
+            this.coat_colors = coat_colors;
+            this.chip_id = chip_id;
         }
-
     }
 
 }

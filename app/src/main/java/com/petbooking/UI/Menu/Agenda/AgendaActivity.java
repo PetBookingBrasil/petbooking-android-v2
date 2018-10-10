@@ -1,5 +1,6 @@
 package com.petbooking.UI.Menu.Agenda;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,10 +8,12 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -22,6 +25,7 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.BusinessServices;
 import com.petbooking.Models.Pet;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
 import com.petbooking.UI.Widget.HorizontalCalendar;
 import com.petbooking.Utils.APIUtils;
@@ -152,6 +156,7 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,7 +164,9 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
 
         mUserService = new UserService();
         userId = SessionManager.getInstance().getUserLogged().id;
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(0);
 
         mPetList = new ArrayList<>();
@@ -204,6 +211,15 @@ public class AgendaActivity extends AppCompatActivity implements ConfirmDialogFr
 
         mBtnPreviousDate.setOnClickListener(btnDateListener);
         mBtnNextDate.setOnClickListener(btnDateListener);
+
+        Button viewBussines = (Button) findViewById(R.id.view_bussines);
+        viewBussines.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AgendaActivity.this, DashboardActivity.class);
+                startActivity(intent);
+            }
+        });
 
         listSchedules();
     }

@@ -144,7 +144,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
         holder.mBtnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onCartChange.onEditItem();
+                onCartChange.onEditItem(cartItem, position);
             }
         });
 
@@ -231,6 +231,6 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.CartVi
     public interface OnCartChange {
         void onChange();
 
-        void onEditItem();
+        void onEditItem(CartItem cartItem,int position);
     }
 }

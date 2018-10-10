@@ -1,5 +1,7 @@
 package com.petbooking.Models;
 
+import android.util.Log;
+
 import com.petbooking.API.Business.Models.BusinessesRspAttributes;
 import com.petbooking.API.Generic.AvatarResp;
 
@@ -37,6 +39,7 @@ public class Business {
     public boolean favorited;
     public boolean imported;
     public String favoritedId;
+    public String slug;
 
 
     public Business(String id, String name, String description, String city, String state, String street,
@@ -44,7 +47,7 @@ public class Business {
                     float distance, String businesstype, Double latitude, Double longitude,
                     String website, String phone, String facebook, String instagram, String twitter,
                     String googlePlus, String snapchat, BusinessesRspAttributes.CoverImage image, AvatarResp avatar,
-                    BusinessesRspAttributes.UserFavorite userFavorite, boolean favorited, boolean imported, String favoritedId) {
+                    BusinessesRspAttributes.UserFavorite userFavorite, boolean favorited, boolean imported, String favoritedId,String slug) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -73,6 +76,7 @@ public class Business {
         this.favorited = favorited;
         this.imported = imported;
         this.favoritedId = favoritedId;
+        this.slug = slug;
     }
 
     public void setFavorited(boolean favorited) {

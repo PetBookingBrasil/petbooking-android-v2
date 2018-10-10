@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@color/brand_primary"
@@ -18,14 +19,46 @@
         android:layout_marginBottom="@dimen/spacing_tiny"
         android:layout_marginTop="@dimen/spacing_smallest">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal">
+
         <ImageView
             android:id="@+id/sidemenu_picture"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
             android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/ic_placeholder_user" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/spacing_xmicro"
+                android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/sidemenu_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Luciano José"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/sidemenu_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="São Paulo, SP"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/profileButton"
@@ -33,27 +66,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/spacing_smallest"
+            android:padding="5dp"
             android:background="@null"
-            app:srcCompat="@drawable/ic_edit_profile" />
+            app:srcCompat="@drawable/ic_navigate_next"
+            tools:ignore="VectorDrawableCompat" />
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/sidemenu_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Luciano José"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/sidemenu_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="São Paulo, SP"
-        android:textColor="@color/white"
-        android:textSize="14sp" />
-
 
 </LinearLayout>

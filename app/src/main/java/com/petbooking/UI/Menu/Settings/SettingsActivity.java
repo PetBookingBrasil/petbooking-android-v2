@@ -3,6 +3,7 @@ package com.petbooking.UI.Menu.Settings;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
@@ -63,6 +64,8 @@ public class SettingsActivity extends AppCompatActivity {
             if (id == mTvContact.getId()) {
                 goToContact();
             } else if (id == mTvTerms.getId()) {
+                goToPrivacy();
+            }else if(id == mTvPrivacy.getId()){
                 goToTerms();
             }
         }
@@ -72,6 +75,10 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mUserService = new UserService();
         mSessionManager = SessionManager.getInstance();
@@ -87,7 +94,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         mTvContact = (TextView) findViewById(R.id.contact);
         mTvTerms = (TextView) findViewById(R.id.terms);
+        mTvPrivacy = (TextView) findViewById(R.id.support);
 
+        mTvPrivacy.setOnClickListener(clickListener);
         mTvContact.setOnClickListener(clickListener);
         mTvTerms.setOnClickListener(clickListener);
 

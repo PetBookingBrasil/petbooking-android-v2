@@ -286,8 +286,8 @@ public class LoginActivity extends BaseActivity {
                 goToPrivacy();
             }
         };
-        ss.setSpan(firstWord, firstIndex, firstIndex + first.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss.setSpan(secondWord, secondIndex, secondIndex + second.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        ss.setSpan(firstWord, firstIndex, firstIndex + first.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+  //      ss.setSpan(secondWord, secondIndex, secondIndex + second.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mTvTerms.setLinksClickable(true);
         mTvTerms.setMovementMethod(LinkMovementMethod.getInstance());
         mTvTerms.setText(ss, TextView.BufferType.SPANNABLE);

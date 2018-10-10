@@ -28,7 +28,7 @@ import com.petbooking.Utils.AppUtils;
 
 import java.util.ArrayList;
 
-public class ServiceDetailActivity extends AppCompatActivity {
+public class  ServiceDetailActivity extends AppCompatActivity {
 
     private AppointmentService mAppointmentService;
     private String businessName;

@@ -9,6 +9,7 @@
     app:headerLayout="@layout/nav_header"
     app:itemIconTint="@color/white"
     app:itemTextColor="@color/white"
+    app:itemTextAppearance="@style/NavigationText"
     app:menu="@menu/menu_drawer">
 
 </android.support.design.widget.NavigationView>

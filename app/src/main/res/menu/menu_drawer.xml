@@ -8,24 +8,15 @@
             android:title="@string/my_pets" />
 
         <item
-            android:id="@+id/search"
-            android:icon="@drawable/ic_menu_search"
-            android:title="@string/search" />
-
-        <item
             android:id="@+id/calendar"
             android:icon="@drawable/ic_menu_calendar"
             android:title="@string/calendar" />
 
         <item
             android:id="@+id/payments"
-            android:icon="@drawable/ic_menu_payments"
-            android:title="@string/payments" />
+            android:icon="@drawable/ic_paymenticon"
+            android:title="@string/payments_forms" />
 
-        <item
-            android:id="@+id/favorites"
-            android:icon="@drawable/ic_menu_favorite"
-            android:title="@string/favorites" />
 
         <item
             android:id="@+id/settings"
@@ -34,7 +25,7 @@
 
         <item
             android:id="@+id/logout"
-            android:icon="@drawable/ic_menu_logout"
+            android:icon="@drawable/close_menu"
             android:title="@string/logout" />
 
     </group>

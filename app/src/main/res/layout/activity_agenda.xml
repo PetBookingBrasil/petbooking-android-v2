@@ -9,9 +9,12 @@
     tools:context="com.petbooking.UI.Menu.Agenda.AgendaActivity">
 
     <include
+        layout="@layout/toolbar_main"/>
+
+    <include
         android:id="@+id/agenda_placeholder"
         layout="@layout/include_agenda_placeholder"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/calendar_layout"
@@ -30,7 +33,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/spacing_xmicro"
             android:layout_marginRight="@dimen/spacing_xmicro"
-            app:srcCompat="@drawable/ic_arrow_left" />
+            app:srcCompat="@drawable/ic_arrow_left"
+            tools:ignore="VectorDrawableCompat" />
 
         <com.petbooking.UI.Widget.HorizontalCalendar
             android:id="@+id/horizontal_calendar"

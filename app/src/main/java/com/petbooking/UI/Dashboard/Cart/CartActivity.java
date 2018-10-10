@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,8 +20,11 @@ import com.petbooking.Managers.AppointmentManager;
 import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.CartItem;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.Scheduling.model.ClearFieldsSchedule;
 import com.petbooking.UI.Dashboard.PaymentWebview.PaymentActivity;
 import com.petbooking.Utils.AppUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -62,7 +66,8 @@ public class CartActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onEditItem() {
+        public void onEditItem(CartItem cartItem, int position) {
+            EventBus.getDefault().post(new ClearFieldsSchedule(true,cartItem,position));
             onBackPressed();
         }
     };
@@ -71,6 +76,10 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mAppointmentManager = AppointmentManager.getInstance();
         mAppointmentService = new AppointmentService();
@@ -132,6 +141,16 @@ public class CartActivity extends AppCompatActivity {
                 AppUtils.hideDialog();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            EventBus.getDefault().post(new ClearFieldsSchedule(false,null,0));
+            onBackPressed();
+        }
+
+        return true;
     }
 
     /**

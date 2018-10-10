@@ -62,7 +62,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mSnackbar != null) {
             mSnackbar.dismiss();
         }
-        mSnackbar = Snackbar.make(findViewById(android.R.id.content), showSnackbarEvt.getMessage(),
+        View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
+        mSnackbar = Snackbar.make(rootView, showSnackbarEvt.getMessage(),
                 showSnackbarEvt.getDuration());
 
         if (showSnackbarEvt.getAction() != null) {

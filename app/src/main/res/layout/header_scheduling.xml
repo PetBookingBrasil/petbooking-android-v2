@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/custom_header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/spacing_tiny"
+    android:layout_marginRight="@dimen/spacing_tiny"
+    android:layout_marginTop="@dimen/spacing_micro"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/header_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_tiny">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circleImage"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@color/schedule_background" />
+
+                <TextView
+                    android:id="@+id/checkUnicode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/check"
+                    android:textColor="@color/light_gray"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/img_header"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/header_icon_background"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_selected_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/text_color"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/layout_additionals"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/background_text"
+                android:gravity="center"
+                android:padding="5dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/additional_quant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1+"
+                    android:textColor="@color/white"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/headerEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_tiny"
+                android:gravity="center"
+                android:visibility="invisible">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_circle"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@color/schedule_background" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/img_edit"
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_centerInParent="true"
+                    android:tint="@color/schedule_item_edit_icon"
+                    app:srcCompat="@drawable/ic_edit"
+                    tools:ignore="VectorDrawableCompat" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+</android.support.v7.widget.CardView>

@@ -53,7 +53,8 @@
             android:configChanges="orientation"
             android:label="@string/signup_title"
             android:parentActivityName=".UI.Login.LoginActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Login.LoginActivity" />
@@ -108,6 +109,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Dashboard.Cart.CartActivity" />
         </activity>
+        <activity
+            android:name=".UI.Dashboard.PaymentWebview.PaymentListActivity"
+            android:configChanges="orientation"
+            android:label="@string/payments"
+            android:parentActivityName=".UI.Dashboard.DashboardActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Dashboard.DashboardActivity" />
+        </activity>
+        <activity
+            android:name=".UI.Dashboard.Business.BusinessInformation.BussinessSocialNetworkActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/RegisterTheme" />
         <activity
             android:name=".UI.Dashboard.Business.ServiceDetail.ServiceDetailActivity"
             android:configChanges="orientation"
@@ -200,9 +216,11 @@
         <activity
             android:name=".UI.Menu.Pets.RegisterPet.RegisterPetActivity"
             android:configChanges="orientation"
-            android:label="@string/new_pet_title"
+            android:label="@string/register_pet_label"
             android:parentActivityName=".UI.Menu.Pets.PetsActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/registerBackground"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Menu.Pets.PetsActivity" />
@@ -212,7 +230,8 @@
             android:configChanges="orientation"
             android:label="@string/new_pet_title"
             android:parentActivityName=".UI.Menu.Pets.PetsActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Menu.Pets.PetsActivity" />
@@ -222,7 +241,8 @@
             android:configChanges="orientation"
             android:label="@string/profile_title"
             android:parentActivityName=".UI.Dashboard.DashboardActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.Dashboard.DashboardActivity" />
@@ -266,6 +286,15 @@
         <!-- Receivers -->
         <receiver android:name=".Managers.AlarmReceiver" />
 
+        <activity
+            android:name=".UI.Dashboard.Business.Scheduling.ReviewSchedule"
+            android:label="@string/title_activity_review_schedule"
+            android:theme="@style/registerBackgroundReview"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            />
+        <activity android:name=".UI.Dashboard.Notifications.NotificationsActivity"
+            android:label="@string/notificationsTitle"
+            ></activity>
     </application>
 
 </manifest>

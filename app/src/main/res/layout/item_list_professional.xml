@@ -4,14 +4,17 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginRight="@dimen/spacing_tiny"
-    android:orientation="horizontal"
+    android:orientation="vertical"
+    android:layout_marginLeft="8dp"
     android:paddingBottom="@dimen/spacing_xmicro"
     android:paddingTop="@dimen/spacing_xmicro">
 
     <ImageView
         android:id="@+id/professional_photo"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:elevation="10dp"
         android:src="@mipmap/ic_launcher" />
 
     <TextView
@@ -19,8 +22,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/spacing_xmicro"
-        android:text="Text"
-        android:textColor="@color/text_color" />
+        android:layout_marginTop="@dimen/spacing_xmicro"
+        android:lines="2"
+        android:text="Banho e Tosa"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"  />
 
 </LinearLayout>

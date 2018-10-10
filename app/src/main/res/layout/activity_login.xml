@@ -53,6 +53,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/spacing_xmicro"
                     android:hint="@string/hint_email"
+                    android:fontFamily="@font/corporativesansrdaltregular"
                     android:inputType="textEmailAddress" />
             </android.support.design.widget.TextInputLayout>
 
@@ -76,6 +77,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/spacing_xmicro"
                     android:hint="@string/hint_password"
+                    android:fontFamily="@font/corporativesansrdaltregular"
                     android:inputType="textPassword" />
 
             </android.support.design.widget.TextInputLayout>

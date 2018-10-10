@@ -27,10 +27,6 @@
                 android:layout_height="match_parent"
                 android:scaleType="fitXY" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/gradient_background" />
 
         </FrameLayout>
 
@@ -44,14 +40,15 @@
             android:layout_marginRight="@dimen/business_fragment_spacing"
             android:layout_marginStart="@dimen/spacing_xmicro"
             android:layout_marginTop="@dimen/spacing_xmicro"
-            android:background="@null"
+            android:background="@color/gray_transparent_pet"
             app:layout_constraintBottom_toBottomOf="@+id/business_cover"
             app:layout_constraintHorizontal_bias="0.95"
             app:layout_constraintLeft_toLeftOf="@+id/business_cover"
             app:layout_constraintRight_toRightOf="@+id/business_cover"
             app:layout_constraintTop_toTopOf="@+id/business_cover"
             app:layout_constraintVertical_bias="0.1"
-            app:srcCompat="@drawable/ic_favorite_border" />
+            app:srcCompat="@drawable/ic_favorite_border"
+            tools:ignore="VectorDrawableCompat" />
 
         <TextView
             android:id="@+id/business_name"
@@ -174,7 +171,7 @@
             android:id="@+id/social_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/separatorContact">
@@ -242,43 +239,48 @@
 
                     <ImageView
                         android:id="@+id/social_facebook"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_marginRight="@dimen/spacing_xmicro"
                         android:visibility="gone"
-                        app:srcCompat="@drawable/ic_social_facebook" />
+                        app:srcCompat="@drawable/ic_social_facebook"
+                        tools:ignore="VectorDrawableCompat" />
 
                     <ImageView
                         android:id="@+id/social_twitter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_marginRight="@dimen/spacing_xmicro"
                         android:visibility="gone"
-                        app:srcCompat="@drawable/ic_social_twitter" />
+                        app:srcCompat="@drawable/ic_social_twitter"
+                        tools:ignore="VectorDrawableCompat" />
 
                     <ImageView
                         android:id="@+id/social_instagram"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_marginRight="@dimen/spacing_xmicro"
                         android:visibility="gone"
-                        app:srcCompat="@drawable/ic_social_instagram" />
+                        app:srcCompat="@drawable/ic_social_instagram"
+                        tools:ignore="VectorDrawableCompat" />
 
                     <ImageView
                         android:id="@+id/social_googleplus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_marginRight="@dimen/spacing_xmicro"
                         android:visibility="gone"
-                        app:srcCompat="@drawable/ic_social_google" />
+                        app:srcCompat="@drawable/ic_social_google"
+                        tools:ignore="VectorDrawableCompat" />
 
                     <ImageView
                         android:id="@+id/social_snapchat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_marginRight="@dimen/spacing_xmicro"
                         android:visibility="gone"
-                        app:srcCompat="@drawable/ic_social_snapchat" />
+                        app:srcCompat="@drawable/ic_social_snapchat"
+                        tools:ignore="VectorDrawableCompat" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -313,7 +315,7 @@
                 android:layout_marginRight="@dimen/business_fragment_spacing"
                 android:layout_marginStart="@dimen/business_fragment_spacing"
                 android:layout_marginTop="@dimen/spacing_tiny"
-                android:text="@string/business_label_location"
+                android:text="@string/business_label_location_max"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

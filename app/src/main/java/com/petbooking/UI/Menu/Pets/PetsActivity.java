@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 
+import com.petbooking.API.Generic.APIError;
 import com.petbooking.API.Pet.Models.ListPetsResp;
 import com.petbooking.API.Pet.PetService;
 import com.petbooking.App;
@@ -18,10 +21,12 @@ import com.petbooking.Managers.SessionManager;
 import com.petbooking.Models.Pet;
 import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.DashboardActivity;
 import com.petbooking.UI.Dialogs.ConfirmDialogFragment;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Menu.Pets.RegisterPet.RegisterPetActivity;
 import com.petbooking.Utils.AppUtils;
+import com.petbooking.Utils.CommonUtils;
 
 import java.util.ArrayList;
 
@@ -34,6 +39,7 @@ public class PetsActivity extends BaseActivity implements
     private PetService mPetService;
     private User currentUser;
     private String petId;
+    private Button registerPet;
 
     private View mPetsPlaceholder;
     private RecyclerView mRvPets;
@@ -52,6 +58,10 @@ public class PetsActivity extends BaseActivity implements
         mPetService = new PetService();
         currentUser = mSessionManager.getUserLogged();
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setElevation(0);
 
@@ -60,6 +70,7 @@ public class PetsActivity extends BaseActivity implements
 
         mPetsPlaceholder = findViewById(R.id.pets_placeholder);
         mRvPets = (RecyclerView) findViewById(R.id.pet_list);
+        registerPet = (Button) findViewById(R.id.btn_add_pet);
         mRvPets.setHasFixedSize(true);
 
         mPets = new ArrayList<>();
@@ -76,6 +87,12 @@ public class PetsActivity extends BaseActivity implements
         mRvPets.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         listPets(currentUser.id);
+        registerPet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirect();
+            }
+        });
     }
 
 
@@ -95,13 +112,17 @@ public class PetsActivity extends BaseActivity implements
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.new_pet) {
-            Intent newPetIntent = new Intent(this, RegisterPetActivity.class);
-            startActivity(newPetIntent);
+            redirect();
         } else if (id == android.R.id.home) {
             onBackPressed();
         }
 
         return true;
+    }
+
+    private void redirect(){
+        Intent newPetIntent = new Intent(this, RegisterPetActivity.class);
+        startActivity(newPetIntent);
     }
 
     /**
@@ -130,6 +151,12 @@ public class PetsActivity extends BaseActivity implements
 
             @Override
             public void onError(Object error) {
+                if(error !=null){
+                    APIError apiError = (APIError) error;
+                    if(apiError.status.equals("401")){
+                        CommonUtils.redirectLogin(PetsActivity.this);
+                    }
+                }
                 mPetsPlaceholder.setVisibility(View.VISIBLE);
                 mRvPets.setVisibility(View.GONE);
                 AppUtils.hideDialog();

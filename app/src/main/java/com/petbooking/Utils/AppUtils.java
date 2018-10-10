@@ -40,7 +40,22 @@ public abstract class AppUtils {
             return APIPetConstants.DATA_GENDER_FEMALE;
         }
 
-        return "";
+        return APIPetConstants.DATA_GENDER_MALE;
+    }
+
+    public static ArrayList<String> getGenders(Context context,ArrayList<String> genders){
+        ArrayList<String> genders1 = new ArrayList<>();
+        for(String gender: genders){
+            if(TextUtils.equals(gender,APIPetConstants.DATA_GENDER_MALE)){
+                genders1.add(context.getString(R.string.gender_male));
+            }else if(TextUtils.equals(gender,APIPetConstants.DATA_GENDER_FEMALE)){
+                genders1.add(context.getString(R.string.gender_female));
+            }
+        }
+        if(genders1.size() > 0)
+            return genders1;
+        else
+            return genders;
     }
 
     public static String getSize(Context context, String size) {
@@ -57,7 +72,31 @@ public abstract class AppUtils {
             return APIPetConstants.DATA_SIZE_GIANT;
         }
 
-        return "";
+        return APIPetConstants.DATA_SIZE_GIANT;
+    }
+
+    public static ArrayList<String> getSizes(Context context, ArrayList<String> sizes){
+        ArrayList<String> sizes1 = new ArrayList<>();
+        for(String size: sizes){
+            if (TextUtils.equals(size,APIPetConstants.DATA_SIZE_SMALL )) {
+                sizes1.add(context.getString(R.string.size_small));
+            }
+            if (TextUtils.equals(size,APIPetConstants.DATA_SIZE_MEDIUM )) {
+                sizes1.add(context.getString(R.string.size_medium));
+            }
+            if (TextUtils.equals(size,APIPetConstants.DATA_SIZE_BIG )) {
+                sizes1.add(context.getString(R.string.size_big));
+            }
+            if (TextUtils.equals(size, APIPetConstants.DATA_SIZE_GIANT)) {
+                sizes1.add(context.getString(R.string.size_giant));
+            }
+        }
+
+        if(sizes1.size() >0){
+            return sizes1;
+        }else{
+            return sizes;
+        }
     }
 
     public static String getCoatType(Context context, String coatType) {
@@ -75,7 +114,28 @@ public abstract class AppUtils {
             return APIPetConstants.DATA_TYPE_SHORT;
         }
 
-        return "";
+        return APIPetConstants.DATA_TYPE_SHORT;
+    }
+
+    public static ArrayList<String> getCoatTypes(Context context, ArrayList<String> coatTypes){
+        ArrayList<String> types = new ArrayList<>();
+        for(String coatType: coatTypes){
+            if (TextUtils.equals(coatType, APIPetConstants.DATA_TYPE_SHORT)) {
+                types.add(context.getString(R.string.coat_short));
+            }
+            if (TextUtils.equals(coatType, APIPetConstants.DATA_TYPE_MEDIUM)) {
+                types.add(context.getString(R.string.coat_medium));
+            }
+            if (TextUtils.equals(coatType, APIPetConstants.DATA_TYPE_LONG)) {
+                types.add( context.getString(R.string.coat_long));
+            }
+        }
+
+        if(types.size() > 0){
+            return types;
+        }else{
+            return coatTypes;
+        }
     }
 
     public static String getType(Context context, String type) {
@@ -87,7 +147,7 @@ public abstract class AppUtils {
             return APIPetConstants.DATA_TYPE_DOG;
         }
 
-        return "";
+        return APIPetConstants.DATA_TYPE_CAT;
     }
 
     public static String getTemper(Context context, String temper) {
@@ -122,7 +182,7 @@ public abstract class AppUtils {
             return APIPetConstants.DATA_TEMPER_BRAVE;
         }
 
-        return "";
+        return APIPetConstants.DATA_TEMPER_BRAVE;
     }
 
     public static String getDisplayTemper(Context context, String temper) {
@@ -156,6 +216,23 @@ public abstract class AppUtils {
         if (TextUtils.equals(temper, APIPetConstants.DATA_TEMPER_BRAVE)) {
             return context.getString(R.string.temper_brave);
         }
+        return context.getString(R.string.temper_brave);
+    }
+
+    public static String getColorPet(Context context, String color){
+        if (TextUtils.equals(color, context.getString(R.string.color_white))) {
+            return APIPetConstants.DATA_TEMPER_NEEDY;
+        }
+        if (TextUtils.equals(color, context.getString(R.string.color_black))) {
+            return APIPetConstants.DATA_TEMPER_AFFECTIONATE;
+        }
+        if (TextUtils.equals(color, context.getString(R.string.color_brown))) {
+            return APIPetConstants.DATA_TEMPER_DOCILE;
+        }
+        if (TextUtils.equals(color, context.getString(R.string.color_gray))) {
+            return APIPetConstants.DATA_TEMPER_QUIET;
+        }
+
         return "";
     }
 
@@ -167,33 +244,20 @@ public abstract class AppUtils {
     }
 
     public static String getDisplayGender(Context context, String gender) {
-        if (TextUtils.equals(gender.toLowerCase(), APIPetConstants.DATA_GENDER_FEMALE)) {
             return context.getString(R.string.gender_female);
-        } else {
-            return context.getString(R.string.gender_male);
-        }
+
     }
 
     public static String getDisplaySize(Context context, String size) {
-        if (TextUtils.equals(size.toLowerCase(), APIPetConstants.DATA_SIZE_MEDIUM)) {
-            return context.getString(R.string.size_medium);
-        } else if (TextUtils.equals(size.toLowerCase(), APIPetConstants.DATA_SIZE_BIG)) {
-            return context.getString(R.string.size_big);
-        } else if (TextUtils.equals(size.toLowerCase(), APIPetConstants.DATA_SIZE_GIANT)) {
-            return context.getString(R.string.size_giant);
-        } else {
-            return context.getString(R.string.size_small);
-        }
+
+
+        return context.getString(R.string.size_small);
     }
 
     public static String getDisplayCoatType(Context context, String coatType) {
-        if (TextUtils.equals(coatType.toLowerCase(), APIPetConstants.DATA_TYPE_MEDIUM)) {
-            return context.getString(R.string.coat_medium);
-        } else if (TextUtils.equals(coatType.toLowerCase(), APIPetConstants.DATA_TYPE_LONG)) {
-            return context.getString(R.string.coat_long);
-        } else {
+
             return context.getString(R.string.coat_short);
-        }
+
     }
     
     //TODO: Trocar ícone do programa da prefeitura

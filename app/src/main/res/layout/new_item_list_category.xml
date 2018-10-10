@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/category_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_xmicro"
+    android:layout_marginLeft="@dimen/spacing_xmicro"
+    android:gravity="center_horizontal"
+    android:layout_marginRight="@dimen/spacing_xmicro"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:id="@+id/layoutCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:elevation="8dp">
+
+
+            <ImageView
+                android:id="@+id/category_icon"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_gravity="center"
+                android:elevation="10dp"
+                app:srcCompat="@drawable/ic_category_transport"
+                tools:ignore="VectorDrawableCompat" />
+
+            <TextView
+                android:id="@+id/category_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:maxEms="6"
+                android:maxLines="3"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold"
+                android:textSize="10dp"
+                android:layout_marginRight="5dp"
+                android:text="Banho e Tosa"
+                android:textAlignment="center"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:id="@+id/total_appointments"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/spacing_micro"
+            android:background="@drawable/selected_day_background"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

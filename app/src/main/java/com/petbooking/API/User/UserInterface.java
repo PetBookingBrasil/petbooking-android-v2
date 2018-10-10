@@ -26,7 +26,7 @@ import retrofit2.http.Query;
 
 public interface UserInterface {
 
-    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_LANGUAGE})
     @POST(APIUserConstants.USER_ENDPOINT)
     Call<AuthUserResp> createUser(@Body CreateUserRqt createUserRqt);
 
@@ -35,11 +35,11 @@ public interface UserInterface {
     Call<AuthUserResp> createSocialUser(@Body CreateSocialUserRqt createSocialUserRqt);
 
 
-    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED, APIConstants.HEADER_LANGUAGE})
     @PUT(APIUserConstants.ENDPOINT_UPDATE_USER)
     Call<AuthUserResp> updateUser(@Path(APIConstants.PATH_PARAM) String userID, @Body UpdateUserRqt updateUserRqt);
 
-    @Headers(APIConstants.HEADER_AUTHORIZATION_REQUIRED)
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED,APIConstants.HEADER_LANGUAGE})
     @POST(APIUserConstants.ENDPOINT_RECOVER_PASSWORD)
     Call<Void> requestPassword(@Body RecoverPasswordRqt recoverPassRqt);
 

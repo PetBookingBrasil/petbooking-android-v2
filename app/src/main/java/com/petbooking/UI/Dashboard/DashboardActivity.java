@@ -3,6 +3,7 @@ package com.petbooking.UI.Dashboard;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.UserManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -24,13 +25,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.petbooking.API.Business.BusinessService;
+import com.petbooking.API.Generic.APIError;
 import com.petbooking.Constants.APIConstants;
 import com.petbooking.Constants.AppConstants;
+import com.petbooking.Interfaces.APICallback;
 import com.petbooking.Managers.LocationManager;
 import com.petbooking.Managers.SessionManager;
+import com.petbooking.Models.ReviewServices;
 import com.petbooking.Models.User;
 import com.petbooking.R;
+import com.petbooking.UI.Dashboard.Business.Scheduling.ReviewSchedule;
 import com.petbooking.UI.Dashboard.Content.ContentFragment;
+import com.petbooking.UI.Dashboard.Notifications.NotificationsActivity;
+import com.petbooking.UI.Dashboard.PaymentWebview.PaymentListActivity;
 import com.petbooking.UI.Dialogs.FeedbackDialogFragment;
 import com.petbooking.UI.Login.LoginActivity;
 import com.petbooking.UI.Menu.Agenda.AgendaActivity;
@@ -42,7 +50,11 @@ import com.petbooking.UI.Menu.Search.SearchResultFragment;
 import com.petbooking.UI.Menu.Settings.SettingsActivity;
 import com.petbooking.UI.Widget.CircleTransformation;
 import com.petbooking.Utils.APIUtils;
-import com.petbooking.Utils.ImageUtils;
+import com.petbooking.Utils.CommonUtils;
+import com.salesforce.marketingcloud.MarketingCloudSdk;
+import com.salesforce.marketingcloud.registration.RegistrationManager;
+
+import java.util.ArrayList;
 
 public class DashboardActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -66,6 +78,7 @@ public class DashboardActivity extends AppCompatActivity implements
     View mHeaderView;
     DrawerLayout mDrawerLayout;
     Toolbar mToolbar;
+    ActionBarDrawerToggle toggle;
 
     /**
      * Sidemenu content
@@ -75,6 +88,7 @@ public class DashboardActivity extends AppCompatActivity implements
     private ImageView mIvSideMenuPicture;
     private TextView mTvSideMenuName;
     private TextView mTvSideMenuAddress;
+    TextView toolbarTitle;
 
     View.OnClickListener btnProfileListener = new View.OnClickListener() {
         @Override
@@ -89,6 +103,7 @@ public class DashboardActivity extends AppCompatActivity implements
             mTvSideMenuAddress.setText(locationCityState);
         }
     };
+    private BusinessService mBusinessService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,22 +115,42 @@ public class DashboardActivity extends AppCompatActivity implements
         mLocationManager.setCallback(locationCallback);
         mFragmentManager = getSupportFragmentManager();
 
+        mBusinessService = new BusinessService();
+
         mFeedbackDialogFragment = FeedbackDialogFragment.newInstance();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView toolbarTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
+        toolbarTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.dashboard_title);
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+        configureContact();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
+        toggle.setDrawerIndicatorEnabled(true);
+
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String text = getResources().getString(R.string.dashboard_title);
+                if(!toolbarTitle.getText().toString().equals(text)){
+                    onBackPressed();
+                }else{
+                    if(!mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+                        mDrawerLayout.openDrawer(GravityCompat.START);
+                    }
+                }
+            }
+        });
+
 
         mNavView = (NavigationView) findViewById(R.id.nav_view);
         mNavView.setNavigationItemSelectedListener(this);
@@ -133,7 +168,36 @@ public class DashboardActivity extends AppCompatActivity implements
         mIBtnProfile.setOnClickListener(btnProfileListener);
 
         inflateBusinessFragment();
+        mBusinessService.getReviews(SessionManager.getInstance().getUserLogged().id, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                ArrayList<ReviewServices> service = (ArrayList<ReviewServices>) response;
+                if(service !=null && service.size() > 0) {
+                    Intent intent = new Intent(DashboardActivity.this, ReviewSchedule.class);
+                    intent.putParcelableArrayListExtra("services", service);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onError(Object error) {
+                if(error !=null){
+                    APIError apiError = (APIError) error;
+                    if(apiError.status.equals("401")){
+                        CommonUtils.redirectLogin(DashboardActivity.this);
+                    }
+                }
+                Log.i(getClass().getSimpleName(),"On error");
+            }
+        });
         //inflateSearchResultFragment();
+    }
+
+    public void setTitle(String title){
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24px);
+        toolbarTitle.setText(title);
+        contentFragment.setChangeNameTab(getString(R.string.list_tab_name),true);
     }
 
     @Override
@@ -164,25 +228,35 @@ public class DashboardActivity extends AppCompatActivity implements
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            //super.onBackPressed();
+            getSupportActionBar().setHomeButtonEnabled(true);
+            toggle.syncState();
+            toolbarTitle.setText(R.string.dashboard_title);
+            contentFragment.setChangeNameTab(getString(R.string.tab_category),false);
+            contentFragment.addTab();
+            super.onBackPressed();
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        menu.findItem(R.id.cart).setVisible(false);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(android.view.MenuItem item) {
-        if (item.getItemId() == R.id.schedules) {
-            Log.d("ITEM SELECTED", "CART");
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.search) {
+            Intent activity = new Intent(this, SearchActivity.class);
+            startActivityForResult(activity, SEARCH_REQUEST);
         } else if (item.getItemId() == R.id.notifications) {
             Log.d("ITEM SELECTED", "NOTIFICATIONS");
+            Intent activity = new Intent(this, NotificationsActivity.class);
+            startActivity(activity);
+        }else if(item.getItemId() == android.R.id.home){
+            onBackPressed();
         }
-
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -193,13 +267,8 @@ public class DashboardActivity extends AppCompatActivity implements
         if (id == R.id.my_pets) {
             activity = new Intent(this, PetsActivity.class);
             startActivity(activity);
-        } else if (id == R.id.search) {
-            activity = new Intent(this, SearchActivity.class);
-            startActivityForResult(activity, SEARCH_REQUEST);
         } else if (id == R.id.payments) {
-            Log.d("PAYMENTS", "PAYMENTS");
-        } else if (id == R.id.favorites) {
-            activity = new Intent(this, FavoritesActivity.class);
+            activity = new Intent(this, PaymentListActivity.class);
             startActivity(activity);
         } else if (id == R.id.settings) {
             activity = new Intent(this, SettingsActivity.class);
@@ -233,8 +302,9 @@ public class DashboardActivity extends AppCompatActivity implements
                 categoryName = data.getStringExtra("CATEGORY_NAME");
                 categoryId = data.getStringExtra("CATEGORY_ID");
             }
+            boolean location = data.getBooleanExtra("location",false);
 
-            inflateSearchResultFragment(filterText, categoryId, categoryName);
+            inflateSearchResultFragment(filterText, categoryId, categoryName,location);
         }
     }
 
@@ -292,6 +362,9 @@ public class DashboardActivity extends AppCompatActivity implements
             userAvatar = R.drawable.ic_placeholder_woman;
         }
 
+        if(currentUser.name.length() > 16){
+            mTvSideMenuName.setText(currentUser.name.substring(0,12) + "...");
+        }else
         mTvSideMenuName.setText(currentUser.name);
         mUserAddress = mLocationManager.getLocationCityState();
 
@@ -328,8 +401,8 @@ public class DashboardActivity extends AppCompatActivity implements
     /**
      * Inflate Search Result List
      */
-    private void inflateSearchResultFragment(String filterText, String categoryId, String categoryName) {
-        searchResultFragment = SearchResultFragment.newInstance(filterText, categoryId, categoryName);
+    private void inflateSearchResultFragment(String filterText, String categoryId, String categoryName, boolean location) {
+        searchResultFragment = SearchResultFragment.newInstance(filterText, categoryId, categoryName,location);
         mFragmentManager.beginTransaction().replace(R.id.content_main, searchResultFragment).commit();
     }
 
@@ -340,11 +413,32 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onNewSearch(String filterText, String categoryId) {
+    public void onNewSearch(String filterText, String categoryId, boolean location) {
         Intent activity = new Intent(this, SearchActivity.class);
         activity.putExtra("newSearch", true);
         activity.putExtra("filterText", filterText);
         activity.putExtra("categoryId", categoryId);
+        activity.putExtra("location",location);
         startActivityForResult(activity, SEARCH_REQUEST);
     }
+
+    private void configureContact(){
+        MarketingCloudSdk.requestSdk(new MarketingCloudSdk.WhenReadyListener() {
+            @Override public void ready(MarketingCloudSdk marketingCloudSdk) {
+                RegistrationManager registrationManager = marketingCloudSdk.getRegistrationManager();
+
+                //Set contact key
+
+                registrationManager
+                        .edit()
+                        .setContactKey(mSessionManager.getLastEmail())
+                        .commit();
+
+                //Get contact key
+                String contactKey = registrationManager.getContactKey();
+            }
+        });
+    }
 }
+
+

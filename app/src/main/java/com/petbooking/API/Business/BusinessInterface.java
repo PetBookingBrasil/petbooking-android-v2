@@ -1,6 +1,7 @@
 package com.petbooking.API.Business;
 
 import com.petbooking.API.Appointment.Models.ServiceResp;
+import com.petbooking.API.Business.Models.BannerResponse;
 import com.petbooking.API.Business.Models.BusinessResp;
 import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.API.Business.Models.CategoryResp;
@@ -44,6 +45,10 @@ public interface BusinessInterface {
                                         @Query(APIConstants.QUERY_TEXT) String text);
 
 
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
+    @GET(APIBusinessConstants.BUSINESS_PROMO_ENDPOINT)
+    Call<BusinessesResp> listPromos(@Path(APIBusinessConstants.PATH_PROMO_ID) String promoID);
+
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @GET(APIBusinessConstants.BUSINESS_SEARCH_ENDPOINT)
     Call<BusinessesResp> listBusinessByCategory(@Query(APIConstants.QUERY_COORDS) String coords,
@@ -75,6 +80,10 @@ public interface BusinessInterface {
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @GET(APIBusinessConstants.SERVICES_CATEGORIES_ENDPOINT)
     Call<CategoryResp> listCategories();
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
+    @GET(APIBusinessConstants.BUSSINESS_BANNER_ENDPOINT)
+    Call<BannerResponse> listBanners();
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @GET(APIBusinessConstants.BUSINESS_CATEGORIES_ENDPOINT)

@@ -29,6 +29,7 @@ public class APIBusinessConstants {
 
     public static final String PATH_CATEGORY_ID = "categoryID";
     public static final String PATH_BUSINESS_ID = "businessID";
+    public static final String PATH_PROMO_ID = "promoID";
     public static final String PATH_FAVORITE_ID = "favoriteID";
 
     public static final String QUERY_TAG = "q";
@@ -72,6 +73,9 @@ public class APIBusinessConstants {
 
     public static final String BUSINESS_CATEGORIES_ENDPOINT = "businesses/{" + PATH_BUSINESS_ID + "}/service-categories" + FIELDS_CATEGORIES_BUSINESS;
 
+    public static final String BUSSINESS_BANNER_ENDPOINT = "promos";
+
+    public static final String BUSINESS_PROMO_ENDPOINT = "promos/{" + PATH_PROMO_ID + "}/businesses";
 
     public static final String BUSINESS_INFO_ENDPOINT = "businesses/{" + PATH_BUSINESS_ID + "}";
 

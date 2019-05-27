@@ -52,6 +52,7 @@ public class BusinessListFragment extends Fragment {
      */
     private boolean isLoading = false;
     private boolean isLastPage = false;
+    private boolean promo = false;
     private int currentPage = 1;
     String categoryId;
 
@@ -101,6 +102,10 @@ public class BusinessListFragment extends Fragment {
         this.categoryId = categoryId;
     }
 
+    public void setPromo(boolean promo) {
+        this.promo = promo;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -129,7 +134,10 @@ public class BusinessListFragment extends Fragment {
         }
 
         mRvBusinessList.addOnScrollListener(scrollListener);
-        listBusiness();
+        if(!promo)
+            listBusiness();
+        else
+            listBussinesByPromo();
 
         return view;
     }
@@ -137,7 +145,10 @@ public class BusinessListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        listBusiness();
+        if(!promo)
+            listBusiness();
+        else
+            listBussinesByPromo();
     }
 
     /**
@@ -158,6 +169,27 @@ public class BusinessListFragment extends Fragment {
 
             @Override
             public void onError(Object error) {
+                AppUtils.hideDialog();
+            }
+        });
+    }
+
+    public void listBussinesByPromo() {
+        currentPage = 1;
+        AppUtils.showLoadingDialog(getContext());
+        mBusinessService.listPromos(categoryId, userId, currentPage, PAGE_SIZE, new APICallback() {
+            @Override
+            public void onSuccess(Object response) {
+                mBusinessList = (ArrayList<Business>) response;
+
+                mAdapter.updateList(mBusinessList);
+                mAdapter.notifyDataSetChanged();
+                AppUtils.hideDialog();
+            }
+
+            @Override
+            public void onError(Object error) {
+                Log.i("Qual o erro aqui ", "Esta errado " + error.toString());
                 AppUtils.hideDialog();
             }
         });

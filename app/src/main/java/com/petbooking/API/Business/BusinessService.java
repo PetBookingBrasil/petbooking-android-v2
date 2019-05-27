@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.petbooking.API.APIClient;
 import com.petbooking.API.Appointment.Models.ServiceResp;
+import com.petbooking.API.Business.Models.BannerResponse;
 import com.petbooking.API.Business.Models.BusinessResp;
 import com.petbooking.API.Business.Models.BusinessesResp;
 import com.petbooking.API.Business.Models.CategoryResp;
@@ -45,6 +46,31 @@ public class BusinessService {
 
     public void listBusiness(String coords, String userId, int page, int limit, final APICallback callback) {
         Call<BusinessesResp> call = mBusinessInterface.listBusiness(coords, userId, page, limit);
+        call.enqueue(new Callback<BusinessesResp>() {
+            @Override
+            public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {
+                if (response.isSuccessful()) {
+                    BusinessesResp responseList = response.body();
+                    ArrayList<Business> businessList = new ArrayList<>();
+                    for (BusinessesResp.Item item : responseList.data) {
+                        businessList.add(APIUtils.parseBusiness(item.id, item.attributes));
+                    }
+
+                    callback.onSuccess(businessList);
+                } else {
+                    callback.onError(APIUtils.handleError(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BusinessesResp> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void listPromos(String promoId, String userId, int page, int limit, final APICallback callback) {
+        Call<BusinessesResp> call = mBusinessInterface.listPromos(promoId);
         call.enqueue(new Callback<BusinessesResp>() {
             @Override
             public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {
@@ -228,6 +254,21 @@ public class BusinessService {
 
             @Override
             public void onFailure(Call<CategoryResp> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void listBanners(final APICallback callback) {
+        Call<BannerResponse> call = mBusinessInterface.listBanners();
+        call.enqueue(new Callback<BannerResponse>() {
+            @Override
+            public void onResponse(Call<BannerResponse> call, Response<BannerResponse> response) {
+                APIUtils.handleResponse(response, callback);
+            }
+
+            @Override
+            public void onFailure(Call<BannerResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });

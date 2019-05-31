@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.petbooking.Models.Banner;
 import com.petbooking.R;
-import com.petbooking.UI.Widget.CircleTransformation;
 
 import java.util.ArrayList;
 
@@ -50,6 +49,7 @@ public class BannerFragment extends Fragment {
         View view = inflater.inflate(R.layout.banner_layout, container, false);
         ButterKnife.bind(this, view);
         final Banner banner = banners.get(position);
+
         Glide.with(getContext())
                 .load(banner.getImage())
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)

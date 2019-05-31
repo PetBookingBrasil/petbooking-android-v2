@@ -1,11 +1,10 @@
 package com.petbooking.UI.Dashboard.BusinessList;
 
-import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.petbooking.API.Business.Models.BannerResponse;
 import com.petbooking.API.Business.Models.CategoryResp;
@@ -39,7 +37,7 @@ import butterknife.ButterKnife;
  * Created by victor on 15/01/18.
  */
 
-public class CategoryListFragment extends android.support.v4.app.Fragment {
+public class CategoryListFragment extends Fragment {
     //List
     @BindView(R.id.listCategorys)
     RecyclerView categorys;
@@ -50,9 +48,7 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
     @BindView(R.id.pagerBanner)
     ViewPager bannerList;
 
-    @BindView(R.id.container)
-    RelativeLayout container;
-
+    boolean returnBussines = false;
 
     Context context;
     //List
@@ -62,6 +58,7 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
     //Business
     private com.petbooking.API.Business.BusinessService mBusinessService;
     private String businessId = null;
+    private int test = 1;
 
     //Adapter
     CategoryListAdapter categoryAdapter;
@@ -81,21 +78,39 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_categories, container, false);
+        View view = inflater.inflate(R.layout.list_categories_home, container, false);
         ButterKnife.bind(this, view);
+        if(returnBussines) {
+            refreshFragment();
+        }else{
+            initViews(view, container);
+        }
+
+
+        return view;
+    }
+
+    private void initViews(View view, @Nullable ViewGroup container) {
         categoryAdapter = new CategoryListAdapter(getActivity(),mCategoryList);
         categoryAdapter.setFragment(this);
         categorys.setLayoutManager(new GridLayoutManager(getActivity(),2));
         categorys.setAdapter(categoryAdapter);
         mCategoryList.clear();
         bannerAdapter = new BannerListAdapter(getFragmentManager());
+        bannerAdapter.setBanners(banners);
         bannerAdapter.setFragment(this);
-        bannersLayout.setVisibility(View.VISIBLE);
         banners.clear();
+        bannerAdapter.setBanners(banners);
+        bannerList.setAdapter(bannerAdapter);
         getCategories();
         getBanners();
         container.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.white));
-        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     public void getCategories() {
@@ -126,7 +141,6 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
             @Override
             public void onSuccess(Object response) {
                 BannerResponse bannerResponse = (BannerResponse) response;
-                Log.i("Teste", "Qual o sise aqui " + bannerResponse.data.size());
                 for (BannerResponse.Item item : bannerResponse.data) {
                     Banner banner = new Banner();
                     banner.setId(item.id);
@@ -135,7 +149,7 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
                     banners.add(banner);
                 }
                 bannerAdapter.setBanners(banners);
-                bannerList.setAdapter(bannerAdapter);
+                bannerAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -154,7 +168,8 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
         CommonUtils.icons = icons;
     }
 
-    public void replaceFragment(String categoryId, String categoryName,Category category){
+    public void replaceFragment(String categoryId, String categoryName,Category category) {
+        returnBussines = true;
         android.support.v4.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
         BusinessListFragment businessListFragment = new BusinessListFragment(category);
         if(category == null){
@@ -167,5 +182,12 @@ public class CategoryListFragment extends android.support.v4.app.Fragment {
         transaction.commit();
         DashboardActivity activity =(DashboardActivity) getActivity();
         activity.setTitle(categoryName);
+    }
+
+    public void refreshFragment() {
+        android.support.v4.app.FragmentTransaction transaction = getFragmentManager()
+                .beginTransaction();
+        transaction.replace(R.id.root_frame, new CategoryListFragment());
+        transaction.commit();
     }
 }

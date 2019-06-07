@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -27,7 +28,9 @@ public class ContentFragment extends Fragment {
     private Category category;
     TextView tabContent;
     TextView tabTreeText;
+    TextView tabTwoText;
     TabLayout.Tab tabTree;
+    TabLayout.Tab tabTwo;
 
     public ContentFragment() {
         // Required empty public constructor
@@ -59,9 +62,9 @@ public class ContentFragment extends Fragment {
         tabContent.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_menu_list, 0, 0, 0);
 
         LinearLayout tabLinearLayoutTwo = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.tab_item_layout, null);
-        TextView textView = (TextView) tabLinearLayoutTwo.findViewById(R.id.tabContent);
-        textView.setText(getContext().getString(R.string.tab_map));
-        textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_my_location, 0, 0, 0);
+        tabTwoText = (TextView) tabLinearLayoutTwo.findViewById(R.id.tabContent);
+        tabTwoText.setText(getContext().getString(R.string.tab_map));
+        tabTwoText.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_my_location, 0, 0, 0);
 
         LinearLayout tabLinearLayoutTree = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.tab_item_layout, null);
         tabTreeText = (TextView) tabLinearLayoutTree.findViewById(R.id.tabContent);
@@ -69,22 +72,42 @@ public class ContentFragment extends Fragment {
         tabTreeText.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_menu_favorite, 0, 0, 0);
 
         mTabLayout.getTabAt(0).setCustomView(tabContent);
-        mTabLayout.getTabAt(1).setCustomView(textView);
+        mTabLayout.getTabAt(1).setCustomView(tabTwoText);
         mTabLayout.getTabAt(2).setCustomView(tabTreeText);
         tabTree = mTabLayout.getTabAt(2);
+        tabTwo = mTabLayout.getTabAt(1);
 
         return view;
     }
 
 
-    public void setChangeNameTab(String nameTab,boolean removeTab) {
+    public void setChangeNameTab(String nameTab, boolean removeTab) {
         tabContent.setText(nameTab);
-        if(removeTab) {
+        if (removeTab) {
             TabLayout.Tab hasTab = mTabLayout.getTabAt(2);
-            if (hasTab != null);
-                mTabLayout.removeTabAt(2);
+            if (hasTab != null) ;
+            mTabLayout.removeTabAt(2);
         }
     }
+
+    public void removeTabMap() {
+        TabLayout.Tab hasTab = mTabLayout.getTabAt(1);
+        if (hasTab != null) {
+            mTabLayout.removeTabAt(1);
+            mViewPager.beginFakeDrag();
+        }
+
+    }
+
+    public void addTabMap() {
+        TabLayout.Tab hasTab = mTabLayout.getTabAt(1);
+        if (hasTab == null && tabTwo != null) {
+
+            mTabLayout.addTab(mTabLayout.newTab().setCustomView(tabTwoText), 1);
+            mViewPager.endFakeDrag();
+        }
+    }
+
     public void addTab() {
         if (tabTree != null) {
             mTabLayout.addTab(mTabLayout.newTab().setCustomView(tabTreeText));

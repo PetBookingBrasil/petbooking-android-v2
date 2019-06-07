@@ -124,9 +124,16 @@ public class BusinessListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         String street = mContext.getResources().getString(R.string.business_street, business.street, business.streetNumber, business.neighborhood);
         String city = mContext.getResources().getString(R.string.business_city, business.city, business.state);
         String distance = mContext.getResources().getString(R.string.business_distance, String.format("%.2f", business.distance));
-        String ratingCount = mContext.getResources().getQuantityString(R.plurals.business_rating_count, business.ratingCount, business.ratingCount);
-        String average = String.format("%.1f", business.ratingAverage);
+        String ratingCount;
+        String average;
+        try {
+            ratingCount = mContext.getResources().getQuantityString(R.plurals.business_rating_count, business.ratingCount, business.ratingCount);
+            average  = String.format("%.1f", business.ratingAverage);
 
+        }catch (Exception e) {
+            average = "";
+            ratingCount = "";
+        }
         if (business.favorited) {
             holder.mBtnFavorite.setImageResource(R.drawable.ic_favorite_filled);
         } else {

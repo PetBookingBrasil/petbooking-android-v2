@@ -200,6 +200,11 @@ public class DashboardActivity extends AppCompatActivity implements
         contentFragment.setChangeNameTab(getString(R.string.list_tab_name),true);
     }
 
+    public void removeTabMap() {
+        contentFragment.removeTabMap();
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -232,6 +237,7 @@ public class DashboardActivity extends AppCompatActivity implements
             toggle.syncState();
             toolbarTitle.setText(R.string.dashboard_title);
             contentFragment.setChangeNameTab(getString(R.string.tab_category),false);
+            contentFragment.addTabMap();
             contentFragment.addTab();
             super.onBackPressed();
         }

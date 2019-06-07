@@ -182,6 +182,9 @@ public class CategoryListFragment extends Fragment {
         transaction.commit();
         DashboardActivity activity =(DashboardActivity) getActivity();
         activity.setTitle(categoryName);
+        if(category == null){
+            activity.removeTabMap();
+        }
     }
 
     public void refreshFragment() {

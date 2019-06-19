@@ -451,8 +451,10 @@ public class BusinessInformationFragment extends Fragment implements OnMapReadyC
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(center)
                 .icon(BitmapDescriptorFactory.fromBitmap(AppUtils.getBitmap(getContext(), R.drawable.ic_marker)));
-        mGMap.addMarker(markerOptions);
-        mGMap.moveCamera(CameraUpdateFactory.newLatLngZoom(center, 16));
+        if(mGMap != null && markerOptions !=null) {
+            mGMap.addMarker(markerOptions);
+            mGMap.moveCamera(CameraUpdateFactory.newLatLngZoom(center, 16));
+        }
     }
 
     /**

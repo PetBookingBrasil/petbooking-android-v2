@@ -33,6 +33,8 @@ public class APIConstants {
     public static final String PATH_PARAM = "ID_PARAM";
     public static final int PAGE_SIZE_DEAFULT = 10;
     public static final String QUERY_COORDS = "coords";
+    public static final String QUERY_LATITUDE = "latitude";
+    public static final String QUERY_LONGITUDE = "longitude";
     public static final String QUERY_PAGE_SIZE_DEAFULT = "?page[size]=" + PAGE_SIZE_DEAFULT;
     public static final String QUERY_USER_ID = "user_id";
     public static final String QUERY_TEXT = "q";

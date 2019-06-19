@@ -176,8 +176,9 @@ public class BusinessListFragment extends Fragment {
 
     public void listBussinesByPromo() {
         currentPage = 1;
+        LocationManager manager = LocationManager.getInstance();
         AppUtils.showLoadingDialog(getContext());
-        mBusinessService.listPromos(categoryId, userId, currentPage, PAGE_SIZE, new APICallback() {
+        mBusinessService.listPromos(categoryId, userId, currentPage, PAGE_SIZE,manager.getLatitude(), manager.getLongitude(), new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 mBusinessList = (ArrayList<Business>) response;

@@ -69,8 +69,13 @@ public class BusinessService {
         });
     }
 
-    public void listPromos(String promoId, String userId, int page, int limit, final APICallback callback) {
-        Call<BusinessesResp> call = mBusinessInterface.listPromos(promoId);
+    public void listPromos(String promoId, String userId, int page, int limit,String latitude,String longitude, final APICallback callback) {
+        Call<BusinessesResp> call;
+        if(latitude != null && longitude !=null){
+            call = mBusinessInterface.listPromos(promoId, latitude, longitude);
+        }else {
+            call =mBusinessInterface.listPromos(promoId);
+        }
         call.enqueue(new Callback<BusinessesResp>() {
             @Override
             public void onResponse(Call<BusinessesResp> call, Response<BusinessesResp> response) {

@@ -47,6 +47,12 @@ public interface BusinessInterface {
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
     @GET(APIBusinessConstants.BUSINESS_PROMO_ENDPOINT)
+    Call<BusinessesResp> listPromos(@Path(APIBusinessConstants.PATH_PROMO_ID) String promoID,
+                                    @Query(APIConstants.QUERY_LATITUDE) String latitude,
+                                    @Query(APIConstants.QUERY_LONGITUDE) String longitude);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED, APIConstants.HEADER_SESSION_TOKEN_REQUIRED})
+    @GET(APIBusinessConstants.BUSINESS_PROMO_ENDPOINT)
     Call<BusinessesResp> listPromos(@Path(APIBusinessConstants.PATH_PROMO_ID) String promoID);
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})

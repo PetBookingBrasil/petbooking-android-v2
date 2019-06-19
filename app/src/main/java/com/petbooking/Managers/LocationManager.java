@@ -105,7 +105,7 @@ public class LocationManager implements GoogleApiClient.ConnectionCallbacks,
         }
 
         setLastLocation(location);
-        if(mLocationReadyCallback != null){
+        if (mLocationReadyCallback != null) {
             mLocationReadyCallback.onLocationReady(getLocationCityState());
         }
 
@@ -128,6 +128,14 @@ public class LocationManager implements GoogleApiClient.ConnectionCallbacks,
 
     public String getLocationCoords() {
         return String.format(Locale.getDefault(), "%f;%f", mLastLocationX, mLastLocationY).replace(",", ".").replace(";", ",");
+    }
+
+    public String getLatitude() {
+        return String.format(Locale.getDefault(), "%f", mLastLocationX).replace(",", ".").replace(";", ",");
+    }
+
+    public String getLongitude() {
+        return String.format(Locale.getDefault(), "%f", mLastLocationY).replace(",", ".").replace(";", ",");
     }
 
     public void getLocationCityState(LocationReadyCallback locationReadyCallback) {

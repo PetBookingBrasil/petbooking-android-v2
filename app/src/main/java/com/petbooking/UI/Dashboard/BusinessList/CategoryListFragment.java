@@ -148,6 +148,9 @@ public class CategoryListFragment extends Fragment {
                     banner.setImage(item.attributes.image_url);
                     banners.add(banner);
                 }
+                if(bannerResponse.data.size() == 0){
+                    bannersLayout.setVisibility(View.GONE);
+                }
                 bannerAdapter.setBanners(banners);
                 bannerAdapter.notifyDataSetChanged();
             }

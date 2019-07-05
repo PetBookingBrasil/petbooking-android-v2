@@ -157,7 +157,7 @@ public class LocationManager implements GoogleApiClient.ConnectionCallbacks,
             List<Address> addresses = geocoder.getFromLocation(mLastLocationX, mLastLocationY, 1);
             if (addresses.size() > 0) {
                 Address address = addresses.get(0);
-                cityState = address.getLocality() + ", " + states.getAbreviation(address.getAdminArea());
+                cityState = address.getSubAdminArea() + ", " + states.getAbreviation(address.getAdminArea());
             }
         } catch (IOException e) {
             return cityState;

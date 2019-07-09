@@ -84,7 +84,11 @@ public class ReviewSchedule extends AppCompatActivity {
         int enviroment = Math.round(ratingBarEnvironment.getRating());
         String comment = editComment.getText().toString();
         ReviewRequest reviewRequest = new ReviewRequest(comment, bussisnes, enviroment, attendance, services.get(position).id);
-        sendReview(reviewRequest);
+        if(validRequest(reviewRequest))
+            sendReview(reviewRequest);
+        else {
+            Snackbar.make(quantBussines, "Campos obrigatórios", Snackbar.LENGTH_LONG).show();
+        }
     }
 
     int position = 0;
@@ -241,6 +245,17 @@ public class ReviewSchedule extends AppCompatActivity {
 
             }
         });
+    }
+
+    public boolean validRequest(ReviewRequest reviewRequest) {
+        if(reviewRequest.data.attributes.business_rating > 0 &&
+                reviewRequest.data.attributes.employment_rating > 0
+        && reviewRequest.data.attributes.business_rating > 0
+        && !reviewRequest.data.attributes.event_id.isEmpty()) {
+            return true;
+        }
+
+        return false;
     }
 
 

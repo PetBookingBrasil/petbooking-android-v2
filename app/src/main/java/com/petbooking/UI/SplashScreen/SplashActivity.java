@@ -72,14 +72,7 @@ public class SplashActivity extends AppCompatActivity {
     public void redirectUser() {
         hasValidAuthToken = mSessionManager.hasAuthTokenValid();
         hasValidSessionToken = mSessionManager.hasSessionTokenValid();
-
-        if (!hasValidAuthToken) {
-            authConsumer();
-        } else if (hasValidAuthToken && !hasValidSessionToken) {
-            authConsumer();
-        } else if (hasValidAuthToken && hasValidSessionToken) {
-            authConsumer();
-        }
+        authConsumer();
     }
 
     /**

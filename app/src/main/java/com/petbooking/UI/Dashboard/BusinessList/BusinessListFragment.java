@@ -134,10 +134,7 @@ public class BusinessListFragment extends Fragment {
         }
 
         mRvBusinessList.addOnScrollListener(scrollListener);
-        if(!promo)
-            listBusiness();
-        else
-            listBussinesByPromo();
+
 
         return view;
     }

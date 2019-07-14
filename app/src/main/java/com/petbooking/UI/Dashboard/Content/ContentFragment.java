@@ -94,7 +94,6 @@ public class ContentFragment extends Fragment {
         TabLayout.Tab hasTab = mTabLayout.getTabAt(1);
         if (hasTab != null) {
             mTabLayout.removeTabAt(1);
-            mViewPager.beginFakeDrag();
         }
 
     }
@@ -102,9 +101,7 @@ public class ContentFragment extends Fragment {
     public void addTabMap() {
         TabLayout.Tab hasTab = mTabLayout.getTabAt(1);
         if (hasTab == null && tabTwo != null) {
-
             mTabLayout.addTab(mTabLayout.newTab().setCustomView(tabTwoText), 1);
-            mViewPager.endFakeDrag();
         }
     }
 

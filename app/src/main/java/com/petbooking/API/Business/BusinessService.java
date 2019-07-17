@@ -264,8 +264,14 @@ public class BusinessService {
         });
     }
 
-    public void listBanners(final APICallback callback) {
-        Call<BannerResponse> call = mBusinessInterface.listBanners();
+    public void listBanners(String lat, String lng,final APICallback callback) {
+        Call<BannerResponse> call;
+        if(lat !=null && lng !=null){
+            call = mBusinessInterface.listBanners(lat, lng);
+        }else{
+            call = mBusinessInterface.listBanners();
+        }
+
         call.enqueue(new Callback<BannerResponse>() {
             @Override
             public void onResponse(Call<BannerResponse> call, Response<BannerResponse> response) {

@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import com.petbooking.API.Business.Models.BannerResponse;
 import com.petbooking.API.Business.Models.CategoryResp;
 import com.petbooking.Interfaces.APICallback;
+import com.petbooking.Managers.AppointmentManager;
+import com.petbooking.Managers.LocationManager;
 import com.petbooking.Models.Banner;
 import com.petbooking.Models.Category;
 import com.petbooking.R;
@@ -137,7 +139,8 @@ public class CategoryListFragment extends Fragment {
     }
 
     public void getBanners() {
-        mBusinessService.listBanners(new APICallback() {
+        LocationManager manager = LocationManager.getInstance();
+        mBusinessService.listBanners(manager.getLatitude(),manager.getLongitude(),new APICallback() {
             @Override
             public void onSuccess(Object response) {
                 BannerResponse bannerResponse = (BannerResponse) response;

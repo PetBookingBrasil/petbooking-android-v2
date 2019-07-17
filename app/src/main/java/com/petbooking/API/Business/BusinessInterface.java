@@ -92,6 +92,11 @@ public interface BusinessInterface {
     Call<BannerResponse> listBanners();
 
     @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
+    @GET(APIBusinessConstants.BUSSINESS_BANNER_ENDPOINT)
+    Call<BannerResponse> listBanners(@Query(APIConstants.QUERY_LATITUDE) String latitude,
+                                     @Query(APIConstants.QUERY_LONGITUDE) String longitude);
+
+    @Headers({APIConstants.HEADER_AUTHORIZATION_REQUIRED})
     @GET(APIBusinessConstants.BUSINESS_CATEGORIES_ENDPOINT)
     Call<CategoryResp> listBusinessCategories(@Path(APIBusinessConstants.PATH_BUSINESS_ID) String businessId);
 
